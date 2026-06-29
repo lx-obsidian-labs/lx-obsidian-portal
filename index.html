@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="LX Obsidian Labs builds enterprise-grade software, AI solutions, cloud infrastructure, mobile apps, and digital platforms. Based in Cape Town, serving global clients.">
+  <meta name="theme-color" content="#050505">
+  <meta property="og:title" content="LX Obsidian Labs — Enterprise Software, AI & Cloud Development">
+  <meta property="og:description" content="Enterprise-grade software development, AI solutions, cloud infrastructure, and mobile apps by LX Obsidian Labs. Based in Cape Town, serving the world.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.lxobsidianportal.co.za/">
+  <meta property="og:locale" content="en_ZA">
+  <meta property="og:image" content="https://www.lxobsidianportal.co.za/assets/og-default.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="LX Obsidian Labs — Enterprise Software, AI & Cloud Development">
+  <meta name="twitter:description" content="Enterprise-grade software development, AI solutions, cloud infrastructure, and mobile apps by LX Obsidian Labs.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.lxobsidianportal.co.za/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="css/style.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8968817915668565" crossorigin="anonymous"></script>
+  <meta name="google-adsense-account" content="ca-pub-8968817915668565">
+  <title>LX Obsidian Labs — Enterprise Software, AI & Cloud Development</title>
+</head>
+<body class="page-home">
+
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Loading Bar -->
+  <div class="loading-bar" aria-hidden="true">
+    <div class="loading-bar__fill" id="loadingBarFill"></div>
+  </div>
+
+  <!-- ==========================================
+       ANNOUNCEMENT BAR
+       ========================================== -->
+  <div class="announcement" id="announcement" role="banner">
+    <div class="container">
+      <div class="announcement__content">
+        <span class="announcement__badge">New</span>
+        <span>New Android applications are now available through LX Marketplace.</span>
+        <a href="marketplace.html" class="announcement__link">Explore →</a>
+      </div>
+      <button class="announcement__close" id="announcementClose" aria-label="Close announcement">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M1 1L13 13M13 1L1 13"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       NAVIGATION
+       ========================================== -->
+  <nav class="nav nav--transparent" id="nav" role="navigation" aria-label="Main navigation">
+    <div class="container">
+      <div class="nav__inner">
+        <a href="index.html" class="nav__logo" aria-label="LX Obsidian Labs Home">
+          <div class="nav__logo-icon">LX</div>
+          <span class="nav__logo-text">LX <span>Obsidian</span></span>
+        </a>
+        <div class="nav__links" id="navLinks" role="menubar">
+          <div class="nav-dropdown" role="none">
+            <button class="nav-dropdown__trigger" role="menuitem" aria-haspopup="true" aria-expanded="false">
+              Solutions
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="nav-dropdown__menu" role="menu">
+              <a href="services.html#web-development" class="nav-dropdown__item" role="menuitem">Web Development</a>
+              <a href="services.html#mobile-apps" class="nav-dropdown__item" role="menuitem">Mobile Apps</a>
+              <a href="services.html#ai-solutions" class="nav-dropdown__item" role="menuitem">AI Solutions</a>
+              <a href="services.html#enterprise-systems" class="nav-dropdown__item" role="menuitem">Enterprise Systems</a>
+              <a href="services.html#cloud-infrastructure" class="nav-dropdown__item" role="menuitem">Cloud Infrastructure</a>
+              <a href="services.html#branding-design" class="nav-dropdown__item" role="menuitem">Branding & Design</a>
+            </div>
+          </div>
+          <a href="marketplace.html" class="nav__link" role="menuitem">Marketplace</a>
+          <a href="portfolio.html" class="nav__link" role="menuitem">Portfolio</a>
+          <div class="nav-dropdown" role="none">
+            <button class="nav-dropdown__trigger" role="menuitem" aria-haspopup="true" aria-expanded="false">
+              Resources
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="nav-dropdown__menu" role="menu">
+              <a href="blog.html" class="nav-dropdown__item" role="menuitem">Blog</a>
+              <a href="#" class="nav-dropdown__item" role="menuitem">Documentation</a>
+              <a href="faq.html" class="nav-dropdown__item" role="menuitem">FAQ</a>
+            </div>
+          </div>
+          <div class="nav-dropdown" role="none">
+            <button class="nav-dropdown__trigger" role="menuitem" aria-haspopup="true" aria-expanded="false">
+              Company
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="nav-dropdown__menu" role="menu">
+              <a href="about.html" class="nav-dropdown__item" role="menuitem">About Us</a>
+              <a href="#" class="nav-dropdown__item" role="menuitem">Careers</a>
+              <a href="contact.html" class="nav-dropdown__item" role="menuitem">Contact</a>
+            </div>
+          </div>
+        </div>
+        <div class="nav__actions">
+          <button id="searchToggle" class="btn btn--ghost btn--small" aria-label="Open search">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </button>
+          <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+            <svg class="theme-toggle__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+          </button>
+          <a href="#" class="btn btn--ghost btn--small">Login</a>
+          <a href="contact.html" class="btn btn--primary btn--small">Start Project</a>
+          <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+            <div class="nav__toggle-icon">
+              <span class="nav__toggle-line"></span>
+              <span class="nav__toggle-line"></span>
+              <span class="nav__toggle-line"></span>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ==========================================
+       HERO
+       ========================================== -->
+  <section class="hero" id="main-content" aria-label="Hero">
+    <div class="hero__background">
+      <div class="hero__gradient"></div>
+      <div class="hero__gradient hero__gradient--2"></div>
+      <div class="hero__gradient hero__gradient--3"></div>
+      <div class="bg-grid bg-grid--subtle" aria-hidden="true" style="position:absolute;inset:0;z-index:0;"></div>
+      <div class="hero__particles" id="particles" aria-hidden="true"></div>
+    </div>
+    <div class="container">
+      <div class="hero__layout">
+        <div class="hero__content">
+          <div class="hero__badge">
+            <span class="hero__badge-dot"></span>
+            <span class="hero__badge-text">FULL-STACK SOFTWARE ENGINEERING</span>
+          </div>
+          <h1 class="hero__title">
+            Build <span class="hero__title-gradient">Digital Products</span> That <span class="hero__title-cyan">Scale</span>
+          </h1>
+          <p class="hero__description">
+            LX Obsidian Labs engineers websites, AI systems, mobile apps, cloud platforms, and enterprise software — from concept to production.
+          </p>
+          <div class="hero__actions">
+            <a href="contact.html" class="btn btn--primary btn--large hero__btn-primary">
+              Start Your Project
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+            <a href="marketplace.html" class="btn btn--secondary btn--large hero__btn-secondary">Explore Marketplace</a>
+          </div>
+          <div class="hero__trust">
+            <div class="hero__trust-avatars">
+              <div class="hero__trust-avatar" style="background:#C89B3C;">SK</div>
+              <div class="hero__trust-avatar" style="background:#00D4FF;">MR</div>
+              <div class="hero__trust-avatar" style="background:#2ECC71;">AT</div>
+              <div class="hero__trust-avatar" style="background:#8B5CF6;">JL</div>
+              <div class="hero__trust-count">+200</div>
+            </div>
+            <div class="hero__trust-text">
+              <div class="hero__trust-stars">★★★★★</div>
+              <span>Trusted by <strong>200+</strong> companies worldwide</span>
+            </div>
+          </div>
+        </div>
+        <div class="hero__visual">
+          <img src="assets/hero-tech.svg" alt="LX Obsidian Labs — Technology solutions" class="hero__img" width="800" height="700" loading="eager">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ad-section" aria-label="Sponsored content">
+    <ins class="adsbygoogle"
+         style="display:block; width:100%; height:auto;"
+         data-ad-client="ca-pub-8968817915668565"
+         data-ad-slot="8664876501"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+         window.adsbygoogle = window.adsbygoogle || [];
+         (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+
+  <!-- ==========================================
+       TRUSTED TECHNOLOGIES
+       ========================================== -->
+  <section class="trusted" aria-label="Trusted technologies">
+    <div class="container">
+      <p class="trusted__label">Trusted by engineering teams worldwide</p>
+      <div class="trusted__track" aria-hidden="true">
+        <span class="trusted__item" data-tooltip="Next.js — The React framework for production">Next.js</span>
+        <span class="trusted__item" data-tooltip="React — A JavaScript library for building user interfaces">React</span>
+        <span class="trusted__item" data-tooltip="TypeScript — Typed superset of JavaScript">TypeScript</span>
+        <span class="trusted__item" data-tooltip="Node.js — JavaScript runtime built on V8">Node.js</span>
+        <span class="trusted__item" data-tooltip="Prisma — Next-generation ORM for Node.js">Prisma</span>
+        <span class="trusted__item" data-tooltip="Cloudflare — Global cloud network for speed and security">Cloudflare</span>
+        <span class="trusted__item" data-tooltip="Docker — Container platform for applications">Docker</span>
+        <span class="trusted__item" data-tooltip="OpenAI — Artificial intelligence research and deployment">OpenAI</span>
+        <span class="trusted__item" data-tooltip="PostgreSQL — Advanced open-source relational database">PostgreSQL</span>
+        <span class="trusted__item" data-tooltip="Next.js — The React framework for production">Next.js</span>
+        <span class="trusted__item" data-tooltip="React — A JavaScript library for building user interfaces">React</span>
+        <span class="trusted__item" data-tooltip="TypeScript — Typed superset of JavaScript">TypeScript</span>
+        <span class="trusted__item" data-tooltip="Node.js — JavaScript runtime built on V8">Node.js</span>
+        <span class="trusted__item" data-tooltip="Prisma — Next-generation ORM for Node.js">Prisma</span>
+        <span class="trusted__item" data-tooltip="Cloudflare — Global cloud network for speed and security">Cloudflare</span>
+        <span class="trusted__item" data-tooltip="Docker — Container platform for applications">Docker</span>
+        <span class="trusted__item" data-tooltip="OpenAI — Artificial intelligence research and deployment">OpenAI</span>
+        <span class="trusted__item" data-tooltip="PostgreSQL — Advanced open-source relational database">PostgreSQL</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       QUICK ACTIONS
+       ========================================== -->
+  <section class="section quick-actions" id="quick-actions" aria-label="Quick actions">
+    <div class="container">
+      <div class="section__header reveal">
+        <p class="section__label">Quick Start</p>
+        <h2 class="section__title">Everything you need to ship faster</h2>
+        <p class="section__subtitle">From concept to deployment, we provide end-to-end solutions for your digital needs.</p>
+      </div>
+      <div class="grid grid--auto gap-6">
+        <div class="card card--glow quick-action reveal reveal--delay-1">
+          <div class="quick-action__icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3v18M3 12h18"/>
+            </svg>
+          </div>
+          <h3 class="card__title">Build a Website</h3>
+          <p class="card__text">Responsive, high-performance websites built with modern frameworks and best practices for your brand.</p>
+        </div>
+        <div class="card card--glow quick-action reveal reveal--delay-2">
+          <div class="quick-action__icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+              <line x1="12" y1="18" x2="12.01" y2="18"/>
+            </svg>
+          </div>
+          <h3 class="card__title">Build an App</h3>
+          <p class="card__text">Native and cross-platform mobile applications with stunning UIs and seamless user experiences.</p>
+        </div>
+        <div class="card card--glow quick-action reveal reveal--delay-3">
+          <div class="quick-action__icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/>
+              <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+          </div>
+          <h3 class="card__title">Build AI</h3>
+          <p class="card__text">Intelligent systems powered by machine learning, natural language processing, and predictive analytics.</p>
+        </div>
+        <div class="card card--glow quick-action reveal reveal--delay-4">
+          <div class="quick-action__icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/>
+            </svg>
+          </div>
+          <h3 class="card__title">Brand Identity</h3>
+          <p class="card__text">Complete branding solutions including logos, design systems, and visual identity guidelines.</p>
+        </div>
+        <div class="card card--glow quick-action reveal reveal--delay-5">
+          <div class="quick-action__icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+              <line x1="8" y1="21" x2="16" y2="21"/>
+              <line x1="12" y1="17" x2="12" y2="21"/>
+            </svg>
+          </div>
+          <h3 class="card__title">Enterprise Software</h3>
+          <p class="card__text">Scalable enterprise solutions with robust architectures, security, and compliance built-in.</p>
+        </div>
+        <div class="card card--glow quick-action reveal reveal--delay-1">
+          <div class="quick-action__icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+            </svg>
+          </div>
+          <h3 class="card__title">Download Apps</h3>
+          <p class="card__text">Access our marketplace of ready-to-use applications, tools, and templates for your projects.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       WHY CHOOSE LX
+       ========================================== -->
+  <section class="section" id="why-choose" aria-label="Why choose LX Obsidian">
+    <div class="container">
+      <div class="section__header reveal">
+        <p class="section__label">Why Choose LX</p>
+        <h2 class="section__title">Built different. Built better.</h2>
+        <p class="section__subtitle">We combine deep technical expertise with a commitment to excellence that sets us apart.</p>
+      </div>
+      <div class="why-grid">
+        <div class="card why-card card--glow reveal reveal--delay-1">
+          <div class="why-card__icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <h3 class="card__title">Custom Solutions</h3>
+          <p class="card__text">Tailor-made software designed around your unique business requirements and goals, not template-based solutions.</p>
+        </div>
+        <div class="card why-card card--glow reveal reveal--delay-2">
+          <div class="why-card__icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+            </svg>
+          </div>
+          <h3 class="card__title">Fast Delivery</h3>
+          <p class="card__text">Streamlined agile processes that deliver projects 2-3x faster than traditional agencies without sacrificing quality.</p>
+        </div>
+        <div class="card why-card card--glow reveal reveal--delay-3">
+          <div class="why-card__icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/>
+              <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+          </div>
+          <h3 class="card__title">AI Powered</h3>
+          <p class="card__text">Leverage cutting-edge AI and machine learning to build smarter, more efficient software solutions.</p>
+        </div>
+        <div class="card why-card card--glow reveal reveal--delay-4">
+          <div class="why-card__icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 002 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
+            </svg>
+          </div>
+          <h3 class="card__title">Scalable Systems</h3>
+          <p class="card__text">Architectures designed to grow with your business, handling increased traffic and data without breaking a sweat.</p>
+        </div>
+        <div class="card why-card card--glow reveal reveal--delay-5">
+          <div class="why-card__icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+              <path d="M7 11V7a5 5 0 0110 0v4"/>
+            </svg>
+          </div>
+          <h3 class="card__title">Secure Development</h3>
+          <p class="card__text">Security-first development practices with regular audits, penetration testing, and compliance certifications.</p>
+        </div>
+        <div class="card why-card card--glow reveal reveal--delay-1">
+          <div class="why-card__icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+          </div>
+          <h3 class="card__title">Modern Technologies</h3>
+          <p class="card__text">We use the latest, most reliable technologies to build performant, maintainable, and future-proof software.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       STATISTICS
+       ========================================== -->
+  <section class="section" id="statistics" aria-label="Statistics">
+    <div class="container">
+      <div class="section__header reveal">
+        <p class="section__label">By the Numbers</p>
+        <h2 class="section__title">Our impact in numbers</h2>
+        <p class="section__subtitle">The metrics that matter — proof of our commitment to excellence.</p>
+      </div>
+      <div class="stats-grid reveal">
+        <div class="stat-item">
+          <div class="stat-number"><span class="counter" data-target="500">0</span>+</div>
+          <div class="stat-label">Projects Completed</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number"><span class="counter" data-target="200">0</span>+</div>
+          <div class="stat-label">Apps Developed</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number"><span class="counter" data-target="150">0</span>+</div>
+          <div class="stat-label">Websites Built</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number"><span class="counter" data-target="80">0</span>+</div>
+          <div class="stat-label">Enterprise Systems</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number"><span class="counter" data-target="300">0</span>+</div>
+          <div class="stat-label">Happy Clients</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number"><span class="counter" data-target="12">0</span>+</div>
+          <div class="stat-label">Years Experience</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number"><span class="counter" data-target="15">0</span>+</div>
+          <div class="stat-label">Countries Served</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number"><span class="counter" data-target="2">0</span>hr</div>
+          <div class="stat-label">Support Response Time</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       TESTIMONIALS
+       ========================================== -->
+  <section class="section" id="testimonials" aria-label="Client testimonials">
+    <div class="container">
+      <div class="section__header reveal">
+        <p class="section__label">Testimonials</p>
+        <h2 class="section__title">Trusted by industry leaders</h2>
+        <p class="section__subtitle">Hear directly from the teams and founders who partnered with us.</p>
+      </div>
+      <div class="testimonials-track reveal" id="testimonialsTrack">
+        <div class="card testimonial-card">
+          <div class="testimonial-card__stars">★★★★★</div>
+          <p class="testimonial-card__quote">"LX Obsidian Labs transformed our entire digital infrastructure. Their team delivered a platform that exceeded every expectation and came in ahead of schedule."</p>
+          <div class="testimonial-card__author">
+            <div class="testimonial-card__avatar">SK</div>
+            <div>
+              <div class="testimonial-card__name">Sarah Kim</div>
+              <div class="testimonial-card__role">CTO, FinFlow Inc.</div>
+            </div>
+          </div>
+        </div>
+        <div class="card testimonial-card">
+          <div class="testimonial-card__stars">★★★★★</div>
+          <p class="testimonial-card__quote">"The technical depth and product thinking at LX Obsidian set them apart. They don't just build software — they build partnerships that last."</p>
+          <div class="testimonial-card__author">
+            <div class="testimonial-card__avatar">MR</div>
+            <div>
+              <div class="testimonial-card__name">Marcus Reed</div>
+              <div class="testimonial-card__role">Founder, CloudScale</div>
+            </div>
+          </div>
+        </div>
+        <div class="card testimonial-card">
+          <div class="testimonial-card__stars">★★★★★</div>
+          <p class="testimonial-card__quote">"Our platform now handles 10x the traffic since the migration. The performance improvements and reliability have been incredible."</p>
+          <div class="testimonial-card__author">
+            <div class="testimonial-card__avatar">AT</div>
+            <div>
+              <div class="testimonial-card__name">Aiko Tanaka</div>
+              <div class="testimonial-card__role">VP Engineering, DataVault</div>
+            </div>
+          </div>
+        </div>
+        <div class="card testimonial-card">
+          <div class="testimonial-card__stars">★★★★★</div>
+          <p class="testimonial-card__quote">"Working with LX Obsidian felt like having an extension of our own team. Seamless collaboration, transparent communication, and outstanding results."</p>
+          <div class="testimonial-card__author">
+            <div class="testimonial-card__avatar">JD</div>
+            <div>
+              <div class="testimonial-card__name">James Delaney</div>
+              <div class="testimonial-card__role">CEO, NexGen Studio</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonials-controls">
+        <button class="testimonials-controls__btn testimonials-arrow" id="testimonialPrev" aria-label="Previous testimonial">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+        </button>
+        <div class="testimonials-dots">
+          <button class="testimonials-dot testimonials-dot--active" data-index="0" aria-label="Testimonial 1"></button>
+          <button class="testimonials-dot" data-index="1" aria-label="Testimonial 2"></button>
+          <button class="testimonials-dot" data-index="2" aria-label="Testimonial 3"></button>
+          <button class="testimonials-dot" data-index="3" aria-label="Testimonial 4"></button>
+        </div>
+        <button class="testimonials-controls__btn testimonials-arrow" id="testimonialNext" aria-label="Next testimonial">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       AFFILIATE PROGRAM
+       ========================================== -->
+  <section class="section affiliate" id="affiliate" aria-label="Affiliate program">
+    <div class="container">
+      <div class="affiliate__grid reveal">
+        <div class="affiliate__content">
+          <p class="section__label">Affiliate Program</p>
+          <h2>Earn 20% recurring commission</h2>
+          <p>Join the LX Obsidian Affiliate Program and earn 20% commission on every sale you refer. Whether you're an agency, freelancer, or content creator, our program is designed to reward you.</p>
+          <div class="affiliate__stats">
+            <div class="affiliate__stat">
+              <div class="affiliate__stat-value">20%</div>
+              <div class="affiliate__stat-label">Commission</div>
+            </div>
+            <div class="affiliate__stat">
+              <div class="affiliate__stat-value">30-day</div>
+              <div class="affiliate__stat-label">Cookie Window</div>
+            </div>
+            <div class="affiliate__stat">
+              <div class="affiliate__stat-value">Monthly</div>
+              <div class="affiliate__stat-label">Payouts</div>
+            </div>
+          </div>
+          <div class="affiliate__form">
+            <input type="email" id="affiliateEmail" placeholder="Enter your email" aria-label="Email for affiliate program">
+            <a href="contact.html" class="btn btn--primary affiliate__submit">Join Free</a>
+          </div>
+        </div>
+        <div class="affiliate__image">
+          <div class="affiliate__image-placeholder" style="padding:3rem;background:var(--color-card);border-radius:var(--radius-xl);border:1px solid var(--color-border);text-align:center;">
+            <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+            <h3 style="margin-top:1rem;font-family:var(--font-heading);color:var(--color-text);">Partner Program</h3>
+            <p style="color:var(--color-muted);font-size:var(--text-sm);">Start earning today with zero investment</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ad-section container" aria-label="Sponsored content" style="margin:var(--space-8) auto;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-8968817915668565"
+         data-ad-slot="8664876501"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+
+  <!-- ==========================================
+       LARGE CTA SECTION
+       ========================================== -->
+  <section class="section cta-section" id="cta" aria-label="Call to action">
+    <div class="container">
+      <div class="cta-content reveal">
+        <div class="cta-gradient"></div>
+        <h2 class="cta-content__title">Ready to Build Something Incredible?</h2>
+        <p class="cta-content__text">Let's transform your vision into powerful digital solutions that drive real business outcomes.</p>
+        <div class="cta-content__actions">
+          <a href="contact.html" class="btn btn--primary btn--large">Start Your Project</a>
+          <a href="contact.html" class="btn btn--secondary btn--large">Book Consultation</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       FOOTER
+       ========================================== -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand-col">
+          <div class="footer__brand">LX <span>Obsidian</span></div>
+          <p class="footer__description">Transforming businesses through software engineering, AI, enterprise systems, cloud technology, mobile applications and digital innovation.</p>
+          <form class="newsletter-form">
+            <input type="email" class="newsletter-input" placeholder="Enter your email" aria-label="Email for newsletter">
+            <button type="submit" class="newsletter-submit">Subscribe</button>
+          </form>
+        </div>
+        <div>
+          <h4 class="footer__heading">Company</h4>
+          <div class="footer__links">
+            <a href="about.html" class="footer__link">About</a>
+            <a href="#" class="footer__link">Careers</a>
+            <a href="about.html" class="footer__link">Our Team</a>
+            <a href="contact.html" class="footer__link">Contact</a>
+          </div>
+        </div>
+        <div>
+          <h4 class="footer__heading">Solutions</h4>
+          <div class="footer__links">
+            <a href="services.html" class="footer__link">Websites</a>
+            <a href="services.html" class="footer__link">Software</a>
+            <a href="services.html" class="footer__link">Apps</a>
+            <a href="services.html" class="footer__link">AI</a>
+            <a href="marketplace.html" class="footer__link">Marketplace</a>
+          </div>
+        </div>
+        <div>
+          <h4 class="footer__heading">Resources</h4>
+          <div class="footer__links">
+            <a href="blog.html" class="footer__link">Blog</a>
+            <a href="#" class="footer__link">Documentation</a>
+            <a href="faq.html" class="footer__link">FAQs</a>
+            <a href="contact.html" class="footer__link">Support</a>
+          </div>
+        </div>
+        <div>
+          <h4 class="footer__heading">Contact</h4>
+          <div class="footer__links">
+            <a href="tel:+27123456789" class="footer__link">+27 123 456 789</a>
+            <a href="mailto:hello@lxobsidian.com">hello@lxobsidian.com</a>
+            <a href="#" class="footer__link">WhatsApp</a>
+            <span class="footer__link footer__link--muted">Cape Town, South Africa</span>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>&copy; 2026 LX Obsidian Labs. All rights reserved.</span>
+        <div class="footer__social">
+          <a href="#" class="footer__social-link" aria-label="GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a>
+          <a href="#" class="footer__social-link" aria-label="Twitter / X"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a href="#" class="footer__social-link" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================
+       CHAT WIDGET
+       ========================================== -->
+  <div class="chat-widget" id="chatWidget">
+    <div class="chat-widget__header">
+      <div class="chat-widget__title">
+        <span class="chat-widget__status"></span>
+        LX Assistant
+      </div>
+      <button class="chat-widget__close" id="chatClose" aria-label="Close chat">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <div class="chat-widget__messages" id="chatMessages">
+      <div class="chat-message chat-message--bot">Hi there! 👋 I'm the LX Assistant. How can I help you today?</div>
+    </div>
+    <div class="chat-widget__footer">
+      <input type="text" class="chat-widget__input" id="chatInput" placeholder="Type your message..." aria-label="Chat message">
+      <button class="chat-widget__send" id="chatSend" aria-label="Send message">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       COOKIE CONSENT
+       ========================================== -->
+  <div class="cookie-consent" id="cookieConsent">
+    <div class="cookie-consent__inner">
+      <p class="cookie-consent__text">We use cookies to enhance your experience. By continuing to visit this site you agree to our <a href="#">Privacy Policy</a> and <a href="#">Cookie Policy</a>.</p>
+      <div class="cookie-consent__actions">
+        <button class="btn btn--ghost btn--small" id="cookieDecline">Decline</button>
+        <button class="btn btn--primary btn--small" id="cookieAccept">Accept All</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       BLOG ARTICLE MODAL
+       ========================================== -->
+  <div class="blog-overlay" id="blogOverlay">
+    <div class="blog-modal">
+      <div class="blog-modal__header">
+        <span class="blog-modal__tag" id="blogModalTag">Engineering</span>
+        <h3 class="blog-modal__title" id="blogModalTitle">Article Title</h3>
+        <button class="blog-modal__close" id="blogModalClose" aria-label="Close article">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div class="blog-modal__body" id="blogModalBody">
+        <p>Loading article content...</p>
+      </div>
+      <div class="blog-modal__footer">
+        <div class="blog-modal__author">
+          <div class="blog-modal__author-avatar">LX</div>
+          <div>
+            <div class="blog-modal__author-name" id="blogModalAuthor">LX Obsidian Team</div>
+            <div class="blog-modal__author-date" id="blogModalDate">June 26, 2026</div>
+          </div>
+        </div>
+        <div class="blog-modal__share">
+          <button class="blog-modal__share-btn" aria-label="Share on Twitter">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </button>
+          <button class="blog-modal__share-btn" aria-label="Share on LinkedIn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       FLOATING BUTTONS
+       ========================================== -->
+  <div class="floating-buttons">
+    <button class="floating-btn floating-btn--chat" aria-label="AI Assistant">
+      <svg class="floating-btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+      </svg>
+      <span class="floating-btn__tooltip floating-btn__label">AI Assistant</span>
+    </button>
+    <button class="floating-btn floating-btn--chat" aria-label="WhatsApp">
+      <svg class="floating-btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/>
+      </svg>
+      <span class="floating-btn__tooltip floating-btn__label">WhatsApp</span>
+    </button>
+    <button class="floating-btn floating-btn--scroll" id="scrollToTop" aria-label="Scroll to top">
+      <svg class="floating-btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="18 15 12 9 6 15"/>
+      </svg>
+      <span class="floating-btn__tooltip floating-btn__label">Scroll to Top</span>
+    </button>
+    <button class="floating-btn floating-btn--scroll" aria-label="Book Consultation">
+      <svg class="floating-btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+        <line x1="16" y1="2" x2="16" y2="6"/>
+        <line x1="8" y1="2" x2="8" y2="6"/>
+        <line x1="3" y1="10" x2="21" y2="10"/>
+      </svg>
+      <span class="floating-btn__tooltip floating-btn__label">Book Consultation</span>
+    </button>
+  </div>
+
+  <!-- ==========================================
+       SEARCH MODAL
+       ========================================== -->
+  <div class="search-overlay" id="searchOverlay" role="dialog" aria-modal="true" aria-label="Search">
+    <div class="search-modal">
+      <div class="search-modal__header">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input type="text" class="search-input" id="searchInput" placeholder="Search services, applications, articles..." aria-label="Search input">
+        <kbd class="search-modal__shortcut">ESC</kbd>
+        <button class="search-modal__close" id="searchClose" aria-label="Close search">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div class="search-results" id="searchResults">
+        <p class="search-empty">Start typing to search...</p>
+      </div>
+    </div>
+  </div>
+
+  <noscript>
+    <div style="padding:1rem;background:var(--color-card,#111);border:1px solid var(--color-accent,#C89B3C);border-radius:8px;text-align:center;margin:1rem;color:var(--color-text,#eee);font-size:0.875rem;font-family:system-ui,sans-serif;">
+      LX Obsidian Labs requires JavaScript for the best experience. Please enable JavaScript in your browser settings.
+    </div>
+  </noscript>
+
+  <!-- ==========================================
+       SCRIPTS
+       ========================================== -->
+  <script src="js/navigation.js"></script>
+  <script src="js/scroll.js"></script>
+  <script src="js/animations.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/features.js"></script>
+  <script src="js/seo.js"></script>
+  <script src="js/ux.js"></script>
+  <script src="js/ads.js"></script>
+  <script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js');}</script>
+</body>
+</html>

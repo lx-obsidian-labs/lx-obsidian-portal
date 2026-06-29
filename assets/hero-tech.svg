@@ -1,0 +1,174 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 700" fill="none">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a0a0f"/>
+      <stop offset="50%" stop-color="#0d0d1a"/>
+      <stop offset="100%" stop-color="#080810"/>
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#C89B3C"/>
+      <stop offset="100%" stop-color="#00d4ff"/>
+    </linearGradient>
+    <linearGradient id="accentGrad2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#C89B3C" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#00d4ff" stop-opacity="0.1"/>
+    </linearGradient>
+    <linearGradient id="accentGrad3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#00d4ff" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#C89B3C" stop-opacity="0.05"/>
+    </linearGradient>
+    <filter id="glow1" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    <filter id="glow2" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="20" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    <filter id="glow3" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    <radialGradient id="pulseGrad" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#00d4ff" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#00d4ff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="goldPulse" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#C89B3C" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#C89B3C" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="0.5"/>
+    </pattern>
+    <pattern id="dotGrid" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="0.8" fill="rgba(255,255,255,0.04)"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="700" fill="url(#bgGrad)"/>
+  <rect width="800" height="700" fill="url(#grid)"/>
+
+  <!-- Ambient glow orbs -->
+  <circle cx="200" cy="350" r="250" fill="url(#goldPulse)" opacity="0.6">
+    <animate attributeName="r" values="250;280;250" dur="6s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="600" cy="300" r="200" fill="url(#pulseGrad)" opacity="0.5">
+    <animate attributeName="r" values="200;230;200" dur="8s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- Connecting neural lines -->
+  <g opacity="0.3">
+    <line x1="120" y1="180" x2="280" y2="320" stroke="url(#accentGrad)" stroke-width="0.8" stroke-dasharray="4 6">
+      <animate attributeName="stroke-dashoffset" from="0" to="-100" dur="6s" repeatCount="indefinite"/>
+    </line>
+    <line x1="280" y1="320" x2="450" y2="220" stroke="url(#accentGrad)" stroke-width="0.8" stroke-dasharray="4 6">
+      <animate attributeName="stroke-dashoffset" from="0" to="-100" dur="5s" repeatCount="indefinite"/>
+    </line>
+    <line x1="450" y1="220" x2="620" y2="340" stroke="url(#accentGrad)" stroke-width="0.8" stroke-dasharray="4 6">
+      <animate attributeName="stroke-dashoffset" from="0" to="-100" dur="7s" repeatCount="indefinite"/>
+    </line>
+    <line x1="620" y1="340" x2="680" y2="200" stroke="url(#accentGrad3)" stroke-width="0.6" stroke-dasharray="3 5">
+      <animate attributeName="stroke-dashoffset" from="0" to="-80" dur="4s" repeatCount="indefinite"/>
+    </line>
+    <line x1="280" y1="320" x2="350" y2="480" stroke="url(#accentGrad3)" stroke-width="0.6" stroke-dasharray="3 5">
+      <animate attributeName="stroke-dashoffset" from="0" to="-80" dur="5.5s" repeatCount="indefinite"/>
+    </line>
+    <line x1="450" y1="220" x2="530" y2="100" stroke="url(#accentGrad2)" stroke-width="0.5" stroke-dasharray="2 4">
+      <animate attributeName="stroke-dashoffset" from="0" to="-60" dur="8s" repeatCount="indefinite"/>
+    </line>
+  </g>
+
+  <!-- Nodes / Network dots -->
+  <g filter="url(#glow3)">
+    <circle cx="120" cy="180" r="4" fill="#C89B3C"/>
+    <circle cx="280" cy="320" r="5" fill="#C89B3C">
+      <animate attributeName="r" values="5;7;5" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="450" cy="220" r="4.5" fill="#00d4ff">
+      <animate attributeName="r" values="4.5;6.5;4.5" dur="2.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="620" cy="340" r="3.5" fill="#C89B3C"/>
+    <circle cx="680" cy="200" r="3" fill="#00d4ff">
+      <animate attributeName="r" values="3;5;3" dur="4s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="350" cy="480" r="3" fill="#C89B3C"/>
+    <circle cx="530" cy="100" r="2.5" fill="#00d4ff"/>
+  </g>
+
+  <!-- Large center hexagon with glow -->
+  <g filter="url(#glow2)" opacity="0.15">
+    <polygon points="400,180 520,250 520,390 400,460 280,390 280,250" fill="none" stroke="#00d4ff" stroke-width="1">
+      <animateTransform attributeName="transform" type="rotate" from="0 400 320" to="360 400 320" dur="40s" repeatCount="indefinite"/>
+    </polygon>
+  </g>
+  <g filter="url(#glow1)" opacity="0.25">
+    <polygon points="400,200 500,260 500,380 400,440 300,380 300,260" fill="none" stroke="url(#accentGrad)" stroke-width="0.8">
+      <animateTransform attributeName="transform" type="rotate" from="0 400 320" to="-360 400 320" dur="50s" repeatCount="indefinite"/>
+    </polygon>
+    <polygon points="400,220 480,270 480,370 400,420 320,370 320,270" fill="none" stroke="url(#accentGrad3)" stroke-width="0.5" stroke-dasharray="3 5">
+      <animateTransform attributeName="transform" type="rotate" from="0 400 320" to="360 400 320" dur="35s" repeatCount="indefinite"/>
+    </polygon>
+  </g>
+
+  <!-- Floating code brackets -->
+  <g font-family="monospace" fill="url(#accentGrad)" opacity="0.12" font-size="28" font-weight="700">
+    <text x="100" y="130">&lt;/&gt;</text>
+    <text x="660" y="460">{ }</text>
+    <text x="80" y="520">&lt;code/&gt;</text>
+    <text x="580" y="120">()</text>
+  </g>
+
+  <!-- Floating tech symbols -->
+  <g opacity="0.08" stroke="url(#accentGrad)" stroke-width="1.5" fill="none">
+    <!-- Terminal icon -->
+    <rect x="90" y="440" width="40" height="30" rx="3"/>
+    <line x1="100" y1="452" x2="120" y2="452"/>
+    <line x1="100" y1="460" x2="115" y2="460"/>
+
+    <!-- Database icon -->
+    <ellipse cx="660" cy="160" rx="20" ry="8"/>
+    <path d="M640 160 v25 a20 8 0 0 0 40 0 v-25"/>
+    <path d="M640 172 a20 8 0 0 0 40 0"/>
+
+    <!-- Cloud icon -->
+    <path d="M580 540 a18 12 0 0 1 0-24 h4 a14 10 0 0 1 26-2 a10 10 0 0 1 0 18 h-30z"/>
+  </g>
+
+  <!-- Small floating particles -->
+  <g fill="#00d4ff" opacity="0.3">
+    <circle cx="150" cy="280" r="1.5">
+      <animate attributeName="cy" values="280;260;280" dur="5s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.3;0.6;0.3" dur="5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="580" cy="400" r="1.5">
+      <animate attributeName="cy" values="400;380;400" dur="7s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.3;0.6;0.3" dur="7s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="350" cy="120" r="1">
+      <animate attributeName="cy" values="120;100;120" dur="4s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="700" cy="300" r="1.2">
+      <animate attributeName="cy" values="300;280;300" dur="6s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="200" cy="500" r="1">
+      <animate attributeName="cy" values="500;480;500" dur="4.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="480" cy="520" r="1.3">
+      <animate attributeName="cy" values="520;500;520" dur="5.5s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- Bottom right terminal window -->
+  <g opacity="0.08">
+    <rect x="580" y="500" width="180" height="120" rx="6" fill="none" stroke="url(#accentGrad)" stroke-width="0.8"/>
+    <line x1="580" y1="512" x2="760" y2="512" stroke="url(#accentGrad)" stroke-width="0.8"/>
+    <circle cx="596" cy="508" r="3" fill="#C89B3C"/>
+    <circle cx="610" cy="508" r="3" fill="#00d4ff"/>
+    <circle cx="624" cy="508" r="3" fill="#2ECC71"/>
+    <text x="590" y="540" font-family="monospace" font-size="9" fill="rgba(200,155,60,0.4)">$ npm run build</text>
+    <text x="590" y="555" font-family="monospace" font-size="9" fill="rgba(0,212,255,0.3)">  compiling...</text>
+    <text x="590" y="570" font-family="monospace" font-size="9" fill="rgba(46,204,113,0.4)">  ✓ built in 2.4s</text>
+    <text x="590" y="590" font-family="monospace" font-size="9" fill="rgba(200,155,60,0.3)">$ _</text>
+  </g>
+</svg>

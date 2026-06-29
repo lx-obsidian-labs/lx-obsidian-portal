@@ -1,0 +1,14 @@
+{
+  "name": "LX Obsidian Labs",
+  "short_name": "LX Obsidian",
+  "description": "Enterprise software, AI, cloud & mobile development. Browse our App Store.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050505",
+  "theme_color": "#050505",
+  "orientation": "any",
+  "icons": [
+    { "src": "/assets/icon-192.svg", "sizes": "192x192", "type": "image/svg+xml" },
+    { "src": "/assets/icon-512.svg", "sizes": "512x512", "type": "image/svg+xml" }
+  ]
+}

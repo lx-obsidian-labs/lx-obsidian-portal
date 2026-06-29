@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://www.lxobsidianportal.co.za/sitemap.xml
+
+# Disallow private or admin areas
+Disallow: /assets/
+Disallow: /css/
+Disallow: /js/
