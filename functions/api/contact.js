@@ -29,9 +29,9 @@ export async function onRequest(context) {
       return new Response(JSON.stringify({ error: 'Invalid email' }), { status: 400, headers });
     }
 
-    if (typeof process !== 'undefined' && process.env && process.env.CONTACT_EMAIL) {
-      var to = process.env.CONTACT_EMAIL;
-      console.log('Contact form submission to:', to);
+    var contactEmail = context.env.CONTACT_EMAIL;
+    if (contactEmail) {
+      console.log('Contact form submission to:', contactEmail);
     }
 
     console.log('Contact submission:', { name, email, subject, messageLength: message.length });

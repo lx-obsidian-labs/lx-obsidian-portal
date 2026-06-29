@@ -6,6 +6,7 @@ lx_portal.db
 dist
 out
 .next
+.wrangler
 __pycache__
 *.pyc
 .DS_Store
