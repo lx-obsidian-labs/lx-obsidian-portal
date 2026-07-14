@@ -37,6 +37,27 @@ export async function onRequest(context) {
       return json({ card: { id, last_four, brand } });
     }
 
+    if (path.match(/^invoices\/[^\/]+$/) && method === 'GET') {
+      const invoiceId = path.split('/')[1];
+      const invoice = await get(context, 'SELECT * FROM invoices WHERE id = ? AND user_id = ?', invoiceId, user.id);
+      if (!invoice) return error('Invoice not found', 404);
+      return json({ invoice });
+    }
+
+    if (path.match(/^cards\/[^\/]+$/) && method === 'DELETE') {
+      const cardId = path.split('/')[1];
+      await run(context, 'DELETE FROM saved_cards WHERE id = ? AND user_id = ?', cardId, user.id);
+      return json({ ok: true });
+    }
+
+    if (path.match(/^coupons\/[^\/]+$/) && method === 'GET') {
+      const code = path.split('/')[1];
+      const coupon = await get(context, "SELECT * FROM coupons WHERE code = ? AND (expires_at IS NULL OR expires_at > datetime('now'))", code);
+      if (!coupon) return error('Invalid or expired coupon', 404);
+      if (coupon.max_uses && coupon.used_count >= coupon.max_uses) return error('Coupon usage limit reached', 400);
+      return json({ coupon });
+    }
+
     if (path === 'subscriptions' && method === 'GET') {
       const result = await all(context, 'SELECT * FROM subscriptions WHERE user_id = ? ORDER BY created_at DESC', user.id);
       return json({ subscriptions: result.results });

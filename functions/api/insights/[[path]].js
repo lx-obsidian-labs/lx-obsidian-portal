@@ -26,6 +26,16 @@ export async function onRequest(context) {
       return json({ revenue, orders, projects, tickets, recentOrders: recentOrders.results, monthlyData: monthlyData.results });
     }
 
+    if (path === 'visitors' && method === 'GET') {
+      const visits = await all(context, "SELECT DATE(created_at) as date, COUNT(*) as count FROM analytics_events WHERE event = 'visit' AND created_at > datetime('now', '-30 days') GROUP BY DATE(created_at) ORDER BY date");
+      return json({ visitors: visits.results });
+    }
+
+    if (path === 'sales' && method === 'GET') {
+      const sales = await all(context, "SELECT DATE(created_at) as date, COUNT(*) as count, COALESCE(SUM(amount), 0) as revenue FROM payments WHERE status = 'completed' AND created_at > datetime('now', '-30 days') GROUP BY DATE(created_at) ORDER BY date");
+      return json({ sales: sales.results });
+    }
+
     return error('Not found', 404);
   } catch (e) {
     return error(e.message, 500);

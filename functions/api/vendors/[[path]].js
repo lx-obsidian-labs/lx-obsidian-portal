@@ -33,6 +33,11 @@ export async function onRequest(context) {
       return json({ ok: true });
     }
 
+    if (path === 'marketplace' && method === 'GET') {
+      const result = await all(context, "SELECT vp.*, u.name as vendor_name FROM vendor_products vp JOIN users u ON vp.vendor_id = u.id WHERE vp.status = ? ORDER BY vp.created_at DESC", 'approved');
+      return json({ products: result.results });
+    }
+
     if (path === 'earnings' && method === 'GET') {
       const total = await get(context, "SELECT COALESCE(SUM(price * commission_rate / 100), 0) as total FROM vendor_products WHERE vendor_id = ? AND status = 'active'", user.id);
       const products = await all(context, "SELECT COUNT(*) as total FROM vendor_products WHERE vendor_id = ? AND status = 'active'", user.id);

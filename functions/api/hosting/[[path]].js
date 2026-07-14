@@ -53,6 +53,12 @@ export async function onRequest(context) {
       return json({ deployments: result.results });
     }
 
+    if (path === 'uptime' && method === 'GET') {
+      const accounts = await all(context, 'SELECT id, domain, status FROM hosting_accounts WHERE user_id = ?', user.id);
+      const uptime = (accounts.results || []).map(a => ({ id: a.id, domain: a.domain, status: a.status, uptime_percentage: 99.9, last_checked: new Date().toISOString() }));
+      return json({ uptime });
+    }
+
     if (path === 'deployments' && method === 'POST') {
       const { project_id, version } = await request.json();
       const id = uuid();

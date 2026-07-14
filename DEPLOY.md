@@ -1,82 +1,118 @@
-# LX Portal Deployment Guide
+# LX Portal — Cloudflare Pages Deployment Guide
+
+## Architecture
+
+```
+Static Assets (.html, .css, .js)
+    └── Served by Cloudflare CDN
+API Routes (functions/api/*.js)
+    └── Cloudflare Pages Functions (Edge Workers)
+Database (D1)
+    └── Cloudflare's serverless SQLite
+```
+
+- **Static files**: HTML, CSS, JS, images → served directly by Cloudflare CDN
+- **API routes**: All `/api/*` endpoints are handled by Pages Functions in `functions/api/`
+- **Database**: Cloudflare D1 (SQLite-compatible), replaces the old `better-sqlite3` SQLite file
 
 ## Prerequisites
-- A VPS (Ubuntu 22.04+ recommended, 1GB RAM minimum)
-- Node.js 18+ installed on the VPS
-- Domain name pointing to your VPS IP
-- PM2 or systemd for process management
 
-## Quick Deploy
+- [Node.js 18+](https://nodejs.org/)
+- [Wrangler CLI](https://developers.cloudflare.com/workers/wrangler/) (installed via `npm install`)
+- [Cloudflare account](https://dash.cloudflare.com/) with Pages & D1 enabled
 
-### 1. Prepare the VPS
+## Setup
+
+### 1. Login to Cloudflare
+
 ```bash
-ssh root@your-vps-ip
-apt update && apt upgrade -y
-apt install -y nginx nodejs npm certbot python3-certbot-nginx
+npx wrangler login
 ```
 
-### 2. Install Node.js 22
+### 2. Create the D1 Database
+
 ```bash
-curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
-apt install -y nodejs
-node -v  # Should show v22.x
+npx wrangler d1 create lx-portal
 ```
 
-### 3. Clone & Setup
+This creates a D1 database and outputs a `database_id`. Copy this ID.
+
+### 3. Configure wrangler.toml
+
+Open `wrangler.toml` and uncomment/update the D1 binding:
+
+```toml
+[[d1_databases]]
+binding = "DB"
+database_name = "lx-portal"
+database_id = "your-database-id-here"  # ← paste the ID from step 2
+```
+
+### 4. Run Database Migrations
+
 ```bash
-git clone https://github.com/YOUR_USER/lx-obsidian-portal.git /opt/lx-portal
-cd /opt/lx-portal
-cp .env.example .env
-nano .env  # Set your NVIDIA_API_KEY and JWT_SECRET
-npm install --production
+# Create all tables
+npx wrangler d1 execute lx-portal --file=migrations/0001_initial.sql
+
+# Seed with sample data
+npx wrangler d1 execute lx-portal --file=migrations/0002_seed.sql
 ```
 
-### 4. Run the Server
+### 5. Set Environment Variables
+
+In the Cloudflare Dashboard → Pages → `lx-obsidian-portal` → **Settings** → **Environment variables** (production):
+
+| Variable | Description |
+|----------|-------------|
+| `NVIDIA_API_KEY` | NVIDIA AI API key for chat (get at https://build.nvidia.com) |
+| `JWT_SECRET` | JWT signing secret (generate: `openssl rand -hex 32`) |
+| `CONTACT_EMAIL` | Email to receive contact form submissions |
+
+## Local Development
+
+### With Wrangler (recommended — uses D1 + Pages Functions)
+
 ```bash
-node server.js
+npm run dev
 ```
 
-### 5. Setup PM2 (recommended for production)
+This starts a local dev server at `http://localhost:8788` with live reload. It uses the Pages Functions and a local D1 simulation.
+
+### With Node.js (legacy Express server)
+
 ```bash
-npm install -g pm2
-pm2 start server.js --name lx-portal
-pm2 save
-pm2 startup
+npm start
 ```
 
-### 6. Nginx Reverse Proxy (for port 80/443)
-```nginx
-server {
-    listen 80;
-    server_name yourdomain.com;
+This runs the old Express server at `http://localhost:3000` with SQLite. Only for local testing; the Express server is not used in production.
 
-    location / {
-        proxy_pass http://localhost:3000;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $host;
-        proxy_cache_bypass $http_upgrade;
-    }
-}
-```
+## Deploy
 
-### 7. SSL with Certbot
+### One-command deploy
+
 ```bash
-certbot --nginx -d yourdomain.com
+npm run deploy
 ```
 
-## Local Dev
+### Full deploy with database setup
+
 ```bash
-node server.js
-# Visit http://localhost:3000
-# Dashboard at http://localhost:3000/dashboard
+bash deploy.sh
 ```
 
-## Environment Variables
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `PORT` | No | Server port (default: 3000) |
-| `NVIDIA_API_KEY` | No | NVIDIA AI API key for chat |
-| `JWT_SECRET` | No | JWT signing secret |
-| `CONTACT_EMAIL` | No | Contact form recipient |
+### Automatic deploys (Git integration)
+
+Connect your GitHub/GitLab repo in Cloudflare Dashboard → Pages → Create a project → Connect your repository. Cloudflare will auto-deploy on every push.
+
+## Important Notes
+
+- **`server.js` and `routes/`**: These are the legacy Express.js backend. The Cloudflare deployment uses Pages Functions (`functions/api/`) instead. Keep `server.js` only for local testing.
+- **`db/`**: Contains the old SQLite database (`better-sqlite3`). Cloudflare uses D1. The schema is replicated in `migrations/0001_initial.sql`.
+- **No build step**: The site is fully static HTML/CSS/JS. No bundler or build tool is needed.
+- **Service Worker (`sw.js`)**: Used for offline caching. Works as-is on Cloudflare Pages.
+
+## Troubleshooting
+
+- **D1 binding errors**: Ensure `wrangler.toml` has the correct `database_id` and the binding name is `DB`.
+- **CORS errors**: The `_middleware.js` file handles CORS for all API routes.
+- **Missing environment variables**: Set them in the Cloudflare Dashboard under Pages → Settings → Environment variables.

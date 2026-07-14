@@ -26,6 +26,12 @@ export async function onRequest(context) {
       return json({ booking: { id, type, title, start_time, end_time, status: 'pending' } });
     }
 
+    if (path.match(/^[^\/]+\/cancel$/) && method === 'PUT') {
+      const bookingId = path.split('/')[0];
+      await run(context, "UPDATE bookings SET status = 'cancelled' WHERE id = ? AND user_id = ?", bookingId, user.id);
+      return json({ ok: true });
+    }
+
     return error('Method not allowed', 405);
   } catch (e) {
     return error(e.message, 500);

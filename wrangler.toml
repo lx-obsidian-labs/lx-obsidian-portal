@@ -1,16 +1,15 @@
 name = "lx-obsidian-portal"
-pages_build_output_dir = "."
+pages_build_output_dir = "dist"
 
-[build]
-command = "npm install"
-output_dir = ""
-
-[env.production]
-vars = { NODE_VERSION = "22" }
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
 
 # D1 Database — create via: npx wrangler d1 create lx-portal
-# Then add the binding in Cloudflare Dashboard → Pages → lx-obsidian-portal → Settings → Functions → D1
+# Then bind the database ID below
 # [[d1_databases]]
 # binding = "DB"
 # database_name = "lx-portal"
-# database_id = ""
+# database_id = "your-database-id-here"
+
+[build]
+command = "node scripts/build.js"

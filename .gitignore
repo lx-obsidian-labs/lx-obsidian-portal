@@ -23,3 +23,5 @@ __pycache__
 test_output.txt
 test_server.js
 server_backup.js
+CLAUDE.md
+.git

@@ -1,72 +1,43 @@
 #!/bin/bash
-# LX Obsidian Portal — VPS Deployment Script
-# Usage: bash deploy.sh <server-ip> <ssh-user>
+# LX Obsidian Portal — Cloudflare Pages Deployment Script
+#
+# Prerequisites:
+#   1. Install wrangler: npm install -g wrangler
+#   2. Login: wrangler login
+#   3. Create D1 database: npx wrangler d1 create lx-portal
+#   4. Update wrangler.toml with your D1 database_id
+#   5. Set environment variables in Cloudflare Dashboard:
+#      - NVIDIA_API_KEY
+#      - JWT_SECRET (generate with: openssl rand -hex 32)
+#      - CONTACT_EMAIL
+#
+# Usage:
+#   bash deploy.sh          # Deploy to Cloudflare Pages
+#   bash deploy.sh --seed   # Deploy + seed D1 database
 
 set -e
 
-APP_DIR="/opt/lx-portal"
-REPO_URL="https://github.com/YOUR_USER/YOUR_REPO.git"
+echo "=== LX Obsidian Portal — Cloudflare Deploy ==="
 
-if [ $# -lt 2 ]; then
-  echo "Usage: bash deploy.sh <server-ip> <ssh-user>"
-  echo "Example: bash deploy.sh 192.168.1.100 root"
-  exit 1
-fi
-
-SERVER_IP=$1
-SSH_USER=$2
-
-echo "=== Building and deploying LX Portal ==="
-
-# Build locally
-echo "--- Installing dependencies ---"
+# Install dependencies
+echo "--- Installing production dependencies ---"
 npm install --production
 
-# Copy to server
-echo "--- Deploying to $SSH_USER@$SERVER_IP ---"
-rsync -avz --delete \
-  --exclude 'node_modules' \
-  --exclude '.git' \
-  --exclude '.env' \
-  --exclude 'lx_portal.db' \
-  --exclude '*.log' \
-  --exclude 'node_modules' \
-  --exclude '__pycache__' \
-  --exclude '*.pyc' \
-  ./ "$SSH_USER@$SERVER_IP:$APP_DIR"
+# Run database migrations
+echo "--- Running D1 migrations ---"
+npx wrangler d1 execute lx-portal --file=migrations/0001_initial.sql
 
-# Install deps & restart on server
-ssh "$SSH_USER@$SERVER_IP" bash << EOF
-  cd $APP_DIR
-  npm install --production
-  
-  # Setup systemd service if not exists
-  if [ ! -f /etc/systemd/system/lx-portal.service ]; then
-    cat > /tmp/lx-portal.service << 'SERVICEEOF'
-[Unit]
-Description=LX Obsidian Portal
-After=network.target
+# Seed database if flag is set
+if [ "$1" = "--seed" ]; then
+  echo "--- Seeding D1 database ---"
+  npx wrangler d1 execute lx-portal --file=migrations/0002_seed.sql
+fi
 
-[Service]
-Type=simple
-User=root
-WorkingDirectory=$APP_DIR
-ExecStart=/usr/bin/node $APP_DIR/server.js
-Restart=always
-RestartSec=10
-Environment=NODE_ENV=production
+# Deploy to Cloudflare Pages
+echo "--- Deploying to Cloudflare Pages ---"
+npx wrangler pages deploy . --project-name lx-obsidian-portal
 
-[Install]
-WantedBy=multi-user.target
-SERVICEEOF
-    mv /tmp/lx-portal.service /etc/systemd/system/
-    systemctl daemon-reload
-    systemctl enable lx-portal
-  fi
-  
-  # Restart
-  systemctl restart lx-portal
-  echo "=== Deployment complete! ==="
-  echo "Server running at http://$SERVER_IP:3000"
-  echo "Dashboard at http://$SERVER_IP:3000/dashboard"
-EOF
+echo "=== Deployment complete! ==="
+echo "Visit your site at https://lx-obsidian-portal.pages.dev"
+echo ""
+echo "To set a custom domain, go to Cloudflare Dashboard > Pages > lx-obsidian-portal > Custom domains"
