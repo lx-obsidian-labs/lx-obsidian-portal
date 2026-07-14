@@ -1,0 +1,187 @@
+/* ============================================================
+   LX Obsidian Labs — Modern Refresh (scoped to html.theme-refresh)
+   Applied only to key pages (Home, Marketplace, Synapse, Services).
+   Keeps dark theme; introduces a violet→cyan accent, glass surfaces,
+   soft depth, and gradient typography. Purely additive — other pages
+   are untouched because the overrides are scoped under .theme-refresh.
+   ============================================================ */
+
+html.theme-refresh {
+  --color-accent: #8B5CF6;
+  --color-accent-light: #C4B5FD;
+  --color-accent-dark: #6D28D9;
+  --color-accent-glow: rgba(139, 92, 246, 0.16);
+  --color-accent-glow-strong: rgba(139, 92, 246, 0.26);
+  --color-cyan: #22D3EE;
+  --color-cyan-light: #A5F3FC;
+  --color-cyan-dark: #06B6D4;
+  --color-cyan-glow: rgba(34, 211, 238, 0.14);
+  --color-border-accent: rgba(139, 92, 246, 0.30);
+  --color-border-cyan: rgba(34, 211, 238, 0.22);
+  --gradient-accent: linear-gradient(135deg, #8B5CF6 0%, #6366F1 52%, #22D3EE 100%);
+  --gradient-accent-reverse: linear-gradient(135deg, #22D3EE 0%, #6366F1 52%, #8B5CF6 100%);
+  --gradient-hero:
+    radial-gradient(70% 55% at 78% 0%, rgba(139, 92, 246, 0.20), transparent 60%),
+    radial-gradient(55% 50% at 8% 12%, rgba(34, 211, 238, 0.13), transparent 60%),
+    linear-gradient(180deg, #06060f 0%, #0a0a18 50%, #06060f 100%);
+  --shadow-accent: 0 0 30px rgba(139, 92, 246, 0.18);
+  --shadow-accent-strong: 0 0 52px rgba(139, 92, 246, 0.28);
+  --shadow-cyan: 0 0 30px rgba(34, 211, 238, 0.12);
+  --glass-bg: rgba(20, 20, 42, 0.55);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+}
+
+/* Decorative, fixed background glow layer (non-interactive) */
+html.theme-refresh body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(40% 35% at 85% 5%, rgba(139, 92, 246, 0.12), transparent 70%),
+    radial-gradient(35% 30% at 5% 25%, rgba(34, 211, 238, 0.08), transparent 70%);
+}
+html.theme-refresh body { position: relative; }
+
+/* Keep real content above the glow layer */
+html.theme-refresh .nav,
+html.theme-refresh .announcement,
+html.theme-refresh main,
+html.theme-refresh .section,
+html.theme-refresh .footer,
+html.theme-refresh .floating-buttons,
+html.theme-refresh .search-overlay,
+html.theme-refresh .cta-section,
+html.theme-refresh .syn-hero { position: relative; z-index: 1; }
+
+/* Gradient text utility */
+html.theme-refresh .gradient-text {
+  background: var(--gradient-accent);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* ---------------- Buttons ---------------- */
+html.theme-refresh .btn--primary {
+  background: var(--gradient-accent);
+  background-size: 160% 160%;
+  color: #fff;
+  border: none;
+  box-shadow: var(--shadow-accent);
+  transition: transform var(--transition-base), box-shadow var(--transition-base),
+    background-position var(--transition-slow), filter var(--transition-base);
+}
+html.theme-refresh .btn--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-accent-strong);
+  background-position: 100% 0;
+  filter: brightness(1.05);
+}
+html.theme-refresh .btn--ghost {
+  border-color: var(--glass-border);
+  color: var(--color-text-secondary);
+}
+html.theme-refresh .btn--ghost:hover {
+  border-color: var(--color-border-accent);
+  color: #fff;
+}
+
+/* ---------------- Section labels ---------------- */
+html.theme-refresh .section__label {
+  color: var(--color-accent-light);
+  background: rgba(139, 92, 246, 0.10);
+  border-color: var(--color-border-accent);
+}
+
+/* ---------------- Cards (glassmorphism) ---------------- */
+html.theme-refresh .card,
+html.theme-refresh .syn-card,
+html.theme-refresh .faq-card {
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: var(--radius-lg);
+}
+html.theme-refresh .card:hover,
+html.theme-refresh .syn-card:hover {
+  border-color: var(--color-border-accent);
+  box-shadow: var(--glass-shadow), var(--shadow-accent);
+  transform: translateY(-4px);
+}
+html.theme-refresh .card__title { color: #fff; }
+html.theme-refresh .card--border-glow {
+  border-color: var(--color-border-accent);
+  box-shadow: var(--glass-shadow), var(--shadow-accent);
+}
+
+/* ---------------- CTA glass panel ---------------- */
+html.theme-refresh .cta-content {
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--glass-shadow);
+  overflow: hidden;
+}
+
+/* ---------------- Hero ---------------- */
+html.theme-refresh .hero { background: var(--gradient-hero); overflow: hidden; }
+html.theme-refresh .hero__title { color: #fff; }
+html.theme-refresh .hero__title .gradient-text,
+html.theme-refresh .hero__title span { color: transparent; }
+html.theme-refresh .hero__gradient { opacity: 0.9; mix-blend-mode: screen; }
+html.theme-refresh .hero__badge {
+  background: rgba(139, 92, 246, 0.12);
+  border-color: var(--color-border-accent);
+  color: var(--color-accent-light);
+}
+
+/* ---------------- Synapse hero (already custom) ---------------- */
+html.theme-refresh .syn-hero { background: var(--gradient-hero); }
+html.theme-refresh .syn-hero__title span { color: var(--color-accent-light); }
+html.theme-refresh .syn-download {
+  background: var(--gradient-accent);
+  background-size: 160% 160%;
+  border: none;
+  box-shadow: var(--shadow-accent);
+  transition: transform var(--transition-base), box-shadow var(--transition-base),
+    background-position var(--transition-slow);
+}
+html.theme-refresh .syn-download:hover { background-position: 100% 0; box-shadow: var(--shadow-accent-strong); }
+html.theme-refresh .syn-download__icon,
+html.theme-refresh .syn-download__meta { color: #fff; }
+html.theme-refresh .syn-card__icon {
+  background: rgba(139, 92, 246, 0.14);
+  color: var(--color-accent-light);
+}
+html.theme-refresh .syn-step__num {
+  background: var(--gradient-accent);
+}
+
+/* ---------------- Service blocks ---------------- */
+html.theme-refresh .service-block__icon {
+  background: rgba(139, 92, 246, 0.14);
+  color: var(--color-accent-light);
+}
+
+/* ---------------- Marketplace grid container ---------------- */
+html.theme-refresh .app-store-header { position: relative; }
+html.theme-refresh .app-filter { border-color: var(--glass-border); }
+html.theme-refresh .app-filter--active {
+  background: var(--gradient-accent);
+  border-color: transparent;
+  color: #fff;
+}
+
+/* ---------------- Footer accents ---------------- */
+html.theme-refresh .footer__link:hover { color: var(--color-accent-light); }
+html.theme-refresh .footer__social-link:hover { color: var(--color-accent-light); }
