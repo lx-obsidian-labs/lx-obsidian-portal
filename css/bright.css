@@ -1429,9 +1429,10 @@ body::after {
 @media (max-width: 768px) {
   .app-store-grid { grid-template-columns: 1fr; }
   .mkt-controls { flex-direction: column; align-items: stretch; }
+  .mkt-controls__left, .mkt-controls__right { max-width: 100%; min-width: 0; }
   .mkt-controls__right { justify-content: space-between; }
-  .app-filters { overflow-x: auto; flex-wrap: nowrap; padding-bottom: 0.5rem; }
-  .mkt-platform-filter { overflow-x: auto; flex-wrap: nowrap; }
+  .app-filters { overflow-x: auto; flex-wrap: nowrap; padding-bottom: 0.5rem; max-width: 100%; min-width: 0; -webkit-overflow-scrolling: touch; }
+  .mkt-platform-filter { overflow-x: auto; flex-wrap: nowrap; max-width: 100%; min-width: 0; -webkit-overflow-scrolling: touch; }
   .mkt-compare-tray__inner { flex-direction: column; }
   .mkt-compare__modal { width: 100%; }
   .mkt-compare__grid { grid-template-columns: 1fr !important; }

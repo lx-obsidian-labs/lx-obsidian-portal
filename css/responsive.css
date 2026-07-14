@@ -434,4 +434,6 @@ code {
   overflow-x: auto;
   white-space: pre-wrap;
   word-wrap: break-word;
+  overflow-wrap: anywhere;
+  max-width: 100%;
 }
