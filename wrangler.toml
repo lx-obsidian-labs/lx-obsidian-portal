@@ -10,6 +10,3 @@ compatibility_flags = ["nodejs_compat"]
 # binding = "DB"
 # database_name = "lx-portal"
 # database_id = "your-database-id-here"
-
-[build]
-command = "node scripts/build.js"
