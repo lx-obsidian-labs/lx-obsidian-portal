@@ -11,17 +11,6 @@
 /contact        /contact.html   200
 /faq            /faq.html       200
 
-# Legacy .html URLs: redirect to clean URLs
-/services.html  /services       301
-/marketplace.html /marketplace  301
-/portfolio.html /portfolio      301
-/about.html     /about          301
-/blog.html      /blog           301
-/synapse.html   /synapse        301
-/pricing.html   /contact        301
-/contact.html   /contact        301
-/faq.html       /faq            301
-
 # Legacy path support
 /shop           /marketplace    301
 /apps           /marketplace    301
@@ -36,5 +25,5 @@
 # Custom 404
 /404            /404.html       200
 
-# Dashboard SPA fallback — all /dashboard/* paths serve dashboard/index.html
+# Dashboard SPA fallback
 /dashboard/*  /dashboard/index.html  200
