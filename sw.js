@@ -38,7 +38,6 @@ self.addEventListener('activate', function (e) {
 
 self.addEventListener('fetch', function (e) {
   if (e.request.method !== 'GET') return;
-  if (e.request.url.includes('pagead') || e.request.url.includes('googlesyndication')) return;
 
   e.respondWith(
     caches.match(e.request).then(function (cached) {

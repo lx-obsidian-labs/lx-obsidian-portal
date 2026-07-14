@@ -2,9 +2,9 @@ void (function () {
   'use strict';
 
   /* ==========================================
-     LX OBSIDIAN APP STORE — Advanced Edition
-     Sorting · Filtering · Compare · Recently Viewed
-     Share · Changelog · View Toggle · Search
+     LX OBSIDIAN APP STORE — Professional Edition
+     Categories · Platforms · Sorting · Filtering
+     Compare · Recently Viewed · Tabbed Modal
      ========================================== */
 
   var APP_DATA = [
@@ -12,6 +12,7 @@ void (function () {
       id: 'optiscan', name: 'OptiScan', tagline: 'AI-powered diagnostic scanning',
       desc: 'Advanced AI diagnostic engine that scans codebases, networks, and systems for vulnerabilities, performance bottlenecks, and optimization opportunities. Features real-time reporting and automated fix suggestions.',
       category: 'developer-tools', categoryLabel: 'Developer Tools',
+      platform: 'desktop', platformLabel: 'Desktop',
       price: 29.99, rating: 4.8, reviews: 342, downloads: 12850,
       version: '2.4.1', size: '24 MB', color: 'blue', icon: 'settings',
       features: ['AI vulnerability scanning', 'Real-time performance monitoring', 'Automated fix suggestions', 'CI/CD integration', 'Multi-language support', 'Export reports (PDF/JSON/HTML)'],
@@ -24,6 +25,7 @@ void (function () {
       id: 'college-manager', name: 'College Manager', tagline: 'Comprehensive campus management',
       desc: 'All-in-one campus management platform with student admissions, course scheduling, grade tracking, attendance monitoring, and communication tools.',
       category: 'business', categoryLabel: 'Business',
+      platform: 'cloud', platformLabel: 'Cloud / SaaS',
       price: 39.99, rating: 4.6, reviews: 218, downloads: 8720,
       version: '3.1.0', size: '42 MB', color: 'green', icon: 'monitor',
       features: ['Student admission portal', 'Course & timetable scheduling', 'Grade & transcript management', 'Attendance tracking', 'Parent communication portal', 'LMS integration (Moodle, Canvas)'],
@@ -36,6 +38,7 @@ void (function () {
       id: 'bookme-rivet', name: 'BookMe Rivet', tagline: 'Seamless appointment platform',
       desc: 'Modern appointment booking and scheduling platform with calendar sync, automated reminders, payment processing, and resource management.',
       category: 'business', categoryLabel: 'Business',
+      platform: 'cloud', platformLabel: 'Cloud / SaaS',
       price: 24.99, rating: 4.7, reviews: 189, downloads: 15430,
       version: '1.9.3', size: '18 MB', color: 'amber', icon: 'calendar',
       features: ['Online booking widget', 'Google/Outlook calendar sync', 'SMS & email reminders', 'Stripe payment integration', 'Staff resource management', 'Analytics dashboard'],
@@ -48,6 +51,7 @@ void (function () {
       id: 'inventory-pro', name: 'Inventory Pro', tagline: 'Real-time inventory tracking',
       desc: 'Enterprise inventory management system with barcode scanning, stock forecasting, multi-warehouse support, and purchase order management.',
       category: 'business', categoryLabel: 'Business',
+      platform: 'desktop', platformLabel: 'Desktop',
       price: 49.99, rating: 4.5, reviews: 156, downloads: 6540,
       version: '2.2.0', size: '36 MB', color: 'purple', icon: 'star',
       features: ['Barcode & QR scanning', 'Stock forecasting (AI)', 'Multi-warehouse support', 'Purchase order management', 'Supplier portal', 'Real-time sync'],
@@ -60,8 +64,9 @@ void (function () {
       id: 'crm-mobile', name: 'CRM Mobile', tagline: 'On-the-go relationship management',
       desc: 'Mobile-first CRM platform with contact management, deal tracking, pipeline visualization, and team collaboration. Works offline with auto-sync.',
       category: 'mobile', categoryLabel: 'Mobile',
+      platform: 'mobile', platformLabel: 'Mobile',
       price: 34.99, rating: 4.9, reviews: 423, downloads: 22100,
-      version: '4.0.1', size: '15 MB', color: 'teal', icon: 'lock',
+      version: '4.0.1', size: '15 MB', color: 'teal', icon: 'smartphone',
       features: ['Contact & lead management', 'Deal pipeline tracking', 'Offline mode with auto-sync', 'Email & calendar integration', 'Team collaboration', 'Custom report builder'],
       requirements: ['iOS 15+ or Android 12+', '2 GB RAM', '200 MB disk space', 'Cloud account required'],
       changelog: ['v4.0.1 — Fixed offline sync conflict resolution', 'v4.0.0 — New pipeline visualization', 'v3.9.0 — Added WhatsApp integration'],
@@ -72,6 +77,7 @@ void (function () {
       id: 'pulse-monitor', name: 'Pulse Monitor', tagline: 'System health monitoring',
       desc: 'Real-time infrastructure monitoring for servers, containers, databases, and applications. Custom alerts, dashboards, and incident response automation.',
       category: 'developer-tools', categoryLabel: 'Developer Tools',
+      platform: 'server', platformLabel: 'Server',
       price: 0, rating: 4.4, reviews: 97, downloads: 18900,
       version: '1.6.2', size: '12 MB', color: 'red', icon: 'message',
       features: ['Server & container monitoring', 'Custom alert thresholds', 'Dashboard builder', 'Incident response automation', 'Multi-cloud support', 'Team notifications (Slack, Email, PagerDuty)'],
@@ -83,7 +89,8 @@ void (function () {
     {
       id: 'datavault', name: 'DataVault', tagline: 'Secure data storage & backup',
       desc: 'Enterprise backup and disaster recovery solution with AES-256 encryption, incremental backups, cloud replication, and one-click restore.',
-      category: 'business', categoryLabel: 'Business',
+      category: 'security', categoryLabel: 'Security',
+      platform: 'cloud', platformLabel: 'Cloud / SaaS',
       price: 59.99, rating: 4.8, reviews: 276, downloads: 9930,
       version: '3.3.0', size: '28 MB', color: 'indigo', icon: 'cloud',
       features: ['AES-256 encryption at rest & transit', 'Incremental & differential backups', 'Multi-cloud replication (AWS/Azure/GCP)', 'One-click disaster recovery', 'SOC 2 & GDPR compliant', 'Audit logging'],
@@ -96,6 +103,7 @@ void (function () {
       id: 'flowforge', name: 'FlowForge', tagline: 'Visual workflow automation',
       desc: 'Drag-and-drop workflow automation builder with 200+ integrations. Automate complex business processes without writing code.',
       category: 'developer-tools', categoryLabel: 'Developer Tools',
+      platform: 'cloud', platformLabel: 'Cloud / SaaS',
       price: 44.99, rating: 4.6, reviews: 198, downloads: 11200,
       version: '2.0.4', size: '34 MB', color: 'blue', icon: 'settings',
       features: ['Visual drag-and-drop builder', '200+ pre-built integrations', 'Conditional logic & branching', 'Approval workflow engine', 'Scheduled triggers & webhooks', 'Execution logs & debugging'],
@@ -108,6 +116,7 @@ void (function () {
       id: 'cloudsync', name: 'CloudSync', tagline: 'Multi-cloud file sync',
       desc: 'Enterprise file synchronization across AWS S3, Google Cloud Storage, Azure Blob, and on-premise storage. Real-time syncing with conflict resolution.',
       category: 'developer-tools', categoryLabel: 'Developer Tools',
+      platform: 'cloud', platformLabel: 'Cloud / SaaS',
       price: 29.99, rating: 4.7, reviews: 145, downloads: 7800,
       version: '1.8.0', size: '16 MB', color: 'green', icon: 'monitor',
       features: ['Multi-cloud sync (AWS/GCP/Azure)', 'Real-time file watching', 'Conflict resolution', 'Version history (90 days)', 'Bandwidth throttling', 'End-to-end encryption'],
@@ -120,6 +129,7 @@ void (function () {
       id: 'teamboard', name: 'TeamBoard', tagline: 'Collaborative project management',
       desc: 'Visual project management with Kanban boards, Gantt charts, time tracking, and resource allocation. Built for agile teams.',
       category: 'business', categoryLabel: 'Business',
+      platform: 'web', platformLabel: 'Web',
       price: 24.99, rating: 4.5, reviews: 312, downloads: 19600,
       version: '2.1.3', size: '20 MB', color: 'amber', icon: 'calendar',
       features: ['Kanban & Scrum boards', 'Gantt chart timeline', 'Time tracking & reporting', 'Resource allocation', 'Real-time collaboration', 'Jira & GitHub integration'],
@@ -131,9 +141,10 @@ void (function () {
     {
       id: 'analytics-pro', name: 'Analytics Pro', tagline: 'Advanced BI dashboard',
       desc: 'Business intelligence platform with drag-and-drop dashboard builder, SQL query editor, custom visualizations, and automated report scheduling.',
-      category: 'developer-tools', categoryLabel: 'Developer Tools',
+      category: 'data', categoryLabel: 'Data & Analytics',
+      platform: 'cloud', platformLabel: 'Cloud / SaaS',
       price: 79.99, rating: 4.9, reviews: 167, downloads: 5430,
-      version: '5.0.2', size: '45 MB', color: 'purple', icon: 'star',
+      version: '5.0.2', size: '45 MB', color: 'purple', icon: 'chart',
       features: ['Drag-and-drop dashboard builder', 'SQL query editor', 'Custom visualization library', 'Automated report scheduling', 'Data source connectors (50+)', 'Role-based access control'],
       requirements: ['Linux (Ubuntu 22+, RHEL 9+)', '8 GB RAM, 4 CPU cores', '2 GB disk space', 'PostgreSQL 14+ or MySQL 8+'],
       changelog: ['v5.0.2 — Bug fix for BigQuery connector', 'v5.0.0 — New AI-powered insights engine', 'v4.9.0 — Added Snowflake connector'],
@@ -143,7 +154,8 @@ void (function () {
     {
       id: 'securegate', name: 'SecureGate', tagline: 'Enterprise access control',
       desc: 'Zero-trust access control platform with SSO, MFA, role-based policies, and real-time threat detection.',
-      category: 'business', categoryLabel: 'Business',
+      category: 'security', categoryLabel: 'Security',
+      platform: 'server', platformLabel: 'Server',
       price: 69.99, rating: 4.6, reviews: 134, downloads: 6890,
       version: '1.3.1', size: '22 MB', color: 'teal', icon: 'lock',
       features: ['Single Sign-On (SAML/OIDC)', 'Multi-factor authentication', 'Role-based access control', 'Real-time threat detection', 'Access audit trails', 'Zero-trust architecture'],
@@ -155,9 +167,10 @@ void (function () {
     {
       id: 'synapse-ai', name: 'Synapse AI', tagline: 'AI browser automation extension',
       desc: 'An AI-powered Chrome / Edge / Brave extension that turns any web page into an autonomous, controllable workspace. Observe, plan, execute, verify — no API key required.',
-      category: 'ai', categoryLabel: 'AI',
+      category: 'ai', categoryLabel: 'AI & Automation',
+      platform: 'browser', platformLabel: 'Browser Extension',
       price: 0, rating: 5.0, reviews: 128, downloads: 5400,
-      version: '1.1.1', size: '115 KB', color: 'purple', icon: 'message',
+      version: '1.1.1', size: '115 KB', color: 'purple', icon: 'brain',
       isExtension: true, githubUrl: 'https://github.com/lx-obsidian-labs/synapse-social',
       features: ['Autonomous web automation', 'AI content generation in your brand voice', 'Vision fallback via page screenshots', 'Self-learning memory & model rotation', 'No API key required', 'Playbooks for ChatGPT, Gmail, YouTube & more'],
       requirements: ['Google Chrome, Edge, or Brave (v100+)', 'Developer mode enabled', 'Unzip downloaded folder', 'No API key needed'],
@@ -169,19 +182,28 @@ void (function () {
   ];
 
   var CATEGORIES = [
-    { id: 'all', label: 'All Apps', count: 0 },
-    { id: 'developer-tools', label: 'Developer Tools', count: 0 },
-    { id: 'ai', label: 'AI', count: 0 },
-    { id: 'business', label: 'Business', count: 0 },
-    { id: 'mobile', label: 'Mobile', count: 0 }
+    { id: 'all', label: 'All Apps', icon: 'grid' },
+    { id: 'business', label: 'Business', icon: 'briefcase' },
+    { id: 'developer-tools', label: 'Developer Tools', icon: 'code' },
+    { id: 'ai', label: 'AI & Automation', icon: 'brain' },
+    { id: 'mobile', label: 'Mobile', icon: 'smartphone' },
+    { id: 'security', label: 'Security', icon: 'shield' },
+    { id: 'data', label: 'Data & Analytics', icon: 'chart' }
   ];
 
-  CATEGORIES.forEach(function (cat) {
-    cat.count = cat.id === 'all' ? APP_DATA.length : APP_DATA.filter(function (a) { return a.category === cat.id; }).length;
-  });
+  var PLATFORMS = [
+    { id: 'all', label: 'All Platforms' },
+    { id: 'desktop', label: 'Desktop' },
+    { id: 'web', label: 'Web' },
+    { id: 'mobile', label: 'Mobile' },
+    { id: 'browser', label: 'Browser' },
+    { id: 'cloud', label: 'Cloud / SaaS' },
+    { id: 'server', label: 'Server' }
+  ];
 
   var state = {
     filter: 'all',
+    platformFilter: 'all',
     sort: 'popular',
     priceFilter: 'all',
     view: 'grid',
@@ -209,6 +231,7 @@ void (function () {
   function filterApps() {
     var apps = APP_DATA;
     if (state.filter !== 'all') apps = apps.filter(function (a) { return a.category === state.filter; });
+    if (state.platformFilter !== 'all') apps = apps.filter(function (a) { return a.platform === state.platformFilter; });
     if (state.priceFilter === 'free') apps = apps.filter(function (a) { return a.price === 0; });
     else if (state.priceFilter === 'paid') apps = apps.filter(function (a) { return a.price > 0; });
     if (state.search) {
@@ -217,6 +240,7 @@ void (function () {
         return a.name.toLowerCase().indexOf(q) > -1 ||
           a.tagline.toLowerCase().indexOf(q) > -1 ||
           a.categoryLabel.toLowerCase().indexOf(q) > -1 ||
+          a.platformLabel.toLowerCase().indexOf(q) > -1 ||
           (a.tags && a.tags.join(' ').toLowerCase().indexOf(q) > -1);
       });
     }
@@ -250,14 +274,11 @@ void (function () {
     var html = '';
     apps.forEach(function (app, i) {
       var isFree = app.price === 0;
-      var priceLabel = isFree ? 'Free' : '$' + app.price.toFixed(2);
-      var delay = (i % 4) + 1;
       var isComparing = state.compare.indexOf(app.id) > -1;
-
       if (isListView) {
-        html += renderListCard(app, isFree, priceLabel, isComparing);
+        html += renderListCard(app, isFree, isComparing);
       } else {
-        html += renderGridCard(app, isFree, priceLabel, delay, isComparing);
+        html += renderGridCard(app, isFree, i, isComparing);
       }
     });
 
@@ -265,68 +286,67 @@ void (function () {
     bindCardEvents(grid);
   }
 
-  function renderGridCard(app, isFree, priceLabel, delay, isComparing) {
-    var freeBadge = isFree ? '<span class="app-card__badge app-card__badge--free">Free</span>' : '';
-    var premiumBadge = !isFree ? '<span class="app-card__badge app-card__badge--premium">Premium</span>' : '';
-    var compareCheck = isComparing ? ' app-card--compare' : '';
+  function renderGridCard(app, isFree, index, isComparing) {
+    var delay = (index % 4) + 1;
+    var badgeClass = isFree ? 'app-card__badge--free' : 'app-card__badge--premium';
+    var badgeText = isFree ? 'Free' : 'Premium';
+    var compareClass = isComparing ? ' app-card--compare' : '';
 
-    return '<div class="app-card reveal reveal--delay-' + delay + compareCheck + '" data-app-id="' + app.id + '">' +
-      '<div class="app-card__header">' +
-        '<div class="app-card__icon" data-color="' + app.color + '">' +
-          '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">' + iconSVG(app.icon) + '</svg>' +
+    return '<div class="app-card reveal reveal--delay-' + delay + compareClass + '" data-app-id="' + app.id + '" data-platform="' + app.platform + '">' +
+      '<div class="app-card__visual" data-color="' + app.color + '">' +
+        '<div class="app-card__icon-wrap">' +
+          '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">' + iconSVG(app.icon) + '</svg>' +
         '</div>' +
-        '<div class="app-card__badges">' + freeBadge + premiumBadge + '</div>' +
-        '<button class="app-card__compare-toggle" data-compare="' + app.id + '" title="Add to compare" aria-label="Compare ' + app.name + '">' +
+        '<span class="app-card__badge ' + badgeClass + '">' + badgeText + '</span>' +
+        '<button class="app-card__compare" data-compare="' + app.id + '" title="Add to compare" aria-label="Compare ' + app.name + '">' +
           '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>' +
         '</button>' +
       '</div>' +
-      '<div class="app-card__body">' +
+      '<div class="app-card__content">' +
         '<h3 class="app-card__title">' + app.name + '</h3>' +
         '<p class="app-card__tagline">' + app.tagline + '</p>' +
-        '<div class="app-card__meta">' +
+        '<div class="app-card__stats">' +
           '<span class="app-card__rating">&#9733; ' + app.rating + '</span>' +
+          '<span class="app-card__divider">&middot;</span>' +
           '<span class="app-card__reviews">' + formatNumber(app.reviews) + ' reviews</span>' +
+          '<span class="app-card__divider">&middot;</span>' +
           '<span class="app-card__downloads">' + formatNumber(app.downloads) + ' downloads</span>' +
         '</div>' +
-        '<div class="app-card__cats">' +
-          '<span class="app-card__cat">' + app.categoryLabel + '</span>' +
+        '<div class="app-card__meta">' +
+          '<span class="app-card__category">' + app.categoryLabel + '</span>' +
+          '<span class="app-card__platform">' + app.platformLabel + '</span>' +
           '<span class="app-card__version">v' + app.version + '</span>' +
-          (app.size ? '<span class="app-card__size">' + app.size + '</span>' : '') +
-        '</div>' +
-        '<div class="app-card__tags">' +
-          (app.tags || []).slice(0, 3).map(function (t) { return '<span class="app-card__tag">' + t + '</span>'; }).join('') +
         '</div>' +
       '</div>' +
-      '<div class="app-card__footer">' +
+      '<div class="app-card__actions">' +
         '<button class="btn btn--primary btn--full app-card__btn" data-app="' + app.id + '" data-action="details">View Details</button>' +
-        (isFree
-          ? '<button class="btn btn--secondary btn--full app-card__btn" data-app="' + app.id + '" data-action="download">' + (app.isExtension ? 'Download Extension' : 'Download Free') + '</button>'
-          : '<button class="btn btn--secondary btn--full app-card__btn" data-app="' + app.id + '" data-action="details">$' + app.price.toFixed(2) + ' — Buy Now</button>'
-        ) +
+        '<button class="btn btn--ghost btn--full app-card__btn" data-app="' + app.id + '" data-action="download">' + (isFree ? (app.isExtension ? 'Get Extension' : 'Download Free') : 'Download') + '</button>' +
       '</div>' +
     '</div>';
   }
 
-  function renderListCard(app, isFree, priceLabel, isComparing) {
-    var compareCheck = isComparing ? ' app-card--compare' : '';
-    return '<div class="app-card app-card--list' + compareCheck + '" data-app-id="' + app.id + '">' +
-      '<div class="app-card__list-left">' +
-        '<div class="app-card__icon" data-color="' + app.color + '">' +
-          '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">' + iconSVG(app.icon) + '</svg>' +
+  function renderListCard(app, isFree, isComparing) {
+    var compareClass = isComparing ? ' app-card--compare' : '';
+    return '<div class="app-card app-card--list' + compareClass + '" data-app-id="' + app.id + '" data-platform="' + app.platform + '">' +
+      '<div class="app-card__visual" data-color="' + app.color + '">' +
+        '<div class="app-card__icon-wrap">' +
+          '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">' + iconSVG(app.icon) + '</svg>' +
         '</div>' +
-        '<div class="app-card__list-info">' +
-          '<h3 class="app-card__title">' + app.name + '</h3>' +
-          '<p class="app-card__tagline">' + app.tagline + '</p>' +
-          '<div class="app-card__cats"><span class="app-card__cat">' + app.categoryLabel + '</span><span class="app-card__version">v' + app.version + '</span></div>' +
+        '<span class="app-card__badge ' + (isFree ? 'app-card__badge--free' : 'app-card__badge--premium') + '">' + (isFree ? 'Free' : '$' + app.price.toFixed(2)) + '</span>' +
+      '</div>' +
+      '<div class="app-card__content">' +
+        '<h3 class="app-card__title">' + app.name + '</h3>' +
+        '<p class="app-card__tagline">' + app.tagline + '</p>' +
+        '<div class="app-card__meta">' +
+          '<span class="app-card__category">' + app.categoryLabel + '</span>' +
+          '<span class="app-card__platform">' + app.platformLabel + '</span>' +
+          '<span class="app-card__version">v' + app.version + '</span>' +
         '</div>' +
       '</div>' +
-      '<div class="app-card__list-right">' +
-        '<div class="app-card__meta"><span class="app-card__rating">&#9733; ' + app.rating + '</span><span class="app-card__downloads">' + formatNumber(app.downloads) + '</span></div>' +
-        '<span class="app-card__price-label">' + (isFree ? 'Free' : '$' + app.price.toFixed(2)) + '</span>' +
-        '<div class="app-card__list-actions">' +
-          '<button class="btn btn--primary btn--small app-card__btn" data-app="' + app.id + '" data-action="details">Details</button>' +
-          '<button class="app-card__compare-toggle" data-compare="' + app.id + '" title="Compare"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg></button>' +
-        '</div>' +
+      '<div class="app-card__actions">' +
+        '<span class="app-card__stats"><span class="app-card__rating">&#9733; ' + app.rating + '</span> <span class="app-card__divider">&middot;</span> <span class="app-card__downloads">' + formatNumber(app.downloads) + '</span></span>' +
+        '<button class="btn btn--primary btn--small app-card__btn" data-app="' + app.id + '" data-action="details">Details</button>' +
+        '<button class="app-card__compare" data-compare="' + app.id + '" title="Compare"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg></button>' +
       '</div>' +
     '</div>';
   }
@@ -346,7 +366,7 @@ void (function () {
     });
   }
 
-  /* ---------- APP DETAIL MODAL ---------- */
+  /* ---------- APP DETAIL MODAL (TABBED) ---------- */
 
   function openAppModal(id) {
     var app = APP_DATA.find(function (a) { return a.id === id; });
@@ -367,8 +387,8 @@ void (function () {
     var reqHtml = app.requirements.map(function (r) { return '<li class="app-modal__req">' + r + '</li>'; }).join('');
 
     var changelogHtml = (app.changelog || []).map(function (c) {
-      var parts = c.split(' — ');
-      return '<li class="app-modal__changelog-item"><strong>' + parts[0] + '</strong>' + (parts[1] ? ' — ' + parts[1] : '') + '</li>';
+      var parts = c.split(' \u2014 ');
+      return '<li class="app-modal__changelog-item"><strong>' + parts[0] + '</strong>' + (parts[1] ? ' \u2014 ' + parts[1] : '') + '</li>';
     }).join('');
 
     var tagsHtml = (app.tags || []).map(function (t) {
@@ -377,9 +397,9 @@ void (function () {
 
     var related = APP_DATA.filter(function (a) { return a.id !== app.id && a.category === app.category; }).slice(0, 3);
     var relatedHtml = related.map(function (r) {
-      return '<div class="app-modal__related-card" data-app="' + r.id + '" style="cursor:pointer;">' +
-        '<div class="app-card__icon" data-color="' + r.color + '" style="width:36px;height:36px;">' +
-          '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">' + iconSVG(r.icon) + '</svg>' +
+      return '<div class="app-modal__related-card" data-app="' + r.id + '">' +
+        '<div class="app-card__icon-wrap" data-color="' + r.color + '" style="width:40px;height:40px;flex-shrink:0;">' +
+          '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">' + iconSVG(r.icon) + '</svg>' +
         '</div>' +
         '<div><strong>' + r.name + '</strong><span>&#9733; ' + r.rating + '</span></div>' +
       '</div>';
@@ -388,68 +408,91 @@ void (function () {
     var shareUrl = encodeURIComponent(window.location.origin + '/marketplace.html?app=' + app.id);
     var shareText = encodeURIComponent('Check out ' + app.name + ' on LX Obsidian Labs Marketplace!');
 
+    var installHtml = '';
+    if (app.installSteps) {
+      installHtml = '<div class="app-modal__section"><h3 class="app-modal__section-title">Install Steps</h3>' +
+        '<ol class="app-modal__install">' +
+        app.installSteps.map(function (s, i) { return '<li><span class="app-modal__install-num">' + (i + 1) + '</span>' + s + '</li>'; }).join('') +
+        '</ol></div>';
+    }
+
     overlay.innerHTML =
       '<div class="app-modal" role="dialog" aria-modal="true" aria-label="' + app.name + ' details">' +
         '<div class="app-modal__header">' +
           '<div class="app-modal__icon" data-color="' + app.color + '">' +
             '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">' + iconSVG(app.icon) + '</svg>' +
           '</div>' +
-          '<div class="app-modal__title-group">' +
-            '<h2 class="app-modal__title">' + app.name + '</h2>' +
-            '<p class="app-modal__tagline">' + app.tagline + '</p>' +
-            '<div class="app-modal__cats">' +
-              '<span class="app-card__cat">' + app.categoryLabel + '</span>' +
+          '<div class="app-modal__info">' +
+            '<h2>' + app.name + '</h2>' +
+            '<p>' + app.tagline + '</p>' +
+            '<div class="app-modal__badges">' +
+              '<span class="app-card__category">' + app.categoryLabel + '</span>' +
+              '<span class="app-card__platform">' + app.platformLabel + '</span>' +
               '<span class="app-card__version">v' + app.version + '</span>' +
-              '<span class="app-card__size">' + app.size + '</span>' +
+              '<span class="app-card__size" style="color:var(--color-text-muted);font-size:11px;">' + app.size + '</span>' +
             '</div>' +
           '</div>' +
-          '<div class="app-modal__header-actions">' +
+          '<div class="app-modal__header-right">' +
             '<div class="app-modal__share-btns">' +
-              '<a href="https://twitter.com/intent/tweet?text=' + shareText + '&url=' + shareUrl + '" target="_blank" rel="noopener" class="app-modal__share-link" title="Share on X/Twitter"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>' +
+              '<a href="https://twitter.com/intent/tweet?text=' + shareText + '&url=' + shareUrl + '" target="_blank" rel="noopener" class="app-modal__share-link" title="Share on X"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>' +
               '<a href="https://www.linkedin.com/shareArticle?mini=true&url=' + shareUrl + '&title=' + shareText + '" target="_blank" rel="noopener" class="app-modal__share-link" title="Share on LinkedIn"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>' +
-              '<button class="app-modal__share-link" title="Copy link" onclick="navigator.clipboard.writeText(window.location.origin+\'/marketplace.html?app='+app.id+'\');if(window.LXToast)window.LXToast(\'Link copied!\',\'success\')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button>' +
+              '<button class="app-modal__share-link" title="Copy link" id="appDetailCopyLink"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button>' +
             '</div>' +
             '<button class="app-modal__close" id="appDetailClose" aria-label="Close">&times;</button>' +
           '</div>' +
         '</div>' +
+        '<div class="app-modal__stats">' +
+          '<div class="app-modal__stat"><strong>&#9733; ' + app.rating + '</strong><span>Rating</span></div>' +
+          '<div class="app-modal__stat"><strong>' + formatNumber(app.downloads) + '</strong><span>Downloads</span></div>' +
+          '<div class="app-modal__stat"><strong>' + formatNumber(app.reviews) + '</strong><span>Reviews</span></div>' +
+          '<div class="app-modal__stat"><strong>v' + app.version + '</strong><span>Version</span></div>' +
+          '<div class="app-modal__stat"><strong>' + priceLabel + '</strong><span>' + (isFree ? 'Free' : 'Price') + '</span></div>' +
+        '</div>' +
+        '<div class="app-modal__tabs">' +
+          '<button class="app-modal__tab app-modal__tab--active" data-tab="overview">Overview</button>' +
+          '<button class="app-modal__tab" data-tab="features">Features</button>' +
+          '<button class="app-modal__tab" data-tab="requirements">Requirements</button>' +
+          '<button class="app-modal__tab" data-tab="changelog">Changelog</button>' +
+          '<button class="app-modal__tab" data-tab="reviews">Reviews</button>' +
+        '</div>' +
         '<div class="app-modal__body">' +
-          '<div class="app-modal__section"><h3 class="app-modal__section-title">About</h3><p class="app-modal__desc">' + app.desc + '</p></div>' +
-          '<div class="app-modal__section"><h3 class="app-modal__section-title">Features</h3><ul class="app-modal__feature-list">' + featuresHtml + '</ul></div>' +
-          '<div class="app-modal__section"><h3 class="app-modal__section-title">System Requirements</h3><ul class="app-modal__req-list">' + reqHtml + '</ul></div>' +
-          (app.installSteps
-            ? '<div class="app-modal__section"><h3 class="app-modal__section-title">Install</h3><ol class="app-modal__install">' +
-                app.installSteps.map(function (s) { return '<li>' + s + '</li>'; }).join('') + '</ol></div>'
-            : '') +
-          '<div class="app-modal__section"><h3 class="app-modal__section-title">Details</h3>' +
-            '<table class="app-modal__table">' +
-              '<tr><td>Author</td><td>' + app.author + '</td></tr>' +
-              '<tr><td>Released</td><td>' + app.released + '</td></tr>' +
-              '<tr><td>Last Updated</td><td>' + app.updated + '</td></tr>' +
-              '<tr><td>Size</td><td>' + app.size + '</td></tr>' +
-              '<tr><td>License</td><td>' + app.license + '</td></tr>' +
-              '<tr><td>Downloads</td><td>' + formatNumber(app.downloads) + '</td></tr>' +
-              '<tr><td>Rating</td><td>&#9733; ' + app.rating + '/5 (' + formatNumber(app.reviews) + ' reviews)</td></tr>' +
-            '</table></div>' +
-          (changelogHtml
-            ? '<div class="app-modal__section"><h3 class="app-modal__section-title">What\'s New</h3><ul class="app-modal__changelog">' + changelogHtml + '</ul></div>'
-            : '') +
-          (tagsHtml
-            ? '<div class="app-modal__section"><h3 class="app-modal__section-title">Tags</h3><div class="app-modal__tags">' + tagsHtml + '</div></div>'
-            : '') +
-          '<div class="app-modal__section"><h3 class="app-modal__section-title">User Reviews</h3><div class="app-modal__reviews" id="appReviews">' + renderReviews(app.id) + '</div></div>' +
-          (relatedHtml
-            ? '<div class="app-modal__section"><h3 class="app-modal__section-title">Related Apps</h3><div class="app-modal__related">' + relatedHtml + '</div></div>'
-            : '') +
+          '<div class="app-modal__panel app-modal__panel--active" data-panel="overview">' +
+            '<p class="app-modal__desc">' + app.desc + '</p>' +
+            (tagsHtml ? '<div class="app-modal__tags">' + tagsHtml + '</div>' : '') +
+            '<div class="app-modal__detail-grid">' +
+              '<div class="app-modal__detail-item"><span class="app-modal__detail-label">Author</span><span>' + app.author + '</span></div>' +
+              '<div class="app-modal__detail-item"><span class="app-modal__detail-label">Released</span><span>' + app.released + '</span></div>' +
+              '<div class="app-modal__detail-item"><span class="app-modal__detail-label">Last Updated</span><span>' + app.updated + '</span></div>' +
+              '<div class="app-modal__detail-item"><span class="app-modal__detail-label">License</span><span>' + app.license + '</span></div>' +
+            '</div>' +
+            (app.githubUrl ? '<div class="app-modal__github-link"><a href="' + app.githubUrl + '" target="_blank" rel="noopener" class="btn btn--ghost"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg> View on GitHub</a></div>' : '') +
+            (relatedHtml ? '<div style="margin-top:1.5rem;"><h4 style="color:var(--color-text);margin-bottom:0.75rem;">Related Apps</h4><div class="app-modal__related">' + relatedHtml + '</div></div>' : '') +
+          '</div>' +
+          '<div class="app-modal__panel" data-panel="features">' +
+            '<ul class="app-modal__feature-list">' + featuresHtml + '</ul>' +
+          '</div>' +
+          '<div class="app-modal__panel" data-panel="requirements">' +
+            '<ul class="app-modal__req-list">' + reqHtml + '</ul>' +
+          '</div>' +
+          '<div class="app-modal__panel" data-panel="changelog">' +
+            (changelogHtml ? '<ul class="app-modal__changelog">' + changelogHtml + '</ul>' : '<p style="color:var(--color-text-muted);">No changelog available.</p>') +
+          '</div>' +
+          '<div class="app-modal__panel" data-panel="reviews">' +
+            '<div class="app-modal__reviews" id="appReviews">' + renderReviews(app.id) + '</div>' +
+          '</div>' +
         '</div>' +
         '<div class="app-modal__footer">' +
-          '<div class="app-modal__price"><span class="app-modal__price-value">' + priceLabel + '</span><span class="app-modal__price-label">' + (isFree ? 'Free' : 'Premium') + '</span></div>' +
+          '<div class="app-modal__price-display">' +
+            '<span class="app-modal__price-big">' + priceLabel + '</span>' +
+            '<span class="app-modal__price-type">' + (isFree ? 'Free to use' : 'One-time purchase') + '</span>' +
+          '</div>' +
           '<div class="app-modal__actions">' +
             (isFree
-              ? '<button class="btn btn--primary app-modal__action-btn" id="appDetailDownload">' + (app.isExtension ? 'Download Extension' : 'Download Free') + '</button>'
-              : '<a href="contact.html" class="btn btn--primary app-modal__action-btn">Contact for Pricing</a>'
+              ? '<button class="btn btn--primary btn--large" id="appDetailDownload">' + (app.isExtension ? 'Get Extension' : 'Download Free') + '</button>'
+              : '<a href="contact.html" class="btn btn--primary btn--large">Contact for Pricing</a>'
             ) +
-            (app.isExtension ? '<a href="synapse.html" class="btn btn--ghost app-modal__action-btn">Install Guide</a>' : '') +
-            '<button class="btn btn--ghost app-modal__action-btn" id="appDetailCloseBtn">Close</button>' +
+            (app.isExtension ? '<a href="synapse.html" class="btn btn--secondary btn--large">Install Guide</a>' : '') +
+            '<button class="btn btn--ghost btn--large" id="appDetailCloseBtn">Close</button>' +
           '</div>' +
         '</div>' +
       '</div>';
@@ -461,6 +504,12 @@ void (function () {
     document.getElementById('appDetailCloseBtn').addEventListener('click', closeAppModal);
     overlay.addEventListener('click', function (e) { if (e.target === overlay) closeAppModal(); });
 
+    var copyBtn = document.getElementById('appDetailCopyLink');
+    if (copyBtn) copyBtn.addEventListener('click', function () {
+      navigator.clipboard.writeText(window.location.origin + '/marketplace.html?app=' + app.id);
+      if (window.LXToast) window.LXToast('Link copied!', 'success');
+    });
+
     var dlBtn = document.getElementById('appDetailDownload');
     if (dlBtn) dlBtn.addEventListener('click', function () { downloadApp(app.id); });
 
@@ -468,6 +517,16 @@ void (function () {
       card.addEventListener('click', function () {
         closeAppModal();
         setTimeout(function () { openAppModal(card.getAttribute('data-app')); }, 300);
+      });
+    });
+
+    overlay.querySelectorAll('.app-modal__tab').forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        overlay.querySelectorAll('.app-modal__tab').forEach(function (t) { t.classList.remove('app-modal__tab--active'); });
+        overlay.querySelectorAll('.app-modal__panel').forEach(function (p) { p.classList.remove('app-modal__panel--active'); });
+        tab.classList.add('app-modal__tab--active');
+        var panel = overlay.querySelector('[data-panel="' + tab.getAttribute('data-tab') + '"]');
+        if (panel) panel.classList.add('app-modal__panel--active');
       });
     });
   }
@@ -502,10 +561,7 @@ void (function () {
       items.innerHTML = state.compare.map(function (id) {
         var app = APP_DATA.find(function (a) { return a.id === id; });
         if (!app) return '';
-        return '<div class="mkt-compare-tray__item">' +
-          '<span>' + app.name + '</span>' +
-          '<button class="mkt-compare-tray__remove" data-remove="' + id + '">&times;</button>' +
-        '</div>';
+        return '<div class="mkt-compare-tray__item"><span>' + app.name + '</span><button class="mkt-compare-tray__remove" data-remove="' + id + '">&times;</button></div>';
       }).join('');
 
       items.querySelectorAll('[data-remove]').forEach(function (btn) {
@@ -530,7 +586,7 @@ void (function () {
 
     var colsHtml = apps.map(function (app) {
       return '<div class="mkt-compare__col">' +
-        '<div class="app-card__icon" data-color="' + app.color + '" style="width:48px;height:48px;margin:0 auto 0.5rem;">' +
+        '<div class="app-card__icon-wrap" data-color="' + app.color + '" style="width:48px;height:48px;margin:0 auto 0.5rem;">' +
           '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">' + iconSVG(app.icon) + '</svg>' +
         '</div>' +
         '<h3>' + app.name + '</h3>' +
@@ -543,10 +599,10 @@ void (function () {
       { label: 'Rating', fn: function (a) { return '&#9733; ' + a.rating + '/5'; } },
       { label: 'Reviews', fn: function (a) { return formatNumber(a.reviews); } },
       { label: 'Downloads', fn: function (a) { return formatNumber(a.downloads); } },
+      { label: 'Platform', fn: function (a) { return a.platformLabel; } },
       { label: 'Version', fn: function (a) { return 'v' + a.version; } },
       { label: 'Size', fn: function (a) { return a.size; } },
-      { label: 'License', fn: function (a) { return a.license; } },
-      { label: 'Updated', fn: function (a) { return a.updated; } }
+      { label: 'License', fn: function (a) { return a.license; } }
     ];
 
     var rowsHtml = rows.map(function (row) {
@@ -608,13 +664,13 @@ void (function () {
 
     track.innerHTML = apps.map(function (app) {
       var isFree = app.price === 0;
-      return '<div class="mkt-recent__card" data-app="' + app.id + '" style="cursor:pointer;">' +
-        '<div class="app-card__icon" data-color="' + app.color + '">' +
+      return '<div class="mkt-recent__card" data-app="' + app.id + '">' +
+        '<div class="app-card__icon-wrap" data-color="' + app.color + '" style="width:40px;height:40px;flex-shrink:0;">' +
           '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">' + iconSVG(app.icon) + '</svg>' +
         '</div>' +
         '<div class="mkt-recent__info">' +
           '<strong>' + app.name + '</strong>' +
-          '<span>&#9733; ' + app.rating + ' · ' + (isFree ? 'Free' : '$' + app.price.toFixed(2)) + '</span>' +
+          '<span>&#9733; ' + app.rating + ' &middot; ' + (isFree ? 'Free' : '$' + app.price.toFixed(2)) + '</span>' +
         '</div>' +
       '</div>';
     }).join('');
@@ -684,7 +740,9 @@ void (function () {
     var container = document.getElementById('appCategoryFilters');
     if (!container) return;
     container.innerHTML = CATEGORIES.map(function (cat) {
-      return '<button class="app-filter' + (cat.id === state.filter ? ' app-filter--active' : '') + '" data-filter="' + cat.id + '">' + cat.label + ' <span class="app-filter__count">' + cat.count + '</span></button>';
+      return '<button class="app-filter' + (cat.id === state.filter ? ' app-filter--active' : '') + '" data-filter="' + cat.id + '">' +
+        '<svg class="app-filter__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + iconSVG(cat.icon) + '</svg>' +
+        cat.label + '</button>';
     }).join('');
 
     container.querySelectorAll('.app-filter').forEach(function (btn) {
@@ -695,6 +753,22 @@ void (function () {
         renderGrid();
       });
     });
+
+    var platformContainer = document.getElementById('mktPlatformFilters');
+    if (platformContainer) {
+      platformContainer.innerHTML = PLATFORMS.map(function (p) {
+        return '<button class="mkt-platform-btn' + (p.id === state.platformFilter ? ' mkt-platform-btn--active' : '') + '" data-platform="' + p.id + '">' + p.label + '</button>';
+      }).join('');
+
+      platformContainer.querySelectorAll('.mkt-platform-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          platformContainer.querySelectorAll('.mkt-platform-btn').forEach(function (b) { b.classList.remove('mkt-platform-btn--active'); });
+          btn.classList.add('mkt-platform-btn--active');
+          state.platformFilter = btn.getAttribute('data-platform');
+          renderGrid();
+        });
+      });
+    }
   }
 
   function initSort() {
@@ -764,7 +838,7 @@ void (function () {
       var container = starBtn.closest('.app-modal__star-select');
       if (!container) return;
       container.querySelectorAll('.star-btn').forEach(function (btn, i) {
-        btn.style.color = i < rating ? 'var(--color-accent)' : 'var(--color-text-muted)';
+        btn.style.color = i < rating ? '#f59e0b' : 'var(--color-text-muted)';
         btn.setAttribute('data-selected', i < rating ? 'true' : 'false');
       });
     });
@@ -816,7 +890,14 @@ void (function () {
       star: '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>',
       lock: '<rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/>',
       message: '<path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>',
-      cloud: '<path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 002 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>'
+      cloud: '<path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z"/>',
+      brain: '<path d="M12 2a5 5 0 00-5 5c0 1.5.8 2.8 2 3.5L12 22l3-11.5c1.2-.7 2-2 2-3.5a5 5 0 00-5-5z"/><path d="M9.5 7.5m-1 0a1 1 0 102 0 1 1 0 10-2 0"/><path d="M14.5 7.5m-1 0a1 1 0 102 0 1 1 0 10-2 0"/>',
+      shield: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
+      briefcase: '<rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/>',
+      code: '<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>',
+      smartphone: '<rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>',
+      chart: '<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>',
+      grid: '<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>'
     };
     return icons[name] || icons.settings;
   }
