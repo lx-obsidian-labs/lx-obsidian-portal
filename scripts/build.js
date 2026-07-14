@@ -8,11 +8,22 @@ const INCLUDE = [
   'index.html', '404.html', 'about.html', 'blog.html', 'contact.html',
   'faq.html', 'marketplace.html', 'portfolio.html', 'services.html',
   'synapse.html',
-  'css', 'js', 'assets', 'dashboard',
+  'js', 'assets', 'dashboard',
   'functions',
   '_headers', '_redirects',
   'sw.js', 'manifest.json', 'robots.txt', 'sitemap.xml', 'ads.txt',
   'package.json'
+];
+
+const CSS_ORDER = [
+  'variables.css',
+  'reset.css',
+  'layout.css',
+  'components.css',
+  'animations.css',
+  'responsive.css',
+  'features.css',
+  'bright.css'
 ];
 
 if (fs.existsSync(DIST)) {
@@ -31,6 +42,28 @@ for (const name of INCLUDE) {
   } else {
     fs.mkdirSync(path.dirname(destPath), { recursive: true });
     fs.copyFileSync(srcPath, destPath);
+  }
+}
+
+// Concatenate CSS into a single file to avoid @import waterfall
+const cssDir = path.join(ROOT, 'css');
+const distCssDir = path.join(DIST, 'css');
+fs.mkdirSync(distCssDir, { recursive: true });
+
+let combinedCss = '';
+for (const file of CSS_ORDER) {
+  const filePath = path.join(cssDir, file);
+  if (fs.existsSync(filePath)) {
+    combinedCss += fs.readFileSync(filePath, 'utf8') + '\n\n';
+  }
+}
+fs.writeFileSync(path.join(distCssDir, 'style.css'), combinedCss);
+console.log(`CSS concatenated: ${CSS_ORDER.length} files -> dist/css/style.css (${Math.round(combinedCss.length / 1024)} KB)`);
+
+// Copy remaining CSS files that pages might reference individually
+for (const file of fs.readdirSync(cssDir)) {
+  if (!CSS_ORDER.includes(file) && file !== 'style.css') {
+    fs.copyFileSync(path.join(cssDir, file), path.join(distCssDir, file));
   }
 }
 

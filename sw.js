@@ -1,25 +1,8 @@
-const CACHE = 'lx-obsidian-v3';
+const CACHE = 'lx-obsidian-v4';
 const ASSETS = [
   '/',
   '/index.html',
-  '/services',
-  '/marketplace',
-  '/synapse',
-  '/portfolio',
-  '/about',
-  '/blog',
-  '/contact',
-  '/faq',
   '/css/style.css',
-  '/css/variables.css',
-  '/css/reset.css',
-  '/css/layout.css',
-  '/css/components.css',
-  '/css/animations.css',
-  '/css/features.css',
-  '/css/responsive.css',
-  '/css/refresh.css',
-  '/css/bright.css',
   '/js/navigation.js',
   '/js/scroll.js',
   '/js/animations.js',
@@ -28,10 +11,8 @@ const ASSETS = [
   '/js/appstore.js',
   '/js/seo.js',
   '/js/ux.js',
-  '/js/ads.js',
   '/robots.txt',
-  '/sitemap.xml',
-  '/ads.txt'
+  '/sitemap.xml'
 ];
 
 self.addEventListener('install', function (e) {
@@ -57,13 +38,14 @@ self.addEventListener('activate', function (e) {
 
 self.addEventListener('fetch', function (e) {
   if (e.request.method !== 'GET') return;
+  if (e.request.url.includes('pagead') || e.request.url.includes('googlesyndication')) return;
 
   e.respondWith(
     caches.match(e.request).then(function (cached) {
       if (cached) return cached;
 
       return fetch(e.request).then(function (response) {
-        if (response && response.status === 200) {
+        if (response && response.status === 200 && response.type === 'basic') {
           var copy = response.clone();
           caches.open(CACHE).then(function (cache) {
             cache.put(e.request, copy);
