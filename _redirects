@@ -1,26 +1,15 @@
 # Cloudflare Pages Redirects
 
-# Clean URLs: rewrite /page to /page.html (200 = internal rewrite, not a redirect)
-/services       /services.html  200
-/marketplace    /marketplace.html 200
-/portfolio      /portfolio.html 200
-/about          /about.html     200
-/blog           /blog.html      200
-/synapse        /synapse.html   200
-/pricing        /contact.html   200
-/contact        /contact.html   200
-/faq            /faq.html       200
-
-# Legacy path support
-/shop           /marketplace    301
-/apps           /marketplace    301
-/catalogue      /marketplace    301
-/team           /about          301
-/knowledge      /blog           301
-/articles       /blog           301
-/plans          /contact        301
-/support        /contact        301
-/help           /faq            301
+# Legacy path support → clean URLs
+/shop           /marketplace.html    301
+/apps           /marketplace.html    301
+/catalogue      /marketplace.html    301
+/team           /about.html          301
+/knowledge      /blog.html           301
+/articles       /blog.html           301
+/plans          /contact.html        301
+/support        /contact.html        301
+/help           /faq.html            301
 
 # Custom 404
 /404            /404.html       200
