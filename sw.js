@@ -1,14 +1,15 @@
-const CACHE = 'lx-obsidian-v2';
+const CACHE = 'lx-obsidian-v3';
 const ASSETS = [
   '/',
+  '/index.html',
   '/services',
   '/marketplace',
+  '/synapse',
   '/portfolio',
   '/about',
   '/blog',
   '/contact',
   '/faq',
-  '/404',
   '/css/style.css',
   '/css/variables.css',
   '/css/reset.css',
@@ -17,6 +18,8 @@ const ASSETS = [
   '/css/animations.css',
   '/css/features.css',
   '/css/responsive.css',
+  '/css/refresh.css',
+  '/css/bright.css',
   '/js/navigation.js',
   '/js/scroll.js',
   '/js/animations.js',
@@ -24,6 +27,7 @@ const ASSETS = [
   '/js/features.js',
   '/js/appstore.js',
   '/js/seo.js',
+  '/js/ux.js',
   '/js/ads.js',
   '/robots.txt',
   '/sitemap.xml',
@@ -67,7 +71,7 @@ self.addEventListener('fetch', function (e) {
         }
         return response;
       }).catch(function () {
-        return caches.match('/404');
+        return caches.match('/index.html');
       });
     })
   );

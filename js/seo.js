@@ -23,7 +23,8 @@ void (function () {
     about:      'About Us — Team, Mission & Values | LX Obsidian Labs',
     blog:       'Blog — Insights, Guides & Tech Articles | LX Obsidian Labs',
     contact:    'Contact Us — Get in Touch | LX Obsidian Labs',
-    faq:        'FAQ — Frequently Asked Questions | LX Obsidian Labs'
+    faq:        'FAQ — Frequently Asked Questions | LX Obsidian Labs',
+    synapse:    'Synapse AI — AI Browser Automation Extension | LX Obsidian Labs'
   };
 
   var descriptions = {
@@ -34,7 +35,8 @@ void (function () {
     about:      'Learn about LX Obsidian Labs — our mission, values, leadership team, and commitment to building tomorrow\'s technology today.',
     blog:       'Read articles on software development, AI, cloud computing, mobile apps, and digital transformation from the LX Obsidian team.',
     contact:    'Contact LX Obsidian Labs for consultations, project inquiries, partnerships, or general questions. We respond within 24 hours.',
-    faq:        'Find answers to frequently asked questions about our services, pricing, process, and technology stack.'
+    faq:        'Find answers to frequently asked questions about our services, pricing, process, and technology stack.',
+    synapse:    'Download Synapse AI, the free AI-powered Chrome extension for autonomous web automation, content generation, and browser control.'
   };
 
   /* ==========================================

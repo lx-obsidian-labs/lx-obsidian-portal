@@ -13,8 +13,7 @@ body::before {
   background: var(--gradient-mesh);
 }
 body { position: relative; }
-.nav, .announcement, .section, .cta-section, .footer, .floating-buttons,
-.search-overlay, .hero, .syn-hero, .app-detail-overlay {
+body > *:not(script):not(style):not(noscript) {
   position: relative; z-index: 1;
 }
 

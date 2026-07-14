@@ -34,29 +34,7 @@ html.theme-refresh {
   --radius-xl: 24px;
 }
 
-/* Decorative, fixed background glow layer (non-interactive) */
-html.theme-refresh body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(40% 35% at 85% 5%, rgba(139, 92, 246, 0.12), transparent 70%),
-    radial-gradient(35% 30% at 5% 25%, rgba(34, 211, 238, 0.08), transparent 70%);
-}
-html.theme-refresh body { position: relative; }
-
-/* Keep real content above the glow layer */
-html.theme-refresh .nav,
-html.theme-refresh .announcement,
-html.theme-refresh main,
-html.theme-refresh .section,
-html.theme-refresh .footer,
-html.theme-refresh .floating-buttons,
-html.theme-refresh .search-overlay,
-html.theme-refresh .cta-section,
-html.theme-refresh .syn-hero { position: relative; z-index: 1; }
+/* Content z-index handled globally by bright.css */
 
 /* Gradient text utility */
 html.theme-refresh .gradient-text {

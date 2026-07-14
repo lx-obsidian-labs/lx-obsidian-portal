@@ -32,44 +32,42 @@
       position: relative;
       padding: 7rem 0 4rem;
       overflow: hidden;
-      background:
-        radial-gradient(60% 60% at 80% 0%, rgba(200,155,60,.12), transparent 60%),
-        radial-gradient(50% 50% at 0% 20%, rgba(120,90,200,.10), transparent 60%),
-        #050505;
+      background: var(--gradient-hero);
     }
     .syn-hero__inner { max-width: 760px; }
     .syn-hero__badge {
       display: inline-flex; align-items: center; gap: .5rem;
       padding: .35rem .8rem; border-radius: 999px;
       font-size: .75rem; font-weight: 600; letter-spacing: .04em;
-      color: var(--color-accent, #C89B3C);
-      background: rgba(200,155,60,.10);
-      border: 1px solid rgba(200,155,60,.30);
+      color: var(--color-accent-light);
+      background: var(--color-accent-glow);
+      border: 1px solid var(--color-border-accent);
       text-transform: uppercase;
     }
     .syn-hero__title {
       font-family: 'Poppins', sans-serif;
       font-size: clamp(2.2rem, 5vw, 3.6rem);
       line-height: 1.08; font-weight: 800; margin: 1.2rem 0 1rem;
-      color: #fff;
+      color: var(--color-text);
     }
-    .syn-hero__title span { color: var(--color-accent, #C89B3C); }
+    .syn-hero__title span { color: var(--color-accent-light); }
     .syn-hero__text {
-      font-size: 1.05rem; line-height: 1.7; color: #b9b9c2; max-width: 640px;
+      font-size: 1.05rem; line-height: 1.7; color: var(--color-text-secondary); max-width: 640px;
     }
     .syn-hero__actions { display: flex; flex-wrap: wrap; gap: .9rem; margin-top: 2rem; }
 
     .syn-download {
       display: inline-flex; align-items: center; gap: .75rem;
       padding: 1rem 1.6rem; border-radius: 14px;
-      background: linear-gradient(135deg, rgba(200,155,60,.18), rgba(200,155,60,.06));
-      border: 1px solid rgba(200,155,60,.35);
+      background: var(--gradient-accent);
+      border: none;
       color: #fff; font-weight: 700; font-size: 1.05rem;
-      text-decoration: none; transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+      text-decoration: none; transition: transform .15s ease, box-shadow .15s ease;
+      box-shadow: var(--shadow-accent);
     }
-    .syn-download:hover { transform: translateY(-2px); box-shadow: 0 14px 40px rgba(200,155,60,.18); border-color: rgba(200,155,60,.6); }
+    .syn-download:hover { transform: translateY(-2px); box-shadow: var(--shadow-accent-strong); }
     .syn-download__icon { width: 22px; height: 22px; flex: none; }
-    .syn-download__meta { display: block; font-size: .72rem; font-weight: 500; color: #cdb98a; margin-top: 2px; }
+    .syn-download__meta { display: block; font-size: .72rem; font-weight: 500; color: rgba(255,255,255,.7); margin-top: 2px; }
     .syn-download__label { line-height: 1.1; }
 
     .syn-grid {
@@ -77,51 +75,54 @@
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     }
     .syn-card {
-      background: var(--color-card, #0d0d10);
-      border: 1px solid rgba(255,255,255,.07);
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
       border-radius: 16px; padding: 1.6rem;
-      transition: transform .18s ease, border-color .18s ease;
+      backdrop-filter: blur(12px);
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
     }
-    .syn-card:hover { transform: translateY(-4px); border-color: rgba(200,155,60,.4); }
+    .syn-card:hover { transform: translateY(-4px); border-color: var(--color-border-accent); box-shadow: var(--shadow-accent); }
     .syn-card__icon {
       width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center;
-      background: rgba(200,155,60,.12); color: var(--color-accent, #C89B3C); margin-bottom: 1rem;
+      background: var(--color-accent-glow); color: var(--color-accent-light); margin-bottom: 1rem;
     }
-    .syn-card__title { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1.1rem; color: #fff; margin-bottom: .5rem; }
-    .syn-card__text { font-size: .92rem; line-height: 1.6; color: #a6a6b0; }
+    .syn-card__title { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--color-text); margin-bottom: .5rem; }
+    .syn-card__text { font-size: .92rem; line-height: 1.6; color: var(--color-text-secondary); }
 
     .syn-steps { display: grid; gap: 1.5rem; margin-top: 2.5rem; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
     .syn-step { position: relative; padding-top: 3.4rem; }
     .syn-step__num {
       position: absolute; top: 0; left: 0;
       width: 40px; height: 40px; border-radius: 50%;
-      display: grid; place-items: center; font-weight: 800; color: #050505;
-      background: var(--color-accent, #C89B3C);
+      display: grid; place-items: center; font-weight: 800; color: #fff;
+      background: var(--gradient-accent);
     }
-    .syn-step__title { font-family: 'Poppins', sans-serif; font-weight: 700; color: #fff; margin-bottom: .4rem; }
-    .syn-step__text { font-size: .92rem; line-height: 1.6; color: #a6a6b0; }
+    .syn-step__title { font-family: 'Poppins', sans-serif; font-weight: 700; color: var(--color-text); margin-bottom: .4rem; }
+    .syn-step__text { font-size: .92rem; line-height: 1.6; color: var(--color-text-secondary); }
 
     .syn-install {
-      background: var(--color-card, #0d0d10);
-      border: 1px solid rgba(255,255,255,.07);
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(12px);
       border-radius: 18px; padding: 2rem; margin-top: 2.5rem;
     }
-    .syn-install__title { font-family: 'Poppins', sans-serif; font-weight: 700; color: #fff; margin-bottom: 1rem; }
+    .syn-install__title { font-family: 'Poppins', sans-serif; font-weight: 700; color: var(--color-text); margin-bottom: 1rem; }
     .syn-install__list { list-style: none; counter-reset: inst; display: grid; gap: .9rem; }
-    .syn-install__list li { display: flex; gap: .8rem; align-items: flex-start; color: #c4c4cd; font-size: .95rem; line-height: 1.6; }
+    .syn-install__list li { display: flex; gap: .8rem; align-items: flex-start; color: var(--color-text-secondary); font-size: .95rem; line-height: 1.6; }
     .syn-install__list li::before {
       counter-increment: inst; content: counter(inst);
       flex: none; width: 26px; height: 26px; border-radius: 50%;
       display: grid; place-items: center; font-size: .8rem; font-weight: 700;
-      color: var(--color-accent, #C89B3C); background: rgba(200,155,60,.12);
+      color: var(--color-accent-light); background: var(--color-accent-glow);
     }
-    .syn-install__list code { background: rgba(255,255,255,.06); padding: .1rem .4rem; border-radius: 6px; font-size: .85em; color: #e8d9b5; }
+    .syn-install__list code { background: rgba(255,255,255,.06); padding: .1rem .4rem; border-radius: 6px; font-size: .85em; color: var(--color-accent-light); }
+    [data-theme="light"] .syn-install__list code { background: rgba(0,0,0,.05); }
 
-    .syn-meta { display: flex; flex-wrap: wrap; gap: 1.5rem; margin-top: 1.5rem; color: #8e8e98; font-size: .9rem; }
-    .syn-meta strong { color: #d7d7df; }
+    .syn-meta { display: flex; flex-wrap: wrap; gap: 1.5rem; margin-top: 1.5rem; color: var(--color-text-muted); font-size: .9rem; }
+    .syn-meta strong { color: var(--color-text); }
     .syn-github {
       display: inline-flex; align-items: center; gap: .5rem; margin-top: 1.5rem;
-      color: var(--color-accent, #C89B3C); font-weight: 600; text-decoration: none;
+      color: var(--color-accent-light); font-weight: 600; text-decoration: none;
     }
     .syn-github:hover { text-decoration: underline; }
     .ad-section { margin: 3rem auto; }
