@@ -126,17 +126,71 @@
   </nav>
 
   <!-- ==========================================
-       PAGE HEADER
+       SPOTLIGHT HERO
        ========================================== -->
-  <section class="section" id="main-content" aria-label="Marketplace">
+  <section class="mkt-spotlight" id="main-content" aria-label="Spotlight">
+    <div class="mkt-spotlight__bg" aria-hidden="true">
+      <div class="mkt-spotlight__orb mkt-spotlight__orb--1"></div>
+      <div class="mkt-spotlight__orb mkt-spotlight__orb--2"></div>
+      <div class="mkt-spotlight__orb mkt-spotlight__orb--3"></div>
+    </div>
     <div class="container">
-      <div class="section__header reveal">
-        <p class="section__label">App Store</p>
-        <h1 class="section__title">LX Obsidian App Store</h1>
-        <p class="section__subtitle">Browse, download, and explore premium applications built by LX Obsidian Labs. Free and premium tools for developers, businesses, and teams.</p>
+      <div class="mkt-spotlight__inner">
+        <div class="mkt-spotlight__content">
+          <span class="mkt-spotlight__badge">Featured App</span>
+          <h2 class="mkt-spotlight__title">Synapse AI</h2>
+          <p class="mkt-spotlight__desc">AI-powered browser automation that turns any web page into an autonomous workspace. Free — no API key required.</p>
+          <div class="mkt-spotlight__meta">
+            <span class="mkt-spotlight__rating">&#9733; 5.0</span>
+            <span class="mkt-spotlight__downloads">5.4K downloads</span>
+            <span class="mkt-spotlight__tag">Free</span>
+          </div>
+          <div class="mkt-spotlight__actions">
+            <a href="synapse.html" class="btn btn--primary btn--large">Get Synapse AI</a>
+            <button class="btn btn--secondary btn--large" onclick="window.LXAppStore.openAppModal('synapse-ai')">View Details</button>
+          </div>
+        </div>
+        <div class="mkt-spotlight__visual">
+          <div class="mkt-spotlight__card">
+            <div class="mkt-spotlight__card-icon">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+            </div>
+            <div class="mkt-spotlight__card-stats">
+              <div><strong>Autonomous</strong><span>Web automation</span></div>
+              <div><strong>No API Key</strong><span>Works instantly</span></div>
+              <div><strong>Multi-platform</strong><span>Chrome, Edge, Brave</span></div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
+
+  <!-- ==========================================
+       MARKETPLACE STATS BAR
+       ========================================== -->
+  <div class="mkt-stats-bar" aria-label="Marketplace statistics">
+    <div class="container">
+      <div class="mkt-stats-bar__inner">
+        <div class="mkt-stat">
+          <span class="mkt-stat__number">13</span>
+          <span class="mkt-stat__label">Apps</span>
+        </div>
+        <div class="mkt-stat">
+          <span class="mkt-stat__number">151K+</span>
+          <span class="mkt-stat__label">Downloads</span>
+        </div>
+        <div class="mkt-stat">
+          <span class="mkt-stat__number">4.7</span>
+          <span class="mkt-stat__label">Avg Rating</span>
+        </div>
+        <div class="mkt-stat">
+          <span class="mkt-stat__number">2,986</span>
+          <span class="mkt-stat__label">Reviews</span>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="ad-section container" aria-label="Sponsored content">
     <ins class="adsbygoogle"
@@ -151,41 +205,109 @@
   </div>
 
   <!-- ==========================================
-       LARGE CTA SECTION
+       MARKETPLACE GRID
        ========================================== -->
-  <section class="section" aria-label="App Store">
+  <section class="section mkt-section" aria-label="App Store">
     <div class="container">
-      <div class="app-store-header reveal">
-        <div class="app-filters" id="appCategoryFilters">
-          <button class="app-filter app-filter--active" data-filter="all">All Apps</button>
-          <button class="app-filter" data-filter="developer-tools">Developer Tools</button>
-          <button class="app-filter" data-filter="ai">AI</button>
-          <button class="app-filter" data-filter="business">Business</button>
-          <button class="app-filter" data-filter="mobile">Mobile</button>
+      <!-- Controls Bar -->
+      <div class="mkt-controls reveal" id="mktControls">
+        <div class="mkt-controls__left">
+          <div class="app-filters" id="appCategoryFilters"></div>
         </div>
-        <div class="app-store-controls">
-          <button class="app-search-toggle" id="appStoreSearch" aria-label="Toggle search">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-            </svg>
+        <div class="mkt-controls__right">
+          <div class="mkt-sort">
+            <label class="mkt-sort__label" for="mktSortSelect">Sort by</label>
+            <select class="mkt-sort__select" id="mktSortSelect">
+              <option value="popular">Most Popular</option>
+              <option value="rating">Highest Rated</option>
+              <option value="newest">Newest</option>
+              <option value="price-low">Price: Low to High</option>
+              <option value="price-high">Price: High to Low</option>
+              <option value="name">Name A-Z</option>
+              <option value="downloads">Most Downloads</option>
+            </select>
+          </div>
+          <div class="mkt-price-filter">
+            <label class="mkt-price-filter__label">Price</label>
+            <div class="mkt-price-filter__btns">
+              <button class="mkt-price-filter__btn mkt-price-filter__btn--active" data-price="all">All</button>
+              <button class="mkt-price-filter__btn" data-price="free">Free</button>
+              <button class="mkt-price-filter__btn" data-price="paid">Paid</button>
+            </div>
+          </div>
+          <div class="mkt-view-toggle">
+            <button class="mkt-view-btn mkt-view-btn--active" data-view="grid" aria-label="Grid view">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+            </button>
+            <button class="mkt-view-btn" data-view="list" aria-label="List view">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+            </button>
+          </div>
+          <button class="app-search-toggle" id="appStoreSearch" aria-label="Search apps">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
           </button>
         </div>
       </div>
+
+      <!-- Search Bar -->
       <div class="app-search-bar" id="appSearchBar">
-        <input type="text" class="app-search-input" id="appSearchInput" placeholder="Search apps by name or keyword..." aria-label="Search applications">
+        <input type="text" class="app-search-input" id="appSearchInput" placeholder="Search apps by name, category, or keyword..." aria-label="Search applications">
       </div>
-      <div class="app-store-grid" id="appStoreGrid">
-        <!-- Rendered by JS -->
+
+      <!-- Results Count -->
+      <div class="mkt-results-info" id="mktResultsInfo"></div>
+
+      <!-- App Grid -->
+      <div class="app-store-grid" id="appStoreGrid"></div>
+
+      <!-- No Results -->
+      <div class="mkt-no-results" id="mktNoResults" style="display:none;">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-muted)" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <h3>No apps found</h3>
+        <p>Try adjusting your filters or search terms.</p>
       </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       RECENTLY VIEWED
+       ========================================== -->
+  <section class="section mkt-recent" id="mktRecent" aria-label="Recently viewed" style="display:none;">
+    <div class="container">
+      <div class="section__header">
+        <p class="section__label">Recently Viewed</p>
+        <h2 class="section__title">Continue exploring</h2>
+      </div>
+      <div class="mkt-recent__track" id="mktRecentTrack"></div>
     </div>
   </section>
 
   <!-- ==========================================
        APP DETAIL MODAL
        ========================================== -->
-  <div class="app-detail-overlay" id="appDetailOverlay">
-    <!-- Rendered by JS -->
+  <div class="app-detail-overlay" id="appDetailOverlay"></div>
+
+  <!-- ==========================================
+       COMPARE TRAY
+       ========================================== -->
+  <div class="mkt-compare-tray" id="mktCompareTray">
+    <div class="mkt-compare-tray__inner">
+      <div class="mkt-compare-tray__info">
+        <span class="mkt-compare-tray__count" id="mktCompareCount">0</span>
+        <span>apps selected</span>
+      </div>
+      <div class="mkt-compare-tray__items" id="mktCompareItems"></div>
+      <div class="mkt-compare-tray__actions">
+        <button class="btn btn--primary btn--small" id="mktCompareBtn">Compare Now</button>
+        <button class="btn btn--ghost btn--small" id="mktCompareClear">Clear</button>
+      </div>
+    </div>
   </div>
+
+  <!-- ==========================================
+       COMPARE MODAL
+       ========================================== -->
+  <div class="mkt-compare-overlay" id="mktCompareOverlay"></div>
 
   <!-- ==========================================
        LARGE CTA SECTION

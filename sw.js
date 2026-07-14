@@ -1,4 +1,4 @@
-const CACHE = 'lx-obsidian-v4';
+const CACHE = 'lx-obsidian-v5';
 const ASSETS = [
   '/',
   '/index.html',
