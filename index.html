@@ -129,9 +129,10 @@
        ========================================== -->
   <section class="hero" id="main-content" aria-label="Hero">
     <div class="hero__background">
-      <div class="hero__gradient"></div>
-      <div class="hero__gradient hero__gradient--2"></div>
-      <div class="hero__gradient hero__gradient--3"></div>
+      <div class="hero__orb hero__orb--1"></div>
+      <div class="hero__orb hero__orb--2"></div>
+      <div class="hero__orb hero__orb--3"></div>
+      <div class="hero__noise" aria-hidden="true"></div>
       <div class="bg-grid bg-grid--subtle" aria-hidden="true" style="position:absolute;inset:0;z-index:0;"></div>
       <div class="hero__particles" id="particles" aria-hidden="true"></div>
     </div>
@@ -143,18 +144,21 @@
             <span class="hero__badge-text">3 WAYS TO PROFIT WITH LX</span>
           </div>
           <h1 class="hero__title">
-            <span class="hero__title-gradient">Build.</span> <span class="hero__title-cyan">Sell.</span> <span class="hero__title-gradient">Earn.</span>
+            <span class="hero__title-line">Automate Any Website</span>
+            <span class="hero__title-line hero__title-gradient">With <span class="hero__typed" id="heroTyped"></span><span class="hero__cursor">|</span></span>
           </h1>
           <p class="hero__description">
-            Launch digital products, sell them in our marketplace, earn <strong class="hero__rotator" id="heroRotator"><span id="heroRotatorText">20% recurring commissions</span></strong> on every referral. Whether you're a developer, creator, or agency — start making money with LX Obsidian Labs.
+            Control Chrome, Edge and Brave using intelligent AI agents that click, type, browse and complete tasks automatically. Build, sell, and earn <strong class="hero__rotator" id="heroRotator"><span id="heroRotatorText">20% recurring commissions</span></strong> on every referral.
           </p>
           <div class="hero__actions">
-            <a href="contact.html" class="btn btn--primary btn--large hero__btn-primary">
-              Start Earning
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            <a href="synapse.html" class="btn btn--primary btn--large hero__btn-primary">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Get Synapse AI
             </a>
-            <a href="marketplace.html" class="btn btn--secondary btn--large hero__btn-secondary">Browse Marketplace</a>
-            <a href="#affiliate" class="btn btn--outline btn--large">Affiliate Program</a>
+            <a href="marketplace.html" class="btn btn--secondary btn--large hero__btn-secondary">
+              Browse Marketplace
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
           </div>
           <div class="hero__trust">
             <div class="hero__trust-avatars">
@@ -166,12 +170,93 @@
             </div>
             <div class="hero__trust-text">
               <div class="hero__trust-stars">★★★★★</div>
-              <span>Trusted by <strong>200+</strong> companies worldwide · <strong>R2M+</strong> in partner payouts</span>
+              <span>Trusted by <strong>200+</strong> companies · <strong>R2M+</strong> in partner payouts</span>
             </div>
           </div>
         </div>
         <div class="hero__visual">
-          <img src="assets/hero-tech.svg" alt="LX Obsidian Labs — Build, Sell, Earn" class="hero__img" width="800" height="700" loading="eager">
+          <div class="hero__mockup">
+            <div class="hero__mockup-browser">
+              <div class="hero__mockup-chrome">
+                <div class="hero__mockup-dots">
+                  <span style="background:#FF5F57;"></span>
+                  <span style="background:#FFBD2E;"></span>
+                  <span style="background:#28C840;"></span>
+                </div>
+                <div class="hero__mockup-url">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                  <span>lxobsidianportal.co.za</span>
+                </div>
+              </div>
+              <div class="hero__mockup-content">
+                <div class="hero__mockup-sidebar">
+                  <div class="hero__mockup-nav-item hero__mockup-nav-item--active">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+                    Dashboard
+                  </div>
+                  <div class="hero__mockup-nav-item">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                    Marketplace
+                  </div>
+                  <div class="hero__mockup-nav-item">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                    Analytics
+                  </div>
+                  <div class="hero__mockup-nav-item">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+                    Settings
+                  </div>
+                </div>
+                <div class="hero__mockup-main">
+                  <div class="hero__mockup-header">
+                    <div class="hero__mockup-greeting">Welcome back, Kairo</div>
+                    <div class="hero__mockup-date">July 2026</div>
+                  </div>
+                  <div class="hero__mockup-stats">
+                    <div class="hero__mockup-stat hero__mockup-stat--accent">
+                      <div class="hero__mockup-stat-label">Revenue</div>
+                      <div class="hero__mockup-stat-value">R127,450</div>
+                      <div class="hero__mockup-stat-change hero__mockup-stat-change--up">+24.5%</div>
+                    </div>
+                    <div class="hero__mockup-stat hero__mockup-stat--cyan">
+                      <div class="hero__mockup-stat-label">Downloads</div>
+                      <div class="hero__mockup-stat-value">151K</div>
+                      <div class="hero__mockup-stat-change hero__mockup-stat-change--up">+18.2%</div>
+                    </div>
+                    <div class="hero__mockup-stat hero__mockup-stat--green">
+                      <div class="hero__mockup-stat-label">Affiliates</div>
+                      <div class="hero__mockup-stat-value">500+</div>
+                      <div class="hero__mockup-stat-change hero__mockup-stat-change--up">+32%</div>
+                    </div>
+                  </div>
+                  <div class="hero__mockup-chart">
+                    <svg viewBox="0 0 400 120" class="hero__mockup-chart-svg">
+                      <defs>
+                        <linearGradient id="chartGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                          <stop offset="0%" style="stop-color:rgba(139,92,246,0.3)"/>
+                          <stop offset="100%" style="stop-color:rgba(139,92,246,0)"/>
+                        </linearGradient>
+                      </defs>
+                      <path d="M0,100 Q50,80 100,70 T200,40 T300,50 T400,20" fill="none" stroke="#8B5CF6" stroke-width="2.5" class="hero__chart-line"/>
+                      <path d="M0,100 Q50,80 100,70 T200,40 T300,50 T400,20 L400,120 L0,120 Z" fill="url(#chartGrad)" class="hero__chart-fill"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="hero__float hero__float--1">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              <span>Task Completed</span>
+            </div>
+            <div class="hero__float hero__float--2">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22D3EE" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+              <span>+R2,450 today</span>
+            </div>
+            <div class="hero__float hero__float--3">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <span>4.9 Rating</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -203,6 +288,36 @@
         <span class="trusted__item" data-tooltip="Docker — Container platform for applications">Docker</span>
         <span class="trusted__item" data-tooltip="OpenAI — Artificial intelligence research and deployment">OpenAI</span>
         <span class="trusted__item" data-tooltip="PostgreSQL — Advanced open-source relational database">PostgreSQL</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       SOCIAL PROOF — Key Numbers
+       ========================================== -->
+  <section class="social-proof reveal" aria-label="Key metrics">
+    <div class="container">
+      <div class="social-proof__inner">
+        <div class="social-proof__item">
+          <div class="social-proof__item-name">R2M+</div>
+          <div class="social-proof__item-label">Partner Payouts</div>
+        </div>
+        <div class="social-proof__item">
+          <div class="social-proof__item-name">151K</div>
+          <div class="social-proof__item-label">Downloads</div>
+        </div>
+        <div class="social-proof__item">
+          <div class="social-proof__item-name">4.9</div>
+          <div class="social-proof__item-label">Rating</div>
+        </div>
+        <div class="social-proof__item">
+          <div class="social-proof__item-name">200+</div>
+          <div class="social-proof__item-label">Companies</div>
+        </div>
+        <div class="social-proof__item">
+          <div class="social-proof__item-name">13</div>
+          <div class="social-proof__item-label">AI Apps</div>
+        </div>
       </div>
     </div>
   </section>
@@ -1235,6 +1350,33 @@
           i++;
         }, 300);
       }, 3500);
+    })();
+
+    (function(){
+      var words = ['AI', 'Automation', 'Intelligence', 'Synapse'];
+      var el = document.getElementById('heroTyped');
+      if (!el) return;
+      var wordIdx = 0, charIdx = 0, deleting = false, pause = 0;
+      function type() {
+        var word = words[wordIdx];
+        if (!deleting) {
+          el.textContent = word.substring(0, charIdx + 1);
+          charIdx++;
+          if (charIdx === word.length) { deleting = true; pause = 1800; }
+          setTimeout(type, pause || 80);
+        } else {
+          el.textContent = word.substring(0, charIdx - 1);
+          charIdx--;
+          if (charIdx === 0) {
+            deleting = false;
+            wordIdx = (wordIdx + 1) % words.length;
+            setTimeout(type, 400);
+          } else {
+            setTimeout(type, 40);
+          }
+        }
+      }
+      setTimeout(type, 1200);
     })();
 
     (function(){

@@ -66,26 +66,28 @@
   .hero__img {
     max-width: 500px;
   }
+  .hero__mockup { max-width: 480px; }
+  .hero__float { display: none; }
 }
 
 @media (max-width: 900px) {
   .hero__layout {
     grid-template-columns: 1fr;
     gap: var(--space-8);
+    text-align: center;
   }
-
   .hero__content {
     padding: var(--space-8) 0 var(--space-4);
+    order: 1;
   }
-
   .hero__visual {
-    order: -1;
+    order: 2;
   }
-
-  .hero__img {
-    max-width: 480px;
-    margin: 0 auto;
-  }
+  .hero__actions { justify-content: center; }
+  .hero__trust { justify-content: center; }
+  .hero__description { margin-left: auto; margin-right: auto; }
+  .hero__mockup-sidebar { display: none; }
+  .hero__mockup { max-width: 100%; margin: 0 auto; }
 }
 
 /* ============================================
@@ -191,11 +193,17 @@
 
   .hero__content {
     padding: var(--space-4) 0;
+    order: 1;
   }
 
   .hero__visual {
-    display: none;
+    order: 2;
+    display: block;
   }
+
+  .hero__mockup { max-width: 100%; }
+  .hero__mockup-sidebar { display: none; }
+  .hero__float { display: none; }
 
   .section__title {
     font-size: var(--text-3xl);
