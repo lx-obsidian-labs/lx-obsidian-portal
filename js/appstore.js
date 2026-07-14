@@ -282,12 +282,57 @@ void (function () {
       released: 'May 2025',
       updated: 'June 20, 2026',
       license: 'Per-user license'
+    },
+    {
+      id: 'synapse-ai',
+      name: 'Synapse AI',
+      tagline: 'AI browser automation extension',
+      desc: 'An AI-powered Chrome / Edge / Brave extension that turns any web page into an autonomous, controllable workspace. It runs an observe → plan → execute → verify loop to navigate, click, type, extract, and automate tasks. Works out of the box — no API key required.',
+      category: 'ai',
+      categoryLabel: 'AI',
+      price: 0,
+      rating: 5.0,
+      reviews: 128,
+      downloads: 5400,
+      version: '1.1.1',
+      size: '115 KB',
+      color: 'purple',
+      icon: 'message',
+      isExtension: true,
+      githubUrl: 'https://github.com/lx-obsidian-labs/synapse-social',
+      features: [
+        'Autonomous web automation — navigate, click, type, extract, fill forms',
+        'AI content generation in your brand voice (Facebook, social OS)',
+        'Vision fallback via page screenshots when the DOM is empty',
+        'Self-learning memory, model rotation & failover',
+        'No API key required — secure hosted NVIDIA proxy',
+        'Playbooks for ChatGPT, Gmail, YouTube, Facebook, Google, LinkedIn & more'
+      ],
+      requirements: [
+        'Google Chrome, Microsoft Edge, or Brave (v100+)',
+        'Developer mode enabled in extensions page',
+        'Unzip the downloaded folder (contains manifest.json)',
+        'No API key needed — works immediately'
+      ],
+      installSteps: [
+        'Download the ZIP and unzip it (you get a folder with manifest.json).',
+        'Open chrome://extensions (or edge://extensions, brave://extensions).',
+        'Turn on Developer mode (top-right toggle).',
+        'Click Load unpacked and select the unzipped folder.',
+        'Pin Synapse AI and open the side panel — the AI works out of the box.'
+      ],
+      screenshots: ['dashboard', 'settings', 'scan-results'],
+      author: 'LX Obsidian Labs',
+      released: 'June 2026',
+      updated: 'June 2026',
+      license: 'Free (Open Distribution)'
     }
   ];
 
   var CATEGORIES = [
     { id: 'all', label: 'All Apps' },
     { id: 'developer-tools', label: 'Developer Tools' },
+    { id: 'ai', label: 'AI' },
     { id: 'business', label: 'Business' },
     { id: 'mobile', label: 'Mobile' }
   ];
@@ -334,7 +379,7 @@ void (function () {
           '<div class="app-card__footer">' +
             '<button class="btn btn--primary btn--full app-card__btn" data-app="' + app.id + '" data-action="details">View Details</button>' +
             (isFree
-              ? '<button class="btn btn--secondary btn--full app-card__btn" data-app="' + app.id + '" data-action="download">Download Free</button>'
+              ? '<button class="btn btn--secondary btn--full app-card__btn" data-app="' + app.id + '" data-action="download">' + (app.isExtension ? 'Download Extension' : 'Download Free') + '</button>'
               : '<button class="btn btn--secondary btn--full app-card__btn" data-app="' + app.id + '" data-action="details">View Details</button>'
             ) +
           '</div>' +
@@ -414,6 +459,14 @@ void (function () {
             '<h3 class="app-modal__section-title">System Requirements</h3>' +
             '<ul class="app-modal__req-list">' + reqHtml + '</ul>' +
           '</div>' +
+          (app.installSteps
+            ? '<div class="app-modal__section">' +
+                '<h3 class="app-modal__section-title">Install</h3>' +
+                '<ol class="app-modal__install">' +
+                  app.installSteps.map(function (s) { return '<li>' + s + '</li>'; }).join('') +
+                '</ol>' +
+              '</div>'
+            : '') +
           '<div class="app-modal__section">' +
             '<h3 class="app-modal__section-title">Details</h3>' +
             '<table class="app-modal__table">' +
@@ -440,9 +493,10 @@ void (function () {
           '</div>' +
           '<div class="app-modal__actions">' +
             (isFree
-              ? '<button class="btn btn--primary app-modal__action-btn" id="appDetailDownload">Download Free</button>'
+              ? '<button class="btn btn--primary app-modal__action-btn" id="appDetailDownload">' + (app.isExtension ? 'Download Extension' : 'Download Free') + '</button>'
               : '<a href="/contact" class="btn btn--primary app-modal__action-btn">Contact for Pricing</a>'
             ) +
+            (app.isExtension ? '<a href="synapse.html" class="btn btn--ghost app-modal__action-btn" target="_blank" rel="noopener">Install Guide</a>' : '') +
             '<button class="btn btn--ghost app-modal__action-btn" id="appDetailCloseBtn">Close</button>' +
           '</div>' +
         '</div>' +
@@ -475,6 +529,11 @@ void (function () {
     var app = APP_DATA.find(function (a) { return a.id === id; });
     if (!app) return;
 
+    if (app.isExtension) {
+      downloadExtension(app);
+      return;
+    }
+
     var downloads = JSON.parse(localStorage.getItem('lx-downloads') || '{}');
     downloads[id] = (downloads[id] || 0) + 1;
     localStorage.setItem('lx-downloads', JSON.stringify(downloads));
@@ -488,6 +547,24 @@ void (function () {
 
     if (window.LXToast) window.LXToast('Downloading ' + app.name, 'success');
     else alert(msg);
+  }
+
+  /* Real download for browser-extension apps — pulls latest GitHub Release asset */
+  function downloadExtension(app) {
+    var RELEASE_API = 'https://api.github.com/repos/lx-obsidian-labs/synapse-social/releases/latest';
+    var FALLBACK = 'https://github.com/lx-obsidian-labs/synapse-social/releases/download/v1.1.1/synapse-ai-v1.1.1.zip';
+
+    if (window.LXToast) window.LXToast('Preparing your download…', 'success');
+
+    function go(url) { window.location.href = url; }
+
+    fetch(RELEASE_API, { headers: { 'Accept': 'application/vnd.github+json' } })
+      .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+      .then(function (data) {
+        var asset = data.assets && data.assets[0];
+        go((asset && asset.browser_download_url) ? asset.browser_download_url : FALLBACK);
+      })
+      .catch(function () { go(FALLBACK); });
   }
 
   /* ---------- REVIEWS ---------- */
