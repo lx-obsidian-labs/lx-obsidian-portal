@@ -1503,7 +1503,7 @@ body::after {
   pointer-events: none;
 }
 
-/* ─── HERO TITLE — Typed Effect ─── */
+/* ─── HERO TITLE — Stable accent ─── */
 .hero__title-line { display: block; }
 .hero__typed {
   background: var(--gradient-accent);
@@ -1512,6 +1512,195 @@ body::after {
   -webkit-text-fill-color: transparent;
   color: transparent;
 }
+.mkt-page-title {
+  max-width: 760px;
+  margin: 0 0 var(--space-10);
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 5vw, 4.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+/* ============================================================
+   CORPORATE LIGHT THEME
+   A clear, editorial product-studio interface: white canvas,
+   charcoal type, quiet borders and one controlled accent.
+   ============================================================ */
+html[data-theme="light"] body {
+  background: #ffffff;
+  color: #172033;
+}
+
+html[data-theme="light"] body::before,
+html[data-theme="light"] body::after {
+  display: none;
+}
+
+html[data-theme="light"] .nav,
+html[data-theme="light"] .nav--transparent,
+html[data-theme="light"] .nav--transparent.scrolled,
+html[data-theme="light"] .nav.scrolled {
+  background: rgba(255, 255, 255, 0.96) !important;
+  border-bottom: 1px solid #e5e7eb !important;
+  box-shadow: 0 1px 8px rgba(15, 23, 42, 0.04) !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+html[data-theme="light"] .nav__logo-text,
+html[data-theme="light"] .nav__link,
+html[data-theme="light"] .nav-dropdown__trigger {
+  color: #172033;
+}
+
+html[data-theme="light"] .nav__link:hover,
+html[data-theme="light"] .nav-dropdown__trigger:hover {
+  color: #6246c7;
+  background: #f5f3ff;
+}
+
+html[data-theme="light"] .nav-dropdown__menu {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.10);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+html[data-theme="light"] .nav-dropdown__item:hover {
+  color: #6246c7;
+  background: #f5f3ff;
+}
+
+html[data-theme="light"] .theme-toggle { display: none; }
+
+html[data-theme="light"] .hero,
+html[data-theme="light"] .syn-hero,
+html[data-theme="light"] .mkt-spotlight {
+  background: #ffffff !important;
+}
+
+html[data-theme="light"] .hero__background,
+html[data-theme="light"] .hero__gradient,
+html[data-theme="light"] .hero__particles,
+html[data-theme="light"] .hero__orb,
+html[data-theme="light"] .mkt-spotlight__bg,
+html[data-theme="light"] .cta-gradient {
+  display: none !important;
+}
+
+html[data-theme="light"] .hero__title,
+html[data-theme="light"] .section__title,
+html[data-theme="light"] .mkt-spotlight__title,
+html[data-theme="light"] .cta-content__title {
+  color: #111827 !important;
+}
+
+html[data-theme="light"] .hero__title-gradient,
+html[data-theme="light"] .gradient-text {
+  background: none;
+  -webkit-text-fill-color: #6246c7;
+  color: #6246c7;
+}
+
+html[data-theme="light"] .hero__description,
+html[data-theme="light"] .section__subtitle,
+html[data-theme="light"] .mkt-spotlight__desc,
+html[data-theme="light"] .card__text,
+html[data-theme="light"] .footer__description {
+  color: #526071;
+}
+
+html[data-theme="light"] .hero__badge,
+html[data-theme="light"] .section__label,
+html[data-theme="light"] .syn-hero__badge {
+  background: #f5f3ff;
+  border: 1px solid #ddd6fe;
+  color: #6246c7;
+  box-shadow: none;
+  animation: none;
+}
+
+html[data-theme="light"] .hero__badge-dot { background: #6246c7; animation: none; }
+
+html[data-theme="light"] .btn {
+  border-radius: 8px;
+  box-shadow: none;
+  transform: none;
+}
+
+html[data-theme="light"] .btn--primary,
+html[data-theme="light"] .btn--gold,
+html[data-theme="light"] .app-filter--active,
+html[data-theme="light"] .syn-download {
+  background: #6246c7 !important;
+  color: #ffffff !important;
+  border: 1px solid #6246c7;
+  box-shadow: none;
+}
+
+html[data-theme="light"] .btn--primary:hover,
+html[data-theme="light"] .btn--gold:hover,
+html[data-theme="light"] .syn-download:hover {
+  background: #5038aa !important;
+  box-shadow: 0 4px 12px rgba(98, 70, 199, 0.20);
+  transform: translateY(-1px);
+}
+
+html[data-theme="light"] .btn--secondary,
+html[data-theme="light"] .btn--outline {
+  background: #ffffff;
+  color: #172033;
+  border: 1px solid #cfd5df;
+}
+
+html[data-theme="light"] .btn--secondary:hover,
+html[data-theme="light"] .btn--outline:hover {
+  background: #f8fafc;
+  border-color: #6246c7;
+  color: #6246c7;
+}
+
+html[data-theme="light"] .card,
+html[data-theme="light"] .syn-card,
+html[data-theme="light"] .faq-card,
+html[data-theme="light"] .product-card,
+html[data-theme="light"] .why-card,
+html[data-theme="light"] .pricing-card,
+html[data-theme="light"] .affiliate__card,
+html[data-theme="light"] .cta-content,
+html[data-theme="light"] .mkt-spotlight__card {
+  background: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(15, 23, 42, 0.05) !important;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+html[data-theme="light"] .card:hover,
+html[data-theme="light"] .syn-card:hover,
+html[data-theme="light"] .product-card:hover {
+  border-color: #c4b5fd !important;
+  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.08) !important;
+  transform: translateY(-2px);
+}
+
+html[data-theme="light"] .footer {
+  background: #f8fafc;
+  border-top: 1px solid #e5e7eb;
+}
+
+html[data-theme="light"] .footer__heading,
+html[data-theme="light"] .footer__brand,
+html[data-theme="light"] .footer__link {
+  color: #263247;
+}
+
+html[data-theme="light"] .footer__link:hover { color: #6246c7; }
+
+html[data-theme="light"] .mkt-page-title { color: #111827; }
 .hero__cursor {
   display: inline-block;
   font-weight: 100;
@@ -1842,7 +2031,7 @@ body::after {
 
 /* ─── SCROLL REVEAL — Stagger ─── */
 .reveal--visible {
-  animation: revealUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: revealUp 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 @keyframes revealUp {
   from { opacity: 0; transform: translateY(30px); }

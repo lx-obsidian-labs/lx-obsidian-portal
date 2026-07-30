@@ -1,5 +1,5 @@
-﻿<!DOCTYPE html>
-<html lang="en" data-theme="dark" class="theme-refresh">
+<!DOCTYPE html>
+<html lang="en" data-theme="light" class="theme-refresh">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
   <link rel="canonical" href="https://www.lxobsidianportal.co.za/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="css/style.css">
   <title>LX Obsidian Labs — Build. Sell. Earn. | Software, AI & Marketplace</title>
@@ -181,8 +181,8 @@
             <span class="hero__badge-text">AI TECHNOLOGY COMPANY</span>
           </div>
           <h1 class="hero__title">
-            <span class="hero__title-line">Build AI Products.</span>
-            <span class="hero__title-line hero__title-gradient">Sell Them <span class="hero__typed" id="heroTyped"></span><span class="hero__cursor">|</span></span>
+            <span class="hero__title-line">We build intelligent</span>
+            <span class="hero__title-line hero__title-gradient">products businesses can use.</span>
           </h1>
           <p class="hero__description">
             We design, develop, and deploy intelligent software — from AI-powered browser automation to enterprise platforms. Sell through the LX Marketplace or hire our engineering team to build your next product.
@@ -1565,33 +1565,6 @@
           i++;
         }, 300);
       }, 3500);
-    })();
-
-    (function(){
-      var words = ['Globally.', 'Automatically.', 'Intelligently.', 'At Scale.'];
-      var el = document.getElementById('heroTyped');
-      if (!el) return;
-      var wordIdx = 0, charIdx = 0, deleting = false, pause = 0;
-      function type() {
-        var word = words[wordIdx];
-        if (!deleting) {
-          el.textContent = word.substring(0, charIdx + 1);
-          charIdx++;
-          if (charIdx === word.length) { deleting = true; pause = 2000; }
-          setTimeout(type, pause || 70);
-        } else {
-          el.textContent = word.substring(0, charIdx - 1);
-          charIdx--;
-          if (charIdx === 0) {
-            deleting = false;
-            wordIdx = (wordIdx + 1) % words.length;
-            setTimeout(type, 400);
-          } else {
-            setTimeout(type, 35);
-          }
-        }
-      }
-      setTimeout(type, 1200);
     })();
 
     (function(){

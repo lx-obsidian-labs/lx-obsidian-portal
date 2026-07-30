@@ -132,6 +132,7 @@ void (function () {
       { id: 'contactName', error: 'contactNameError', validate: function (v) { return v.trim().length > 0; } },
       { id: 'contactEmail', error: 'contactEmailError', validate: function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()); } },
       { id: 'contactSubject', error: 'contactSubjectError', validate: function (v) { return v.trim().length > 0; } },
+      { id: 'contactProjectType', error: 'contactProjectTypeError', validate: function (v) { return v.trim().length > 0; } },
       { id: 'contactMessage', error: 'contactMessageError', validate: function (v) { return v.trim().length > 0; } }
     ];
 
@@ -161,6 +162,10 @@ void (function () {
 
       var data = {};
       fields.forEach(function (f) { data[f.id.replace('contact', '').toLowerCase()] = document.getElementById(f.id).value; });
+      ['contactBudget', 'contactLaunch', 'contactWebsite', 'contactPreferred'].forEach(function (id) {
+        var input = document.getElementById(id);
+        if (input) data[id.replace('contact', '').toLowerCase()] = input.value.trim();
+      });
 
       fetch('/api/contact', {
         method: 'POST',

@@ -588,7 +588,7 @@
   letter-spacing: 0.08em;
   color: var(--color-accent);
   margin-bottom: var(--space-6);
-  animation: fadeInUp 0.8s ease forwards;
+  animation: fadeInUp 0.22s ease forwards;
   text-transform: uppercase;
 }
 
@@ -611,7 +611,7 @@
   letter-spacing: -0.03em;
   margin-bottom: var(--space-6);
   max-width: 800px;
-  animation: fadeInUp 0.8s ease 0.15s forwards;
+  animation: fadeInUp 0.22s ease 0.04s forwards;
   opacity: 0;
 }
 
@@ -635,7 +635,7 @@
   max-width: 540px;
   line-height: 1.7;
   margin-bottom: var(--space-10);
-  animation: fadeInUp 0.8s ease 0.3s forwards;
+  animation: fadeInUp 0.22s ease 0.08s forwards;
   opacity: 0;
 }
 
@@ -644,7 +644,7 @@
   align-items: center;
   gap: var(--space-4);
   flex-wrap: wrap;
-  animation: fadeInUp 0.8s ease 0.45s forwards;
+  animation: fadeInUp 0.22s ease 0.12s forwards;
   opacity: 0;
 }
 
@@ -690,7 +690,7 @@
   margin-top: var(--space-10);
   padding-top: var(--space-6);
   border-top: 1px solid var(--color-border);
-  animation: fadeInUp 0.8s ease 0.6s forwards;
+  animation: fadeInUp 0.22s ease 0.16s forwards;
   opacity: 0;
   flex-wrap: wrap;
 }

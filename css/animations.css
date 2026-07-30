@@ -81,7 +81,7 @@
 .reveal {
   opacity: 0;
   transform: translateY(40px);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .reveal--visible {
@@ -99,7 +99,7 @@
 .reveal--left {
   opacity: 0;
   transform: translateX(-50px);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .reveal--left.reveal--visible {
@@ -110,7 +110,7 @@
 .reveal--right {
   opacity: 0;
   transform: translateX(50px);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .reveal--right.reveal--visible {
@@ -121,7 +121,7 @@
 .reveal--scale {
   opacity: 0;
   transform: scale(0.92);
-  transition: opacity 0.8s ease, transform 0.8s ease;
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
 .reveal--scale.reveal--visible {
@@ -149,4 +149,13 @@
 .counter {
   display: inline-block;
   font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

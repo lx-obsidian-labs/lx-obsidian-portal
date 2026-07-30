@@ -46,7 +46,7 @@
   --gradient-glow: linear-gradient(135deg, rgba(139,92,246,0.12), rgba(34,211,238,0.08), rgba(236,72,153,0.06));
 
   /* ─── Typography ─── */
-  --font-primary: 'Poppins', sans-serif;
+  --font-primary: 'Space Grotesk', sans-serif;
   --font-secondary: 'Inter', sans-serif;
   --font-display: 'Space Grotesk', sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;

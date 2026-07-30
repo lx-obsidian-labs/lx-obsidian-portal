@@ -20,8 +20,9 @@ export async function onRequest(context) {
     var email = (body.email || '').trim();
     var subject = (body.subject || '').trim();
     var message = (body.message || '').trim();
+    var projectType = (body.projecttype || '').trim();
 
-    if (!name || !email || !subject || !message) {
+    if (!name || !email || !subject || !message || !projectType) {
       return new Response(JSON.stringify({ error: 'All fields are required' }), { status: 400, headers });
     }
 
@@ -34,7 +35,7 @@ export async function onRequest(context) {
       console.log('Contact form submission to:', contactEmail);
     }
 
-    console.log('Contact submission:', { name, email, subject, messageLength: message.length });
+    console.log('Contact submission:', { name, email, subject, projectType, budget: body.budget || '', launch: body.launch || '', website: body.website || '', preferred: body.preferred || '', messageLength: message.length });
 
     return new Response(JSON.stringify({ ok: true }), { status: 200, headers });
   } catch (err) {
