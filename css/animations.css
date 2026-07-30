@@ -31,6 +31,29 @@
   100% { opacity: 0; transform: translateY(-250px) scale(1); }
 }
 
+/* Hero background motion stays isolated from the HTML interface. */
+@keyframes heroFrameFade {
+  0%, 42% { opacity: 0; }
+  50%, 92% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes heroCorePulse {
+  0%, 100% { filter: brightness(1); transform: scale(1); }
+  50% { filter: brightness(1.08); transform: scale(1.08); }
+}
+
+@keyframes heroParticleDrift {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(7px, -5px); }
+  100% { transform: translate(-6px, 4px); }
+}
+
+@keyframes heroFogDrift {
+  0% { transform: translate(-7px, 5px); }
+  100% { transform: translate(8px, -6px); }
+}
+
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-12px); }
