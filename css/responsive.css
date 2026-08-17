@@ -417,6 +417,83 @@
 }
 
 /* ============================================
+   NEW DESIGN SYSTEM RESPONSIVE
+   ============================================ */
+
+@media (max-width: 1024px) {
+  .process-steps {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .services-grid--5col {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .featured-product__card {
+    grid-template-columns: 1fr;
+  }
+  .featured-product__visual {
+    min-height: 200px;
+  }
+}
+
+@media (max-width: 900px) {
+  .editorial-layout {
+    grid-template-columns: 1fr;
+    gap: var(--space-10);
+  }
+  .editorial-layout--reverse {
+    direction: ltr;
+  }
+  .editorial-visual {
+    aspect-ratio: 16/8;
+  }
+  .work-item {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+  .industries-grid__layout {
+    grid-template-columns: 1fr;
+  }
+  .industry-card--large {
+    grid-row: auto;
+  }
+  .blog-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .process-steps {
+    grid-template-columns: 1fr;
+  }
+  .services-grid--3col,
+  .services-grid--5col {
+    grid-template-columns: 1fr;
+  }
+  .portfolio-grid--2col {
+    grid-template-columns: 1fr;
+  }
+  .blog-grid {
+    grid-template-columns: 1fr;
+  }
+  .insights-grid {
+    grid-template-columns: 1fr;
+  }
+  .command-strip__options {
+    gap: var(--space-2);
+  }
+  .command-strip__option {
+    font-size: var(--text-xs);
+    padding: 0.5rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .final-cta__heading {
+    font-size: var(--text-4xl);
+  }
+}
+
+/* ============================================
    UTILITY
    ============================================ */
 
