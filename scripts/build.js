@@ -7,7 +7,7 @@ const DIST = path.join(ROOT, 'dist');
 const INCLUDE = [
   'index.html', '404.html', 'about.html', 'blog.html', 'contact.html',
   'faq.html', 'marketplace.html', 'portfolio.html', 'services.html',
-  'synapse.html',
+  'synapse.html', 'industries.html', 'partners.html',
   'js', 'assets', 'dashboard',
   'functions',
   '_headers', '_redirects',
@@ -23,7 +23,8 @@ const CSS_ORDER = [
   'animations.css',
   'responsive.css',
   'features.css',
-  'bright.css'
+  'bright.css',
+  'refresh.css'
 ];
 
 if (fs.existsSync(DIST)) {

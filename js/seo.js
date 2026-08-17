@@ -24,7 +24,9 @@ void (function () {
     blog:       'Blog — Insights, Guides & Tech Articles | LX Obsidian Labs',
     contact:    'Contact Us — Get in Touch | LX Obsidian Labs',
     faq:        'FAQ — Frequently Asked Questions | LX Obsidian Labs',
-    synapse:    'Synapse AI — AI Browser Automation Extension | LX Obsidian Labs'
+    synapse:    'Synapse AI — AI Browser Automation Extension | LX Obsidian Labs',
+    industries: 'Industries We Serve — Fintech, Healthcare & More | LX Obsidian Labs',
+    partners:   'Partners — Build With LX Obsidian Labs | LX Obsidian Labs'
   };
 
   var descriptions = {
@@ -36,7 +38,9 @@ void (function () {
     blog:       'Read articles on software development, AI, cloud computing, mobile apps, and digital transformation from the LX Obsidian team.',
     contact:    'Contact LX Obsidian Labs for consultations, project inquiries, partnerships, or general questions. We respond within 24 hours.',
     faq:        'Find answers to frequently asked questions about our services, pricing, process, and technology stack.',
-    synapse:    'Download Synapse AI, the free AI-powered Chrome extension for autonomous web automation, content generation, and browser control.'
+    synapse:    'Download Synapse AI, the free AI-powered Chrome extension for autonomous web automation, content generation, and browser control.',
+    industries: 'LX Obsidian Labs serves fintech, healthcare, ecommerce, enterprise, and public sector organisations across South Africa and beyond.',
+    partners:   'Partner with LX Obsidian Labs — white-label, reseller, technology integration, and referral opportunities.'
   };
 
   /* ==========================================
@@ -52,7 +56,7 @@ void (function () {
     '@id': BASE + '/#organization',
     name: 'LX Obsidian Labs',
     url: BASE,
-    logo: BASE + '/assets/logo.png',
+    logo: BASE + '/assets/og-default.png',
     description: 'Enterprise software, AI, cloud & mobile development company based in Cape Town, South Africa.',
     address: {
       '@type': 'PostalAddress',
@@ -246,7 +250,7 @@ void (function () {
         },
         publisher: { '@id': BASE + '/#organization' },
         datePublished: '2026-06-26',
-        image: BASE + '/assets/logo.png',
+    image: BASE + '/assets/og-default.png',
         articleSection: tagEl ? tagEl.textContent.trim() : 'Technology'
       });
     });
