@@ -66,12 +66,14 @@ void (function () {
     document.querySelectorAll('.nav__link').forEach(function (link) {
       if (link.getAttribute('href') === pageClass) {
         link.classList.add('nav__link--active');
+        link.setAttribute('aria-current', 'page');
       }
     });
 
     document.querySelectorAll('.nav-dropdown__item').forEach(function (item) {
       if (item.getAttribute('href') === pageClass) {
         item.classList.add('nav-dropdown__item--active');
+        item.setAttribute('aria-current', 'page');
       }
     });
   }

@@ -541,6 +541,7 @@ p {
   border-radius: var(--radius-xl);
   padding: var(--space-8);
   transition: all var(--transition-base);
+  will-change: transform;
 }
 
 .card:hover {
@@ -2277,10 +2278,11 @@ p {
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.4s ease, padding 0.4s ease;
+  will-change: max-height;
 }
 
 .faq-item--open .faq-item__content {
-  max-height: 300px;
+  max-height: 600px;
   padding-bottom: var(--space-6);
 }
 
@@ -9309,6 +9311,7 @@ body > *:not(script):not(style):not(noscript) {
   display: flex;
   flex-direction: column;
   transition: border-color var(--transition-base), transform var(--transition-fast);
+  will-change: transform;
 }
 .service-card:hover {
   border-color: var(--color-border-accent);
@@ -9358,6 +9361,7 @@ body > *:not(script):not(style):not(noscript) {
   border-radius: var(--radius-xl);
   overflow: hidden;
   transition: border-color var(--transition-base), transform var(--transition-fast);
+  will-change: transform;
 }
 .portfolio-card:hover {
   border-color: var(--color-border-accent);

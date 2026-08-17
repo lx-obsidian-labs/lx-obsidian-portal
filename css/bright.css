@@ -1157,6 +1157,7 @@ body > *:not(script):not(style):not(noscript) {
   display: flex;
   flex-direction: column;
   transition: border-color var(--transition-base), transform var(--transition-fast);
+  will-change: transform;
 }
 .service-card:hover {
   border-color: var(--color-border-accent);
@@ -1206,6 +1207,7 @@ body > *:not(script):not(style):not(noscript) {
   border-radius: var(--radius-xl);
   overflow: hidden;
   transition: border-color var(--transition-base), transform var(--transition-fast);
+  will-change: transform;
 }
 .portfolio-card:hover {
   border-color: var(--color-border-accent);

@@ -144,6 +144,7 @@
   border-radius: var(--radius-xl);
   padding: var(--space-8);
   transition: all var(--transition-base);
+  will-change: transform;
 }
 
 .card:hover {
@@ -1880,10 +1881,11 @@
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.4s ease, padding 0.4s ease;
+  will-change: max-height;
 }
 
 .faq-item--open .faq-item__content {
-  max-height: 300px;
+  max-height: 600px;
   padding-bottom: var(--space-6);
 }
 
