@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en" class="theme-refresh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Synapse AI — an AI-powered browser automation extension by LX Obsidian Labs. Control any page, extract data, fill forms and automate tasks. Download the Chrome extension for free.">
+  <meta name="theme-color" content="#050505">
+  <meta property="og:title" content="Synapse AI — AI Browser Automation Extension | LX Obsidian Labs">
+  <meta property="og:description" content="Download Synapse AI, the AI-powered browser automation extension by LX Obsidian Labs. Automate any web page with an observe → plan → execute → verify agent loop.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.lxobsidianportal.co.za/synapse">
+  <meta property="og:locale" content="en_ZA">
+  <meta property="og:image" content="https://www.lxobsidianportal.co.za/assets/og-default.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Synapse AI — AI Browser Automation Extension">
+  <meta name="twitter:description" content="Download Synapse AI, the AI-powered browser automation extension by LX Obsidian Labs.">
+  <meta name="twitter:image" content="https://www.lxobsidianportal.co.za/assets/og-default.png">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.lxobsidianportal.co.za/synapse">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="css/style.css">
+  <title>Synapse AI — AI Browser Automation Extension | LX Obsidian Labs</title>
+  <style>
+    /* ---- Synapse AI page (scoped, reuses global design tokens) ---- */
+    .syn-hero {
+      position: relative;
+      padding: 7rem 0 4rem;
+      overflow: hidden;
+      background: var(--gradient-hero);
+    }
+    .syn-hero__inner { max-width: 760px; }
+    .syn-hero__badge {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .35rem .8rem; border-radius: 999px;
+      font-size: .75rem; font-weight: 600; letter-spacing: .04em;
+      color: var(--color-accent-light);
+      background: var(--color-accent-glow);
+      border: 1px solid var(--color-border-accent);
+      text-transform: uppercase;
+    }
+    .syn-hero__title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.2rem, 5vw, 3.6rem);
+      line-height: 1.08; font-weight: 800; margin: 1.2rem 0 1rem;
+      color: var(--color-text);
+    }
+    .syn-hero__title span { color: var(--color-accent-light); }
+    .syn-hero__text {
+      font-size: 1.05rem; line-height: 1.7; color: var(--color-text-secondary); max-width: 640px;
+    }
+    .syn-hero__actions { display: flex; flex-wrap: wrap; gap: .9rem; margin-top: 2rem; }
+
+    .syn-download {
+      display: inline-flex; align-items: center; gap: .75rem;
+      padding: 1rem 1.6rem; border-radius: 14px;
+      background: var(--gradient-accent);
+      border: none;
+      color: #fff; font-weight: 700; font-size: 1.05rem;
+      text-decoration: none; transition: transform .15s ease, box-shadow .15s ease;
+      box-shadow: var(--shadow-accent);
+    }
+    .syn-download:hover { transform: translateY(-2px); box-shadow: var(--shadow-accent-strong); }
+    .syn-download__icon { width: 22px; height: 22px; flex: none; }
+    .syn-download__meta { display: block; font-size: .72rem; font-weight: 500; color: rgba(255,255,255,.7); margin-top: 2px; }
+    .syn-download__label { line-height: 1.1; }
+
+    .syn-grid {
+      display: grid; gap: 1.25rem; margin-top: 2.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+    .syn-card {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px; padding: 1.6rem;
+      backdrop-filter: blur(12px);
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+    }
+    .syn-card:hover { transform: translateY(-4px); border-color: var(--color-border-accent); box-shadow: var(--shadow-accent); }
+    .syn-card__icon {
+      width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center;
+      background: var(--color-accent-glow); color: var(--color-accent-light); margin-bottom: 1rem;
+    }
+    .syn-card__title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--color-text); margin-bottom: .5rem; }
+    .syn-card__text { font-size: .92rem; line-height: 1.6; color: var(--color-text-secondary); }
+
+    .syn-steps { display: grid; gap: 1.5rem; margin-top: 2.5rem; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    .syn-step { position: relative; padding-top: 3.4rem; }
+    .syn-step__num {
+      position: absolute; top: 0; left: 0;
+      width: 40px; height: 40px; border-radius: 50%;
+      display: grid; place-items: center; font-weight: 800; color: #fff;
+      background: var(--gradient-accent);
+    }
+    .syn-step__title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; color: var(--color-text); margin-bottom: .4rem; }
+    .syn-step__text { font-size: .92rem; line-height: 1.6; color: var(--color-text-secondary); }
+
+    .syn-install {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(12px);
+      border-radius: 18px; padding: 2rem; margin-top: 2.5rem;
+    }
+    .syn-install__title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; color: var(--color-text); margin-bottom: 1rem; }
+    .syn-install__list { list-style: none; counter-reset: inst; display: grid; gap: .9rem; }
+    .syn-install__list li { display: flex; gap: .8rem; align-items: flex-start; color: var(--color-text-secondary); font-size: .95rem; line-height: 1.6; }
+    .syn-install__list li::before {
+      counter-increment: inst; content: counter(inst);
+      flex: none; width: 26px; height: 26px; border-radius: 50%;
+      display: grid; place-items: center; font-size: .8rem; font-weight: 700;
+      color: var(--color-accent-light); background: var(--color-accent-glow);
+    }
+    .syn-install__list code { background: rgba(255,255,255,.06); padding: .1rem .4rem; border-radius: 6px; font-size: .85em; color: var(--color-accent-light); }
+    [data-theme="light"] .syn-install__list code { background: rgba(0,0,0,.05); }
+
+    .syn-meta { display: flex; flex-wrap: wrap; gap: 1.5rem; margin-top: 1.5rem; color: var(--color-text-muted); font-size: .9rem; }
+    .syn-meta strong { color: var(--color-text); }
+    .syn-github {
+      display: inline-flex; align-items: center; gap: .5rem; margin-top: 1.5rem;
+      color: var(--color-accent-light); font-weight: 600; text-decoration: none;
+    }
+    .syn-github:hover { text-decoration: underline; }
+  </style>
+</head>
+<body class="page-synapse">
+
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Loading Bar -->
+  <div class="loading-bar" aria-hidden="true">
+    <div class="loading-bar__fill" id="loadingBarFill"></div>
+  </div>
+
+  <!-- ==========================================
+       ANNOUNCEMENT BAR
+       ========================================== -->
+  <div class="announcement-bar">
+    <div class="container">
+      <a href="marketplace.html" class="announcement-bar__link">
+        <span class="announcement-bar__badge">NEW</span>
+        <span>Browse all products on LX Marketplace — AI tools, templates and business systems.</span>
+        <span class="announcement-bar__cta">Explore <span aria-hidden="true">→</span></span>
+      </a>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       NAVIGATION
+       ========================================== -->
+  <nav class="nav nav--solid" id="nav" role="navigation" aria-label="Main navigation">
+    <div class="container">
+      <div class="nav__inner">
+        <a href="index.html" class="nav__logo" aria-label="LX Obsidian Labs Home">
+          <div class="nav__logo-icon">LX</div>
+          <span class="nav__logo-text">LX <span>Obsidian</span></span>
+        </a>
+        <div class="nav__links" id="navLinks" role="menubar">
+          <div class="nav-dropdown" role="none">
+            <button class="nav-dropdown__trigger" role="menuitem" aria-haspopup="true" aria-expanded="false">
+              Solutions
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="nav-dropdown__menu" role="menu">
+              <a href="services.html#ai-automation" class="nav-dropdown__item" role="menuitem">AI & Automation</a>
+              <a href="services.html#web-platforms" class="nav-dropdown__item" role="menuitem">Web Platforms</a>
+              <a href="services.html#mobile-apps" class="nav-dropdown__item" role="menuitem">Mobile Applications</a>
+              <a href="services.html#business-systems" class="nav-dropdown__item" role="menuitem">Business Systems</a>
+              <a href="services.html#cloud-infrastructure" class="nav-dropdown__item" role="menuitem">Cloud & Infrastructure</a>
+              <a href="services.html#ui-ux-design" class="nav-dropdown__item" role="menuitem">UI/UX & Product Design</a>
+            </div>
+          </div>
+          <div class="nav-dropdown" role="none">
+            <button class="nav-dropdown__trigger" role="menuitem" aria-haspopup="true" aria-expanded="false">
+              Products
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="nav-dropdown__menu" role="menu">
+              <a href="marketplace.html" class="nav-dropdown__item" role="menuitem">LX Marketplace</a>
+              <a href="synapse.html" class="nav-dropdown__item nav-dropdown__item--hot" role="menuitem">Synapse AI</a>
+            </div>
+          </div>
+          <div class="nav-dropdown" role="none">
+            <button class="nav-dropdown__trigger" role="menuitem" aria-haspopup="true" aria-expanded="false">
+              Industries
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="nav-dropdown__menu" role="menu">
+              <a href="industries.html#education" class="nav-dropdown__item" role="menuitem">Education & Training</a>
+              <a href="industries.html#retail" class="nav-dropdown__item" role="menuitem">Retail & Commerce</a>
+              <a href="industries.html#hospitality" class="nav-dropdown__item" role="menuitem">Restaurants & Hospitality</a>
+              <a href="industries.html#professional" class="nav-dropdown__item" role="menuitem">Professional Services</a>
+              <a href="industries.html#mining" class="nav-dropdown__item" role="menuitem">Industrial & Mining</a>
+              <a href="industries.html#startups" class="nav-dropdown__item" role="menuitem">Startups</a>
+            </div>
+          </div>
+          <div class="nav-dropdown" role="none">
+            <button class="nav-dropdown__trigger" role="menuitem" aria-haspopup="true" aria-expanded="false">
+              Work
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="nav-dropdown__menu" role="menu">
+              <a href="portfolio.html" class="nav-dropdown__item" role="menuitem">Case Studies</a>
+              <a href="portfolio.html" class="nav-dropdown__item" role="menuitem">Portfolio</a>
+            </div>
+          </div>
+          <div class="nav-dropdown" role="none">
+            <button class="nav-dropdown__trigger" role="menuitem" aria-haspopup="true" aria-expanded="false">
+              Company
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="nav-dropdown__menu" role="menu">
+              <a href="about.html" class="nav-dropdown__item" role="menuitem">About</a>
+              <a href="blog.html" class="nav-dropdown__item" role="menuitem">Insights</a>
+              <a href="#" class="nav-dropdown__item" role="menuitem">Careers</a>
+              <a href="partners.html" class="nav-dropdown__item" role="menuitem">Partners</a>
+              <a href="contact.html" class="nav-dropdown__item" role="menuitem">Contact</a>
+            </div>
+          </div>
+        </div>
+        <div class="nav__actions">
+          <button id="searchToggle" class="btn btn--ghost btn--small" aria-label="Open search">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </button>
+          <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+            <svg class="theme-toggle__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+          </button>
+          <a href="contact.html" class="btn btn--ghost btn--small">Contact Sales</a>
+          <a href="contact.html" class="btn btn--primary btn--small">Start Project</a>
+          <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ==========================================
+       HERO
+       ========================================== -->
+  <section class="syn-hero" id="main-content" aria-label="Synapse AI">
+    <div class="container">
+      <div class="syn-hero__inner reveal">
+        <span class="syn-hero__badge">By LX Obsidian Labs</span>
+        <h1 class="syn-hero__title">Synapse AI — your <span>AI browser agent</span></h1>
+        <p class="syn-hero__text">
+          An AI-powered Chrome / Edge / Brave extension that turns any web page into an autonomous,
+          controllable workspace. It runs an <strong>observe → plan → execute → verify</strong> loop:
+          it reads the live page, an AI model picks one action, the extension performs it, checks the
+          result, and repeats until your objective is done. Works out of the box — no API key required.
+        </p>
+        <div class="syn-hero__actions">
+          <a href="#" id="synapseDownloadBtn" class="syn-download">
+            <svg class="syn-download__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            <span>
+              <span class="syn-download__label">Download for Chrome</span>
+              <span class="syn-download__meta" id="synapseVersion">v1.1.1 · free</span>
+            </span>
+          </a>
+          <a href="https://github.com/lx-obsidian-labs/synapse-social" class="btn btn--secondary btn--large" target="_blank" rel="noopener">View Source on GitHub</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       FEATURES
+       ========================================== -->
+  <section class="section" aria-label="Features">
+    <div class="container">
+      <div class="section__header reveal">
+        <p class="section__label">Capabilities</p>
+        <h2 class="section__title">What Synapse AI can do</h2>
+        <p class="section__subtitle">A single extension that combines browser automation, AI content generation, and workflow intelligence.</p>
+      </div>
+      <div class="syn-grid">
+        <div class="syn-card reveal">
+          <div class="syn-card__icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+          </div>
+          <h3 class="syn-card__title">Autonomous web automation</h3>
+          <p class="syn-card__text">Navigate, click, type, extract, and fill forms on any page. The agent plans each step and verifies the result before continuing.</p>
+        </div>
+        <div class="syn-card reveal">
+          <div class="syn-card__icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          </div>
+          <h3 class="syn-card__title">AI content generation</h3>
+          <p class="syn-card__text">Generate posts, replies, and copy in your brand voice. Built for Facebook page management and social operating workflows.</p>
+        </div>
+        <div class="syn-card reveal">
+          <div class="syn-card__icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+          </div>
+          <h3 class="syn-card__title">Vision fallback</h3>
+          <p class="syn-card__text">When the DOM is empty or unclear, Synapse understands a screenshot of the page so automation never gets stuck.</p>
+        </div>
+        <div class="syn-card reveal">
+          <div class="syn-card__icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 6 6 .9-4.5 4.3L17.5 20 12 16.8 6.5 20l1-6.8L3 8.9 9 8z"/></svg>
+          </div>
+          <h3 class="syn-card__title">Self-learning memory</h3>
+          <p class="syn-card__text">Model rotation, failover, and a technical HUD keep tasks reliable. Outcomes feed a memory that improves future runs.</p>
+        </div>
+        <div class="syn-card reveal">
+          <div class="syn-card__icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          </div>
+          <h3 class="syn-card__title">No key required</h3>
+          <p class="syn-card__text">AI routing goes through a secure hosted proxy, so the extension works immediately — no NVIDIA key to configure.</p>
+        </div>
+        <div class="syn-card reveal">
+          <div class="syn-card__icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M4 9h16M9 20V9"/></svg>
+          </div>
+          <h3 class="syn-card__title">Site-specific playbooks</h3>
+          <p class="syn-card__text">Ready-made workflows for ChatGPT, Gmail, YouTube, Facebook, Google, LinkedIn, GitHub, Canva and more.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       HOW IT WORKS
+       ========================================== -->
+  <section class="section" aria-label="How it works">
+    <div class="container">
+      <div class="section__header reveal">
+        <p class="section__label">How it works</p>
+        <h2 class="section__title">An agent loop you can steer</h2>
+        <p class="section__subtitle">Type an objective and Synapse does the work — step by step, transparently.</p>
+      </div>
+      <div class="syn-steps">
+        <div class="syn-step reveal">
+          <div class="syn-step__num">1</div>
+          <h3 class="syn-step__title">Observe</h3>
+          <p class="syn-step__text">The extension reads the live page — its DOM, forms, and visible content — to understand the current state.</p>
+        </div>
+        <div class="syn-step reveal">
+          <div class="syn-step__num">2</div>
+          <h3 class="syn-step__title">Plan</h3>
+          <p class="syn-step__text">An AI model (NVIDIA NIM Nemotron / Llama / VILA) picks the single best next action toward your goal.</p>
+        </div>
+        <div class="syn-step reveal">
+          <div class="syn-step__num">3</div>
+          <h3 class="syn-step__title">Execute</h3>
+          <p class="syn-step__text">Synapse performs the action — click, type, extract, fill — directly on the page.</p>
+        </div>
+        <div class="syn-step reveal">
+          <div class="syn-step__num">4</div>
+          <h3 class="syn-step__title">Verify</h3>
+          <p class="syn-step__text">It checks the result and loops until the objective is complete. Use Pause / Stop in the HUD to stay in control.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       DOWNLOAD / INSTALL
+       ========================================== -->
+  <section class="section" id="download" aria-label="Download and install">
+    <div class="container">
+      <div class="section__header reveal">
+        <p class="section__label">Get Synapse AI</p>
+        <h2 class="section__title">Download &amp; install</h2>
+        <p class="section__subtitle">Free, open distribution via GitHub Releases. Always pulls the latest build automatically.</p>
+      </div>
+
+      <div class="syn-install reveal">
+        <h3 class="syn-install__title">Install from the downloaded ZIP</h3>
+        <ol class="syn-install__list">
+          <li>Click <strong>Download for Chrome</strong> above and unzip the file. You'll get a folder containing <code>manifest.json</code>.</li>
+          <li>Open your browser's extensions page:
+            <code>chrome://extensions</code>, <code>edge://extensions</code>, or <code>brave://extensions</code>.</li>
+          <li>Turn on <strong>Developer mode</strong> (top-right toggle).</li>
+          <li>Click <strong>Load unpacked</strong> and select the unzipped folder (the one with <code>manifest.json</code>).</li>
+          <li>Pin <strong>Synapse AI</strong> to your toolbar and click it to open the side panel. That's it — the AI works out of the box.</li>
+        </ol>
+
+        <div class="syn-meta">
+          <span>Version: <strong id="synapseVersionMeta">v1.1.1</strong></span>
+          <span>Manifest: <strong>MV3</strong></span>
+          <span>Browsers: <strong>Chrome · Edge · Brave</strong></span>
+          <span>Requires: <strong>Chromium v100+</strong></span>
+        </div>
+
+        <a href="#" id="synapseDownloadBtnBottom" class="syn-download">
+          <svg class="syn-download__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          <span>
+            <span class="syn-download__label">Download Synapse AI</span>
+            <span class="syn-download__meta" id="synapseVersionBottom">v1.1.1 · free</span>
+          </span>
+        </a>
+
+        <a href="https://github.com/lx-obsidian-labs/synapse-social/releases" class="syn-github" target="_blank" rel="noopener">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          Browse all releases on GitHub
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       CTA
+       ========================================== -->
+  <section class="section cta-section" aria-label="Call to action">
+    <div class="container">
+      <div class="cta-content reveal">
+        <div class="cta-gradient"></div>
+        <h2 class="cta-content__title">Ready to automate the web?</h2>
+        <p class="cta-content__text">Download Synapse AI today, or explore more products on LX Marketplace. Custom AI automation also available.</p>
+        <div class="cta-content__actions">
+          <a href="#download" class="btn btn--primary btn--large">Download Free</a>
+          <a href="marketplace.html" class="btn btn--secondary btn--large">Browse Marketplace</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       FOOTER
+       ========================================== -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand-col">
+          <div class="footer__brand">LX <span>Obsidian</span></div>
+          <p class="footer__description">LX Obsidian Labs is a South African software and AI engineering company building digital products, automation systems and custom business software.</p>
+        </div>
+        <div>
+          <h4 class="footer__heading">Solutions</h4>
+          <div class="footer__links">
+            <a href="services.html#ai-automation" class="footer__link">AI & Automation</a>
+            <a href="services.html#web-platforms" class="footer__link">Web Platforms</a>
+            <a href="services.html#mobile-apps" class="footer__link">Mobile Applications</a>
+            <a href="services.html#business-systems" class="footer__link">Business Systems</a>
+            <a href="services.html#cloud-infrastructure" class="footer__link">Cloud & Infrastructure</a>
+            <a href="services.html#ui-ux-design" class="footer__link">UI/UX Design</a>
+          </div>
+        </div>
+        <div>
+          <h4 class="footer__heading">Products</h4>
+          <div class="footer__links">
+            <a href="marketplace.html" class="footer__link">LX Marketplace</a>
+            <a href="synapse.html" class="footer__link">Synapse AI</a>
+          </div>
+        </div>
+        <div>
+          <h4 class="footer__heading">Company</h4>
+          <div class="footer__links">
+            <a href="about.html" class="footer__link">About</a>
+            <a href="portfolio.html" class="footer__link">Portfolio</a>
+            <a href="partners.html" class="footer__link">Partners</a>
+            <a href="contact.html" class="footer__link">Contact</a>
+            <a href="#" class="footer__link">Careers</a>
+          </div>
+        </div>
+        <div>
+          <h4 class="footer__heading">Resources</h4>
+          <div class="footer__links">
+            <a href="blog.html" class="footer__link">Insights</a>
+            <a href="faq.html" class="footer__link">FAQ</a>
+            <a href="#" class="footer__link">Privacy Policy</a>
+            <a href="#" class="footer__link">Terms of Service</a>
+          </div>
+        </div>
+        <div>
+          <h4 class="footer__heading">Connect</h4>
+          <div class="footer__links">
+            <a href="https://github.com/lx-obsidian-labs" class="footer__link" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://www.instagram.com/lx_obsidian_labs/" class="footer__link" target="_blank" rel="noopener">Instagram</a>
+            <a href="mailto:contact@lxobsidian.co.za" class="footer__link">Email</a>
+            <a href="https://wa.me/27630652689" class="footer__link" target="_blank" rel="noopener">WhatsApp</a>
+            <a href="tel:+27630652689" class="footer__link">+27 63 065 2689</a>
+            <span class="footer__link footer__link--muted">Cape Town, South Africa</span>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>&copy; 2026 LX Obsidian Labs. All rights reserved.</span>
+        <div class="footer__social">
+          <a href="https://github.com/lx-obsidian-labs" class="footer__social-link" aria-label="GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a>
+          <a href="https://www.instagram.com/lx_obsidian_labs/" class="footer__social-link" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 01-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 017.8 2m-.2 2A3.6 3.6 0 004 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 003.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 010 2.5 1.25 1.25 0 010-2.5M12 7a5 5 0 110 10 5 5 0 010-10m0 2a3 3 0 100 6 3 3 0 000-6z"/></svg></a>
+          <a href="mailto:contact@lxobsidian.co.za" class="footer__social-link" aria-label="Email"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a>
+          <a href="https://wa.me/27630652689" class="footer__social-link" aria-label="WhatsApp"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================
+       FLOATING BUTTONS
+       ========================================== -->
+  <div class="floating-buttons">
+    <button class="floating-btn floating-btn--chat" aria-label="AI Assistant">
+      <svg class="floating-btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+      </svg>
+      <span class="floating-btn__tooltip floating-btn__label">AI Assistant</span>
+    </button>
+    <button class="floating-btn floating-btn--chat" aria-label="WhatsApp">
+      <svg class="floating-btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/>
+      </svg>
+      <span class="floating-btn__tooltip floating-btn__label">WhatsApp</span>
+    </button>
+    <button class="floating-btn floating-btn--scroll" id="scrollToTop" aria-label="Scroll to top">
+      <svg class="floating-btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="18 15 12 9 6 15"/>
+      </svg>
+      <span class="floating-btn__tooltip floating-btn__label">Scroll to Top</span>
+    </button>
+    <button class="floating-btn floating-btn--scroll" aria-label="Book Consultation">
+      <svg class="floating-btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+        <line x1="16" y1="2" x2="16" y2="6"/>
+        <line x1="8" y1="2" x2="8" y2="6"/>
+        <line x1="3" y1="10" x2="21" y2="10"/>
+      </svg>
+      <span class="floating-btn__tooltip floating-btn__label">Book Consultation</span>
+    </button>
+  </div>
+
+  <!-- ==========================================
+       SEARCH MODAL
+       ========================================== -->
+  <div class="search-overlay" id="searchOverlay" role="dialog" aria-modal="true" aria-label="Search">
+    <div class="search-modal">
+      <div class="search-modal__header">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input type="text" class="search-input" id="searchInput" placeholder="Search services, applications, articles..." aria-label="Search input">
+        <kbd class="search-modal__shortcut">ESC</kbd>
+        <button class="search-modal__close" id="searchClose" aria-label="Close search">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div class="search-results" id="searchResults">
+        <p class="search-empty">Start typing to search...</p>
+      </div>
+    </div>
+  </div>
+
+  <noscript>
+    <div style="padding:1rem;background:var(--color-card,#111);border:1px solid var(--color-accent,#C89B3C);border-radius:8px;text-align:center;margin:1rem;color:var(--color-text,#eee);font-size:0.875rem;font-family:system-ui,sans-serif;">
+      LX Obsidian Labs requires JavaScript for the best experience. Please enable JavaScript in your browser settings.
+    </div>
+  </noscript>
+
+  <!-- ==========================================
+       SCRIPTS
+       ========================================== -->
+  <script src="js/navigation.js"></script>
+  <script src="js/scroll.js"></script>
+  <script src="js/animations.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/features.js"></script>
+  <script src="js/seo.js"></script>
+  <script src="js/ux.js"></script>
+  <script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js');}</script>
+
+  <!-- Synapse AI: fetch latest release from GitHub, fall back to v1.1.1 -->
+  <script>
+    (function () {
+      var RELEASE_API = 'https://api.github.com/repos/lx-obsidian-labs/synapse-social/releases/latest';
+      var FALLBACK = {
+        version: '1.1.1',
+        url: 'https://github.com/lx-obsidian-labs/synapse-social/releases/download/v1.1.1/synapse-ai-v1.1.1.zip'
+      };
+
+      var btns = [
+        document.getElementById('synapseDownloadBtn'),
+        document.getElementById('synapseDownloadBtnBottom')
+      ];
+      var labels = [
+        document.getElementById('synapseVersion'),
+        document.getElementById('synapseVersionBottom'),
+        document.getElementById('synapseVersionMeta')
+      ];
+
+      function apply(version, url) {
+        btns.forEach(function (b) { if (b) b.href = url; });
+        labels.forEach(function (l) {
+          if (!l) return;
+          if (l.id === 'synapseVersionMeta') { l.textContent = 'v' + version; }
+          else { l.textContent = 'v' + version + ' · free'; }
+        });
+        btns.forEach(function (b) {
+          if (!b) return;
+          var lbl = b.querySelector('.syn-download__label');
+          if (lbl) lbl.textContent = (b.id === 'synapseDownloadBtnBottom') ? ('Download Synapse AI v' + version) : ('Download v' + version);
+        });
+      }
+
+      apply(FALLBACK.version, FALLBACK.url);
+
+      fetch(RELEASE_API, { headers: { 'Accept': 'application/vnd.github+json' } })
+        .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+        .then(function (data) {
+          var asset = data.assets && data.assets[0];
+          if (!asset || !asset.browser_download_url) return;
+          var v = (data.tag_name || '').replace(/^v/, '') || FALLBACK.version;
+          apply(v, asset.browser_download_url);
+        })
+        .catch(function () { /* keep fallback */ });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+export async function onRequest(context) {
+  var headers = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Content-Type': 'application/json'
+  };
+
+  if (context.request.method === 'OPTIONS') {
+    return new Response(null, { status: 204, headers });
+  }
+
+  if (context.request.method !== 'POST') {
+    return new Response(JSON.stringify({ error: 'Method not allowed' }), { status: 405, headers });
+  }
+
+  try {
+    var body = await context.request.json();
+    var name = (body.name || '').trim();
+    var email = (body.email || '').trim();
+    var subject = (body.subject || '').trim();
+    var message = (body.message || '').trim();
+    var projectType = (body.projecttype || '').trim();
+
+    if (!name || !email || !subject || !message || !projectType) {
+      return new Response(JSON.stringify({ error: 'All fields are required' }), { status: 400, headers });
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return new Response(JSON.stringify({ error: 'Invalid email' }), { status: 400, headers });
+    }
+
+    var contactEmail = context.env.CONTACT_EMAIL;
+    if (contactEmail) {
+      console.log('Contact form submission to:', contactEmail);
+    }
+
+    console.log('Contact submission:', { name, email, subject, projectType, budget: body.budget || '', launch: body.launch || '', website: body.website || '', preferred: body.preferred || '', messageLength: message.length });
+
+    return new Response(JSON.stringify({ ok: true }), { status: 200, headers });
+  } catch (err) {
+    return new Response(JSON.stringify({ error: 'Internal error' }), { status: 500, headers });
+  }
+}
