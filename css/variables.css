@@ -1,14 +1,14 @@
 :root {
   /* ─── Core Palette ─── */
-  --color-bg: #05070b;
-  --color-surface: #080b10;
-  --color-card: #0b0f15;
-  --color-card-hover: #101622;
-  --color-accent: #8b5cff;
-  --color-accent-light: #b9a4ff;
-  --color-accent-dark: #6338d8;
-  --color-accent-glow: rgba(139, 92, 246, 0.14);
-  --color-accent-glow-strong: rgba(139, 92, 246, 0.28);
+  --color-bg: #070709;
+  --color-surface: #0c0c10;
+  --color-card: #101016;
+  --color-card-hover: #161620;
+  --color-accent: #7c5cff;
+  --color-accent-light: #a78bfa;
+  --color-accent-dark: #5b3fd6;
+  --color-accent-glow: rgba(124, 92, 255, 0.12);
+  --color-accent-glow-strong: rgba(124, 92, 255, 0.22);
   --color-cyan: #22D3EE;
   --color-cyan-light: #67E8F9;
   --color-cyan-dark: #06B6D4;
@@ -31,18 +31,18 @@
   /* ─── Gradients ─── */
   --gradient-accent: linear-gradient(135deg, #8B5CF6 0%, #6366F1 48%, #22D3EE 100%);
   --gradient-accent-reverse: linear-gradient(135deg, #22D3EE 0%, #6366F1 52%, #8B5CF6 100%);
-  --gradient-hero: linear-gradient(180deg, #05070b 0%, #080c13 52%, #05070b 100%);
-  --gradient-card: linear-gradient(145deg, rgba(13,18,26,0.96), rgba(7,10,15,0.98));
-  --gradient-card-hover: linear-gradient(145deg, rgba(18,24,35,0.98), rgba(10,14,22,0.98));
+  --gradient-hero: linear-gradient(180deg, #070709 0%, #0c0c12 52%, #070709 100%);
+  --gradient-card: linear-gradient(145deg, rgba(16,16,24,0.96), rgba(7,7,12,0.98));
+  --gradient-card-hover: linear-gradient(145deg, rgba(22,22,34,0.98), rgba(10,10,18,0.98));
   --gradient-mesh:
-    radial-gradient(ellipse 80% 50% at 80% 0%, rgba(139,92,246,0.18), transparent 60%),
-    radial-gradient(ellipse 60% 45% at 5% 15%, rgba(34,211,238,0.12), transparent 60%),
-    radial-gradient(ellipse 50% 40% at 50% 80%, rgba(236,72,153,0.08), transparent 60%);
+    radial-gradient(ellipse 80% 50% at 80% 0%, rgba(124,92,255,0.12), transparent 60%),
+    radial-gradient(ellipse 60% 45% at 5% 15%, rgba(34,211,238,0.08), transparent 60%),
+    radial-gradient(ellipse 50% 40% at 50% 80%, rgba(236,72,153,0.05), transparent 60%);
   --gradient-aurora:
-    radial-gradient(ellipse 120% 60% at 20% 10%, rgba(139,92,246,0.25), transparent 50%),
-    radial-gradient(ellipse 100% 50% at 80% 20%, rgba(34,211,238,0.18), transparent 50%),
-    radial-gradient(ellipse 80% 40% at 50% 70%, rgba(236,72,153,0.10), transparent 50%),
-    radial-gradient(ellipse 60% 30% at 10% 60%, rgba(52,211,153,0.06), transparent 50%);
+    radial-gradient(ellipse 120% 60% at 20% 10%, rgba(124,92,255,0.18), transparent 50%),
+    radial-gradient(ellipse 100% 50% at 80% 20%, rgba(34,211,238,0.10), transparent 50%),
+    radial-gradient(ellipse 80% 40% at 50% 70%, rgba(236,72,153,0.06), transparent 50%),
+    radial-gradient(ellipse 60% 30% at 10% 60%, rgba(52,211,153,0.04), transparent 50%);
   --gradient-glow: linear-gradient(135deg, rgba(139,92,246,0.12), rgba(34,211,238,0.08), rgba(236,72,153,0.06));
 
   /* ─── Typography ─── */
@@ -80,11 +80,11 @@
   --space-32: 8rem;
 
   /* ─── Radii ─── */
-  --radius-sm: 2px;
-  --radius-md: 3px;
-  --radius-lg: 4px;
-  --radius-xl: 4px;
-  --radius-2xl: 6px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 10px;
+  --radius-2xl: 14px;
   --radius-full: 9999px;
 
   /* ─── Shadows ─── */
@@ -100,10 +100,10 @@
   --shadow-card-hover: 0 20px 60px rgba(139, 92, 246, 0.15), 0 0 0 1px rgba(139, 92, 246, 0.2);
 
   /* ─── Glass ─── */
-  --glass-bg: rgba(17, 17, 38, 0.55);
-  --glass-border: rgba(255, 255, 255, 0.10);
-  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
-  --glass-blur: 20px;
+  --glass-bg: rgba(12, 12, 20, 0.62);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.40);
+  --glass-blur: 24px;
 
   /* ─── Transitions ─── */
   --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -123,10 +123,10 @@
   --z-particles: 1;
 
   /* ─── Layout ─── */
-  --container-max: 1280px;
-  --container-narrow: 960px;
+  --container-max: 1200px;
+  --container-narrow: 920px;
   --container-padding: 1.5rem;
-  --nav-height: 72px;
+  --nav-height: 68px;
 }
 
 [data-theme="light"] {

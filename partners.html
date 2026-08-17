@@ -3,33 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Find answers to frequently asked questions about our services, pricing, process, and technology stack.">
+  <meta name="description" content="Partner with LX Obsidian Labs. Join our affiliate program, sell on the marketplace, or collaborate on client projects.">
   <meta name="theme-color" content="#050505">
-  <meta property="og:title" content="FAQ — Frequently Asked Questions | LX Obsidian Labs">
-  <meta property="og:description" content="Find answers to frequently asked questions about our services, pricing, process, and technology stack.">
+  <meta property="og:title" content="Partners — LX Obsidian Labs">
+  <meta property="og:description" content="Partner with LX Obsidian Labs. Join our affiliate program, sell on the marketplace, or collaborate on client projects.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://www.lxobsidianportal.co.za/faq">
+  <meta property="og:url" content="https://www.lxobsidianportal.co.za/partners">
   <meta property="og:locale" content="en_ZA">
   <meta property="og:image" content="https://www.lxobsidianportal.co.za/assets/og-default.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="FAQ — Frequently Asked Questions | LX Obsidian Labs">
-  <meta name="twitter:description" content="Find answers to frequently asked questions about our services, pricing, process, and technology stack.">
+  <meta name="twitter:title" content="Partners — LX Obsidian Labs">
+  <meta name="twitter:description" content="Partner with LX Obsidian Labs. Join our affiliate program, sell on the marketplace, or collaborate on client projects.">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://www.lxobsidianportal.co.za/faq">
+  <link rel="canonical" href="https://www.lxobsidianportal.co.za/partners">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="css/style.css">
-  <title>FAQ — Frequently Asked Questions | LX Obsidian Labs</title>
+  <title>Partners — LX Obsidian Labs</title>
 </head>
-<body class="page-faq">
+<body class="page-partners">
 
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
-  <!-- Loading Bar -->
   <div class="loading-bar" aria-hidden="true">
     <div class="loading-bar__fill" id="loadingBarFill"></div>
   </div>
@@ -37,14 +36,18 @@
   <!-- ==========================================
        ANNOUNCEMENT BAR
        ========================================== -->
-  <!-- ANNOUNCEMENT BAR -->
-  <div class="announcement-bar">
+  <div class="announcement" id="announcement" role="banner">
     <div class="container">
-      <a href="synapse.html" class="announcement-bar__link">
-        <span class="announcement-bar__badge">NEW</span>
+      <div class="announcement__content">
+        <span class="announcement__badge">New</span>
         <span>Synapse AI is now available — Free browser automation powered by AI.</span>
-        <span class="announcement-bar__cta">Explore <span aria-hidden="true">→</span></span>
-      </a>
+        <a href="synapse.html" class="announcement__link">Explore →</a>
+      </div>
+      <button class="announcement__close" id="announcementClose" aria-label="Close announcement">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M1 1L13 13M13 1L1 13"/>
+        </svg>
+      </button>
     </div>
   </div>
 
@@ -65,10 +68,10 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
             <div class="nav-dropdown__menu" role="menu">
-              <a href="services.html#ai-automation" class="nav-dropdown__item" role="menuitem">AI & Automation</a>
-              <a href="services.html#web-platforms" class="nav-dropdown__item" role="menuitem">Web Platforms</a>
+              <a href="services.html#ai-solutions" class="nav-dropdown__item" role="menuitem">AI & Automation</a>
+              <a href="services.html#web-development" class="nav-dropdown__item" role="menuitem">Web Platforms</a>
               <a href="services.html#mobile-apps" class="nav-dropdown__item" role="menuitem">Mobile Applications</a>
-              <a href="services.html#business-systems" class="nav-dropdown__item" role="menuitem">Business Systems</a>
+              <a href="services.html#enterprise-systems" class="nav-dropdown__item" role="menuitem">Business Systems</a>
               <a href="services.html#cloud-infrastructure" class="nav-dropdown__item" role="menuitem">Cloud & Infrastructure</a>
               <a href="services.html#ui-ux-design" class="nav-dropdown__item" role="menuitem">UI/UX & Product Design</a>
             </div>
@@ -89,12 +92,12 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
             <div class="nav-dropdown__menu" role="menu">
-              <a href="industries.html#education" class="nav-dropdown__item" role="menuitem">Education & Training</a>
-              <a href="industries.html#retail" class="nav-dropdown__item" role="menuitem">Retail & Commerce</a>
-              <a href="industries.html#hospitality" class="nav-dropdown__item" role="menuitem">Restaurants & Hospitality</a>
-              <a href="industries.html#professional" class="nav-dropdown__item" role="menuitem">Professional Services</a>
-              <a href="industries.html#mining" class="nav-dropdown__item" role="menuitem">Industrial & Mining</a>
-              <a href="industries.html#startups" class="nav-dropdown__item" role="menuitem">Startups</a>
+              <a href="services.html" class="nav-dropdown__item" role="menuitem">Education & Training</a>
+              <a href="services.html" class="nav-dropdown__item" role="menuitem">Retail & Commerce</a>
+              <a href="services.html" class="nav-dropdown__item" role="menuitem">Restaurants & Hospitality</a>
+              <a href="services.html" class="nav-dropdown__item" role="menuitem">Professional Services</a>
+              <a href="services.html" class="nav-dropdown__item" role="menuitem">Industrial & Mining</a>
+              <a href="services.html" class="nav-dropdown__item" role="menuitem">Startups</a>
             </div>
           </div>
           <div class="nav-dropdown" role="none">
@@ -126,14 +129,16 @@
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
           </button>
           <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-            <svg class="theme-toggle__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-            </svg>
+            <svg class="theme-toggle__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
           </button>
           <a href="contact.html" class="btn btn--ghost btn--small">Contact Sales</a>
           <a href="contact.html" class="btn btn--primary btn--small">Start Project</a>
-          <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
-            <span></span><span></span><span></span>
+          <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+            <div class="nav__toggle-icon">
+              <span class="nav__toggle-line"></span>
+              <span class="nav__toggle-line"></span>
+              <span class="nav__toggle-line"></span>
+            </div>
           </button>
         </div>
       </div>
@@ -143,150 +148,67 @@
   <!-- ==========================================
        PAGE HEADER
        ========================================== -->
-  <section class="section" id="main-content" aria-label="FAQ">
-    <div class="container container--narrow">
+  <section class="section" id="main-content" aria-label="Partners">
+    <div class="container">
       <div class="section__header reveal">
-        <p class="section__label">FAQ</p>
-        <h1 class="section__title">Frequently asked questions</h1>
-        <p class="section__subtitle">Everything you need to know about working with LX Obsidian Labs. Can't find what you're looking for? <a href="contact.html" style="color: var(--color-accent); text-decoration: underline;">Contact us</a>.</p>
+        <p class="section__label">Partners</p>
+        <h1 class="section__title">Build with us.</h1>
+        <p class="section__subtitle">We work with affiliates, marketplace sellers and development partners to extend what LX can deliver.</p>
       </div>
     </div>
   </section>
 
   <!-- ==========================================
-       FAQ ACCORDION
+       AFFILIATE PROGRAM
        ========================================== -->
-  <section class="section" aria-label="Frequently asked questions">
+  <section class="section" id="affiliates" aria-label="Affiliate Program">
     <div class="container">
-      <div class="faq-list reveal">
-        <div class="faq-item">
-          <button class="faq-item__trigger" aria-expanded="false">
-            <span>How much does a website cost?</span>
-            <span class="faq-item__icon">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
-              </svg>
-            </span>
-          </button>
-          <div class="faq-item__content">
-            <p class="faq-item__text">Our pricing varies based on project scope, complexity, and timeline. A simple brochure website starts at $2,499/mo, while more complex web applications with custom functionality are priced higher. We provide a detailed quote after our initial consultation.</p>
+      <div class="grid grid--2">
+        <div class="reveal reveal--left">
+          <h2 class="section__title" style="margin-bottom:var(--space-4);">Affiliate Program</h2>
+          <p class="card__text" style="margin-bottom:var(--space-6);">Share LX products and earn recurring commission on every sale. 20% commission on referred sales, free to join, real-time dashboard.</p>
+          <div style="margin-bottom:var(--space-6);">
+            <h3 style="font-size:var(--text-sm);font-weight:600;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:var(--space-4);">What you get</h3>
+            <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:var(--space-3);">
+              <li style="display:flex;align-items:flex-start;gap:var(--space-3);">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:3px;"><polyline points="20 6 9 17 4 12"/></svg>
+                <span class="card__text">20% recurring commission</span>
+              </li>
+              <li style="display:flex;align-items:flex-start;gap:var(--space-3);">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:3px;"><polyline points="20 6 9 17 4 12"/></svg>
+                <span class="card__text">Free to join</span>
+              </li>
+              <li style="display:flex;align-items:flex-start;gap:var(--space-3);">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:3px;"><polyline points="20 6 9 17 4 12"/></svg>
+                <span class="card__text">Real-time tracking dashboard</span>
+              </li>
+              <li style="display:flex;align-items:flex-start;gap:var(--space-3);">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:3px;"><polyline points="20 6 9 17 4 12"/></svg>
+                <span class="card__text">Marketing materials provided</span>
+              </li>
+            </ul>
           </div>
         </div>
-        <div class="faq-item">
-          <button class="faq-item__trigger" aria-expanded="false">
-            <span>How long does development take?</span>
-            <span class="faq-item__icon">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
-              </svg>
-            </span>
-          </button>
-          <div class="faq-item__content">
-            <p class="faq-item__text">Typical project timelines range from 4–12 weeks depending on complexity. A standard website can be delivered in 4–6 weeks, while larger enterprise systems may take 3–6 months. We provide a realistic timeline during the proposal phase.</p>
-          </div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-item__trigger" aria-expanded="false">
-            <span>Can you redesign existing software?</span>
-            <span class="faq-item__icon">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
-              </svg>
-            </span>
-          </button>
-          <div class="faq-item__content">
-            <p class="faq-item__text">Absolutely. We specialise in modernising legacy systems, redesigning user interfaces, and migrating outdated architectures to modern, scalable platforms. Our team will audit your existing software and provide a comprehensive roadmap for improvement.</p>
-          </div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-item__trigger" aria-expanded="false">
-            <span>Do you build AI systems?</span>
-            <span class="faq-item__icon">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
-              </svg>
-            </span>
-          </button>
-          <div class="faq-item__content">
-            <p class="faq-item__text">Yes. We design and deploy AI-powered solutions including chatbots, recommendation engines, predictive analytics, document processing systems, and custom machine learning models. Our team has deep expertise in integrating AI into real-world business applications.</p>
-          </div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-item__trigger" aria-expanded="false">
-            <span>Can you maintain my software?</span>
-            <span class="faq-item__icon">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
-              </svg>
-            </span>
-          </button>
-          <div class="faq-item__content">
-            <p class="faq-item__text">Yes. We offer ongoing maintenance and support plans to keep your software secure, up-to-date, and running smoothly. This includes bug fixes, performance monitoring, security patches, feature updates, and technical support with guaranteed response times.</p>
-          </div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-item__trigger" aria-expanded="false">
-            <span>Do you build Android Apps?</span>
-            <span class="faq-item__icon">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
-              </svg>
-            </span>
-          </button>
-          <div class="faq-item__content">
-            <p class="faq-item__text">Yes. We develop native Android applications using Kotlin and Jetpack Compose, as well as cross-platform apps using React Native and Flutter. Our apps are designed for performance, usability, and seamless integration with the Android ecosystem.</p>
-          </div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-item__trigger" aria-expanded="false">
-            <span>Do you provide hosting?</span>
-            <span class="faq-item__icon">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
-              </svg>
-            </span>
-          </button>
-          <div class="faq-item__content">
-            <p class="faq-item__text">We do not offer hosting directly, but we manage deployment and infrastructure setup on leading cloud providers including AWS, Google Cloud, Cloudflare, and Vercel. We handle the entire DevOps pipeline so your application is reliable, scalable, and secure.</p>
-          </div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-item__trigger" aria-expanded="false">
-            <span>Can I track my project?</span>
-            <span class="faq-item__icon">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
-              </svg>
-            </span>
-          </button>
-          <div class="faq-item__content">
-            <p class="faq-item__text">Absolutely. Every client gets access to a dedicated project management dashboard with real-time updates, task tracking, milestone timelines, and direct communication with your development team. We believe in full transparency throughout the development process.</p>
-          </div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-item__trigger" aria-expanded="false">
-            <span>Do you provide ongoing support?</span>
-            <span class="faq-item__icon">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
-              </svg>
-            </span>
-          </button>
-          <div class="faq-item__content">
-            <p class="faq-item__text">Yes. All projects include post-launch support, and we offer extended maintenance and support packages tailored to your needs. Our support plans cover bug fixes, performance optimisation, security updates, and priority assistance with guaranteed response times.</p>
-          </div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-item__trigger" aria-expanded="false">
-            <span>What technologies do you use?</span>
-            <span class="faq-item__icon">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
-              </svg>
-            </span>
-          </button>
-          <div class="faq-item__content">
-            <p class="faq-item__text">We work with a modern tech stack including React, Next.js, TypeScript, Node.js, Python, Kotlin, Swift, PostgreSQL, Docker, Kubernetes, AWS, Cloudflare, OpenAI, TensorFlow, and more. We choose the best technology for each project's specific requirements.</p>
+        <div class="reveal reveal--right">
+          <div class="card" style="height:100%;display:flex;flex-direction:column;justify-content:space-between;padding:var(--space-8);gap:var(--space-8);">
+            <div>
+              <h3 style="font-size:var(--text-lg);font-weight:600;margin-bottom:var(--space-6);">How it works</h3>
+              <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:var(--space-4);">
+                <li style="display:flex;align-items:center;gap:var(--space-3);">
+                  <span style="display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:var(--color-accent);color:var(--color-bg);font-weight:600;font-size:var(--text-sm);flex-shrink:0;">1</span>
+                  <span class="card__text">Sign up</span>
+                </li>
+                <li style="display:flex;align-items:center;gap:var(--space-3);">
+                  <span style="display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:var(--color-accent);color:var(--color-bg);font-weight:600;font-size:var(--text-sm);flex-shrink:0;">2</span>
+                  <span class="card__text">Share your link</span>
+                </li>
+                <li style="display:flex;align-items:center;gap:var(--space-3);">
+                  <span style="display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:var(--color-accent);color:var(--color-bg);font-weight:600;font-size:var(--text-sm);flex-shrink:0;">3</span>
+                  <span class="card__text">Earn commission on every sale</span>
+                </li>
+              </ul>
+            </div>
+            <a href="contact.html" class="btn btn--primary">Join Affiliate Program</a>
           </div>
         </div>
       </div>
@@ -294,17 +216,144 @@
   </section>
 
   <!-- ==========================================
-       LARGE CTA SECTION
+       MARKETPLACE SELLERS
        ========================================== -->
-  <section class="section cta-section" id="cta" aria-label="Call to action">
+  <section class="section section--alt" id="marketplace-partner" aria-label="Marketplace Sellers">
     <div class="container">
-      <div class="cta-content reveal">
-        <div class="cta-gradient"></div>
-        <h2 class="cta-content__title">Ready to Build Something Incredible?</h2>
-        <p class="cta-content__text">Let's transform your vision into powerful digital solutions that drive real business outcomes.</p>
-        <div class="cta-content__actions">
-          <a href="contact.html" class="btn btn--primary btn--large">Start Your Project</a>
-          <a href="contact.html" class="btn btn--secondary btn--large">Book Consultation</a>
+      <div class="grid grid--2">
+        <div class="reveal reveal--left">
+          <h2 class="section__title" style="margin-bottom:var(--space-4);">Sell on LX Marketplace</h2>
+          <p class="card__text" style="margin-bottom:var(--space-6);">List your digital products, AI tools and business software on our marketplace. We handle hosting, payments and delivery.</p>
+          <div style="margin-bottom:var(--space-6);">
+            <h3 style="font-size:var(--text-sm);font-weight:600;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:var(--space-4);">What you get</h3>
+            <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:var(--space-3);">
+              <li style="display:flex;align-items:flex-start;gap:var(--space-3);">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:3px;"><polyline points="20 6 9 17 4 12"/></svg>
+                <span class="card__text">Access to our audience</span>
+              </li>
+              <li style="display:flex;align-items:flex-start;gap:var(--space-3);">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:3px;"><polyline points="20 6 9 17 4 12"/></svg>
+                <span class="card__text">Handled hosting and payments</span>
+              </li>
+              <li style="display:flex;align-items:flex-start;gap:var(--space-3);">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:3px;"><polyline points="20 6 9 17 4 12"/></svg>
+                <span class="card__text">Quality review process</span>
+              </li>
+              <li style="display:flex;align-items:flex-start;gap:var(--space-3);">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:3px;"><polyline points="20 6 9 17 4 12"/></svg>
+                <span class="card__text">85% revenue share</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="reveal reveal--right">
+          <div class="card" style="height:100%;display:flex;flex-direction:column;justify-content:space-between;padding:var(--space-8);gap:var(--space-8);">
+            <div>
+              <h3 style="font-size:var(--text-lg);font-weight:600;margin-bottom:var(--space-6);">Products we accept</h3>
+              <div style="display:flex;flex-wrap:wrap;gap:var(--space-3);">
+                <span class="card__text" style="display:inline-block;padding:var(--space-2) var(--space-4);border:1px solid var(--color-border);border-radius:var(--radius-full);font-size:var(--text-sm);">Mobile apps</span>
+                <span class="card__text" style="display:inline-block;padding:var(--space-2) var(--space-4);border:1px solid var(--color-border);border-radius:var(--radius-full);font-size:var(--text-sm);">Web templates</span>
+                <span class="card__text" style="display:inline-block;padding:var(--space-2) var(--space-4);border:1px solid var(--color-border);border-radius:var(--radius-full);font-size:var(--text-sm);">AI agents</span>
+                <span class="card__text" style="display:inline-block;padding:var(--space-2) var(--space-4);border:1px solid var(--color-border);border-radius:var(--radius-full);font-size:var(--text-sm);">Chatbots</span>
+                <span class="card__text" style="display:inline-block;padding:var(--space-2) var(--space-4);border:1px solid var(--color-border);border-radius:var(--radius-full);font-size:var(--text-sm);">SaaS tools</span>
+                <span class="card__text" style="display:inline-block;padding:var(--space-2) var(--space-4);border:1px solid var(--color-border);border-radius:var(--radius-full);font-size:var(--text-sm);">Design assets</span>
+                <span class="card__text" style="display:inline-block;padding:var(--space-2) var(--space-4);border:1px solid var(--color-border);border-radius:var(--radius-full);font-size:var(--text-sm);">Video courses</span>
+                <span class="card__text" style="display:inline-block;padding:var(--space-2) var(--space-4);border:1px solid var(--color-border);border-radius:var(--radius-full);font-size:var(--text-sm);">API integrations</span>
+              </div>
+            </div>
+            <a href="contact.html" class="btn btn--primary">Become a Seller</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       DEVELOPMENT PARTNERS
+       ========================================== -->
+  <section class="section" id="dev-partners" aria-label="Development Partners">
+    <div class="container">
+      <div class="grid grid--2">
+        <div class="reveal reveal--left">
+          <h2 class="section__title" style="margin-bottom:var(--space-4);">Development Partners</h2>
+          <p class="card__text" style="margin-bottom:var(--space-6);">Collaborate with LX on larger projects. We partner with specialists, agencies and freelancers to deliver complete solutions.</p>
+        </div>
+        <div class="reveal reveal--right">
+          <div class="card" style="height:100%;display:flex;flex-direction:column;justify-content:space-between;padding:var(--space-8);gap:var(--space-8);">
+            <div>
+              <h3 style="font-size:var(--text-lg);font-weight:600;margin-bottom:var(--space-6);">What we look for</h3>
+              <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:var(--space-4);">
+                <li style="display:flex;align-items:flex-start;gap:var(--space-3);">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:3px;"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span class="card__text">Technical expertise</span>
+                </li>
+                <li style="display:flex;align-items:flex-start;gap:var(--space-3);">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:3px;"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span class="card__text">Complementary skills</span>
+                </li>
+                <li style="display:flex;align-items:flex-start;gap:var(--space-3);">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:3px;"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span class="card__text">Professional communication</span>
+                </li>
+                <li style="display:flex;align-items:flex-start;gap:var(--space-3);">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:3px;"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span class="card__text">Quality track record</span>
+                </li>
+              </ul>
+            </div>
+            <a href="contact.html" class="btn btn--primary">Apply to Partner</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       WHY PARTNER
+       ========================================== -->
+  <section class="section section--alt" aria-label="Why partner with LX">
+    <div class="container">
+      <div class="section__header reveal">
+        <p class="section__label">Why Partner</p>
+        <h2 class="section__title">Built for long-term collaboration</h2>
+        <p class="section__subtitle">We value partners who want to grow alongside us, not just transact once.</p>
+      </div>
+      <div class="grid grid--4 reveal">
+        <div class="card" style="padding:var(--space-6);text-align:center;">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:var(--space-4);"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          <h3 style="font-size:var(--text-sm);font-weight:600;margin-bottom:var(--space-2);">Reliable payments</h3>
+          <p class="card__text" style="font-size:var(--text-sm);">Commission and revenue share paid on schedule, every time.</p>
+        </div>
+        <div class="card" style="padding:var(--space-6);text-align:center;">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:var(--space-4);"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+          <h3 style="font-size:var(--text-sm);font-weight:600;margin-bottom:var(--space-2);">Growing audience</h3>
+          <p class="card__text" style="font-size:var(--text-sm);">Access to a growing South African tech audience.</p>
+        </div>
+        <div class="card" style="padding:var(--space-6);text-align:center;">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:var(--space-4);"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <h3 style="font-size:var(--text-sm);font-weight:600;margin-bottom:var(--space-2);">Professional brand</h3>
+          <p class="card__text" style="font-size:var(--text-sm);">Partner with a brand known for quality and professionalism.</p>
+        </div>
+        <div class="card" style="padding:var(--space-6);text-align:center;">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:var(--space-4);"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          <h3 style="font-size:var(--text-sm);font-weight:600;margin-bottom:var(--space-2);">Long-term opportunities</h3>
+          <p class="card__text" style="font-size:var(--text-sm);">Partnerships designed to grow over time, not just one-off deals.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       CTA SECTION
+       ========================================== -->
+  <section class="section" aria-label="Partner call to action">
+    <div class="container">
+      <div class="section__header reveal">
+        <h2 class="section__title">Ready to partner with LX?</h2>
+        <p class="section__subtitle">Let's explore how we can work together.</p>
+        <div style="display:flex;gap:var(--space-4);justify-content:center;flex-wrap:wrap;margin-top:var(--space-6);">
+          <a href="contact.html" class="btn btn--primary">Get in Touch</a>
+          <a href="contact.html" class="btn btn--ghost">Start as an Affiliate</a>
         </div>
       </div>
     </div>
@@ -316,18 +365,22 @@
   <footer class="footer" role="contentinfo">
     <div class="container">
       <div class="footer__grid">
-        <div class="footer__brand-col">
-          <div class="footer__brand">LX <span>Obsidian</span></div>
-          <p class="footer__description">LX Obsidian Labs is a South African software and AI engineering company building digital products, automation systems and custom business software.</p>
+        <div>
+          <a href="index.html" class="footer__logo" aria-label="LX Obsidian Labs Home">
+            <div class="nav__logo-icon">LX</div>
+            <span class="nav__logo-text">LX <span>Obsidian</span></span>
+          </a>
+          <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.6;margin:var(--space-4) 0 var(--space-6);">South African software and AI company building digital products, automation systems and custom business software.</p>
+
         </div>
         <div>
           <h4 class="footer__heading">Solutions</h4>
           <div class="footer__links">
-            <a href="services.html#ai-automation" class="footer__link">AI & Automation</a>
-            <a href="services.html#web-platforms" class="footer__link">Web Platforms</a>
-            <a href="services.html#mobile-apps" class="footer__link">Mobile Applications</a>
-            <a href="services.html#business-systems" class="footer__link">Business Systems</a>
-            <a href="services.html#cloud-infrastructure" class="footer__link">Cloud & Infrastructure</a>
+            <a href="services.html#ai-solutions" class="footer__link">AI & Automation</a>
+            <a href="services.html#web-development" class="footer__link">Web Development</a>
+            <a href="services.html#mobile-apps" class="footer__link">Mobile Apps</a>
+            <a href="services.html#enterprise-systems" class="footer__link">Enterprise Systems</a>
+            <a href="services.html#cloud-infrastructure" class="footer__link">Cloud & DevOps</a>
             <a href="services.html#ui-ux-design" class="footer__link">UI/UX Design</a>
           </div>
         </div>
@@ -336,23 +389,27 @@
           <div class="footer__links">
             <a href="synapse.html" class="footer__link">Synapse AI</a>
             <a href="marketplace.html" class="footer__link">LX Marketplace</a>
+            <a href="marketplace.html" class="footer__link">AI Agents</a>
+            <a href="marketplace.html" class="footer__link">Web Apps</a>
+            <a href="marketplace.html" class="footer__link">Mobile Apps</a>
           </div>
         </div>
         <div>
           <h4 class="footer__heading">Company</h4>
           <div class="footer__links">
             <a href="about.html" class="footer__link">About</a>
-            <a href="portfolio.html" class="footer__link">Portfolio</a>
+            <a href="blog.html" class="footer__link">Insights</a>
+            <a href="#" class="footer__link">Careers</a>
             <a href="partners.html" class="footer__link">Partners</a>
             <a href="contact.html" class="footer__link">Contact</a>
-            <a href="#" class="footer__link">Careers</a>
           </div>
         </div>
         <div>
           <h4 class="footer__heading">Resources</h4>
           <div class="footer__links">
-            <a href="blog.html" class="footer__link">Insights</a>
+            <a href="portfolio.html" class="footer__link">Portfolio</a>
             <a href="faq.html" class="footer__link">FAQ</a>
+            <a href="contact.html" class="footer__link">Support</a>
             <a href="#" class="footer__link">Privacy Policy</a>
             <a href="#" class="footer__link">Terms of Service</a>
           </div>
@@ -536,4 +593,3 @@
   <script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js');}</script>
 </body>
 </html>
-

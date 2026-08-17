@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Explore our portfolio of successful projects across fintech, healthcare, ecommerce, and enterprise software. See how we deliver results.">
+  <meta name="description" content="Explore our work across client projects, LX products, and experimental labs. Software, AI, and automation built by LX Obsidian Labs.">
   <meta name="theme-color" content="#050505">
-  <meta property="og:title" content="Our Portfolio — Case Studies & Projects | LX Obsidian Labs">
-  <meta property="og:description" content="Explore our portfolio of successful projects across fintech, healthcare, ecommerce, and enterprise software. See how we deliver results.">
+  <meta property="og:title" content="Work — LX Obsidian Labs">
+  <meta property="og:description" content="Explore our work across client projects, LX products, and experimental labs. Software, AI, and automation built by LX Obsidian Labs.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.lxobsidianportal.co.za/portfolio">
   <meta property="og:locale" content="en_ZA">
@@ -14,8 +14,8 @@
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Our Portfolio — Case Studies & Projects | LX Obsidian Labs">
-  <meta name="twitter:description" content="Explore our portfolio of successful projects across fintech, healthcare, ecommerce, and enterprise software. See how we deliver results.">
+  <meta name="twitter:title" content="Work — LX Obsidian Labs">
+  <meta name="twitter:description" content="Explore our work across client projects, LX products, and experimental labs. Software, AI, and automation built by LX Obsidian Labs.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://www.lxobsidianportal.co.za/portfolio">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,7 +23,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="css/style.css">
-  <title>Our Portfolio — Case Studies & Projects | LX Obsidian Labs</title>
+  <title>Work — LX Obsidian Labs</title>
 </head>
 <body class="page-portfolio">
 
@@ -34,21 +34,14 @@
     <div class="loading-bar__fill" id="loadingBarFill"></div>
   </div>
 
-  <!-- ==========================================
-       ANNOUNCEMENT BAR
-       ========================================== -->
-  <div class="announcement" id="announcement" role="banner">
+  <!-- ANNOUNCEMENT BAR -->
+  <div class="announcement-bar">
     <div class="container">
-      <div class="announcement__content">
-        <span class="announcement__badge">New</span>
-        <span>New Android applications are now available through LX Marketplace.</span>
-        <a href="marketplace.html" class="announcement__link">Explore →</a>
-      </div>
-      <button class="announcement__close" id="announcementClose" aria-label="Close announcement">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M1 1L13 13M13 1L1 13"/>
-        </svg>
-      </button>
+      <a href="synapse.html" class="announcement-bar__link">
+        <span class="announcement-bar__badge">NEW</span>
+        <span>Synapse AI is now available — Free browser automation powered by AI.</span>
+        <span class="announcement-bar__cta">Explore <span aria-hidden="true">→</span></span>
+      </a>
     </div>
   </div>
 
@@ -69,25 +62,46 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
             <div class="nav-dropdown__menu" role="menu">
-              <a href="services.html#web-development" class="nav-dropdown__item" role="menuitem">Web Development</a>
-              <a href="services.html#mobile-apps" class="nav-dropdown__item" role="menuitem">Mobile Apps</a>
-              <a href="services.html#ai-solutions" class="nav-dropdown__item" role="menuitem">AI Solutions</a>
-              <a href="services.html#enterprise-systems" class="nav-dropdown__item" role="menuitem">Enterprise Systems</a>
-              <a href="services.html#cloud-infrastructure" class="nav-dropdown__item" role="menuitem">Cloud Infrastructure</a>
-              <a href="services.html#branding-design" class="nav-dropdown__item" role="menuitem">Branding & Design</a>
+              <a href="services.html#ai-solutions" class="nav-dropdown__item" role="menuitem">AI & Automation</a>
+              <a href="services.html#web-development" class="nav-dropdown__item" role="menuitem">Web Platforms</a>
+              <a href="services.html#mobile-apps" class="nav-dropdown__item" role="menuitem">Mobile Applications</a>
+              <a href="services.html#enterprise-systems" class="nav-dropdown__item" role="menuitem">Business Systems</a>
+              <a href="services.html#cloud-infrastructure" class="nav-dropdown__item" role="menuitem">Cloud & Infrastructure</a>
+              <a href="services.html#ui-ux-design" class="nav-dropdown__item" role="menuitem">UI/UX & Product Design</a>
             </div>
           </div>
-          <a href="marketplace.html" class="nav__link" role="menuitem">Marketplace</a>
-          <a href="portfolio.html" class="nav__link" role="menuitem">Portfolio</a>
           <div class="nav-dropdown" role="none">
             <button class="nav-dropdown__trigger" role="menuitem" aria-haspopup="true" aria-expanded="false">
-              Resources
+              Products
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
             <div class="nav-dropdown__menu" role="menu">
-              <a href="blog.html" class="nav-dropdown__item" role="menuitem">Blog</a>
-              <a href="#" class="nav-dropdown__item" role="menuitem">Documentation</a>
-              <a href="faq.html" class="nav-dropdown__item" role="menuitem">FAQ</a>
+              <a href="synapse.html" class="nav-dropdown__item nav-dropdown__item--hot" role="menuitem">Synapse AI</a>
+              <a href="marketplace.html" class="nav-dropdown__item" role="menuitem">LX Marketplace</a>
+            </div>
+          </div>
+          <div class="nav-dropdown" role="none">
+            <button class="nav-dropdown__trigger" role="menuitem" aria-haspopup="true" aria-expanded="false">
+              Industries
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="nav-dropdown__menu" role="menu">
+              <a href="services.html" class="nav-dropdown__item" role="menuitem">Education & Training</a>
+              <a href="services.html" class="nav-dropdown__item" role="menuitem">Retail & Commerce</a>
+              <a href="services.html" class="nav-dropdown__item" role="menuitem">Restaurants & Hospitality</a>
+              <a href="services.html" class="nav-dropdown__item" role="menuitem">Professional Services</a>
+              <a href="services.html" class="nav-dropdown__item" role="menuitem">Industrial & Mining</a>
+              <a href="services.html" class="nav-dropdown__item" role="menuitem">Startups</a>
+            </div>
+          </div>
+          <div class="nav-dropdown" role="none">
+            <button class="nav-dropdown__trigger nav-dropdown__trigger--active" role="menuitem" aria-haspopup="true" aria-expanded="false">
+              Work
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="nav-dropdown__menu" role="menu">
+              <a href="portfolio.html#case-studies" class="nav-dropdown__item" role="menuitem">Case Studies</a>
+              <a href="portfolio.html" class="nav-dropdown__item" role="menuitem">Portfolio</a>
             </div>
           </div>
           <div class="nav-dropdown" role="none">
@@ -96,8 +110,10 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
             <div class="nav-dropdown__menu" role="menu">
-              <a href="about.html" class="nav-dropdown__item" role="menuitem">About Us</a>
+              <a href="about.html" class="nav-dropdown__item" role="menuitem">About</a>
+              <a href="blog.html" class="nav-dropdown__item" role="menuitem">Insights</a>
               <a href="#" class="nav-dropdown__item" role="menuitem">Careers</a>
+              <a href="#" class="nav-dropdown__item" role="menuitem">Partners</a>
               <a href="contact.html" class="nav-dropdown__item" role="menuitem">Contact</a>
             </div>
           </div>
@@ -109,7 +125,7 @@
           <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
             <svg class="theme-toggle__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
           </button>
-          <a href="#" class="btn btn--ghost btn--small">Login</a>
+          <a href="contact.html" class="btn btn--ghost btn--small">Contact Sales</a>
           <a href="contact.html" class="btn btn--primary btn--small">Start Project</a>
           <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
             <div class="nav__toggle-icon">
@@ -130,8 +146,8 @@
     <div class="container">
       <div class="section__header reveal">
         <p class="section__label">Our Work</p>
-        <h1 class="section__title">Showcase of excellence</h1>
-        <p class="section__subtitle">Every project tells a story. Here are some of our best builds across industries and technologies.</p>
+        <h1 class="section__title">Real products. Real clients. Real experiments.</h1>
+        <p class="section__subtitle">Every project tells a story. We classify our work into three categories so you always know what you're looking at.</p>
       </div>
     </div>
   </section>
@@ -143,11 +159,9 @@
     <div class="container">
       <div class="portfolio-filters reveal">
         <button class="portfolio-filter portfolio-filter--active" data-filter="all">All</button>
-        <button class="portfolio-filter" data-filter="websites">Websites</button>
-        <button class="portfolio-filter" data-filter="apps">Apps</button>
-        <button class="portfolio-filter" data-filter="software">Software</button>
-        <button class="portfolio-filter" data-filter="ai">AI</button>
-        <button class="portfolio-filter" data-filter="branding">Branding</button>
+        <button class="portfolio-filter" data-filter="client">Client Work</button>
+        <button class="portfolio-filter" data-filter="products">LX Products</button>
+        <button class="portfolio-filter" data-filter="labs">Labs</button>
       </div>
     </div>
   </section>
@@ -157,122 +171,131 @@
        ========================================== -->
   <section class="section" aria-label="Portfolio projects">
     <div class="container">
+
+      <!-- Category: Client Work -->
+      <p class="portfolio-category-label" data-categories="client">Client Work</p>
       <div class="portfolio-grid" id="portfolioGrid">
-        <!-- FinFlow Dashboard -->
-        <div class="portfolio-item" data-categories="software">
+
+        <!-- Newton's 4th Training Academy -->
+        <div class="portfolio-item" data-categories="client">
           <div class="portfolio-item__image">
             <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 20V10M18 20V4M6 20v-4"/>
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+              <path d="M6 12v5c3 3 9 3 12 0v-5"/>
             </svg>
           </div>
           <div class="portfolio-item__body">
-            <h3 class="portfolio-item__title">FinFlow Dashboard</h3>
-            <p class="portfolio-item__description">Real-time financial analytics platform with interactive dashboards, automated reporting, and multi-currency support for enterprise finance teams.</p>
+            <span class="portfolio-item__tag portfolio-item__tag--category">Education</span>
+            <h3 class="portfolio-item__title">Newton's 4th Training Academy</h3>
+            <p class="portfolio-item__description">Digital growth and marketing transformation — brand system, digital marketing, lead funnel, and future web infrastructure.</p>
             <div class="portfolio-item__tags">
-              <span class="portfolio-item__tag">React</span>
-              <span class="portfolio-item__tag">Node.js</span>
-              <span class="portfolio-item__tag">AWS</span>
+              <span class="portfolio-item__tag">Branding</span>
+              <span class="portfolio-item__tag">Marketing</span>
+              <span class="portfolio-item__tag">Web</span>
             </div>
             <a href="#" class="portfolio-item__link">View Case Study →</a>
           </div>
         </div>
 
-        <!-- CloudScale Platform -->
-        <div class="portfolio-item" data-categories="software">
-          <div class="portfolio-item__image">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 002 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
-            </svg>
-          </div>
-          <div class="portfolio-item__body">
-            <h3 class="portfolio-item__title">CloudScale Platform</h3>
-            <p class="portfolio-item__description">Multi-cloud infrastructure orchestration platform enabling automated deployment, scaling, and monitoring across GCP and AWS environments.</p>
-            <div class="portfolio-item__tags">
-              <span class="portfolio-item__tag">Go</span>
-              <span class="portfolio-item__tag">Kubernetes</span>
-              <span class="portfolio-item__tag">GCP</span>
-            </div>
-            <a href="#" class="portfolio-item__link">View Case Study →</a>
-          </div>
-        </div>
+      </div>
 
-        <!-- NexGen Studio -->
-        <div class="portfolio-item" data-categories="apps">
-          <div class="portfolio-item__image">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-            </svg>
-          </div>
-          <div class="portfolio-item__body">
-            <h3 class="portfolio-item__title">NexGen Studio</h3>
-            <p class="portfolio-item__description">Creative collaboration platform for design teams with real-time editing, version control, and integrated feedback workflows.</p>
-            <div class="portfolio-item__tags">
-              <span class="portfolio-item__tag">Next.js</span>
-              <span class="portfolio-item__tag">WebSocket</span>
-              <span class="portfolio-item__tag">Redis</span>
-            </div>
-            <a href="#" class="portfolio-item__link">View Case Study →</a>
-          </div>
-        </div>
+      <!-- Category: LX Products -->
+      <p class="portfolio-category-label" data-categories="products">LX Products</p>
+      <div class="portfolio-grid">
 
-        <!-- ShopFlow -->
-        <div class="portfolio-item" data-categories="websites">
+        <!-- Synapse AI -->
+        <div class="portfolio-item" data-categories="products">
           <div class="portfolio-item__image">
             <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
-              <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>
-            </svg>
-          </div>
-          <div class="portfolio-item__body">
-            <h3 class="portfolio-item__title">ShopFlow</h3>
-            <p class="portfolio-item__description">High-performance ecommerce platform with dynamic product filtering, real-time inventory management, and seamless payment processing.</p>
-            <div class="portfolio-item__tags">
-              <span class="portfolio-item__tag">Next.js</span>
-              <span class="portfolio-item__tag">PayFast</span>
-              <span class="portfolio-item__tag">Tailwind</span>
-            </div>
-            <a href="#" class="portfolio-item__link">View Case Study →</a>
-          </div>
-        </div>
-
-        <!-- MediTrack -->
-        <div class="portfolio-item" data-categories="apps">
-          <div class="portfolio-item__image">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
-            </svg>
-          </div>
-          <div class="portfolio-item__body">
-            <h3 class="portfolio-item__title">MediTrack</h3>
-            <p class="portfolio-item__description">Patient management application featuring appointment scheduling, EHR integration, telemedicine capabilities, and compliance tracking.</p>
-            <div class="portfolio-item__tags">
-              <span class="portfolio-item__tag">Flutter</span>
-              <span class="portfolio-item__tag">Python</span>
-              <span class="portfolio-item__tag">FHIR</span>
-            </div>
-            <a href="#" class="portfolio-item__link">View Case Study →</a>
-          </div>
-        </div>
-
-        <!-- BrandKit -->
-        <div class="portfolio-item" data-categories="branding">
-          <div class="portfolio-item__image">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
               <circle cx="12" cy="12" r="3"/>
-              <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/>
             </svg>
           </div>
           <div class="portfolio-item__body">
-            <h3 class="portfolio-item__title">BrandKit</h3>
-            <p class="portfolio-item__description">Comprehensive branding system with logo suites, color palettes, typography scales, and interactive brand guidelines documentation.</p>
+            <span class="portfolio-item__tag portfolio-item__tag--category">AI Product</span>
+            <h3 class="portfolio-item__title">Synapse AI</h3>
+            <p class="portfolio-item__description">AI-powered browser automation tool. Observe, understand, act, and verify any web workflow.</p>
             <div class="portfolio-item__tags">
-              <span class="portfolio-item__tag">Figma</span>
-              <span class="portfolio-item__tag">Framer</span>
-              <span class="portfolio-item__tag">Illustrator</span>
+              <span class="portfolio-item__tag">AI</span>
+              <span class="portfolio-item__tag">Browser Automation</span>
+              <span class="portfolio-item__tag">Chrome Extension</span>
             </div>
-            <a href="#" class="portfolio-item__link">View Case Study →</a>
+            <a href="synapse.html" class="portfolio-item__link">View Product →</a>
           </div>
         </div>
+
+        <!-- LX Marketplace -->
+        <div class="portfolio-item" data-categories="products">
+          <div class="portfolio-item__image">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <path d="M16 10a4 4 0 01-8 0"/>
+            </svg>
+          </div>
+          <div class="portfolio-item__body">
+            <span class="portfolio-item__tag portfolio-item__tag--category">Platform</span>
+            <h3 class="portfolio-item__title">LX Marketplace</h3>
+            <p class="portfolio-item__description">Software marketplace for digital products, AI tools, and business applications built by LX and independent creators.</p>
+            <div class="portfolio-item__tags">
+              <span class="portfolio-item__tag">Marketplace</span>
+              <span class="portfolio-item__tag">Ecommerce</span>
+              <span class="portfolio-item__tag">Digital Products</span>
+            </div>
+            <a href="marketplace.html" class="portfolio-item__link">Visit Marketplace →</a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Category: Labs / Experiments -->
+      <p class="portfolio-category-label" data-categories="labs">Labs / Experiments</p>
+      <div class="portfolio-grid">
+
+        <!-- LX Intelligence Platform -->
+        <div class="portfolio-item" data-categories="labs">
+          <div class="portfolio-item__image">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 16v-4M12 8h.01"/>
+              <path d="M8 12h8"/>
+            </svg>
+          </div>
+          <div class="portfolio-item__body">
+            <span class="portfolio-item__tag portfolio-item__tag--category">AI Research</span>
+            <h3 class="portfolio-item__title">LX Intelligence Platform</h3>
+            <p class="portfolio-item__description">Multi-agent AI orchestration platform for business workflows. Currently in development.</p>
+            <div class="portfolio-item__tags">
+              <span class="portfolio-item__tag">AI</span>
+              <span class="portfolio-item__tag">Agents</span>
+              <span class="portfolio-item__tag">Automation</span>
+            </div>
+            <span class="portfolio-item__status">In Development</span>
+          </div>
+        </div>
+
+        <!-- SmartPOS System -->
+        <div class="portfolio-item" data-categories="labs">
+          <div class="portfolio-item__image">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+              <line x1="8" y1="21" x2="16" y2="21"/>
+              <line x1="12" y1="17" x2="12" y2="21"/>
+            </svg>
+          </div>
+          <div class="portfolio-item__body">
+            <span class="portfolio-item__tag portfolio-item__tag--category">Product Prototype</span>
+            <h3 class="portfolio-item__title">SmartPOS System</h3>
+            <p class="portfolio-item__description">Point-of-sale system prototype with inventory management and offline capabilities. Proof of concept for retail clients.</p>
+            <div class="portfolio-item__tags">
+              <span class="portfolio-item__tag">POS</span>
+              <span class="portfolio-item__tag">Mobile</span>
+              <span class="portfolio-item__tag">Retail</span>
+            </div>
+            <span class="portfolio-item__status">Prototype</span>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -284,11 +307,11 @@
     <div class="container">
       <div class="cta-content reveal">
         <div class="cta-gradient"></div>
-        <h2 class="cta-content__title">Ready to Build Something Incredible?</h2>
-        <p class="cta-content__text">Let's transform your vision into powerful digital solutions that drive real business outcomes.</p>
+        <h2 class="cta-content__title">Have a project in mind?</h2>
+        <p class="cta-content__text">We'd love to hear about it.</p>
         <div class="cta-content__actions">
           <a href="contact.html" class="btn btn--primary btn--large">Start Your Project</a>
-          <a href="contact.html" class="btn btn--secondary btn--large">Book Consultation</a>
+          <a href="contact.html" class="btn btn--secondary btn--large">Contact Sales</a>
         </div>
       </div>
     </div>
@@ -302,41 +325,35 @@
       <div class="footer__grid">
         <div class="footer__brand-col">
           <div class="footer__brand">LX <span>Obsidian</span></div>
-          <p class="footer__description">An AI technology company that builds, sells, and scales intelligent software for developers, businesses, and creators worldwide.</p>
-          <form class="newsletter-form">
-            <input type="email" class="newsletter-input" placeholder="Enter your email" aria-label="Email for newsletter">
-            <button type="submit" class="newsletter-submit">Subscribe</button>
-          </form>
+          <p class="footer__description">A South African software company that builds, sells, and scales intelligent software for developers, businesses, and creators worldwide.</p>
+
         </div>
         <div>
           <h4 class="footer__heading">Solutions</h4>
           <div class="footer__links">
             <a href="services.html#ai-solutions" class="footer__link">AI & Automation</a>
-            <a href="services.html#web-development" class="footer__link">Web Development</a>
-            <a href="services.html#mobile-apps" class="footer__link">Mobile Apps</a>
-            <a href="services.html#enterprise-systems" class="footer__link">Enterprise Systems</a>
-            <a href="services.html#cloud-infrastructure" class="footer__link">Cloud & DevOps</a>
-            <a href="services.html#branding-design" class="footer__link">UI/UX Design</a>
+            <a href="services.html#web-development" class="footer__link">Web Platforms</a>
+            <a href="services.html#mobile-apps" class="footer__link">Mobile Applications</a>
+            <a href="services.html#enterprise-systems" class="footer__link">Business Systems</a>
+            <a href="services.html#cloud-infrastructure" class="footer__link">Cloud & Infrastructure</a>
+            <a href="services.html#ui-ux-design" class="footer__link">UI/UX & Product Design</a>
           </div>
         </div>
         <div>
-          <h4 class="footer__heading">Marketplace</h4>
+          <h4 class="footer__heading">Products</h4>
           <div class="footer__links">
-            <a href="marketplace.html" class="footer__link">All Products</a>
             <a href="synapse.html" class="footer__link">Synapse AI</a>
-            <a href="marketplace.html" class="footer__link">AI Agents</a>
-            <a href="marketplace.html" class="footer__link">Web Apps</a>
-            <a href="marketplace.html" class="footer__link">Mobile Apps</a>
+            <a href="marketplace.html" class="footer__link">LX Marketplace</a>
           </div>
         </div>
         <div>
           <h4 class="footer__heading">Company</h4>
           <div class="footer__links">
-            <a href="about.html" class="footer__link">About Us</a>
-            <a href="portfolio.html" class="footer__link">Portfolio</a>
-            <a href="contact.html" class="footer__link">Contact</a>
-            <a href="#affiliate" class="footer__link">Affiliate Program</a>
+            <a href="about.html" class="footer__link">About</a>
+            <a href="blog.html" class="footer__link">Insights</a>
             <a href="#" class="footer__link">Careers</a>
+            <a href="#" class="footer__link">Partners</a>
+            <a href="contact.html" class="footer__link">Contact</a>
           </div>
         </div>
         <div>
@@ -529,4 +546,3 @@
   <script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js');}</script>
 </body>
 </html>
-

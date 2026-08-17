@@ -14,9 +14,9 @@ body::before {
   animation: aurora-drift 20s ease-in-out infinite alternate;
 }
 @keyframes aurora-drift {
-  0% { opacity: 0.7; transform: scale(1) translate(0, 0); }
-  50% { opacity: 1; transform: scale(1.05) translate(2%, -1%); }
-  100% { opacity: 0.8; transform: scale(1.02) translate(-1%, 1%); }
+  0% { opacity: 0.5; transform: scale(1) translate(0, 0); }
+  50% { opacity: 0.7; transform: scale(1.03) translate(1%, -0.5%); }
+  100% { opacity: 0.6; transform: scale(1.01) translate(-0.5%, 0.5%); }
 }
 body { position: relative; }
 body > *:not(script):not(style):not(noscript) {
@@ -31,7 +31,7 @@ body::after {
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  opacity: 0.03;
+  opacity: 0.02;
   background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 256px 256px;
 }

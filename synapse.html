@@ -137,18 +137,13 @@
   <!-- ==========================================
        ANNOUNCEMENT BAR
        ========================================== -->
-  <div class="announcement" id="announcement" role="banner">
+  <div class="announcement-bar">
     <div class="container">
-      <div class="announcement__content">
-        <span class="announcement__badge">New</span>
-        <span>Synapse AI — our AI browser automation extension is now available to download.</span>
-        <a href="#download" class="announcement__link">Get it →</a>
-      </div>
-      <button class="announcement__close" id="announcementClose" aria-label="Close announcement">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M1 1L13 13M13 1L1 13"/>
-        </svg>
-      </button>
+      <a href="marketplace.html" class="announcement-bar__link">
+        <span class="announcement-bar__badge">NEW</span>
+        <span>Browse all products on LX Marketplace — AI tools, templates and business systems.</span>
+        <span class="announcement-bar__cta">Explore <span aria-hidden="true">→</span></span>
+      </a>
     </div>
   </div>
 
@@ -169,24 +164,46 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
             <div class="nav-dropdown__menu" role="menu">
-              <a href="services.html#web-development" class="nav-dropdown__item" role="menuitem">Web Development</a>
-              <a href="services.html#mobile-apps" class="nav-dropdown__item" role="menuitem">Mobile Apps</a>
-              <a href="services.html#ai-solutions" class="nav-dropdown__item" role="menuitem">AI Solutions</a>
-              <a href="services.html#enterprise-systems" class="nav-dropdown__item" role="menuitem">Enterprise Systems</a>
-              <a href="services.html#cloud-infrastructure" class="nav-dropdown__item" role="menuitem">Cloud Infrastructure</a>
-              <a href="services.html#branding-design" class="nav-dropdown__item" role="menuitem">Branding & Design</a>
+              <a href="services.html#ai-automation" class="nav-dropdown__item" role="menuitem">AI & Automation</a>
+              <a href="services.html#web-platforms" class="nav-dropdown__item" role="menuitem">Web Platforms</a>
+              <a href="services.html#mobile-apps" class="nav-dropdown__item" role="menuitem">Mobile Applications</a>
+              <a href="services.html#business-systems" class="nav-dropdown__item" role="menuitem">Business Systems</a>
+              <a href="services.html#cloud-infrastructure" class="nav-dropdown__item" role="menuitem">Cloud & Infrastructure</a>
+              <a href="services.html#ui-ux-design" class="nav-dropdown__item" role="menuitem">UI/UX & Product Design</a>
             </div>
           </div>
-          <a href="marketplace.html" class="nav__link" role="menuitem">Marketplace</a>
-          <a href="portfolio.html" class="nav__link" role="menuitem">Portfolio</a>
           <div class="nav-dropdown" role="none">
             <button class="nav-dropdown__trigger" role="menuitem" aria-haspopup="true" aria-expanded="false">
-              Resources
+              Products
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
             <div class="nav-dropdown__menu" role="menu">
-              <a href="blog.html" class="nav-dropdown__item" role="menuitem">Blog</a>
-              <a href="faq.html" class="nav-dropdown__item" role="menuitem">FAQ</a>
+              <a href="marketplace.html" class="nav-dropdown__item" role="menuitem">LX Marketplace</a>
+              <a href="synapse.html" class="nav-dropdown__item nav-dropdown__item--hot" role="menuitem">Synapse AI</a>
+            </div>
+          </div>
+          <div class="nav-dropdown" role="none">
+            <button class="nav-dropdown__trigger" role="menuitem" aria-haspopup="true" aria-expanded="false">
+              Industries
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="nav-dropdown__menu" role="menu">
+              <a href="industries.html#education" class="nav-dropdown__item" role="menuitem">Education & Training</a>
+              <a href="industries.html#retail" class="nav-dropdown__item" role="menuitem">Retail & Commerce</a>
+              <a href="industries.html#hospitality" class="nav-dropdown__item" role="menuitem">Restaurants & Hospitality</a>
+              <a href="industries.html#professional" class="nav-dropdown__item" role="menuitem">Professional Services</a>
+              <a href="industries.html#mining" class="nav-dropdown__item" role="menuitem">Industrial & Mining</a>
+              <a href="industries.html#startups" class="nav-dropdown__item" role="menuitem">Startups</a>
+            </div>
+          </div>
+          <div class="nav-dropdown" role="none">
+            <button class="nav-dropdown__trigger" role="menuitem" aria-haspopup="true" aria-expanded="false">
+              Work
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="nav-dropdown__menu" role="menu">
+              <a href="portfolio.html" class="nav-dropdown__item" role="menuitem">Case Studies</a>
+              <a href="portfolio.html" class="nav-dropdown__item" role="menuitem">Portfolio</a>
             </div>
           </div>
           <div class="nav-dropdown" role="none">
@@ -195,8 +212,10 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
             <div class="nav-dropdown__menu" role="menu">
-              <a href="about.html" class="nav-dropdown__item" role="menuitem">About Us</a>
+              <a href="about.html" class="nav-dropdown__item" role="menuitem">About</a>
+              <a href="blog.html" class="nav-dropdown__item" role="menuitem">Insights</a>
               <a href="#" class="nav-dropdown__item" role="menuitem">Careers</a>
+              <a href="partners.html" class="nav-dropdown__item" role="menuitem">Partners</a>
               <a href="contact.html" class="nav-dropdown__item" role="menuitem">Contact</a>
             </div>
           </div>
@@ -206,17 +225,14 @@
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
           </button>
           <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-            <svg class="theme-toggle__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+            <svg class="theme-toggle__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
           </button>
-          <a href="#" class="btn btn--ghost btn--small">Login</a>
-                    <a href="marketplace.html" class="nav__cta-synapse" role="menuitem">Download Synapse</a>
+          <a href="contact.html" class="btn btn--ghost btn--small">Contact Sales</a>
           <a href="contact.html" class="btn btn--primary btn--small">Start Project</a>
-          <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
-            <div class="nav__toggle-icon">
-              <span class="nav__toggle-line"></span>
-              <span class="nav__toggle-line"></span>
-              <span class="nav__toggle-line"></span>
-            </div>
+          <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+            <span></span><span></span><span></span>
           </button>
         </div>
       </div>
@@ -404,10 +420,10 @@
       <div class="cta-content reveal">
         <div class="cta-gradient"></div>
         <h2 class="cta-content__title">Ready to automate the web?</h2>
-        <p class="cta-content__text">Download Synapse AI today, or talk to LX Obsidian Labs about custom AI automation for your business.</p>
+        <p class="cta-content__text">Download Synapse AI today, or explore more products on LX Marketplace. Custom AI automation also available.</p>
         <div class="cta-content__actions">
           <a href="#download" class="btn btn--primary btn--large">Download Free</a>
-          <a href="contact.html" class="btn btn--secondary btn--large">Book Consultation</a>
+          <a href="marketplace.html" class="btn btn--secondary btn--large">Browse Marketplace</a>
         </div>
       </div>
     </div>
@@ -421,50 +437,41 @@
       <div class="footer__grid">
         <div class="footer__brand-col">
           <div class="footer__brand">LX <span>Obsidian</span></div>
-          <p class="footer__description">An AI technology company that builds, sells, and scales intelligent software for developers, businesses, and creators worldwide.</p>
-          <form class="newsletter-form">
-            <input type="email" class="newsletter-input" placeholder="Enter your email" aria-label="Email for newsletter">
-            <button type="submit" class="newsletter-submit">Subscribe</button>
-          </form>
+          <p class="footer__description">LX Obsidian Labs is a South African software and AI engineering company building digital products, automation systems and custom business software.</p>
         </div>
         <div>
           <h4 class="footer__heading">Solutions</h4>
           <div class="footer__links">
-            <a href="services.html#ai-solutions" class="footer__link">AI & Automation</a>
-            <a href="services.html#web-development" class="footer__link">Web Development</a>
-            <a href="services.html#mobile-apps" class="footer__link">Mobile Apps</a>
-            <a href="services.html#enterprise-systems" class="footer__link">Enterprise Systems</a>
-            <a href="services.html#cloud-infrastructure" class="footer__link">Cloud & DevOps</a>
-            <a href="services.html#branding-design" class="footer__link">UI/UX Design</a>
+            <a href="services.html#ai-automation" class="footer__link">AI & Automation</a>
+            <a href="services.html#web-platforms" class="footer__link">Web Platforms</a>
+            <a href="services.html#mobile-apps" class="footer__link">Mobile Applications</a>
+            <a href="services.html#business-systems" class="footer__link">Business Systems</a>
+            <a href="services.html#cloud-infrastructure" class="footer__link">Cloud & Infrastructure</a>
+            <a href="services.html#ui-ux-design" class="footer__link">UI/UX Design</a>
           </div>
         </div>
         <div>
-          <h4 class="footer__heading">Marketplace</h4>
+          <h4 class="footer__heading">Products</h4>
           <div class="footer__links">
-            <a href="marketplace.html" class="footer__link">All Products</a>
+            <a href="marketplace.html" class="footer__link">LX Marketplace</a>
             <a href="synapse.html" class="footer__link">Synapse AI</a>
-            <a href="marketplace.html" class="footer__link">AI Agents</a>
-            <a href="marketplace.html" class="footer__link">Web Apps</a>
-            <a href="marketplace.html" class="footer__link">Mobile Apps</a>
           </div>
         </div>
         <div>
           <h4 class="footer__heading">Company</h4>
           <div class="footer__links">
-            <a href="about.html" class="footer__link">About Us</a>
+            <a href="about.html" class="footer__link">About</a>
             <a href="portfolio.html" class="footer__link">Portfolio</a>
+            <a href="partners.html" class="footer__link">Partners</a>
             <a href="contact.html" class="footer__link">Contact</a>
-            <a href="#affiliate" class="footer__link">Affiliate Program</a>
             <a href="#" class="footer__link">Careers</a>
           </div>
         </div>
         <div>
           <h4 class="footer__heading">Resources</h4>
           <div class="footer__links">
-            <a href="blog.html" class="footer__link">Blog</a>
-            <a href="#" class="footer__link">Documentation</a>
+            <a href="blog.html" class="footer__link">Insights</a>
             <a href="faq.html" class="footer__link">FAQ</a>
-            <a href="contact.html" class="footer__link">Support</a>
             <a href="#" class="footer__link">Privacy Policy</a>
             <a href="#" class="footer__link">Terms of Service</a>
           </div>
@@ -481,7 +488,7 @@
           </div>
         </div>
       </div>
-        <div class="footer__bottom">
+      <div class="footer__bottom">
         <span>&copy; 2026 LX Obsidian Labs. All rights reserved.</span>
         <div class="footer__social">
           <a href="https://github.com/lx-obsidian-labs" class="footer__social-link" aria-label="GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a>

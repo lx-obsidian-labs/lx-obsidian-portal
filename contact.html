@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Contact LX Obsidian Labs for consultations, project inquiries, partnerships, or general questions. We respond within 24 hours.">
+  <meta name="description" content="Tell us about your project. Select what you're building, share your details, and book a discovery call with LX Obsidian Labs.">
   <meta name="theme-color" content="#050505">
-  <meta property="og:title" content="Contact Us — Get in Touch | LX Obsidian Labs">
-  <meta property="og:description" content="Contact LX Obsidian Labs for consultations, project inquiries, partnerships, or general questions. We respond within 24 hours.">
+  <meta property="og:title" content="Start a Project — LX Obsidian Labs">
+  <meta property="og:description" content="Tell us about your project. Select what you're building, share your details, and book a discovery call with LX Obsidian Labs.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.lxobsidianportal.co.za/contact">
   <meta property="og:locale" content="en_ZA">
@@ -14,8 +14,8 @@
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Contact Us — Get in Touch | LX Obsidian Labs">
-  <meta name="twitter:description" content="Contact LX Obsidian Labs for consultations, project inquiries, partnerships, or general questions. We respond within 24 hours.">
+  <meta name="twitter:title" content="Start a Project — LX Obsidian Labs">
+  <meta name="twitter:description" content="Tell us about your project. Select what you're building, share your details, and book a discovery call with LX Obsidian Labs.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://www.lxobsidianportal.co.za/contact">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,7 +23,84 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="css/style.css">
-  <title>Contact Us — Get in Touch | LX Obsidian Labs</title>
+  <title>Start a Project — LX Obsidian Labs</title>
+  <style>
+    .project-type-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: var(--space-4);
+    }
+    .project-type-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: var(--space-6) var(--space-4);
+      background: var(--color-card);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      cursor: pointer;
+      transition: border-color .2s, box-shadow .2s, transform .2s;
+      user-select: none;
+    }
+    .project-type-card:hover {
+      border-color: var(--color-border-accent);
+      transform: translateY(-2px);
+    }
+    .project-type-card.selected {
+      border-color: var(--color-accent-light);
+      box-shadow: 0 0 0 3px var(--color-accent-glow), var(--shadow-accent);
+    }
+    .project-type-card__icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: var(--color-accent-glow);
+      color: var(--color-accent-light);
+      margin-bottom: var(--space-3);
+    }
+    .project-type-card__title {
+      font-family: var(--font-primary);
+      font-weight: 600;
+      font-size: var(--text-sm);
+      color: var(--color-text);
+      margin-bottom: var(--space-1);
+    }
+    .project-type-card__desc {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      line-height: 1.4;
+    }
+    .contact-info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--space-6);
+      margin-top: var(--space-6);
+      padding-top: var(--space-6);
+      border-top: 1px solid var(--color-border);
+    }
+    .contact-info-item__label {
+      font-size: var(--text-sm);
+      color: var(--color-accent);
+      font-weight: 500;
+      margin-bottom: var(--space-1);
+    }
+    .contact-info-item__value {
+      font-size: var(--text-base);
+      color: var(--color-text-secondary);
+    }
+    .contact-info-item__value a {
+      color: var(--color-text-secondary);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .contact-info-item__value a:hover {
+      color: var(--color-accent-light);
+    }
+  </style>
 </head>
 <body class="page-contact">
 
@@ -34,21 +111,14 @@
     <div class="loading-bar__fill" id="loadingBarFill"></div>
   </div>
 
-  <!-- ==========================================
-       ANNOUNCEMENT BAR
-       ========================================== -->
-  <div class="announcement" id="announcement" role="banner">
+  <!-- ANNOUNCEMENT BAR -->
+  <div class="announcement-bar">
     <div class="container">
-      <div class="announcement__content">
-        <span class="announcement__badge">New</span>
-        <span>New Android applications are now available through LX Marketplace.</span>
-        <a href="marketplace.html" class="announcement__link">Explore →</a>
-      </div>
-      <button class="announcement__close" id="announcementClose" aria-label="Close announcement">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M1 1L13 13M13 1L1 13"/>
-        </svg>
-      </button>
+      <a href="synapse.html" class="announcement-bar__link">
+        <span class="announcement-bar__badge">NEW</span>
+        <span>Synapse AI is now available — Free browser automation powered by AI.</span>
+        <span class="announcement-bar__cta">Explore <span aria-hidden="true">→</span></span>
+      </a>
     </div>
   </div>
 
@@ -69,25 +139,46 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
             <div class="nav-dropdown__menu" role="menu">
-              <a href="services.html#web-development" class="nav-dropdown__item" role="menuitem">Web Development</a>
-              <a href="services.html#mobile-apps" class="nav-dropdown__item" role="menuitem">Mobile Apps</a>
-              <a href="services.html#ai-solutions" class="nav-dropdown__item" role="menuitem">AI Solutions</a>
-              <a href="services.html#enterprise-systems" class="nav-dropdown__item" role="menuitem">Enterprise Systems</a>
-              <a href="services.html#cloud-infrastructure" class="nav-dropdown__item" role="menuitem">Cloud Infrastructure</a>
-              <a href="services.html#branding-design" class="nav-dropdown__item" role="menuitem">Branding & Design</a>
+              <a href="services.html#ai-solutions" class="nav-dropdown__item" role="menuitem">AI & Automation</a>
+              <a href="services.html#web-development" class="nav-dropdown__item" role="menuitem">Web Platforms</a>
+              <a href="services.html#mobile-apps" class="nav-dropdown__item" role="menuitem">Mobile Applications</a>
+              <a href="services.html#enterprise-systems" class="nav-dropdown__item" role="menuitem">Business Systems</a>
+              <a href="services.html#cloud-infrastructure" class="nav-dropdown__item" role="menuitem">Cloud & Infrastructure</a>
+              <a href="services.html#ui-ux-design" class="nav-dropdown__item" role="menuitem">UI/UX & Product Design</a>
             </div>
           </div>
-          <a href="marketplace.html" class="nav__link" role="menuitem">Marketplace</a>
-          <a href="portfolio.html" class="nav__link" role="menuitem">Portfolio</a>
           <div class="nav-dropdown" role="none">
             <button class="nav-dropdown__trigger" role="menuitem" aria-haspopup="true" aria-expanded="false">
-              Resources
+              Products
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
             <div class="nav-dropdown__menu" role="menu">
-              <a href="blog.html" class="nav-dropdown__item" role="menuitem">Blog</a>
-              <a href="#" class="nav-dropdown__item" role="menuitem">Documentation</a>
-              <a href="faq.html" class="nav-dropdown__item" role="menuitem">FAQ</a>
+              <a href="synapse.html" class="nav-dropdown__item nav-dropdown__item--hot" role="menuitem">Synapse AI</a>
+              <a href="marketplace.html" class="nav-dropdown__item" role="menuitem">LX Marketplace</a>
+            </div>
+          </div>
+          <div class="nav-dropdown" role="none">
+            <button class="nav-dropdown__trigger" role="menuitem" aria-haspopup="true" aria-expanded="false">
+              Industries
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="nav-dropdown__menu" role="menu">
+              <a href="services.html#web-development" class="nav-dropdown__item" role="menuitem">Education & Training</a>
+              <a href="services.html#web-development" class="nav-dropdown__item" role="menuitem">Retail & Commerce</a>
+              <a href="services.html#web-development" class="nav-dropdown__item" role="menuitem">Restaurants & Hospitality</a>
+              <a href="services.html#enterprise-systems" class="nav-dropdown__item" role="menuitem">Professional Services</a>
+              <a href="services.html#enterprise-systems" class="nav-dropdown__item" role="menuitem">Industrial & Mining</a>
+              <a href="services.html#web-development" class="nav-dropdown__item" role="menuitem">Startups</a>
+            </div>
+          </div>
+          <div class="nav-dropdown" role="none">
+            <button class="nav-dropdown__trigger" role="menuitem" aria-haspopup="true" aria-expanded="false">
+              Work
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="nav-dropdown__menu" role="menu">
+              <a href="portfolio.html" class="nav-dropdown__item" role="menuitem">Case Studies</a>
+              <a href="portfolio.html" class="nav-dropdown__item" role="menuitem">Portfolio</a>
             </div>
           </div>
           <div class="nav-dropdown" role="none">
@@ -96,8 +187,10 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
             <div class="nav-dropdown__menu" role="menu">
-              <a href="about.html" class="nav-dropdown__item" role="menuitem">About Us</a>
+              <a href="about.html" class="nav-dropdown__item" role="menuitem">About</a>
+              <a href="blog.html" class="nav-dropdown__item" role="menuitem">Insights</a>
               <a href="#" class="nav-dropdown__item" role="menuitem">Careers</a>
+              <a href="#" class="nav-dropdown__item" role="menuitem">Partners</a>
               <a href="contact.html" class="nav-dropdown__item" role="menuitem">Contact</a>
             </div>
           </div>
@@ -109,7 +202,7 @@
           <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
             <svg class="theme-toggle__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
           </button>
-          <a href="#" class="btn btn--ghost btn--small">Login</a>
+          <a href="contact.html" class="btn btn--ghost btn--small">Contact Sales</a>
           <a href="contact.html" class="btn btn--primary btn--small">Start Project</a>
           <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
             <div class="nav__toggle-icon">
@@ -126,111 +219,189 @@
   <!-- ==========================================
        PAGE HEADER
        ========================================== -->
-  <section class="section" id="main-content" aria-label="Contact">
+  <section class="section" id="main-content" aria-label="Start a project">
     <div class="container container--narrow">
       <div class="section__header reveal">
-        <p class="section__label">Contact</p>
-        <h1 class="section__title">Get in touch</h1>
-        <p class="section__subtitle">Have a project in mind? Reach out and let's discuss how we can help bring your vision to life.</p>
+        <p class="section__label">Start a Project</p>
+        <h1 class="section__title">What are you building?</h1>
+        <p class="section__subtitle">Tell us about your project and we'll get back to you within 24 hours to schedule a discovery call.</p>
       </div>
     </div>
   </section>
 
   <!-- ==========================================
-       CONTACT INFO + FORM
+       PROJECT TYPE SELECTOR
        ========================================== -->
-  <section class="section" aria-label="Contact details">
+  <section class="section" aria-label="Project type">
     <div class="container container--narrow">
-      <div class="grid grid--2 reveal" style="gap: var(--space-10); align-items: start;">
-        <div>
-          <h3 style="font-family: var(--font-primary); font-size: var(--text-2xl); font-weight: 600; margin-bottom: var(--space-6);">Let's talk</h3>
-          <div style="display: flex; flex-direction: column; gap: var(--space-5);">
-            <div><div style="font-size: var(--text-sm); color: var(--color-accent); font-weight: 500; margin-bottom: var(--space-1);">Email</div><a href="mailto:contact@lxobsidian.co.za" style="font-size: var(--text-base); color: var(--color-text-secondary);">contact@lxobsidian.co.za</a></div>
-            <div><div style="font-size: var(--text-sm); color: var(--color-accent); font-weight: 500; margin-bottom: var(--space-1);">Phone</div><a href="tel:+27630652689" style="font-size: var(--text-base); color: var(--color-text-secondary);">+27 63 065 2689</a></div>
-            <div><div style="font-size: var(--text-sm); color: var(--color-accent); font-weight: 500; margin-bottom: var(--space-1);">Location</div><div style="font-size: var(--text-base); color: var(--color-text-secondary);">Cape Town, South Africa</div></div>
-            <div><div style="font-size: var(--text-sm); color: var(--color-accent); font-weight: 500; margin-bottom: var(--space-1);">Hours</div><div style="font-size: var(--text-base); color: var(--color-text-secondary);">Mon-Fri, 9AM-6PM SAST</div></div>
+      <div class="project-type-grid reveal" id="projectTypeGrid">
+        <div class="project-type-card" data-type="Website" tabindex="0" role="button" aria-pressed="false">
+          <div class="project-type-card__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <div class="project-type-card__title">Website</div>
+          <div class="project-type-card__desc">Business website, landing page, or web application</div>
+        </div>
+        <div class="project-type-card" data-type="Mobile App" tabindex="0" role="button" aria-pressed="false">
+          <div class="project-type-card__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+          </div>
+          <div class="project-type-card__title">Mobile App</div>
+          <div class="project-type-card__desc">Android, iOS, or cross-platform mobile application</div>
+        </div>
+        <div class="project-type-card" data-type="Business System" tabindex="0" role="button" aria-pressed="false">
+          <div class="project-type-card__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+          </div>
+          <div class="project-type-card__title">Business System</div>
+          <div class="project-type-card__desc">CRM, ERP, POS, MIS, or workflow platform</div>
+        </div>
+        <div class="project-type-card" data-type="AI / Automation" tabindex="0" role="button" aria-pressed="false">
+          <div class="project-type-card__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 017 7c0 2.5-1.5 4.5-3 6v2a2 2 0 01-2 2h-4a2 2 0 01-2-2v-2c-1.5-1.5-3-3.5-3-6a7 7 0 017-7z"/><line x1="10" y1="22" x2="14" y2="22"/><line x1="11" y1="17" x2="13" y2="17"/><circle cx="10" cy="8" r="1" fill="currentColor"/><circle cx="14" cy="8" r="1" fill="currentColor"/></svg>
+          </div>
+          <div class="project-type-card__title">AI / Automation</div>
+          <div class="project-type-card__desc">AI agents, automation, chatbots, or intelligent workflows</div>
+        </div>
+        <div class="project-type-card" data-type="Ecommerce" tabindex="0" role="button" aria-pressed="false">
+          <div class="project-type-card__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
+          </div>
+          <div class="project-type-card__title">Ecommerce</div>
+          <div class="project-type-card__desc">Online store, marketplace, or payment platform</div>
+        </div>
+        <div class="project-type-card" data-type="Not sure yet" tabindex="0" role="button" aria-pressed="false">
+          <div class="project-type-card__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </div>
+          <div class="project-type-card__title">Not sure yet</div>
+          <div class="project-type-card__desc">Let's figure it out together</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       CONTACT FORM
+       ========================================== -->
+  <section class="section" aria-label="Project details">
+    <div class="container container--narrow">
+      <form class="contact-form" id="contactForm" novalidate style="background: var(--color-card); border: 1px solid var(--color-border); border-radius: var(--radius-xl); padding: var(--space-8);">
+        <input type="hidden" id="contactSubject" value="">
+        <input type="hidden" id="contactProjectType" value="">
+        <div class="contact-form__row">
+          <div class="contact-form__group">
+            <label class="contact-form__label" for="contactName">Your Name</label>
+            <input type="text" class="contact-form__input" id="contactName" placeholder="Your full name" required>
+            <span class="contact-form__error" id="contactNameError">Please enter your name</span>
+          </div>
+          <div class="contact-form__group">
+            <label class="contact-form__label" for="contactBusinessName">Business Name</label>
+            <input type="text" class="contact-form__input" id="contactBusinessName" placeholder="Your company or project name">
           </div>
         </div>
-        <div>
-          <form class="contact-form" id="contactForm" novalidate style="background: var(--color-card); border: 1px solid var(--color-border); border-radius: var(--radius-xl); padding: var(--space-8);">
-            <div class="contact-form__row">
-              <div class="contact-form__group">
-                <label class="contact-form__label" for="contactName">Full Name</label>
-                <input type="text" class="contact-form__input" id="contactName" placeholder="John Doe" required>
-                <span class="contact-form__error" id="contactNameError">Please enter your name</span>
-              </div>
-              <div class="contact-form__group">
-                <label class="contact-form__label" for="contactEmail">Email Address</label>
-                <input type="email" class="contact-form__input" id="contactEmail" placeholder="john@example.com" required>
-                <span class="contact-form__error" id="contactEmailError">Please enter a valid email</span>
-              </div>
-            </div>
-            <div class="contact-form__group">
-              <label class="contact-form__label" for="contactSubject">Subject</label>
-              <input type="text" class="contact-form__input" id="contactSubject" placeholder="How can we help?" required>
-              <span class="contact-form__error" id="contactSubjectError">Please enter a subject</span>
-            </div>
-            <div class="contact-form__row">
-              <div class="contact-form__group">
-                <label class="contact-form__label" for="contactProjectType">Project Type</label>
-                <select class="contact-form__input" id="contactProjectType" required>
-                  <option value="">Select a project type</option>
-                  <option>AI and automation</option><option>Digital platform</option><option>Mobile product</option><option>Enterprise system</option><option>Other</option>
-                </select>
-                <span class="contact-form__error" id="contactProjectTypeError">Please select a project type</span>
-              </div>
-              <div class="contact-form__group">
-                <label class="contact-form__label" for="contactBudget">Expected Budget</label>
-                <select class="contact-form__input" id="contactBudget">
-                  <option value="">Select a range</option><option>Under R25,000</option><option>R25,000–R75,000</option><option>R75,000–R150,000</option><option>R150,000+</option><option>Not sure yet</option>
-                </select>
-              </div>
-            </div>
-            <div class="contact-form__row">
-              <div class="contact-form__group">
-                <label class="contact-form__label" for="contactLaunch">Desired Launch Period</label>
-                <select class="contact-form__input" id="contactLaunch">
-                  <option value="">Select a timeframe</option><option>As soon as possible</option><option>Within 1–3 months</option><option>Within 3–6 months</option><option>Exploring</option>
-                </select>
-              </div>
-              <div class="contact-form__group">
-                <label class="contact-form__label" for="contactWebsite">Existing Website or Product</label>
-                <input type="url" class="contact-form__input" id="contactWebsite" placeholder="https://example.com">
-              </div>
-            </div>
-            <div class="contact-form__group">
-              <label class="contact-form__label" for="contactPreferred">Preferred Contact Method</label>
-              <select class="contact-form__input" id="contactPreferred"><option>Email</option><option>Phone</option><option>WhatsApp</option><option>Video call</option></select>
-            </div>
-            <div class="contact-form__group">
-              <label class="contact-form__label" for="contactMessage">Message</label>
-              <textarea class="contact-form__textarea" id="contactMessage" placeholder="Tell us about your project..." required></textarea>
-              <span class="contact-form__error" id="contactMessageError">Please enter your message</span>
-            </div>
-            <button type="submit" class="btn btn--primary btn--large btn--full">Send Message</button>
-            <div class="contact-form__success" id="contactSuccess" role="status" aria-live="polite" style="display:none;text-align:center;padding:var(--space-8);">
-              <div style="width:48px;height:48px;border-radius:50%;background:var(--color-green);color:var(--color-bg);display:flex;align-items:center;justify-content:center;margin:0 auto var(--space-4);font-size:var(--text-2xl);">✓</div>
-              <h3 style="font-family:var(--font-primary);font-weight:600;font-size:var(--text-xl);margin-bottom:var(--space-2);">Message Sent!</h3>
-              <p style="color:var(--color-text-secondary);font-size:var(--text-sm);">Thank you for reaching out. Our team will get back to you within 24 hours.</p>
-            </div>
-          </form>
+        <div class="contact-form__row">
+          <div class="contact-form__group">
+            <label class="contact-form__label" for="contactEmail">Email</label>
+            <input type="email" class="contact-form__input" id="contactEmail" placeholder="you@example.com" required>
+            <span class="contact-form__error" id="contactEmailError">Please enter a valid email</span>
+          </div>
+          <div class="contact-form__group">
+            <label class="contact-form__label" for="contactWhatsApp">WhatsApp</label>
+            <input type="tel" class="contact-form__input" id="contactWhatsApp" placeholder="+27 00 000 0000">
+          </div>
+        </div>
+        <div class="contact-form__row">
+          <div class="contact-form__group">
+            <label class="contact-form__label" for="contactIndustry">Industry</label>
+            <select class="contact-form__input" id="contactIndustry">
+              <option value="">Select your industry</option>
+              <option>Education & Training</option>
+              <option>Retail & Commerce</option>
+              <option>Hospitality</option>
+              <option>Professional Services</option>
+              <option>Industrial & Mining</option>
+              <option>Technology</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="contact-form__group">
+            <label class="contact-form__label" for="contactBudget">Budget Range</label>
+            <select class="contact-form__input" id="contactBudget">
+              <option value="">Select a range</option>
+              <option>Under R5,000</option>
+              <option>R5,000 - R15,000</option>
+              <option>R15,000 - R50,000</option>
+              <option>R50,000 - R150,000</option>
+              <option>R150,000+</option>
+              <option>Not sure yet</option>
+            </select>
+          </div>
+        </div>
+        <div class="contact-form__row">
+          <div class="contact-form__group">
+            <label class="contact-form__label" for="contactLaunch">Desired Launch Date</label>
+            <select class="contact-form__input" id="contactLaunch">
+              <option value="">Select a timeframe</option>
+              <option>As soon as possible</option>
+              <option>Within 1-3 months</option>
+              <option>Within 3-6 months</option>
+              <option>Within 6-12 months</option>
+              <option>Exploring options</option>
+            </select>
+          </div>
+        </div>
+        <div class="contact-form__group">
+          <label class="contact-form__label" for="contactMessage">Project Description</label>
+          <textarea class="contact-form__textarea" id="contactMessage" rows="4" placeholder="Tell us about your project, the problem you're solving, and any specific requirements..." required></textarea>
+          <span class="contact-form__error" id="contactMessageError">Please describe your project</span>
+        </div>
+        <button type="submit" class="btn btn--primary btn--large btn--full">Book Discovery Call</button>
+        <div class="contact-form__success" id="contactSuccess" role="status" aria-live="polite" style="display:none;text-align:center;padding:var(--space-8);">
+          <div style="width:48px;height:48px;border-radius:50%;background:var(--color-green);color:var(--color-bg);display:flex;align-items:center;justify-content:center;margin:0 auto var(--space-4);font-size:var(--text-2xl);">&#10003;</div>
+          <h3 style="font-family:var(--font-primary);font-weight:600;font-size:var(--text-xl);margin-bottom:var(--space-2);">Request Received!</h3>
+          <p style="color:var(--color-text-secondary);font-size:var(--text-sm);">Thank you! We'll review your project details and get back to you within 24 hours to schedule your discovery call.</p>
+        </div>
+      </form>
+
+      <!-- Contact Info -->
+      <div class="contact-info-grid reveal" style="margin-top: var(--space-8);">
+        <div class="contact-info-item">
+          <div class="contact-info-item__label">Email</div>
+          <div class="contact-info-item__value"><a href="mailto:contact@lxobsidian.co.za">contact@lxobsidian.co.za</a></div>
+        </div>
+        <div class="contact-info-item">
+          <div class="contact-info-item__label">Phone</div>
+          <div class="contact-info-item__value"><a href="tel:+27630652689">+27 63 065 2689</a></div>
+        </div>
+        <div class="contact-info-item">
+          <div class="contact-info-item__label">WhatsApp</div>
+          <div class="contact-info-item__value"><a href="https://wa.me/27630652689" target="_blank" rel="noopener">+27 63 065 2689</a></div>
+        </div>
+        <div class="contact-info-item">
+          <div class="contact-info-item__label">Location</div>
+          <div class="contact-info-item__value">Cape Town, South Africa</div>
+        </div>
+        <div class="contact-info-item">
+          <div class="contact-info-item__label">Hours</div>
+          <div class="contact-info-item__value">Mon-Fri, 9AM-6PM SAST</div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ==========================================
-       LARGE CTA SECTION
+       CTA SECTION
        ========================================== -->
   <section class="section cta-section" id="cta" aria-label="Call to action">
     <div class="container">
       <div class="cta-content reveal">
         <div class="cta-gradient"></div>
-        <h2 class="cta-content__title">Ready to Build Something Incredible?</h2>
-        <p class="cta-content__text">Let's transform your vision into powerful digital solutions that drive real business outcomes.</p>
+        <h2 class="cta-content__title">Not ready to start? Explore our work first.</h2>
+        <p class="cta-content__text">Browse our case studies and portfolio to see the quality and range of projects we've delivered for clients across industries.</p>
         <div class="cta-content__actions">
-          <a href="contact.html" class="btn btn--primary btn--large">Start Your Project</a>
-          <a href="contact.html" class="btn btn--secondary btn--large">Book Consultation</a>
+          <a href="portfolio.html" class="btn btn--primary btn--large">See Our Work</a>
+          <a href="contact.html" class="btn btn--secondary btn--large">Start Project</a>
         </div>
       </div>
     </div>
@@ -244,11 +415,8 @@
       <div class="footer__grid">
         <div class="footer__brand-col">
           <div class="footer__brand">LX <span>Obsidian</span></div>
-          <p class="footer__description">An AI technology company that builds, sells, and scales intelligent software for developers, businesses, and creators worldwide.</p>
-          <form class="newsletter-form">
-            <input type="email" class="newsletter-input" placeholder="Enter your email" aria-label="Email for newsletter">
-            <button type="submit" class="newsletter-submit">Subscribe</button>
-          </form>
+          <p class="footer__description">LX Obsidian Labs is a South African software and AI engineering company building digital products, automation systems and custom business software.</p>
+
         </div>
         <div>
           <h4 class="footer__heading">Solutions</h4>
@@ -258,17 +426,14 @@
             <a href="services.html#mobile-apps" class="footer__link">Mobile Apps</a>
             <a href="services.html#enterprise-systems" class="footer__link">Enterprise Systems</a>
             <a href="services.html#cloud-infrastructure" class="footer__link">Cloud & DevOps</a>
-            <a href="services.html#branding-design" class="footer__link">UI/UX Design</a>
+            <a href="services.html#ui-ux-design" class="footer__link">UI/UX Design</a>
           </div>
         </div>
         <div>
-          <h4 class="footer__heading">Marketplace</h4>
+          <h4 class="footer__heading">Products</h4>
           <div class="footer__links">
-            <a href="marketplace.html" class="footer__link">All Products</a>
+            <a href="marketplace.html" class="footer__link">LX Marketplace</a>
             <a href="synapse.html" class="footer__link">Synapse AI</a>
-            <a href="marketplace.html" class="footer__link">AI Agents</a>
-            <a href="marketplace.html" class="footer__link">Web Apps</a>
-            <a href="marketplace.html" class="footer__link">Mobile Apps</a>
           </div>
         </div>
         <div>
@@ -304,7 +469,7 @@
           </div>
         </div>
       </div>
-        <div class="footer__bottom">
+      <div class="footer__bottom">
         <span>&copy; 2026 LX Obsidian Labs. All rights reserved.</span>
         <div class="footer__social">
           <a href="https://github.com/lx-obsidian-labs" class="footer__social-link" aria-label="GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a>
@@ -468,7 +633,26 @@
   <script src="js/features.js"></script>
   <script src="js/seo.js"></script>
   <script src="js/ux.js"></script>
+  <script>
+    (function(){
+      var cards = document.querySelectorAll('.project-type-card');
+      var subjectInput = document.getElementById('contactSubject');
+      var projectTypeInput = document.getElementById('contactProjectType');
+      cards.forEach(function(card){
+        card.addEventListener('click', function(){
+          cards.forEach(function(c){ c.classList.remove('selected'); c.setAttribute('aria-pressed', 'false'); });
+          card.classList.add('selected');
+          card.setAttribute('aria-pressed', 'true');
+          var type = card.getAttribute('data-type');
+          subjectInput.value = type;
+          projectTypeInput.value = type;
+        });
+        card.addEventListener('keydown', function(e){
+          if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); card.click(); }
+        });
+      });
+    })();
+  </script>
   <script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js');}</script>
 </body>
 </html>
-
