@@ -1,12 +1,7 @@
 # Cloudflare Pages Redirects
 
-# Canonical domain: apex → www (configure in Cloudflare Dashboard
-# as a Bulk Redirect Rule OR DNS-level redirect for this to work)
-# NOTE: Cloudflare Pages _redirects cannot do host-level redirects.
-# Set this up in Cloudflare Dashboard → Rules → Redirect Rules:
-#   When: Hostname equals lxobsidianportal.co.za
-#   Then: Dynamic URL = "https://www.lxobsidianportal.co.za" + uri
-#   Status: 301 Permanent
+# NOTE: apex→www redirect handled by functions/_middleware.js
+# (Cloudflare Pages _redirects cannot do host-level redirects)
 
 # Legacy path support → clean URLs
 /shop           /marketplace.html    301
