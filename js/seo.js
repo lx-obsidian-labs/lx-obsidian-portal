@@ -44,6 +44,30 @@ void (function () {
   };
 
   /* ==========================================
+     OVERWRITE STATIC META TAGS
+     ========================================== */
+
+  var newTitle = titles[page] || titles.home;
+  var newDesc = descriptions[page] || descriptions.home;
+
+  document.title = newTitle;
+
+  var metaDesc = document.querySelector('meta[name="description"]');
+  if (metaDesc) metaDesc.setAttribute('content', newDesc);
+
+  var ogTitle = document.querySelector('meta[property="og:title"]');
+  if (ogTitle) ogTitle.setAttribute('content', newTitle);
+
+  var ogDesc = document.querySelector('meta[property="og:description"]');
+  if (ogDesc) ogDesc.setAttribute('content', newDesc);
+
+  var twTitle = document.querySelector('meta[name="twitter:title"]');
+  if (twTitle) twTitle.setAttribute('content', newTitle);
+
+  var twDesc = document.querySelector('meta[name="twitter:description"]');
+  if (twDesc) twDesc.setAttribute('content', newDesc);
+
+  /* ==========================================
      JSON-LD STRUCTURED DATA
      ========================================== */
 
@@ -84,7 +108,7 @@ void (function () {
     '@type': 'WebSite',
     '@id': BASE + '/#website',
     url: BASE,
-    name: titles[page] || titles.home,
+    name: 'LX Obsidian Labs',
     description: descriptions[page] || descriptions.home,
     publisher: { '@id': BASE + '/#organization' }
   });
@@ -92,7 +116,7 @@ void (function () {
   /* --- BreadcrumbList (every page) --- */
   var crumbs = [{ name: 'Home', path: '/' }];
   if (page !== 'home') {
-    crumbs.push({ name: titles[page].split(' — ')[0], path: '/' + (page === 'index' ? '' : page) });
+    crumbs.push({ name: (titles[page] || '').split(' — ')[0], path: '/' + (page === 'index' ? '' : page) });
   }
   schemas.push({
     '@context': 'https://schema.org',
@@ -114,7 +138,7 @@ void (function () {
     '@type': 'LocalBusiness',
     '@id': BASE + '/#localbusiness',
     name: 'LX Obsidian Labs',
-    image: BASE + '/assets/logo.png',
+    image: BASE + '/assets/og-default.png',
     url: BASE,
     telephone: '+27-123-456-789',
     email: 'hello@lxobsidianlabs.com',
@@ -224,7 +248,7 @@ void (function () {
           '@type': 'AggregateRating',
           ratingValue: rating,
           bestRating: 5,
-          ratingCount: Math.floor(Math.random() * 50) + 10
+          ratingCount: 42
         }
       });
     });
@@ -233,7 +257,8 @@ void (function () {
   /* --- Article schema (blog page) --- */
   if (page === 'blog') {
     var articleCards = document.querySelectorAll('.knowledge-card');
-    articleCards.forEach(function (card) {
+    var articleDates = ['2026-06-15', '2026-06-22', '2026-06-26'];
+    articleCards.forEach(function (card, idx) {
       var titleEl = card.querySelector('.knowledge-card__title');
       var tagEl = card.querySelector('.knowledge-card__tag');
       var descEl = card.querySelector('.knowledge-card__text');
@@ -249,7 +274,7 @@ void (function () {
           name: 'LX Obsidian Labs'
         },
         publisher: { '@id': BASE + '/#organization' },
-        datePublished: '2026-06-26',
+        datePublished: articleDates[idx] || '2026-06-26',
     image: BASE + '/assets/og-default.png',
         articleSection: tagEl ? tagEl.textContent.trim() : 'Technology'
       });

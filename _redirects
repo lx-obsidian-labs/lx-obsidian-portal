@@ -3,16 +3,29 @@
 # NOTE: apex→www redirect handled by functions/_middleware.js
 # (Cloudflare Pages _redirects cannot do host-level redirects)
 
+# Explicit .html → clean URL redirects (301)
+/about.html      /about              301
+/services.html   /services           301
+/portfolio.html  /portfolio          301
+/contact.html    /contact            301
+/blog.html       /blog               301
+/faq.html        /faq                301
+/marketplace.html /marketplace       301
+/synapse.html    /synapse            301
+/industries.html /industries         301
+/partners.html   /partners           301
+/index.html      /                   301
+
 # Legacy path support → clean URLs
-/shop           /marketplace.html    301
-/apps           /marketplace.html    301
-/catalogue      /marketplace.html    301
-/team           /about.html          301
-/knowledge      /blog.html           301
-/articles       /blog.html           301
-/plans          /contact.html        301
-/support        /contact.html        301
-/help           /faq.html            301
+/shop           /marketplace         301
+/apps           /marketplace         301
+/catalogue      /marketplace         301
+/team           /about               301
+/knowledge      /blog                301
+/articles       /blog                301
+/plans          /contact             301
+/support        /contact             301
+/help           /faq                 301
 
 # Custom 404
 /404            /404.html       200
