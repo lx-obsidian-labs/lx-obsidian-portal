@@ -1300,7 +1300,7 @@ select:focus:not(:focus-visible) {
 .app-card__icon[data-color="blue"] { background: rgba(59,130,246,0.15); color: #3b82f6; }
 .app-card__icon[data-color="green"] { background: rgba(34,197,94,0.15); color: #22c55e; }
 .app-card__icon[data-color="amber"] { background: rgba(245,158,11,0.15); color: #f59e0b; }
-.app-card__icon[data-color="purple"] { background: rgba(168,85,247,0.15); color: #a855f7; }
+.app-card__icon[data-color="purple"] { background: rgba(229,9,20,0.15); color: #E50914; }
 .app-card__icon[data-color="teal"] { background: rgba(20,184,166,0.15); color: #14b8a6; }
 .app-card__icon[data-color="red"] { background: rgba(239,68,68,0.15); color: #ef4444; }
 .app-card__icon[data-color="indigo"] { background: rgba(99,102,241,0.15); color: #6366f1; }
@@ -1464,7 +1464,7 @@ select:focus:not(:focus-visible) {
 .app-modal__icon[data-color="blue"] { background: rgba(59,130,246,0.15); color: #3b82f6; }
 .app-modal__icon[data-color="green"] { background: rgba(34,197,94,0.15); color: #22c55e; }
 .app-modal__icon[data-color="amber"] { background: rgba(245,158,11,0.15); color: #f59e0b; }
-.app-modal__icon[data-color="purple"] { background: rgba(168,85,247,0.15); color: #a855f7; }
+.app-modal__icon[data-color="purple"] { background: rgba(229,9,20,0.15); color: #E50914; }
 .app-modal__icon[data-color="teal"] { background: rgba(20,184,166,0.15); color: #14b8a6; }
 .app-modal__icon[data-color="red"] { background: rgba(239,68,68,0.15); color: #ef4444; }
 .app-modal__icon[data-color="indigo"] { background: rgba(99,102,241,0.15); color: #6366f1; }
@@ -2786,12 +2786,12 @@ noscript {
 }
 
 .profit-card__icon--purple {
-  background: rgba(139, 92, 246, 0.15);
-  color: #8B5CF6;
+  background: rgba(229, 9, 20, 0.15);
+  color: #E50914;
 }
 
 .profit-card__icon--purple::after {
-  background: radial-gradient(circle, rgba(139, 92, 246, 0.08), transparent 70%);
+  background: radial-gradient(circle, rgba(229, 9, 20, 0.08), transparent 70%);
 }
 
 .profit-card__badge {
@@ -4091,7 +4091,7 @@ noscript {
     from var(--angle, 0deg),
     var(--color-accent),
     var(--color-cyan),
-    #8B5CF6,
+    #E50914,
     var(--color-accent-light),
     var(--color-accent)
   );

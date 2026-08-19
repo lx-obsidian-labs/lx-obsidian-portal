@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
+  <rect width="1080" height="1920" fill="#0A0A0A"/>
+  <!-- Status bar -->
+  <rect width="1080" height="80" fill="#0A0A0A"/>
+  <text x="960" y="52" font-family="sans-serif" font-size="28" fill="#888">9:41</text>
+  <!-- Top bar -->
+  <text x="60" y="160" font-family="sans-serif" font-size="48" font-weight="bold" fill="white">Home</text>
+  <circle cx="960" cy="148" r="28" fill="#222"/>
+  <text x="952" y="158" font-family="sans-serif" font-size="24" fill="#888">U</text>
+  <!-- Continue Watching -->
+  <text x="60" y="280" font-family="sans-serif" font-size="32" fill="#888">Continue Watching</text>
+  <rect x="60" y="310" width="300" height="450" rx="16" fill="#1A1A1A"/>
+  <rect x="60" y="310" width="300" height="260" rx="16" fill="#2A0A0A"/>
+  <text x="180" y="460" font-family="sans-serif" font-size="60" fill="#E50914">V</text>
+  <text x="80" y="610" font-family="sans-serif" font-size="26" fill="white">Breaking Bad</text>
+  <text x="80" y="645" font-family="sans-serif" font-size="20" fill="#666">S5 E8</text>
+  <rect x="60" y="660" width="280" height="6" rx="3" fill="#333"/>
+  <rect x="60" y="660" width="180" height="6" rx="3" fill="#E50914"/>
+  <rect x="400" y="310" width="300" height="450" rx="16" fill="#1A1A1A"/>
+  <rect x="400" y="310" width="300" height="260" rx="16" fill="#0A1A2A"/>
+  <text x="520" y="460" font-family="sans-serif" font-size="60" fill="#1E90FF">V</text>
+  <text x="420" y="610" font-family="sans-serif" font-size="26" fill="white">Stranger Things</text>
+  <text x="420" y="645" font-family="sans-serif" font-size="20" fill="#666">S4 E3</text>
+  <rect x="400" y="660" width="280" height="6" rx="3" fill="#333"/>
+  <rect x="400" y="660" width="100" height="6" rx="3" fill="#1E90FF"/>
+  <rect x="740" y="310" width="300" height="450" rx="16" fill="#1A1A1A"/>
+  <rect x="740" y="310" width="300" height="260" rx="16" fill="#1A2A0A"/>
+  <text x="860" y="460" font-family="sans-serif" font-size="60" fill="#4CAF50">V</text>
+  <text x="760" y="610" font-family="sans-serif" font-size="26" fill="white">The Witcher</text>
+  <text x="760" y="645" font-family="sans-serif" font-size="20" fill="#666">S2 E5</text>
+  <rect x="740" y="660" width="280" height="6" rx="3" fill="#333"/>
+  <rect x="740" y="660" width="220" height="6" rx="3" fill="#4CAF50"/>
+  <!-- Trending -->
+  <text x="60" y="860" font-family="sans-serif" font-size="32" font-weight="bold" fill="white">Trending Movies</text>
+  <text x="900" y="860" font-family="sans-serif" font-size="24" fill="#E50914">See All</text>
+  <rect x="60" y="900" width="300" height="420" rx="16" fill="#1A1A1A"/>
+  <rect x="60" y="900" width="300" height="240" rx="16" fill="#2A1A0A"/>
+  <text x="180" y="1040" font-family="sans-serif" font-size="50" fill="#E50914">★</text>
+  <text x="80" y="1190" font-family="sans-serif" font-size="26" fill="white">Dune: Part Two</text>
+  <text x="80" y="1225" font-family="sans-serif" font-size="20" fill="#E50914">★ 8.5</text>
+  <rect x="400" y="900" width="300" height="420" rx="16" fill="#1A1A1A"/>
+  <rect x="400" y="900" width="300" height="240" rx="16" fill="#0A1A2A"/>
+  <text x="520" y="1040" font-family="sans-serif" font-size="50" fill="#1E90FF">★</text>
+  <text x="420" y="1190" font-family="sans-serif" font-size="26" fill="white">Oppenheimer</text>
+  <text x="420" y="1225" font-family="sans-serif" font-size="20" fill="#E50914">★ 8.3</text>
+  <rect x="740" y="900" width="300" height="420" rx="16" fill="#1A1A1A"/>
+  <rect x="740" y="900" width="300" height="240" rx="16" fill="#1A0A2A"/>
+  <text x="860" y="1040" font-family="sans-serif" font-size="50" fill="#9C27B0">★</text>
+  <text x="760" y="1190" font-family="sans-serif" font-size="26" fill="white">Killers of the...</text>
+  <text x="760" y="1225" font-family="sans-serif" font-size="20" fill="#E50914">★ 7.9</text>
+  <!-- Bottom nav -->
+  <rect y="1800" width="1080" height="120" fill="#0F0F0F"/>
+  <line x1="0" y1="1800" x2="1080" y2="1800" stroke="#1A1A1A" stroke-width="1"/>
+  <text x="108" y="1870" font-family="sans-serif" font-size="22" fill="#E50914">Home</text>
+  <text x="324" y="1870" font-family="sans-serif" font-size="22" fill="#666">Discover</text>
+  <text x="540" y="1870" font-family="sans-serif" font-size="22" fill="#666">Schedule</text>
+  <text x="756" y="1870" font-family="sans-serif" font-size="22" fill="#666">Saved</text>
+  <text x="972" y="1870" font-family="sans-serif" font-size="22" fill="#666">Profile</text>
+</svg>

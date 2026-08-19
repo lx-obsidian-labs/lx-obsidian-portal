@@ -30,13 +30,13 @@
 .btn--gold:hover {
   background: var(--color-accent-light);
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(124, 92, 255, 0.3);
+  box-shadow: 0 8px 25px rgba(229, 9, 20, 0.3);
 }
 
 .btn--primary:active,
 .btn--gold:active {
   transform: translateY(0);
-  box-shadow: 0 2px 8px rgba(124, 92, 255, 0.2);
+  box-shadow: 0 2px 8px rgba(229, 9, 20, 0.2);
 }
 
 .btn--secondary {
@@ -47,9 +47,9 @@
 
 .btn--secondary:hover {
   border-color: var(--color-accent);
-  background: rgba(124, 92, 255, 0.05);
+  background: rgba(229, 9, 20, 0.05);
   transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(124, 92, 255, 0.1);
+  box-shadow: 0 4px 16px rgba(229, 9, 20, 0.1);
 }
 
 .btn--secondary:active {
@@ -64,7 +64,7 @@
 
 .btn--outline:hover {
   border-color: var(--color-accent);
-  background: rgba(124, 92, 255, 0.05);
+  background: rgba(229, 9, 20, 0.05);
   transform: translateY(-2px);
 }
 
@@ -116,7 +116,7 @@
 .btn--nav-cta:hover {
   background: var(--color-accent-light);
   transform: translateY(-1px);
-  box-shadow: 0 4px 20px rgba(124, 92, 255, 0.3);
+  box-shadow: 0 4px 20px rgba(229, 9, 20, 0.3);
 }
 
 /* Ripple effect on buttons */
@@ -1120,7 +1120,7 @@
 .marketplace-card__logo[data-color="blue"] { color: #3B82F6; }
 .marketplace-card__logo[data-color="green"] { color: #10B981; }
 .marketplace-card__logo[data-color="amber"] { color: #F59E0B; }
-.marketplace-card__logo[data-color="purple"] { color: #8B5CF6; }
+.marketplace-card__logo[data-color="purple"] { color: #E50914; }
 
 .marketplace-card__logo {
   width: 48px;

@@ -60,7 +60,7 @@ npx wrangler d1 execute lx-portal --file=migrations/0002_seed.sql
 
 ### 5. Set Environment Variables
 
-In the Cloudflare Dashboard → Pages → `lx-obsidian-portal` → **Settings** → **Environment variables** (production):
+In the Cloudflare Dashboard → Pages → `lxobsidianmainsite` → **Settings** → **Environment variables** (production):
 
 | Variable | Description |
 |----------|-------------|

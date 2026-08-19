@@ -4,11 +4,11 @@
   --color-surface: #0B0B0E;
   --color-card: #111116;
   --color-card-hover: #161620;
-  --color-accent: #7C5CFF;
-  --color-accent-light: #A78BFA;
-  --color-accent-dark: #5B3FD6;
-  --color-accent-glow: rgba(124, 92, 255, 0.10);
-  --color-accent-glow-strong: rgba(124, 92, 255, 0.18);
+  --color-accent: #E50914;
+  --color-accent-light: #FF3D47;
+  --color-accent-dark: #B20710;
+  --color-accent-glow: rgba(229, 9, 20, 0.10);
+  --color-accent-glow-strong: rgba(229, 9, 20, 0.18);
   --color-cyan: #22D3EE;
   --color-cyan-light: #67E8F9;
   --color-cyan-dark: #06B6D4;
@@ -27,18 +27,18 @@
   --color-muted: #686872;
   --color-border: rgba(255, 255, 255, 0.06);
   --color-border-light: rgba(255, 255, 255, 0.10);
-  --color-border-accent: rgba(124, 92, 255, 0.25);
+  --color-border-accent: rgba(229, 9, 20, 0.25);
 
   /* ─── Gradients ─── */
-  --gradient-accent: linear-gradient(135deg, #7C5CFF 0%, #6366F1 50%, #22D3EE 100%);
+  --gradient-accent: linear-gradient(135deg, #E50914 0%, #FF3D47 50%, #22D3EE 100%);
   --gradient-hero: linear-gradient(180deg, #050506 0%, #0B0B0E 50%, #050506 100%);
   --gradient-card: linear-gradient(145deg, rgba(17,17,22,0.96), rgba(5,5,6,0.98));
   --gradient-card-hover: linear-gradient(145deg, rgba(22,22,32,0.98), rgba(11,11,14,0.98));
   --gradient-mesh:
-    radial-gradient(ellipse 80% 50% at 80% 0%, rgba(124,92,255,0.08), transparent 60%),
+    radial-gradient(ellipse 80% 50% at 80% 0%, rgba(229,9,20,0.08), transparent 60%),
     radial-gradient(ellipse 60% 45% at 5% 15%, rgba(34,211,238,0.05), transparent 60%);
   --gradient-aurora:
-    radial-gradient(ellipse 120% 60% at 20% 10%, rgba(124,92,255,0.12), transparent 50%),
+    radial-gradient(ellipse 120% 60% at 20% 10%, rgba(229,9,20,0.12), transparent 50%),
     radial-gradient(ellipse 100% 50% at 80% 20%, rgba(34,211,238,0.06), transparent 50%);
 
   /* ─── Typography ─── */
@@ -92,8 +92,8 @@
   --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.50);
   --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.60);
   --shadow-xl: 0 16px 60px rgba(0, 0, 0, 0.70);
-  --shadow-accent: 0 0 40px rgba(124, 92, 255, 0.15);
-  --shadow-glow: 0 0 30px rgba(124, 92, 255, 0.12);
+  --shadow-accent: 0 0 40px rgba(229, 9, 20, 0.15);
+  --shadow-glow: 0 0 30px rgba(229, 9, 20, 0.12);
   --shadow-card-hover: 0 20px 60px rgba(0, 0, 0, 0.50);
 
   /* ─── Glass ─── */
@@ -133,11 +133,11 @@
   --color-surface: #FFFFFF;
   --color-card: #FFFFFF;
   --color-card-hover: #F0F0F4;
-  --color-accent: #7C5CFF;
-  --color-accent-light: #6246c7;
-  --color-accent-dark: #5B3FD6;
-  --color-accent-glow: rgba(124, 92, 255, 0.08);
-  --color-accent-glow-strong: rgba(124, 92, 255, 0.14);
+  --color-accent: #E50914;
+  --color-accent-light: #B20710;
+  --color-accent-dark: #8B0000;
+  --color-accent-glow: rgba(229, 9, 20, 0.08);
+  --color-accent-glow-strong: rgba(229, 9, 20, 0.14);
   --color-cyan: #06B6D4;
   --color-cyan-light: #22D3EE;
   --color-cyan-dark: #0891B2;
@@ -154,23 +154,23 @@
   --color-text-muted: #8A8A95;
   --color-border: rgba(0, 0, 0, 0.06);
   --color-border-light: rgba(0, 0, 0, 0.10);
-  --color-border-accent: rgba(124, 92, 255, 0.20);
-  --gradient-accent: linear-gradient(135deg, #7C5CFF 0%, #6366F1 50%, #06B6D4 100%);
+  --color-border-accent: rgba(229, 9, 20, 0.20);
+  --gradient-accent: linear-gradient(135deg, #E50914 0%, #FF3D47 50%, #06B6D4 100%);
   --gradient-hero: linear-gradient(180deg, #F8F8FA 0%, #EFEFEE 50%, #F8F8FA 100%);
   --gradient-card: linear-gradient(145deg, rgba(255,255,255,0.95), rgba(248,248,250,0.98));
   --gradient-card-hover: linear-gradient(145deg, rgba(255,255,255,1), rgba(240,240,244,1));
   --gradient-mesh:
-    radial-gradient(ellipse 60% 50% at 80% 0%, rgba(124,92,255,0.04), transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 0%, rgba(229,9,20,0.04), transparent 60%),
     radial-gradient(ellipse 50% 45% at 5% 15%, rgba(6,182,212,0.03), transparent 60%);
   --gradient-aurora:
-    radial-gradient(ellipse 100% 50% at 20% 10%, rgba(124,92,255,0.06), transparent 50%),
+    radial-gradient(ellipse 100% 50% at 20% 10%, rgba(229,9,20,0.06), transparent 50%),
     radial-gradient(ellipse 80% 40% at 80% 20%, rgba(6,182,212,0.04), transparent 50%);
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.06);
   --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.08);
   --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.10);
-  --shadow-accent: 0 0 30px rgba(124, 92, 255, 0.08);
-  --shadow-glow: 0 0 24px rgba(124, 92, 255, 0.08);
+  --shadow-accent: 0 0 30px rgba(229, 9, 20, 0.08);
+  --shadow-glow: 0 0 24px rgba(229, 9, 20, 0.08);
   --shadow-card-hover: 0 16px 48px rgba(0, 0, 0, 0.08);
   --glass-bg: rgba(255, 255, 255, 0.80);
   --glass-border: rgba(0, 0, 0, 0.06);

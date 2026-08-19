@@ -35,9 +35,9 @@ fi
 
 # Deploy to Cloudflare Pages
 echo "--- Deploying to Cloudflare Pages ---"
-npx wrangler pages deploy . --project-name lx-obsidian-portal
+npx wrangler pages deploy . --project-name lxobsidianmainsite
 
 echo "=== Deployment complete! ==="
-echo "Visit your site at https://lx-obsidian-portal.pages.dev"
+echo "Visit your site at https://lxobsidianmainsite.pages.dev"
 echo ""
-echo "To set a custom domain, go to Cloudflare Dashboard > Pages > lx-obsidian-portal > Custom domains"
+echo "To set a custom domain, go to Cloudflare Dashboard > Pages > lxobsidianmainsite > Custom domains"
