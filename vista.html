@@ -27,104 +27,207 @@
   <link rel="stylesheet" href="css/style.css">
   <title>Vista Cinema — AI Video Production Suite | LX Obsidian Labs</title>
   <style>
-    /* ---- Vista Cinema page (scoped, reuses global design tokens) ---- */
+    /* ======== Vista Cinema — Premium Cinematic Dark Theme ======== */
+    :root {
+      --vc-bg: #080808;
+      --vc-bg-soft: #0d0d0d;
+      --vc-surface: #111111;
+      --vc-surface-high: #151515;
+      --vc-surface-pressed: #1d1d1d;
+      --vc-primary: #F20D19;
+      --vc-primary-dark: #B60812;
+      --vc-burgundy: #29070B;
+      --vc-text-primary: #FFFFFF;
+      --vc-text-secondary: #A6A6A6;
+      --vc-text-muted: #686868;
+      --vc-border: #292929;
+      --vc-rating: #FFC400;
+    }
+
+    body.page-vista {
+      background: linear-gradient(180deg, #16080B 0%, #080808 30%, #080808 100%);
+      color: var(--vc-text-primary);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    /* Hero */
     .syn-hero {
       position: relative;
-      padding: 7rem 0 4rem;
+      padding: 6rem 0 3rem;
       overflow: hidden;
-      background: var(--gradient-hero);
+      background: transparent;
     }
     .syn-hero__inner { max-width: 760px; }
     .syn-hero__badge {
       display: inline-flex; align-items: center; gap: .5rem;
-      padding: .35rem .8rem; border-radius: 999px;
-      font-size: .75rem; font-weight: 600; letter-spacing: .04em;
-      color: var(--color-accent-light);
-      background: var(--color-accent-glow);
-      border: 1px solid var(--color-border-accent);
+      padding: .4rem .9rem; border-radius: 999px;
+      font-size: .75rem; font-weight: 600; letter-spacing: .05em;
+      color: #fff;
+      background: rgba(242, 13, 25, 0.15);
+      border: 1px solid rgba(242, 13, 25, 0.3);
       text-transform: uppercase;
+      backdrop-filter: blur(12px);
     }
     .syn-hero__title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(2.2rem, 5vw, 3.6rem);
-      line-height: 1.08; font-weight: 800; margin: 1.2rem 0 1rem;
-      color: var(--color-text);
+      font-family: 'Space Grotesk', 'Inter', sans-serif;
+      font-size: clamp(2.2rem, 6vw, 3.4rem);
+      line-height: 1.05; font-weight: 800; margin: 1rem 0;
+      color: var(--vc-text-primary);
     }
-    .syn-hero__title span { color: var(--color-accent-light); }
+    .syn-hero__title span { color: var(--vc-primary); }
     .syn-hero__text {
-      font-size: 1.05rem; line-height: 1.7; color: var(--color-text-secondary); max-width: 640px;
+      font-size: 1.1rem; line-height: 1.7;
+      color: var(--vc-text-secondary); max-width: 640px;
     }
-    .syn-hero__actions { display: flex; flex-wrap: wrap; gap: .9rem; margin-top: 2rem; }
+    .syn-hero__actions { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 2rem; }
 
+    /* Primary download button — Vista red */
     .syn-download {
       display: inline-flex; align-items: center; gap: .75rem;
-      padding: 1rem 1.6rem; border-radius: 14px;
-      background: var(--gradient-accent);
+      padding: .9rem 1.8rem; border-radius: 20px;
+      background: linear-gradient(135deg, var(--vc-primary) 0%, var(--vc-primary-dark) 100%);
       border: none;
-      color: #fff; font-weight: 700; font-size: 1.05rem;
+      color: #fff; font-weight: 700; font-size: 1rem;
       text-decoration: none; transition: transform .15s ease, box-shadow .15s ease;
-      box-shadow: var(--shadow-accent);
+      box-shadow: 0 0 30px rgba(242, 13, 25, 0.35);
     }
-    .syn-download:hover { transform: translateY(-2px); box-shadow: var(--shadow-accent-strong); }
+    .syn-download:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 40px rgba(242, 13, 25, 0.5);
+    }
     .syn-download__icon { width: 22px; height: 22px; flex: none; }
-    .syn-download__meta { display: block; font-size: .72rem; font-weight: 500; color: rgba(255,255,255,.7); margin-top: 2px; }
+    .syn-download__meta { display: block; font-size: .75rem; font-weight: 500; color: rgba(255,255,255,.7); margin-top: 2px; }
     .syn-download__label { line-height: 1.1; }
 
+    /* Hero stats (rating, downloads) */
+    .syn-hero__stats {
+      display: flex; align-items: center; gap: var(--space-4); margin-top: 1.5rem;
+      font-size: var(--text-sm); color: var(--vc-text-muted);
+    }
+    .syn-hero__rating { color: var(--vc-rating); }
+
+    /* Features grid */
     .syn-grid {
       display: grid; gap: 1.25rem; margin-top: 2.5rem;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     }
     .syn-card {
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
+      background: var(--vc-surface-high);
+      border: 1px solid var(--vc-border);
       border-radius: 16px; padding: 1.6rem;
-      backdrop-filter: blur(12px);
       transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
     }
-    .syn-card:hover { transform: translateY(-4px); border-color: var(--color-border-accent); box-shadow: var(--shadow-accent); }
+    .syn-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--vc-primary);
+      box-shadow: 0 0 20px rgba(242, 13, 25, 0.15);
+    }
     .syn-card__icon {
       width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center;
-      background: var(--color-accent-glow); color: var(--color-accent-light); margin-bottom: 1rem;
+      background: var(--vc-burgundy); color: var(--vc-primary); margin-bottom: 1rem;
     }
-    .syn-card__title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--color-text); margin-bottom: .5rem; }
-    .syn-card__text { font-size: .92rem; line-height: 1.6; color: var(--color-text-secondary); }
+    .syn-card__title {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.1rem;
+      color: var(--vc-text-primary); margin-bottom: .5rem;
+    }
+    .syn-card__text {
+      font-size: .92rem; line-height: 1.6; color: var(--vc-text-secondary);
+    }
 
+    /* Steps */
     .syn-steps { display: grid; gap: 1.5rem; margin-top: 2.5rem; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
     .syn-step { position: relative; padding-top: 3.4rem; }
     .syn-step__num {
       position: absolute; top: 0; left: 0;
       width: 40px; height: 40px; border-radius: 50%;
       display: grid; place-items: center; font-weight: 800; color: #fff;
-      background: var(--gradient-accent);
+      background: var(--vc-primary);
     }
-    .syn-step__title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; color: var(--color-text); margin-bottom: .4rem; }
-    .syn-step__text { font-size: .92rem; line-height: 1.6; color: var(--color-text-secondary); }
+    .syn-step__title {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+      color: var(--vc-text-primary); margin-bottom: .4rem;
+    }
+    .syn-step__text { font-size: .92rem; line-height: 1.6; color: var(--vc-text-secondary); }
 
-    .syn-install {
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-      backdrop-filter: blur(12px);
-      border-radius: 18px; padding: 2rem; margin-top: 2.5rem;
+    /* Screenshots gallery */
+    .syn-screenshots {
+      display: grid; gap: var(--space-4);
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     }
-    .syn-install__title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; color: var(--color-text); margin-bottom: 1rem; }
+    .syn-screenshots img {
+      border-radius: 18px;
+      border: 1px solid var(--vc-border);
+    }
+
+    /* Install section */
+    .syn-install {
+      background: var(--vc-surface);
+      border: 1px solid var(--vc-border);
+      border-radius: 22px; padding: 2rem; margin-top: 2.5rem;
+    }
+    .syn-install__title {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+      color: var(--vc-text-primary); margin-bottom: 1rem;
+    }
     .syn-install__list { list-style: none; counter-reset: inst; display: grid; gap: .9rem; }
-    .syn-install__list li { display: flex; gap: .8rem; align-items: flex-start; color: var(--color-text-secondary); font-size: .95rem; line-height: 1.6; }
+    .syn-install__list li { display: flex; gap: .8rem; align-items: flex-start; color: var(--vc-text-secondary); font-size: .95rem; line-height: 1.6; }
     .syn-install__list li::before {
       counter-increment: inst; content: counter(inst);
       flex: none; width: 26px; height: 26px; border-radius: 50%;
       display: grid; place-items: center; font-size: .8rem; font-weight: 700;
-      color: var(--color-accent-light); background: var(--color-accent-glow);
+      color: #fff; background: var(--vc-primary);
     }
-    .syn-install__list code { background: rgba(255,255,255,.06); padding: .1rem .4rem; border-radius: 6px; font-size: .85em; color: var(--color-accent-light); }
-    [data-theme="light"] .syn-install__list code { background: rgba(0,0,0,.05); }
+    .syn-install__list code {
+      background: rgba(255,255,255,.06); padding: .1rem .4rem; border-radius: 6px;
+      font-size: .85em; color: var(--vc-primary);
+    }
 
-    .syn-meta { display: flex; flex-wrap: wrap; gap: 1.5rem; margin-top: 1.5rem; color: var(--color-text-muted); font-size: .9rem; }
-    .syn-meta strong { color: var(--color-text); }
-    .syn-github {
-      display: inline-flex; align-items: center; gap: .5rem; margin-top: 1.5rem;
-      color: var(--color-accent-light); font-weight: 600; text-decoration: none;
+    /* Meta info */
+    .syn-meta {
+      display: flex; flex-wrap: wrap; gap: 1.5rem; margin-top: 1.5rem;
+      color: var(--vc-text-muted); font-size: .9rem;
     }
-    .syn-github:hover { text-decoration: underline; }
+    .syn-meta strong { color: var(--vc-text-primary); }
+
+    /* CTA section */
+    .cta-section { background: var(--vc-bg); border-top: 1px solid var(--vc-border); }
+    .cta-content { text-align: center; padding: 3rem 1rem; }
+    .cta-content__title {
+      font-family: 'Space Grotesk', sans-serif; font-size: 2rem; font-weight: 800;
+      color: var(--vc-text-primary); margin-bottom: var(--space-4);
+    }
+    .cta-content__text { color: var(--vc-text-secondary); font-size: var(--text-lg); }
+    .cta-content__actions { display: flex; gap: var(--space-4); justify-content: center; margin-top: var(--space-8); flex-wrap: wrap; }
+
+    /* Section labels and headings */
+    .section__label {
+      font-size: .85rem; font-weight: 600; color: var(--vc-primary);
+      letter-spacing: .05em; text-transform: uppercase;
+    }
+    .section__title {
+      font-family: 'Space Grotesk', sans-serif; font-size: 2rem; font-weight: 700;
+      color: var(--vc-text-primary); margin-top: var(--space-4);
+    }
+    .section__title span { color: var(--vc-primary); }
+    .section__subtitle { color: var(--vc-text-secondary); font-size: 1rem; line-height: 1.7; }
+
+    /* Editorial number tags */
+    .editorial-number {
+      font-size: .8rem; font-weight: 700; color: var(--vc-text-secondary);
+      letter-spacing: .1em; text-transform: uppercase;
+    }
+
+    /* Ensure footer blends with theme */
+    .footer__brand { color: var(--vc-text-primary); }
+    .footer__link:hover { color: var(--vc-primary); }
+    .footer__social-link:hover { color: var(--vc-primary); }
+
+    @media (max-width: 768px) {
+      .syn-hero { padding: 4rem 0 2rem; }
+      .syn-hero__title { font-size: clamp(1.8rem, 6vw, 2.4rem); }
+      .cta-content__title { font-size: 1.5rem; }
+      .syn-steps { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body class="page-vista">
@@ -249,10 +352,10 @@
   <main class="syn-hero" id="main-content" aria-label="Vista Cinema">
     <div class="container">
       <div class="syn-hero__inner reveal">
-        <span class="syn-hero__badge">By LX Obsidian Labs</span>
-        <h1 class="syn-hero__title">Vista Cinema — your <span>AI production studio</span></h1>
+        <span class="syn-hero__badge">FREE — No subscription fees</span>
+        <h1 class="syn-hero__title">Vista Cinema<span style="color:var(--vc-primary);">.</span><br><span style="color:var(--vc-primary);">Stream. Edit. Publish.</span></h1>
         <p class="syn-hero__text">
-          AI-powered video production suite with Hollywood-grade editing, multi-language AI dubbing, AI actors and direct YouTube/TikTok publishing. Download free on Android.
+          AI-powered movie streaming and video production suite. Browse thousands of films, AI-edit your content, add multi-language dubbing, create AI actors and publish to YouTube and TikTok. Create a free account — 100% free.
         </p>
         <div class="syn-hero__actions">
           <a href="deploy/VistaCinema-v1.0.0.apk" download class="syn-download">
@@ -286,8 +389,8 @@
     <div class="container">
       <div class="section__header reveal">
         <p class="section__label">Capabilities</p>
-        <h2 class="section__title">What Vista Cinema can do</h2>
-        <p class="section__subtitle">A complete AI video production suite — edit, dub, animate and publish from a single app.</p>
+        <h2 class="section__title">Watch &amp; Create</h2>
+        <p class="section__subtitle">A complete AI-powered cinema experience — stream films, edit productions, add AI dubbing and publish your own content.</p>
       </div>
       <div class="syn-grid">
         <div class="syn-card reveal">
@@ -343,8 +446,8 @@
      <div class="container">
        <div class="section__header reveal">
          <p class="section__label">In Action</p>
-         <h2 class="section__title">Vista Cinema in Action</h2>
-         <p class="section__subtitle">See how Vista Cinema transforms your video production workflow — from editing to publishing.</p>
+        <h2 class="section__title">Vista Cinema in Action</h2>
+        <p class="section__subtitle">Stream, edit and publish — all in one cinematic experience.</p>
        </div>
     <div class="syn-screenshots" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:var(--space-8);margin-top:var(--space-12);">
           <div class="reveal">
@@ -368,29 +471,24 @@
     <div class="container">
       <div class="section__header reveal">
         <p class="section__label">How it works</p>
-        <h2 class="section__title">From footage to published film</h2>
-        <p class="section__subtitle">Four steps to a polished production — import, edit, review and publish.</p>
+        <h2 class="section__title">From Sign Up to Streaming</h2>
+        <p class="section__subtitle">Three steps to your first film.</p>
       </div>
       <div class="syn-steps">
         <div class="syn-step reveal">
           <div class="syn-step__num">1</div>
-          <h3 class="syn-step__title">Import</h3>
-          <p class="syn-step__text">Load your video footage, scripts and assets into Vista Cinema.</p>
+          <h3 class="syn-step__title">Create Account</h3>
+          <p class="syn-step__text">Sign up with your email — no phone number required. Start streaming immediately.</p>
         </div>
         <div class="syn-step reveal">
           <div class="syn-step__num">2</div>
-          <h3 class="syn-step__title">Edit</h3>
-          <p class="syn-step__text">Use AI-powered tools to edit, add effects, dub and polish your production.</p>
+          <h3 class="syn-step__title">Stream & Edit</h3>
+          <p class="syn-step__text">Browse thousands of films or AI-edit your own videos with Hollywood-grade tools.</p>
         </div>
         <div class="syn-step reveal">
           <div class="syn-step__num">3</div>
-          <h3 class="syn-step__title">Review</h3>
-          <p class="syn-step__text">Preview your production with real-time playback and quality checks.</p>
-        </div>
-        <div class="syn-step reveal">
-          <div class="syn-step__num">4</div>
-          <h3 class="syn-step__title">Publish</h3>
-          <p class="syn-step__text">Export in 4K and publish directly to YouTube, TikTok and other platforms.</p>
+          <h3 class="syn-step__title">Share</h3>
+          <p class="syn-step__text">Publish to YouTube, TikTok and Instagram, or add to your personal collection.</p>
         </div>
       </div>
     </div>
@@ -403,8 +501,8 @@
     <div class="container">
       <div class="section__header reveal">
         <p class="section__label">Get Vista Cinema</p>
-        <h2 class="section__title">Download &amp; install</h2>
-        <p class="section__subtitle">Free Android APK — install directly on your device, no Play Store required.</p>
+        <h2 class="section__title">Get Vista Cinema</h2>
+        <p class="section__subtitle">Free Android APK — no subscription. Create a free account to start streaming.</p>
       </div>
 
       <div class="syn-install reveal">
@@ -422,7 +520,8 @@
           <span>Platform: <strong>Android 7.0+</strong></span>
           <span>Size: <strong>~35 MB</strong></span>
           <span>Updated: <strong>August 2026</strong></span>
-          <span>License: <strong>Free</strong></span>
+          <span>License: <strong>Free</strong> — no subscription</span>
+          <span>Account: <strong>Username, Email, Password</strong></span>
         </div>
 
         <a href="deploy/VistaCinema-v1.0.0.apk" download class="syn-download">
@@ -447,10 +546,20 @@
     <div class="container">
       <div class="cta-content reveal">
         <div class="cta-gradient"></div>
-        <h2 class="cta-content__title">Ready to produce with AI?</h2>
-        <p class="cta-content__text">Download Vista Cinema today, or explore more products on LX Marketplace. Custom AI video solutions also available.</p>
+        <h2 class="cta-content__title">Start Streaming<br><span style="color:var(--vc-primary);">Watch. Edit. Share.</span></h2>
+        <p class="cta-content__text">Create a free Vista Cinema account — 100% free, no hidden fees. Stream thousands of films or AI-edit your own.</p>
         <div class="cta-content__actions">
-          <a href="#download" class="btn btn--primary btn--large">Download Free</a>
+          <a href="deploy/VistaCinema-v1.0.0.apk" download class="syn-download">
+            <svg class="syn-download__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            <span>
+              <span class="syn-download__label">Download Free</span>
+              <span class="syn-download__meta">v1.0.0 · Android · No subscription</span>
+            </span>
+          </a>
           <a href="marketplace.html" class="btn btn--secondary btn--large">Browse Marketplace</a>
         </div>
       </div>
