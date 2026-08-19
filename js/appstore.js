@@ -32,7 +32,7 @@ void (function () {
       category: 'mobile', categoryLabel: 'Mobile Apps',
       platform: 'mobile', platformLabel: 'Android',
       price: 0, rating: 5.0, reviews: 45, downloads: 1200,
-      version: '1.0.0', size: '~35 MB', color: 'purple', icon: 'film',
+      version: '1.0.0', size: '~35 MB', color: 'red', icon: 'film',
       isExtension: false, apkUrl: 'deploy/VistaCinema-v1.0.0.apk',
       features: ['AI-Powered Editing Suite', 'Multi-Language AI Dubbing', 'AI Actor & Voice Selection', 'Hollywood-Grade Effects', 'Direct YouTube/TikTok Publishing', '4K Export Quality'],
       requirements: ['Android 7.0 (API 24) or higher', '~35 MB free storage', 'Internet connection for AI features'],
