@@ -221,23 +221,11 @@
     .product-actions { margin-top: 30px; display: flex; flex-wrap: wrap; gap: 10px; }
     .product-visual { min-height: 650px; position: relative; display: grid; place-items: center; padding: 40px; overflow: hidden; border-left: 1px solid var(--line); background: radial-gradient(circle at center, rgba(115,87,255,.08), transparent 26rem); }
 
-    /* Synapse visual */
-    .synapse-ui { width: min(590px, 100%); overflow: hidden; border: 1px solid var(--line-2); border-radius: 24px; background: #0a0b10; box-shadow: var(--shadow); }
-    .synapse-head { min-height: 50px; display: flex; align-items: center; gap: 8px; padding: 0 15px; border-bottom: 1px solid var(--line); background: #101119; }
-    .synapse-main { display: grid; grid-template-columns: 1fr 220px; min-height: 405px; }
-    .fake-page { padding: 24px; }
-    .fake-page .bar { height: 12px; border-radius: 5px; background: rgba(255,255,255,.08); margin-bottom: 12px; }
-    .fake-page .bar.a { width: 48%; background: rgba(155,138,255,.19); }
-    .fake-page .bar.b { width: 78%; }
-    .fake-page .bar.c { width: 66%; }
-    .fake-card-grid { margin-top: 26px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-    .fake-card { min-height: 105px; border: 1px solid var(--line); border-radius: 14px; background: linear-gradient(135deg, rgba(115,87,255,.09), rgba(255,255,255,.018)); }
-    .agent-panel { padding: 18px; border-left: 1px solid var(--line); background: #0d0e14; }
-    .agent-title { color: #d4d0f4; font-size: .72rem; font-weight: 800; }
-    .agent-status { margin-top: 16px; display: grid; gap: 9px; }
-    .agent-step { padding: 9px 10px; border: 1px solid var(--line); border-radius: 10px; color: #727684; font-size: .62rem; }
-    .agent-step.active { color: #b8f0d2; border-color: rgba(81,214,156,.17); background: rgba(81,214,156,.05); }
-    .agent-prompt { margin-top: 18px; min-height: 74px; padding: 10px; border: 1px solid rgba(115,87,255,.19); border-radius: 11px; background: rgba(115,87,255,.05); color: #969aa8; font-size: .61rem; }
+    /* Synapse screenshot gallery */
+    .synapse-screenshot-stage { width: min(820px, 100%); max-width: 100%; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 24px; }
+    .synapse-screenshot-stage .synapse-screen { border: 1px solid var(--line-2); border-radius: 24px; background: #0a0b10; box-shadow: var(--shadow); overflow: hidden; position: relative; aspect-ratio: 16/9; }
+    .synapse-screenshot-stage .synapse-screen img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .synapse-screenshot-stage .synapse-screen .synapse-screen__tag { position: absolute; bottom: 8px; left: 8px; background: rgba(0,0,0,.45); color: #fff; padding: 2px 6px; border-radius: 4px; font-size: .56rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
 
     /* Vista visual */
     .vista-stage { width: 100%; min-height: 570px; position: relative; display: grid; place-items: center; }
@@ -673,38 +661,18 @@
               </div>
             </div>
             <div class="product-visual">
-              <div class="synapse-ui" aria-label="Synapse AI browser agent interface">
-                <div class="synapse-head">
-                  <span class="sys-dot a"></span>
-                  <span class="sys-dot b"></span>
-                  <span class="sys-dot c"></span>
-                  <div class="url"></div>
+              <div class="synapse-screenshot-stage">
+                <div class="synapse-screen one">
+                  <img src="assets/synapse-screenshot-1.png" alt="Synapse AI agent interface — observation mode" loading="lazy" decoding="async" />
+                  <span class="synapse-screen__tag">Observation</span>
                 </div>
-                <div class="synapse-main">
-                  <div class="fake-page">
-                    <div class="bar a"></div>
-                    <div class="bar b"></div>
-                    <div class="bar c"></div>
-                    <div class="fake-card-grid">
-                      <div class="fake-card"></div>
-                      <div class="fake-card"></div>
-                      <div class="fake-card"></div>
-                      <div class="fake-card"></div>
-                    </div>
-                  </div>
-                  <aside class="agent-panel">
-                    <div class="agent-title">SYNAPSE // AGENT</div>
-                    <div class="agent-status">
-                      <div class="agent-step active">✓ Observe</div>
-                      <div class="agent-step active">✓ Plan</div>
-                      <div class="agent-step active">✓ Execute</div>
-                      <div class="agent-step">○ Verify</div>
-                    </div>
-                    <div class="agent-prompt">
-                      Objective:<br />
-                      Complete the requested browser workflow and verify the result.
-                    </div>
-                  </aside>
+                <div class="synapse-screen two">
+                  <img src="assets/synapse-screenshot-2.png" alt="Synapse AI agent interface — action execution" loading="lazy" decoding="async" />
+                  <span class="synapse-screen__tag">Action</span>
+                </div>
+                <div class="synapse-screen three">
+                  <img src="assets/synapse-screenshot-3.png" alt="Synapse AI agent interface — verification result" loading="lazy" decoding="async" />
+                  <span class="synapse-screen__tag">Verify</span>
                 </div>
               </div>
             </div>
