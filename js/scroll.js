@@ -100,19 +100,7 @@ void (function () {
      ========================================== */
 
   function initSmoothScroll() {
-    document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
-      anchor.addEventListener('click', function (e) {
-        var targetId = this.getAttribute('href');
-        if (targetId === '#') return;
-        var target = document.querySelector(targetId);
-        if (target) {
-          e.preventDefault();
-          var navHeight = nav ? nav.offsetHeight : 76;
-          var targetPos = target.getBoundingClientRect().top + window.scrollY - navHeight - 20;
-          window.scrollTo({ top: targetPos, behavior: 'smooth' });
-        }
-      });
-    });
+    /* Handled by navigation.js — removed duplicate */
   }
 
   /* ==========================================

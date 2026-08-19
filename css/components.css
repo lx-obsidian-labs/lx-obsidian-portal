@@ -566,7 +566,7 @@
   right: -30%;
   width: 800px;
   height: 800px;
-  background: radial-gradient(circle, rgba(200, 155, 60, 0.08) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(229, 9, 20, 0.08) 0%, transparent 70%);
   animation: gradientShift 12s ease-in-out infinite alternate;
 }
 
@@ -585,7 +585,7 @@
   left: 40%;
   width: 500px;
   height: 500px;
-  background: radial-gradient(circle, rgba(200, 155, 60, 0.03) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(229, 9, 20, 0.03) 0%, transparent 70%);
   animation: gradientShift 20s ease-in-out infinite alternate;
 }
 
@@ -1286,7 +1286,7 @@
 }
 
 .timeline-step--active::before {
-  box-shadow: 0 0 0 1px var(--color-accent), 0 0 12px rgba(200, 155, 60, 0.3);
+  box-shadow: 0 0 0 1px var(--color-accent), 0 0 12px rgba(229, 9, 20, 0.3);
 }
 
 .timeline-step__header {
@@ -1927,7 +1927,7 @@
   transform: translateX(-50%);
   width: 600px;
   height: 600px;
-  background: radial-gradient(circle, rgba(200, 155, 60, 0.06) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(229, 9, 20, 0.06) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -2359,7 +2359,7 @@
 .newsletter-submit:hover {
   background: var(--color-accent-light);
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(200, 155, 60, 0.25);
+  box-shadow: 0 8px 25px rgba(229, 9, 20, 0.25);
 }
 
 

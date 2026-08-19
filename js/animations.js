@@ -295,23 +295,20 @@ void (function () {
 
     if (!input || !results) return;
 
-    var data = [
-      { title: 'Website Development', type: 'Service', url: '#' },
-      { title: 'Mobile App Development', type: 'Service', url: '#' },
-      { title: 'AI Solutions', type: 'Service', url: '#' },
-      { title: 'Enterprise Software', type: 'Service', url: '#' },
-      { title: 'OptiScan', type: 'Application', url: '#' },
-      { title: 'College Manager', type: 'Application', url: '#' },
-      { title: 'BookMe Rivet', type: 'Application', url: '#' },
-      { title: 'Inventory Pro', type: 'Application', url: '#' },
-      { title: 'CRM Mobile', type: 'Application', url: '#' },
-      { title: 'How Much Does Software Cost?', type: 'Article', url: '#' },
-      { title: 'Choosing Between Website and Mobile App', type: 'Article', url: '#' },
-      { title: 'Artificial Intelligence for Business', type: 'Article', url: '#' },
-      { title: 'Digital Transformation Guide', type: 'Article', url: '#' },
-      { title: 'How much does a website cost?', type: 'FAQ', url: '#faq' },
-      { title: 'How long does development take?', type: 'FAQ', url: '#faq' },
-      { title: 'Portfolio Showcase', type: 'Project', url: '#portfolio' },
+    var pages = [
+      { title: 'Home', desc: 'LX Obsidian Labs homepage', url: 'index.html' },
+      { title: 'Services', desc: 'AI, web, mobile, business systems', url: 'services.html' },
+      { title: 'Synapse AI', desc: 'AI browser automation extension', url: 'synapse.html' },
+      { title: 'Vista Cinema', desc: 'AI video production suite', url: 'vista.html' },
+      { title: 'Marketplace', desc: 'Browse and download software', url: 'marketplace.html' },
+      { title: 'Portfolio', desc: 'Case studies and selected work', url: 'portfolio.html' },
+      { title: 'About', desc: 'About LX Obsidian Labs', url: 'about.html' },
+      { title: 'Industries', desc: 'Education, retail, hospitality, mining', url: 'industries.html' },
+      { title: 'Contact', desc: 'Start a project or get in touch', url: 'contact.html' },
+      { title: 'Blog', desc: 'Insights, engineering and case studies', url: 'blog.html' },
+      { title: 'FAQ', desc: 'Frequently asked questions', url: 'faq.html' },
+      { title: 'Partners', desc: 'Sell on LX and partner programme', url: 'partners.html' },
+      { title: 'Advertise', desc: 'Market your business on LX', url: 'advertise.html' }
     ];
 
     input.addEventListener('input', function () {
@@ -322,8 +319,9 @@ void (function () {
         return;
       }
 
-      var matches = data.filter(function (item) {
-        return item.title.toLowerCase().indexOf(query) !== -1;
+      var matches = pages.filter(function (item) {
+        return item.title.toLowerCase().indexOf(query) !== -1 ||
+               item.desc.toLowerCase().indexOf(query) !== -1;
       });
 
       if (matches.length === 0) {
@@ -337,8 +335,8 @@ void (function () {
         el.className = 'search-result-item';
         el.href = item.url;
         el.innerHTML =
-          '<div class="search-result-item__type">' + item.type + '</div>' +
-          '<div class="search-result-item__title">' + item.title + '</div>';
+          '<div class="search-result-item__title">' + item.title + '</div>' +
+          '<div class="search-result-item__type">' + item.desc + '</div>';
         results.appendChild(el);
       });
     });
