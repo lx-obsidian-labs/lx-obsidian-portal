@@ -1121,8 +1121,8 @@
 .marketplace-card__logo[data-color="green"] { color: #10B981; }
 .marketplace-card__logo[data-color="amber"] { color: #F59E0B; }
 .marketplace-card__logo[data-color="purple"] { color: #E50914; }
-.marketplace-card__logo[data-color="cyan"] { color: #22D3EE; }
-.marketplace-card__logo[data-color="red"] { color: #E50914; }
+
+
 
 .marketplace-card__logo {
   width: 48px;
