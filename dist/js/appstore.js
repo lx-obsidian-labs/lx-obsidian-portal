@@ -9,162 +9,6 @@ void (function () {
 
   var APP_DATA = [
     {
-      id: 'optiscan', name: 'OptiScan', tagline: 'AI-powered diagnostic scanning',
-      desc: 'Advanced AI diagnostic engine that scans codebases, networks, and systems for vulnerabilities, performance bottlenecks, and optimization opportunities. Features real-time reporting and automated fix suggestions.',
-      category: 'developer-tools', categoryLabel: 'Developer Tools',
-      platform: 'desktop', platformLabel: 'Desktop',
-      price: 29.99, rating: 4.8, reviews: 342, downloads: 12850,
-      version: '2.4.1', size: '24 MB', color: 'blue', icon: 'settings',
-      features: ['AI vulnerability scanning', 'Real-time performance monitoring', 'Automated fix suggestions', 'CI/CD integration', 'Multi-language support', 'Export reports (PDF/JSON/HTML)'],
-      requirements: ['Windows 10+, macOS 12+, or Linux', '4 GB RAM minimum', '500 MB disk space', 'Node.js 18+ (optional)'],
-      changelog: ['v2.4.1 — Fixed false positives in Python scan results', 'v2.4.0 — Added Docker container scanning support', 'v2.3.0 — New CI/CD plugin for GitHub Actions', 'v2.2.0 — Multi-language support (Python, Go, Rust)'],
-      tags: ['security', 'scanning', 'devops', 'ci-cd'],
-      author: 'LX Obsidian Labs', released: 'March 2025', updated: 'June 15, 2026', license: 'Single-user license'
-    },
-    {
-      id: 'college-manager', name: 'College Manager', tagline: 'Comprehensive campus management',
-      desc: 'All-in-one campus management platform with student admissions, course scheduling, grade tracking, attendance monitoring, and communication tools.',
-      category: 'business', categoryLabel: 'Business',
-      platform: 'cloud', platformLabel: 'Cloud / SaaS',
-      price: 39.99, rating: 4.6, reviews: 218, downloads: 8720,
-      version: '3.1.0', size: '42 MB', color: 'green', icon: 'monitor',
-      features: ['Student admission portal', 'Course & timetable scheduling', 'Grade & transcript management', 'Attendance tracking', 'Parent communication portal', 'LMS integration (Moodle, Canvas)'],
-      requirements: ['Windows Server 2019+ or Linux', '8 GB RAM, 4 CPU cores', '2 GB disk space', 'PostgreSQL 14+ or MySQL 8+'],
-      changelog: ['v3.1.0 — New parent portal mobile view', 'v3.0.0 — Redesigned dashboard with analytics', 'v2.9.0 — Added Canvas LMS integration'],
-      tags: ['education', 'management', 'scheduling', 'enterprise'],
-      author: 'LX Obsidian Labs', released: 'August 2024', updated: 'June 10, 2026', license: 'Site license (per institution)'
-    },
-    {
-      id: 'bookme-rivet', name: 'BookMe Rivet', tagline: 'Seamless appointment platform',
-      desc: 'Modern appointment booking and scheduling platform with calendar sync, automated reminders, payment processing, and resource management.',
-      category: 'business', categoryLabel: 'Business',
-      platform: 'cloud', platformLabel: 'Cloud / SaaS',
-      price: 24.99, rating: 4.7, reviews: 189, downloads: 15430,
-      version: '1.9.3', size: '18 MB', color: 'amber', icon: 'calendar',
-      features: ['Online booking widget', 'Google/Outlook calendar sync', 'SMS & email reminders', 'Stripe payment integration', 'Staff resource management', 'Analytics dashboard'],
-      requirements: ['Node.js 18+', 'MongoDB 6+ or PostgreSQL 14+', '4 GB RAM', 'Stripe account'],
-      changelog: ['v1.9.3 — Fixed Outlook calendar sync bug', 'v1.9.0 — Added WhatsApp reminders', 'v1.8.0 — New analytics dashboard'],
-      tags: ['booking', 'scheduling', 'payments', 'saas'],
-      author: 'LX Obsidian Labs', released: 'January 2025', updated: 'May 28, 2026', license: 'Monthly subscription'
-    },
-    {
-      id: 'inventory-pro', name: 'Inventory Pro', tagline: 'Real-time inventory tracking',
-      desc: 'Enterprise inventory management system with barcode scanning, stock forecasting, multi-warehouse support, and purchase order management.',
-      category: 'business', categoryLabel: 'Business',
-      platform: 'desktop', platformLabel: 'Desktop',
-      price: 49.99, rating: 4.5, reviews: 156, downloads: 6540,
-      version: '2.2.0', size: '36 MB', color: 'purple', icon: 'star',
-      features: ['Barcode & QR scanning', 'Stock forecasting (AI)', 'Multi-warehouse support', 'Purchase order management', 'Supplier portal', 'Real-time sync'],
-      requirements: ['Windows/Linux/macOS', '8 GB RAM', '1 GB disk space', 'PostgreSQL 14+ or MySQL 8+'],
-      changelog: ['v2.2.0 — AI stock forecasting engine', 'v2.1.0 — Multi-warehouse support', 'v2.0.0 — Complete UI redesign'],
-      tags: ['inventory', 'warehouse', 'supply-chain', 'enterprise'],
-      author: 'LX Obsidian Labs', released: 'November 2024', updated: 'June 20, 2026', license: 'Per-seat license'
-    },
-    {
-      id: 'crm-mobile', name: 'CRM Mobile', tagline: 'On-the-go relationship management',
-      desc: 'Mobile-first CRM platform with contact management, deal tracking, pipeline visualization, and team collaboration. Works offline with auto-sync.',
-      category: 'mobile', categoryLabel: 'Mobile',
-      platform: 'mobile', platformLabel: 'Mobile',
-      price: 34.99, rating: 4.9, reviews: 423, downloads: 22100,
-      version: '4.0.1', size: '15 MB', color: 'teal', icon: 'smartphone',
-      features: ['Contact & lead management', 'Deal pipeline tracking', 'Offline mode with auto-sync', 'Email & calendar integration', 'Team collaboration', 'Custom report builder'],
-      requirements: ['iOS 15+ or Android 12+', '2 GB RAM', '200 MB disk space', 'Cloud account required'],
-      changelog: ['v4.0.1 — Fixed offline sync conflict resolution', 'v4.0.0 — New pipeline visualization', 'v3.9.0 — Added WhatsApp integration'],
-      tags: ['crm', 'mobile', 'sales', 'contacts'],
-      author: 'LX Obsidian Labs', released: 'March 2024', updated: 'June 22, 2026', license: 'Per-user subscription'
-    },
-    {
-      id: 'pulse-monitor', name: 'Pulse Monitor', tagline: 'System health monitoring',
-      desc: 'Real-time infrastructure monitoring for servers, containers, databases, and applications. Custom alerts, dashboards, and incident response automation.',
-      category: 'developer-tools', categoryLabel: 'Developer Tools',
-      platform: 'server', platformLabel: 'Server',
-      price: 0, rating: 4.4, reviews: 97, downloads: 18900,
-      version: '1.6.2', size: '12 MB', color: 'red', icon: 'message',
-      features: ['Server & container monitoring', 'Custom alert thresholds', 'Dashboard builder', 'Incident response automation', 'Multi-cloud support', 'Team notifications (Slack, Email, PagerDuty)'],
-      requirements: ['Linux (Ubuntu 20+, CentOS 8+)', '2 GB RAM', '500 MB disk space', 'Docker (optional)'],
-      changelog: ['v1.6.2 — Security patch for alert API', 'v1.6.0 — PagerDuty integration', 'v1.5.0 — Custom dashboard builder'],
-      tags: ['monitoring', 'devops', 'alerts', 'infrastructure'],
-      author: 'LX Obsidian Labs', released: 'October 2024', updated: 'June 5, 2026', license: 'Free (Community Edition)'
-    },
-    {
-      id: 'datavault', name: 'DataVault', tagline: 'Secure data storage & backup',
-      desc: 'Enterprise backup and disaster recovery solution with AES-256 encryption, incremental backups, cloud replication, and one-click restore.',
-      category: 'security', categoryLabel: 'Security',
-      platform: 'cloud', platformLabel: 'Cloud / SaaS',
-      price: 59.99, rating: 4.8, reviews: 276, downloads: 9930,
-      version: '3.3.0', size: '28 MB', color: 'indigo', icon: 'cloud',
-      features: ['AES-256 encryption at rest & transit', 'Incremental & differential backups', 'Multi-cloud replication (AWS/Azure/GCP)', 'One-click disaster recovery', 'SOC 2 & GDPR compliant', 'Audit logging'],
-      requirements: ['Linux (Ubuntu 22+, RHEL 9+)', '8 GB RAM, 4 CPU cores', '10 GB disk space', 'Cloud storage account'],
-      changelog: ['v3.3.0 — Added GCP Cloud Storage support', 'v3.2.0 — SOC 2 compliance certification', 'v3.1.0 — One-click disaster recovery'],
-      tags: ['backup', 'security', 'encryption', 'cloud'],
-      author: 'LX Obsidian Labs', released: 'September 2024', updated: 'June 18, 2026', license: 'Per-TB license'
-    },
-    {
-      id: 'flowforge', name: 'FlowForge', tagline: 'Visual workflow automation',
-      desc: 'Drag-and-drop workflow automation builder with 200+ integrations. Automate complex business processes without writing code.',
-      category: 'developer-tools', categoryLabel: 'Developer Tools',
-      platform: 'cloud', platformLabel: 'Cloud / SaaS',
-      price: 44.99, rating: 4.6, reviews: 198, downloads: 11200,
-      version: '2.0.4', size: '34 MB', color: 'blue', icon: 'settings',
-      features: ['Visual drag-and-drop builder', '200+ pre-built integrations', 'Conditional logic & branching', 'Approval workflow engine', 'Scheduled triggers & webhooks', 'Execution logs & debugging'],
-      requirements: ['Docker or Kubernetes', '4 GB RAM, 2 CPU cores', 'PostgreSQL 14+', 'Node.js 18+'],
-      changelog: ['v2.0.4 — Performance improvements for large workflows', 'v2.0.0 — New visual builder with AI suggestions', 'v1.9.0 — Added Slack & Teams integrations'],
-      tags: ['automation', 'no-code', 'integration', 'workflows'],
-      author: 'LX Obsidian Labs', released: 'February 2025', updated: 'June 12, 2026', license: 'Per-workflow license'
-    },
-    {
-      id: 'cloudsync', name: 'CloudSync', tagline: 'Multi-cloud file sync',
-      desc: 'Enterprise file synchronization across AWS S3, Google Cloud Storage, Azure Blob, and on-premise storage. Real-time syncing with conflict resolution.',
-      category: 'developer-tools', categoryLabel: 'Developer Tools',
-      platform: 'cloud', platformLabel: 'Cloud / SaaS',
-      price: 29.99, rating: 4.7, reviews: 145, downloads: 7800,
-      version: '1.8.0', size: '16 MB', color: 'green', icon: 'monitor',
-      features: ['Multi-cloud sync (AWS/GCP/Azure)', 'Real-time file watching', 'Conflict resolution', 'Version history (90 days)', 'Bandwidth throttling', 'End-to-end encryption'],
-      requirements: ['Linux or macOS', '2 GB RAM', '200 MB disk space', 'Cloud provider credentials'],
-      changelog: ['v1.8.0 — Azure Blob Storage support', 'v1.7.0 — Conflict resolution UI', 'v1.6.0 — End-to-end encryption'],
-      tags: ['sync', 'cloud', 'storage', 'multi-cloud'],
-      author: 'LX Obsidian Labs', released: 'April 2025', updated: 'May 30, 2026', license: 'Per-connector license'
-    },
-    {
-      id: 'teamboard', name: 'TeamBoard', tagline: 'Collaborative project management',
-      desc: 'Visual project management with Kanban boards, Gantt charts, time tracking, and resource allocation. Built for agile teams.',
-      category: 'business', categoryLabel: 'Business',
-      platform: 'web', platformLabel: 'Web',
-      price: 24.99, rating: 4.5, reviews: 312, downloads: 19600,
-      version: '2.1.3', size: '20 MB', color: 'amber', icon: 'calendar',
-      features: ['Kanban & Scrum boards', 'Gantt chart timeline', 'Time tracking & reporting', 'Resource allocation', 'Real-time collaboration', 'Jira & GitHub integration'],
-      requirements: ['Web browser (Chrome/Firefox/Edge)', 'Internet connection', '2 GB RAM recommended'],
-      changelog: ['v2.1.3 — Fixed Gantt drag performance', 'v2.1.0 — Resource allocation view', 'v2.0.0 — New Kanban board with swimlanes'],
-      tags: ['project-management', 'agile', 'kanban', 'collaboration'],
-      author: 'LX Obsidian Labs', released: 'July 2024', updated: 'June 8, 2026', license: 'Per-user subscription'
-    },
-    {
-      id: 'analytics-pro', name: 'Analytics Pro', tagline: 'Advanced BI dashboard',
-      desc: 'Business intelligence platform with drag-and-drop dashboard builder, SQL query editor, custom visualizations, and automated report scheduling.',
-      category: 'data', categoryLabel: 'Data & Analytics',
-      platform: 'cloud', platformLabel: 'Cloud / SaaS',
-      price: 79.99, rating: 4.9, reviews: 167, downloads: 5430,
-      version: '5.0.2', size: '45 MB', color: 'purple', icon: 'chart',
-      features: ['Drag-and-drop dashboard builder', 'SQL query editor', 'Custom visualization library', 'Automated report scheduling', 'Data source connectors (50+)', 'Role-based access control'],
-      requirements: ['Linux (Ubuntu 22+, RHEL 9+)', '8 GB RAM, 4 CPU cores', '2 GB disk space', 'PostgreSQL 14+ or MySQL 8+'],
-      changelog: ['v5.0.2 — Bug fix for BigQuery connector', 'v5.0.0 — New AI-powered insights engine', 'v4.9.0 — Added Snowflake connector'],
-      tags: ['analytics', 'bi', 'dashboards', 'reporting'],
-      author: 'LX Obsidian Labs', released: 'January 2024', updated: 'June 25, 2026', license: 'Per-seat license'
-    },
-    {
-      id: 'securegate', name: 'SecureGate', tagline: 'Enterprise access control',
-      desc: 'Zero-trust access control platform with SSO, MFA, role-based policies, and real-time threat detection.',
-      category: 'security', categoryLabel: 'Security',
-      platform: 'server', platformLabel: 'Server',
-      price: 69.99, rating: 4.6, reviews: 134, downloads: 6890,
-      version: '1.3.1', size: '22 MB', color: 'teal', icon: 'lock',
-      features: ['Single Sign-On (SAML/OIDC)', 'Multi-factor authentication', 'Role-based access control', 'Real-time threat detection', 'Access audit trails', 'Zero-trust architecture'],
-      requirements: ['Linux (Ubuntu 22+, RHEL 9+)', '4 GB RAM, 2 CPU cores', '1 GB disk space', 'PostgreSQL 14+'],
-      changelog: ['v1.3.1 — Patch for SAML assertion handling', 'v1.3.0 — OIDC provider support', 'v1.2.0 — Real-time threat detection'],
-      tags: ['security', 'sso', 'access-control', 'zero-trust'],
-      author: 'LX Obsidian Labs', released: 'May 2025', updated: 'June 20, 2026', license: 'Per-user license'
-    },
-    {
       id: 'synapse-ai', name: 'Synapse AI', tagline: 'AI browser automation extension',
       desc: 'An AI-powered Chrome / Edge / Brave extension that turns any web page into an autonomous, controllable workspace. Observe, plan, execute, verify — no API key required.',
       category: 'ai', categoryLabel: 'AI & Automation',
@@ -178,6 +22,24 @@ void (function () {
       changelog: ['v1.1.1 — Improved DOM extraction reliability', 'v1.1.0 — Added LinkedIn & Facebook playbooks', 'v1.0.0 — Initial release with 5 playbooks'],
       tags: ['ai', 'automation', 'extension', 'browser', 'free'],
       author: 'LX Obsidian Labs', released: 'June 2026', updated: 'June 2026', license: 'Free (Open Distribution)'
+    },
+    {
+      id: 'vista-cinema',
+      slug: 'vista-cinema',
+      name: 'Vista Cinema',
+      tagline: 'AI Video Production Suite',
+      desc: 'AI-powered video production suite with Hollywood-grade editing, multi-language AI dubbing, AI actors and direct YouTube/TikTok publishing. Download free on Android.',
+      category: 'mobile', categoryLabel: 'Mobile Apps',
+      platform: 'mobile', platformLabel: 'Android',
+      price: 0, rating: 5.0, reviews: 45, downloads: 1200,
+      version: '1.0.0', size: '~35 MB', color: 'purple', icon: 'film',
+      isExtension: false, apkUrl: 'deploy/VistaCinema-v1.0.0.apk',
+      features: ['AI-Powered Editing Suite', 'Multi-Language AI Dubbing', 'AI Actor & Voice Selection', 'Hollywood-Grade Effects', 'Direct YouTube/TikTok Publishing', '4K Export Quality'],
+      requirements: ['Android 7.0 (API 24) or higher', '~35 MB free storage', 'Internet connection for AI features'],
+      installSteps: ['Tap Download APK below', 'If prompted, allow install from unknown sources', 'Open the downloaded APK file', 'Tap Install and wait for completion', 'Open Vista Cinema from your app drawer'],
+      changelog: ['v1.0.0 — Initial release with AI editing, dubbing and publishing'],
+      tags: ['ai', 'video', 'cinema', 'editing', 'production', 'mobile', 'android'],
+      author: 'LX Obsidian Labs', released: 'August 2026', updated: 'August 2026', license: 'Free'
     }
   ];
 
@@ -686,8 +548,19 @@ void (function () {
     var app = APP_DATA.find(function (a) { return a.id === id; });
     if (!app) return;
     if (app.isExtension) { downloadExtension(app); return; }
-    if (window.LXToast) window.LXToast('Downloading ' + app.name, 'success');
-    else alert('Downloading ' + app.name + ' v' + app.version + '...');
+    var url = app.apkUrl || null;
+    if (url) {
+      if (window.LXToast) window.LXToast('Downloading ' + app.name + '...', 'success');
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = '';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    } else {
+      if (window.LXToast) window.LXToast('Download coming soon!', 'success');
+      else alert('Download coming soon!');
+    }
   }
 
   function downloadExtension(app) {

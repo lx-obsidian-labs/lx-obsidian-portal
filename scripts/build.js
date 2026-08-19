@@ -7,8 +7,8 @@ const DIST = path.join(ROOT, 'dist');
 const INCLUDE = [
   'index.html', '404.html', 'about.html', 'blog.html', 'contact.html',
   'faq.html', 'marketplace.html', 'portfolio.html', 'services.html',
-  'synapse.html', 'industries.html', 'partners.html',
-  'js', 'assets', 'dashboard',
+  'synapse.html', 'industries.html', 'partners.html', 'advertise.html',
+  'js', 'assets', 'dashboard', 'deploy',
   'functions',
   '_headers', '_redirects',
   'sw.js', 'manifest.json', 'robots.txt', 'sitemap.xml', 'ads.txt',

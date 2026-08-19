@@ -125,7 +125,7 @@
   </nav>
 
   <!-- ANNOUNCEMENT BAR -->
-  <div class="announcement-bar">
+  <div class="announcement-bar" style="background:linear-gradient(90deg, rgba(229,9,20,0.15) 0%, rgba(34,211,238,0.08) 50%, rgba(229,9,20,0.15) 100%); border-bottom:1px solid rgba(229,9,20,0.2);">
     <div class="container">
       <a href="marketplace.html" class="announcement-bar__link">
         <span class="announcement-bar__badge">NEW</span>
@@ -153,7 +153,51 @@
           </div>
         </div>
         <div class="hero__visual">
-          <div class="hero__core"><div></div></div>
+          <div class="hero__core">
+            <div style="position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
+              <svg width="320" height="320" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg" style="opacity:0.9;">
+                <defs>
+                  <linearGradient id="heroGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#E50914" stop-opacity="0.8"/>
+                    <stop offset="50%" stop-color="#FF3D47" stop-opacity="0.5"/>
+                    <stop offset="100%" stop-color="#22D3EE" stop-opacity="0.3"/>
+                  </linearGradient>
+                  <linearGradient id="heroGrad2" x1="100%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#22D3EE" stop-opacity="0.6"/>
+                    <stop offset="100%" stop-color="#E50914" stop-opacity="0.2"/>
+                  </linearGradient>
+                  <filter id="glow"><feGaussianBlur stdDeviation="8" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+                </defs>
+                <circle cx="160" cy="160" r="140" stroke="url(#heroGrad1)" stroke-width="1.5" fill="none" opacity="0.5">
+                  <animateTransform attributeName="transform" type="rotate" from="0 160 160" to="360 160 160" dur="40s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="160" cy="160" r="110" stroke="url(#heroGrad2)" stroke-width="1" fill="none" opacity="0.4">
+                  <animateTransform attributeName="transform" type="rotate" from="360 160 160" to="0 160 160" dur="30s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="160" cy="160" r="80" stroke="#E50914" stroke-width="0.8" fill="none" opacity="0.3">
+                  <animateTransform attributeName="transform" type="rotate" from="0 160 160" to="360 160 160" dur="20s" repeatCount="indefinite"/>
+                </circle>
+                <g filter="url(#glow)">
+                  <rect x="130" y="130" width="60" height="60" rx="12" fill="url(#heroGrad1)" opacity="0.9">
+                    <animate attributeName="rx" values="12;20;12" dur="4s" repeatCount="indefinite"/>
+                  </rect>
+                  <text x="160" y="168" text-anchor="middle" fill="white" font-size="22" font-weight="700" font-family="Space Grotesk, sans-serif">LX</text>
+                </g>
+                <circle cx="160" cy="40" r="4" fill="#E50914" opacity="0.8">
+                  <animate attributeName="opacity" values="0.8;0.3;0.8" dur="3s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="280" cy="160" r="3" fill="#22D3EE" opacity="0.7">
+                  <animate attributeName="opacity" values="0.7;0.2;0.7" dur="4s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="160" cy="280" r="3.5" fill="#FF3D47" opacity="0.6">
+                  <animate attributeName="opacity" values="0.6;0.2;0.6" dur="3.5s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="40" cy="160" r="3" fill="#22D3EE" opacity="0.5">
+                  <animate attributeName="opacity" values="0.5;0.1;0.5" dur="5s" repeatCount="indefinite"/>
+                </circle>
+              </svg>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -284,8 +328,10 @@
           <p class="work-item__desc">AI-powered video production suite with Hollywood-grade editing, multi-language dubbing, AI actors and direct YouTube/TikTok publishing. Download free on Android.</p>
           <a href="deploy/index.html" class="editorial-link">Download APK <span aria-hidden="true">→</span></a>
         </div>
-        <div class="work-item__mockup">
-          <div class="work-item__mockup-text">VC</div>
+        <div class="work-item__mockup" style="background:linear-gradient(135deg, rgba(229,9,20,0.15), rgba(10,10,24,0.9));border:1px solid rgba(229,9,20,0.2);position:relative;overflow:hidden;">
+          <div style="position:absolute;inset:0;background:radial-gradient(circle at 30% 40%, rgba(229,9,20,0.2) 0%, transparent 60%);"></div>
+          <div class="work-item__mockup-text" style="position:relative;z-index:1;">VC</div>
+          <div style="position:absolute;bottom:12px;right:12px;font-size:11px;color:rgba(229,9,20,0.6);z-index:1;">v1.0.0</div>
         </div>
       </div>
 
@@ -297,8 +343,10 @@
           <p class="work-item__desc">AI that works inside the browser. Observe, understand, act and verify — on any website. Free Chrome extension open to everyone.</p>
           <a href="synapse.html" class="editorial-link">View Product <span aria-hidden="true">→</span></a>
         </div>
-        <div class="work-item__mockup">
-          <div class="work-item__mockup-text">SX</div>
+        <div class="work-item__mockup" style="background:linear-gradient(135deg, rgba(34,211,238,0.15), rgba(10,10,24,0.9));border:1px solid rgba(34,211,238,0.2);position:relative;overflow:hidden;">
+          <div style="position:absolute;inset:0;background:radial-gradient(circle at 70% 30%, rgba(34,211,238,0.2) 0%, transparent 60%);"></div>
+          <div class="work-item__mockup-text" style="position:relative;z-index:1;">SX</div>
+          <div style="position:absolute;bottom:12px;right:12px;font-size:11px;color:rgba(34,211,238,0.6);z-index:1;">Free</div>
         </div>
       </div>
 
@@ -310,8 +358,10 @@
           <p class="work-item__desc">A curated marketplace for business software, AI tools and digital products built by LX and independent creators. Browse, download and get started.</p>
           <a href="marketplace.html" class="editorial-link">Visit Marketplace <span aria-hidden="true">→</span></a>
         </div>
-        <div class="work-item__mockup">
-          <div class="work-item__mockup-text">LX</div>
+        <div class="work-item__mockup" style="background:linear-gradient(135deg, rgba(255,255,255,0.05), rgba(10,10,24,0.9));border:1px solid rgba(255,255,255,0.1);position:relative;overflow:hidden;">
+          <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 50%, rgba(229,9,20,0.08) 0%, rgba(34,211,238,0.05) 60%, transparent 100%);"></div>
+          <div class="work-item__mockup-text" style="position:relative;z-index:1;">LX</div>
+          <div style="position:absolute;bottom:12px;right:12px;font-size:11px;color:rgba(255,255,255,0.4);z-index:1;">Marketplace</div>
         </div>
       </div>
     </div>
@@ -367,52 +417,56 @@
   <!-- ==========================================
        FEATURED PRODUCTS — Vista Cinema + Synapse AI
        ========================================== -->
-  <section class="featured-product" aria-label="Featured products">
+  <section class="featured-product" aria-label="Featured products" style="background:linear-gradient(180deg, transparent 0%, rgba(229,9,20,0.03) 50%, transparent 100%);">
     <div class="container">
       <div class="editorial-number" style="justify-content:flex-start;margin-bottom:var(--space-12);">FEATURED PRODUCTS</div>
-      <div class="featured-product__card" style="margin-bottom:var(--space-8);">
-        <div class="featured-product__content">
-          <div class="featured-product__label">New Release</div>
-          <h2 class="featured-product__title">Vista Cinema</h2>
-          <p class="featured-product__desc">AI-powered video production suite. Hollywood-grade editing, multi-language AI dubbing, AI actors and direct publishing to YouTube and TikTok. Download free on Android.</p>
-          <div class="featured-product__meta">
-            <span class="featured-product__meta-item"><strong>Free</strong> to download</span>
-            <span class="featured-product__meta-item"><strong>Android</strong> APK</span>
-            <span class="featured-product__meta-item"><strong>4K</strong> export</span>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:var(--space-8);">
+        <div class="featured-product__card" style="position:relative;overflow:hidden;border:1px solid rgba(229,9,20,0.15);background:linear-gradient(135deg, rgba(229,9,20,0.06) 0%, rgba(10,10,24,0.95) 50%, rgba(34,211,238,0.04) 100%);">
+          <div style="position:absolute;top:-40px;right:-40px;width:160px;height:160px;background:radial-gradient(circle, rgba(229,9,20,0.15) 0%, transparent 70%);border-radius:50%;pointer-events:none;"></div>
+          <div class="featured-product__content" style="position:relative;z-index:1;">
+            <div class="featured-product__label" style="background:rgba(229,9,20,0.15);color:#FF3D47;border:1px solid rgba(229,9,20,0.3);">New Release</div>
+            <h2 class="featured-product__title" style="font-size:2rem;">Vista Cinema</h2>
+            <p class="featured-product__desc">AI-powered video production suite. Hollywood-grade editing, multi-language AI dubbing, AI actors and direct publishing to YouTube and TikTok. Download free on Android.</p>
+            <div class="featured-product__meta">
+              <span class="featured-product__meta-item"><strong>Free</strong> to download</span>
+              <span class="featured-product__meta-item"><strong>Android</strong> APK</span>
+              <span class="featured-product__meta-item"><strong>4K</strong> export</span>
+            </div>
+            <div class="featured-product__actions">
+              <a href="deploy/VistaCinema-v1.0.0.apk" class="btn btn--primary" download>Download APK</a>
+              <a href="marketplace.html" class="btn btn--secondary">View in Marketplace</a>
+            </div>
           </div>
-          <div class="featured-product__actions">
-            <a href="deploy/index.html" class="btn btn--primary">Download APK</a>
-            <a href="marketplace.html" class="btn btn--secondary">View in Marketplace</a>
-          </div>
-        </div>
-        <div class="featured-product__visual">
-          <div class="featured-product__visual-icon">
-            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/>
-            </svg>
-          </div>
-        </div>
-      </div>
-      <div class="featured-product__card">
-        <div class="featured-product__content">
-          <div class="featured-product__label">Featured Product</div>
-          <h2 class="featured-product__title">Synapse AI</h2>
-          <p class="featured-product__desc">AI that works inside the browser. Synapse observes, understands, acts and verifies — on any website. Free and open to everyone.</p>
-          <div class="featured-product__meta">
-            <span class="featured-product__meta-item"><strong>Free</strong> to use</span>
-            <span class="featured-product__meta-item"><strong>Chrome</strong> extension</span>
-            <span class="featured-product__meta-item"><strong>Open</strong> platform</span>
-          </div>
-          <div class="featured-product__actions">
-            <a href="synapse.html" class="btn btn--primary">Explore Synapse</a>
-            <a href="marketplace.html" class="btn btn--secondary">View in Marketplace</a>
+          <div class="featured-product__visual" style="position:relative;z-index:1;">
+            <div class="featured-product__visual-icon" style="background:linear-gradient(135deg, rgba(229,9,20,0.2), rgba(34,211,238,0.1));border:1px solid rgba(229,9,20,0.2);">
+              <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#E50914" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/>
+              </svg>
+            </div>
           </div>
         </div>
-        <div class="featured-product__visual">
-          <div class="featured-product__visual-icon">
-            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-            </svg>
+        <div class="featured-product__card" style="position:relative;overflow:hidden;border:1px solid rgba(34,211,238,0.15);background:linear-gradient(135deg, rgba(34,211,238,0.06) 0%, rgba(10,10,24,0.95) 50%, rgba(229,9,20,0.04) 100%);">
+          <div style="position:absolute;top:-40px;right:-40px;width:160px;height:160px;background:radial-gradient(circle, rgba(34,211,238,0.15) 0%, transparent 70%);border-radius:50%;pointer-events:none;"></div>
+          <div class="featured-product__content" style="position:relative;z-index:1;">
+            <div class="featured-product__label" style="background:rgba(34,211,238,0.12);color:#22D3EE;border:1px solid rgba(34,211,238,0.3);">Featured Product</div>
+            <h2 class="featured-product__title" style="font-size:2rem;">Synapse AI</h2>
+            <p class="featured-product__desc">AI that works inside the browser. Synapse observes, understands, acts and verifies — on any website. Free and open to everyone.</p>
+            <div class="featured-product__meta">
+              <span class="featured-product__meta-item"><strong>Free</strong> to use</span>
+              <span class="featured-product__meta-item"><strong>Chrome</strong> extension</span>
+              <span class="featured-product__meta-item"><strong>Open</strong> platform</span>
+            </div>
+            <div class="featured-product__actions">
+              <a href="synapse.html" class="btn btn--primary" style="background:linear-gradient(135deg, #22D3EE 0%, #06B6D4 100%);box-shadow:0 0 30px rgba(34,211,238,0.2);">Explore Synapse</a>
+              <a href="marketplace.html" class="btn btn--secondary">View in Marketplace</a>
+            </div>
+          </div>
+          <div class="featured-product__visual" style="position:relative;z-index:1;">
+            <div class="featured-product__visual-icon" style="background:linear-gradient(135deg, rgba(34,211,238,0.2), rgba(229,9,20,0.1));border:1px solid rgba(34,211,238,0.2);">
+              <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#22D3EE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+              </svg>
+            </div>
           </div>
         </div>
       </div>

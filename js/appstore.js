@@ -27,42 +27,19 @@ void (function () {
       id: 'vista-cinema',
       slug: 'vista-cinema',
       name: 'Vista Cinema',
-      tagline: 'Cinematic AI Video Production Studio',
-      category: 'Media & Entertainment',
-      description: 'AI-powered video production suite with Hollywood-grade editing tools, AI actors, multi-language dubbing, and direct YouTube/TikTok publishing.',
-      icon: '\uD83C\uDFAC',
-      badge: 'New',
-      rating: 5.0,
-      downloads: '1.2K',
-      price: 'Free',
-      version: '1.0.0',
-      size: '~35 MB',
-      updated: '2026-08-15',
-      platform: ['android'],
-      status: 'live',
-      featured: true,
-      tags: ['ai', 'video', 'cinema', 'editing', 'production', 'mobile'],
-      features: [
-        'AI-Powered Editing Suite',
-        'Multi-Language AI Dubbing',
-        'AI Actor & Voice Selection',
-        'Hollywood-Grade Effects',
-        'Direct YouTube/TikTok Publishing',
-        '4K Export Quality'
-      ],
-      downloads: {
-        primary: { url: 'deploy/index.html', label: 'Download APK', type: 'apk' },
-        mirror: { url: 'deploy/index.html', label: 'Official Site', type: 'website' }
-      },
-      screenshots: [
-        { src: 'deploy/screenshots/home.svg', alt: 'Vista Cinema home' },
-        { src: 'deploy/screenshots/discover.svg', alt: 'Discover AI tools' },
-        { src: 'deploy/screenshots/details.svg', alt: 'Project details' },
-        { src: 'deploy/screenshots/player.svg', alt: 'Video player' },
-        { src: 'deploy/screenshots/search.svg', alt: 'Search content' },
-        { src: 'deploy/screenshots/profile.svg', alt: 'User profile' }
-      ],
-      stats: { downloads: '1,200+', rating: '5.0', activeUsers: '800+' }
+      tagline: 'AI Video Production Suite',
+      desc: 'AI-powered video production suite with Hollywood-grade editing, multi-language AI dubbing, AI actors and direct YouTube/TikTok publishing. Download free on Android.',
+      category: 'mobile', categoryLabel: 'Mobile Apps',
+      platform: 'mobile', platformLabel: 'Android',
+      price: 0, rating: 5.0, reviews: 45, downloads: 1200,
+      version: '1.0.0', size: '~35 MB', color: 'purple', icon: 'film',
+      isExtension: false, apkUrl: 'deploy/VistaCinema-v1.0.0.apk',
+      features: ['AI-Powered Editing Suite', 'Multi-Language AI Dubbing', 'AI Actor & Voice Selection', 'Hollywood-Grade Effects', 'Direct YouTube/TikTok Publishing', '4K Export Quality'],
+      requirements: ['Android 7.0 (API 24) or higher', '~35 MB free storage', 'Internet connection for AI features'],
+      installSteps: ['Tap Download APK below', 'If prompted, allow install from unknown sources', 'Open the downloaded APK file', 'Tap Install and wait for completion', 'Open Vista Cinema from your app drawer'],
+      changelog: ['v1.0.0 — Initial release with AI editing, dubbing and publishing'],
+      tags: ['ai', 'video', 'cinema', 'editing', 'production', 'mobile', 'android'],
+      author: 'LX Obsidian Labs', released: 'August 2026', updated: 'August 2026', license: 'Free'
     }
   ];
 
@@ -571,8 +548,19 @@ void (function () {
     var app = APP_DATA.find(function (a) { return a.id === id; });
     if (!app) return;
     if (app.isExtension) { downloadExtension(app); return; }
-    if (window.LXToast) window.LXToast('Downloading ' + app.name, 'success');
-    else alert('Downloading ' + app.name + ' v' + app.version + '...');
+    var url = app.apkUrl || null;
+    if (url) {
+      if (window.LXToast) window.LXToast('Downloading ' + app.name + '...', 'success');
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = '';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    } else {
+      if (window.LXToast) window.LXToast('Download coming soon!', 'success');
+      else alert('Download coming soon!');
+    }
   }
 
   function downloadExtension(app) {
