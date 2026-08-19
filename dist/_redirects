@@ -12,8 +12,10 @@
 /faq.html        /faq                301
 /marketplace.html /marketplace       301
 /synapse.html    /synapse            301
+/vista.html      /vista              301
 /industries.html /industries         301
 /partners.html   /partners           301
+/advertise.html  /advertise          301
 /index.html      /                   301
 
 # Legacy path support → clean URLs

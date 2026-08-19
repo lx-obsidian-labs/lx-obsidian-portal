@@ -1302,8 +1302,9 @@ select:focus:not(:focus-visible) {
 .app-card__icon[data-color="amber"] { background: rgba(245,158,11,0.15); color: #f59e0b; }
 .app-card__icon[data-color="purple"] { background: rgba(229,9,20,0.15); color: #E50914; }
 .app-card__icon[data-color="teal"] { background: rgba(20,184,166,0.15); color: #14b8a6; }
-.app-card__icon[data-color="red"] { background: rgba(239,68,68,0.15); color: #ef4444; }
 .app-card__icon[data-color="indigo"] { background: rgba(99,102,241,0.15); color: #6366f1; }
+.app-card__icon[data-color="cyan"] { background: rgba(34,211,238,0.15); color: #22D3EE; }
+.app-card__icon[data-color="red"] { background: rgba(229,9,20,0.15); color: #E50914; }
 
 .app-card__badge {
   font-size: 10px;
@@ -1466,8 +1467,9 @@ select:focus:not(:focus-visible) {
 .app-modal__icon[data-color="amber"] { background: rgba(245,158,11,0.15); color: #f59e0b; }
 .app-modal__icon[data-color="purple"] { background: rgba(229,9,20,0.15); color: #E50914; }
 .app-modal__icon[data-color="teal"] { background: rgba(20,184,166,0.15); color: #14b8a6; }
-.app-modal__icon[data-color="red"] { background: rgba(239,68,68,0.15); color: #ef4444; }
 .app-modal__icon[data-color="indigo"] { background: rgba(99,102,241,0.15); color: #6366f1; }
+.app-modal__icon[data-color="cyan"] { background: rgba(34,211,238,0.15); color: #22D3EE; }
+.app-modal__icon[data-color="red"] { background: rgba(229,9,20,0.15); color: #E50914; }
 
 .app-modal__title-group {
   flex: 1;
