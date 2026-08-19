@@ -3,6 +3,12 @@
    Restrained · Editorial · Premium Dark
    ============================================================ */
 
+/* ─── FOCUS VISIBLE FOR ACCESSIBILITY ─── */
+*:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
 /* ─── BODY LAYERS ─── */
 body {
   position: relative;

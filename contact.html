@@ -21,6 +21,7 @@
   <link rel="canonical" href="https://www.lxobsidianportal.co.za/contact">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://www.google-analytics.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="css/style.css">
@@ -283,88 +284,144 @@
     </div>
   </section>
 
-  <!-- ==========================================
-       CONTACT FORM
-       ========================================== -->
-  <section class="section" aria-label="Project details">
-    <div class="container container--narrow">
-      <form class="contact-form" id="contactForm" novalidate style="background: var(--color-card); border: 1px solid var(--color-border); border-radius: var(--radius-xl); padding: var(--space-8);">
-        <input type="hidden" id="contactSubject" value="">
-        <input type="hidden" id="contactProjectType" value="">
-        <div class="contact-form__row">
-          <div class="contact-form__group">
-            <label class="contact-form__label" for="contactName">Your Name</label>
-            <input type="text" class="contact-form__input" id="contactName" placeholder="Your full name" required>
-            <span class="contact-form__error" id="contactNameError">Please enter your name</span>
-          </div>
-          <div class="contact-form__group">
-            <label class="contact-form__label" for="contactBusinessName">Business Name</label>
-            <input type="text" class="contact-form__input" id="contactBusinessName" placeholder="Your company or project name">
-          </div>
-        </div>
-        <div class="contact-form__row">
-          <div class="contact-form__group">
-            <label class="contact-form__label" for="contactEmail">Email</label>
-            <input type="email" class="contact-form__input" id="contactEmail" placeholder="you@example.com" required>
-            <span class="contact-form__error" id="contactEmailError">Please enter a valid email</span>
-          </div>
-          <div class="contact-form__group">
-            <label class="contact-form__label" for="contactWhatsApp">WhatsApp</label>
-            <input type="tel" class="contact-form__input" id="contactWhatsApp" placeholder="+27 00 000 0000">
-          </div>
-        </div>
-        <div class="contact-form__row">
-          <div class="contact-form__group">
-            <label class="contact-form__label" for="contactIndustry">Industry</label>
-            <select class="contact-form__input" id="contactIndustry">
-              <option value="">Select your industry</option>
-              <option>Education & Training</option>
-              <option>Retail & Commerce</option>
-              <option>Hospitality</option>
-              <option>Professional Services</option>
-              <option>Industrial & Mining</option>
-              <option>Technology</option>
-              <option>Other</option>
-            </select>
-          </div>
-          <div class="contact-form__group">
-            <label class="contact-form__label" for="contactBudget">Budget Range</label>
-            <select class="contact-form__input" id="contactBudget">
-              <option value="">Select a range</option>
-              <option>Under R5,000</option>
-              <option>R5,000 - R15,000</option>
-              <option>R15,000 - R50,000</option>
-              <option>R50,000 - R150,000</option>
-              <option>R150,000+</option>
-              <option>Not sure yet</option>
-            </select>
-          </div>
-        </div>
-        <div class="contact-form__row">
-          <div class="contact-form__group">
-            <label class="contact-form__label" for="contactLaunch">Desired Launch Date</label>
-            <select class="contact-form__input" id="contactLaunch">
-              <option value="">Select a timeframe</option>
-              <option>As soon as possible</option>
-              <option>Within 1-3 months</option>
-              <option>Within 3-6 months</option>
-              <option>Within 6-12 months</option>
-              <option>Exploring options</option>
-            </select>
-          </div>
-        </div>
-        <div class="contact-form__group">
-          <label class="contact-form__label" for="contactMessage">Project Description</label>
-          <textarea class="contact-form__textarea" id="contactMessage" rows="4" placeholder="Tell us about your project, the problem you're solving, and any specific requirements..." required></textarea>
-          <span class="contact-form__error" id="contactMessageError">Please describe your project</span>
-        </div>
-        <button type="submit" class="btn btn--primary btn--large btn--full">Book Discovery Call</button>
-        <div class="contact-form__success" id="contactSuccess" role="status" aria-live="polite" style="display:none;text-align:center;padding:var(--space-8);">
-          <div style="width:48px;height:48px;border-radius:50%;background:var(--color-green);color:var(--color-bg);display:flex;align-items:center;justify-content:center;margin:0 auto var(--space-4);font-size:var(--text-2xl);">&#10003;</div>
-          <h3 style="font-family:var(--font-primary);font-weight:600;font-size:var(--text-xl);margin-bottom:var(--space-2);">Request Received!</h3>
-          <p style="color:var(--color-text-secondary);font-size:var(--text-sm);">Thank you! We'll review your project details and get back to you within 24 hours to schedule your discovery call.</p>
-        </div>
-      </form>
+   <!-- ==========================================
+        CONTACT FORM
+        ========================================== -->
+   <section class="section" aria-label="Project details">
+     <div class="container container--narrow">
+       <form class="contact-form" id="contactForm" novalidate style="background: var(--color-card); border: 1px solid var(--color-border); border-radius: var(--radius-xl); padding: var(--space-8);">
+         <input type="hidden" id="contactSubject" value="">
+         <input type="hidden" id="contactProjectType" value="">
+
+         <!-- Progress Bar -->
+         <div class="contact-form__progress" style="margin-bottom:var(--space-8);">
+           <div style="display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-3);justify-content:center;">
+             <span id="formStepIndicator" style="font-size:var(--text-sm);color:var(--color-text-muted);">Step 1 of 3</span>
+           </div>
+           <div style="height:4px;background:rgba(255,255,255,0.06);border-radius:2px;overflow:hidden;">
+             <div id="formProgressBar" style="height:100%;width:33%;background:var(--color-accent);border-radius:2px;transition:width 0.4s ease;"></div>
+           </div>
+         </div>
+
+         <!-- STEP 1: About You -->
+         <div id="form-step-1" class="form-step">
+           <h3 style="font-size:var(--text-xl);font-weight:var(--heading-weight);color:var(--color-text);margin-bottom:var(--space-2);">About You</h3>
+           <p style="color:var(--color-text-secondary);font-size:var(--text-sm);margin-bottom:var(--space-8);">Who we'll be working with.</p>
+
+           <div class="contact-form__row">
+             <div class="contact-form__group">
+               <label class="contact-form__label" for="contactName">Your Name *</label>
+               <input type="text" class="contact-form__input" id="contactName" placeholder="Your full name" required>
+               <span class="contact-form__error" id="contactNameError">Please enter your name</span>
+             </div>
+             <div class="contact-form__group">
+               <label class="contact-form__label" for="contactBusinessName">Business Name</label>
+               <input type="text" class="contact-form__input" id="contactBusinessName" placeholder="Your company or project name">
+             </div>
+           </div>
+           <div class="contact-form__row">
+             <div class="contact-form__group">
+               <label class="contact-form__label" for="contactEmail">Email *</label>
+               <input type="email" class="contact-form__input" id="contactEmail" placeholder="you@example.com" required>
+               <span class="contact-form__error" id="contactEmailError">Please enter a valid email</span>
+             </div>
+             <div class="contact-form__group">
+               <label class="contact-form__label" for="contactWhatsApp">WhatsApp</label>
+               <input type="tel" class="contact-form__input" id="contactWhatsApp" placeholder="+27 00 000 0000">
+             </div>
+           </div>
+
+           <div style="display:flex;justify-content:flex-end;margin-top:var(--space-8);">
+             <button type="button" onclick="showFormStep(2)" class="btn btn--primary">Continue →</button>
+           </div>
+         </div>
+
+         <!-- STEP 2: Project Details -->
+         <div id="form-step-2" class="form-step" style="display:none;">
+           <h3 style="font-size:var(--text-xl);font-weight:var(--heading-weight);color:var(--color-text);margin-bottom:var(--space-2);">Project Details</h3>
+           <p style="color:var(--color-text-secondary);font-size:var(--text-sm);margin-bottom:var(--space-8);">What kind of project are you looking for?</p>
+
+           <div class="contact-form__row">
+             <div class="contact-form__group" style="width:100%;">
+               <label class="contact-form__label" for="contactIndustry">Industry *</label>
+               <select class="contact-form__input" id="contactIndustry" required>
+                 <option value="">Select your industry</option>
+                 <option>Education & Training</option>
+                 <option>Retail & Commerce</option>
+                 <option>Hospitality</option>
+                 <option>Professional Services</option>
+                 <option>Industrial & Mining</option>
+                 <option>Technology</option>
+                 <option>Other</option>
+               </select>
+             </div>
+           </div>
+           <div class="contact-form__row">
+             <div class="contact-form__group">
+               <label class="contact-form__label" for="contactBudget">Budget Range</label>
+               <select class="contact-form__input" id="contactBudget">
+                 <option value="">Select a range</option>
+                 <option>Under R5,000</option>
+                 <option>R5,000 - R15,000</option>
+                 <option>R15,000 - R50,000</option>
+                 <option>R50,000 - R150,000</option>
+                 <option>R150,000+</option>
+                 <option>Not sure yet</option>
+               </select>
+             </div>
+             <div class="contact-form__group">
+               <label class="contact-form__label" for="contactLaunch">Desired Timeline</label>
+               <select class="contact-form__input" id="contactLaunch">
+                 <option value="">Select a timeframe</option>
+                 <option>As soon as possible</option>
+                 <option>Within 1-3 months</option>
+                 <option>Within 3-6 months</option>
+                 <option>Within 6-12 months</option>
+                 <option>Exploring options</option>
+               </select>
+             </div>
+           </div>
+
+           <div style="display:flex;justify-content:space-between;margin-top:var(--space-8);">
+             <button type="button" onclick="showFormStep(1)" class="btn btn--secondary">← Back</button>
+             <button type="button" onclick="showFormStep(3)" class="btn btn--primary">Continue →</button>
+           </div>
+         </div>
+
+         <!-- STEP 3: Message -->
+         <div id="form-step-3" class="form-step" style="display:none;">
+           <h3 style="font-size:var(--text-xl);font-weight:var(--heading-weight);color:var(--color-text);margin-bottom:var(--space-2);">Project Description</h3>
+           <p style="color:var(--color-text-secondary);font-size:var(--text-sm);margin-bottom:var(--space-8);">Tell us what you need built.</p>
+
+           <div class="contact-form__group" style="margin-bottom:var(--space-6);">
+             <label class="contact-form__label" for="contactSubject">Subject *</label>
+             <input type="text" class="contact-form__input" id="contactSubjectInput" placeholder="e.g. Need a booking platform for my restaurant" required>
+             <span class="contact-form__error" id="contactSubjectError">Please enter a subject</span>
+           </div>
+           <div class="contact-form__group">
+             <label class="contact-form__label" for="contactMessage">Message *</label>
+             <textarea class="contact-form__textarea" id="contactMessage" rows="5" placeholder="Describe your project, requirements, and any specific goals..." required></textarea>
+             <span class="contact-form__error" id="contactMessageError">Please describe your project</span>
+           </div>
+           <div style="margin-top:var(--space-4);">
+             <label style="display:flex;align-items:flex-start;gap:var(--space-3);cursor:pointer;">
+               <input type="checkbox" id="contactNda" name="nda" style="margin-top:3px;">
+               <span style="font-size:var(--text-sm);color:var(--color-text-secondary);">I'd like to discuss an NDA before sharing project details</span>
+             </label>
+           </div>
+
+           <div style="display:flex;justify-content:space-between;margin-top:var(--space-8);">
+             <button type="button" onclick="showFormStep(2)" class="btn btn--secondary">← Back</button>
+             <button type="submit" class="btn btn--primary">Send Project Brief →</button>
+           </div>
+         </div>
+
+         <div class="contact-form__success" id="contactSuccess" role="status" aria-live="polite" style="display:none;text-align:center;padding:var(--space-8);">
+           <div style="width:48px;height:48px;border-radius:50%;background:var(--color-green);color:var(--color-bg);display:flex;align-items:center;justify-content:center;margin:0 auto var(--space-4);font-size:var(--text-2xl);">&#10003;</div>
+           <h3 style="font-family:var(--font-primary);font-weight:600;font-size:var(--text-xl);margin-bottom:var(--space-2);">Request Received!</h3>
+           <p style="color:var(--color-text-secondary);font-size:var(--text-sm);">Thank you! We'll review your project details and get back to you within 24 hours to schedule your discovery call.</p>
+         </div>
+       </form>
 
       <!-- Contact Info -->
       <div class="contact-info-grid reveal" style="margin-top: var(--space-8);">
@@ -637,6 +694,15 @@
   <script src="js/seo.js"></script>
   <script src="js/ux.js"></script>
   <script>
+    // Multi-step form
+    function showFormStep(step) {
+      document.querySelectorAll('.form-step').forEach(function(el){ el.style.display = 'none'; });
+      document.getElementById('form-step-' + step).style.display = 'block';
+      document.getElementById('formStepIndicator').textContent = 'Step ' + step + ' of 3';
+      document.getElementById('formProgressBar').style.width = (step * 33) + '%';
+      window.scrollTo({ top: 180, behavior: 'smooth' });
+    }
+    // Project type cards
     (function(){
       var cards = document.querySelectorAll('.project-type-card');
       var subjectInput = document.getElementById('contactSubject');
@@ -647,13 +713,29 @@
           card.classList.add('selected');
           card.setAttribute('aria-pressed', 'true');
           var type = card.getAttribute('data-type');
-          subjectInput.value = type;
-          projectTypeInput.value = type;
+          if(subjectInput) subjectInput.value = type;
+          if(projectTypeInput) projectTypeInput.value = type;
         });
         card.addEventListener('keydown', function(e){
           if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); card.click(); }
         });
       });
+    })();
+    // Contact form submit handler
+    (function(){
+      var form = document.getElementById('contactForm');
+      var success = document.getElementById('contactSuccess');
+      if(form) {
+        form.addEventListener('submit', function(e){
+          e.preventDefault();
+          showFormStep(1);
+          success.style.display = 'block';
+          // Also open WhatsApp for quick reply
+          var name = document.getElementById('contactName') ? document.getElementById('contactName').value : '';
+          var msg = encodeURIComponent('Hi, I just submitted a project brief on your contact form. Looking forward to hearing from you!');
+          setTimeout(function(){ window.open('https://wa.me/27694829711?text=' + msg, '_blank'); }, 1000);
+        });
+      }
     })();
   </script>
   <script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js');}</script>
