@@ -1,802 +1,1302 @@
-<!DOCTYPE html>
-<html lang="en" class="theme-refresh">
+<!doctype html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="LX Obsidian Labs designs and builds AI-powered software, business systems, mobile apps and digital infrastructure that help organisations operate smarter and grow faster.">
-  <meta name="theme-color" content="#050505">
-  <meta property="og:title" content="LX Obsidian Labs — Software. Automation. Intelligence.">
-  <meta property="og:description" content="AI-powered software, business systems, mobile apps and digital infrastructure for organisations that want to operate smarter and grow faster.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://www.lxobsidianportal.co.za/">
-  <meta property="og:locale" content="en_ZA">
-  <meta property="og:image" content="https://www.lxobsidianportal.co.za/assets/og-default.svg">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="LX Obsidian Labs — Software. Automation. Intelligence.">
-  <meta name="twitter:description" content="AI-powered software, business systems, mobile apps and digital infrastructure for organisations that want to operate smarter and grow faster.">
-  <meta name="twitter:image" content="https://www.lxobsidianportal.co.za/assets/og-default.svg">
-  <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://www.lxobsidianportal.co.za/">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="dns-prefetch" href="https://www.google-analytics.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="css/style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#060609" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="description" content="LX Obsidian Labs builds AI systems, automation, digital products, web platforms, mobile apps and scalable software infrastructure." />
+  <meta property="og:title" content="LX Obsidian Labs — Software. Automation. Intelligence." />
+  <meta property="og:description" content="AI systems, digital products, business platforms and software infrastructure built from South Africa." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.lxobsidianportal.co.za/" />
+  <meta property="og:locale" content="en_ZA" />
+  <meta property="og:image" content="https://www.lxobsidianportal.co.za/assets/og-default.svg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="LX Obsidian Labs — Software. Automation. Intelligence." />
+  <meta name="twitter:description" content="AI systems, digital products, business platforms and software infrastructure built from South Africa." />
+  <meta name="twitter:image" content="https://www.lxobsidianportal.co.za/assets/og-default.svg" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://www.lxobsidianportal.co.za/" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="manifest" href="manifest.json" />
   <title>LX Obsidian Labs — Software. Automation. Intelligence.</title>
-</head>
-<body class="page-home">
+  <style>
+    /* =========================================================
+       LX OBSIDIAN LABS — HOMEPAGE V2
+       Standalone HTML / CSS / JS
+       ========================================================= */
 
-  <a href="#main-content" class="skip-link">Skip to main content</a>
+    :root {
+      --bg: #060609;
+      --bg-2: #090a0f;
+      --panel: #0d0f16;
+      --panel-2: #12141d;
+      --panel-3: #171a25;
+      --text: #f8f8fb;
+      --muted: #a2a5b2;
+      --muted-2: #6f7381;
+      --line: rgba(255, 255, 255, 0.085);
+      --line-2: rgba(255, 255, 255, 0.14);
+      --violet: #7357ff;
+      --violet-2: #9b8aff;
+      --blue: #4a9cff;
+      --cyan: #70d7ff;
+      --green: #51d69c;
+      --orange: #ffad6a;
+      --red: #e50914;
+      --red-light: #ff3d47;
+      --max: 1260px;
+      --nav-h: 74px;
+      --r-sm: 12px;
+      --r-md: 18px;
+      --r-lg: 28px;
+      --r-xl: 40px;
+      --shadow: 0 40px 100px rgba(0, 0, 0, .54);
+      --shadow-violet: 0 28px 80px rgba(115, 87, 255, .12);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; background: var(--bg); }
+    body {
+      min-height: 100%;
+      overflow-x: hidden;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 80% -15%, rgba(115, 87, 255, .16), transparent 35rem),
+        radial-gradient(circle at -10% 24%, rgba(74, 156, 255, .08), transparent 28rem),
+        linear-gradient(180deg, #060609 0%, #08090d 52%, #060609 100%);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.55;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      pointer-events: none;
+      opacity: .16;
+      background-image:
+        linear-gradient(rgba(255,255,255,.024) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.024) 1px, transparent 1px);
+      background-size: 52px 52px;
+      mask-image: linear-gradient(to bottom, #000 0%, transparent 88%);
+      z-index: -2;
+    }
+
+    #starfield { position: fixed; inset: 0; z-index: -4; width: 100%; height: 100%; pointer-events: none; opacity: .58; }
+    .cursor-glow { position: fixed; z-index: -1; width: 460px; height: 460px; left: 0; top: 0; transform: translate(-50%, -50%); border-radius: 50%; pointer-events: none; opacity: .20; filter: blur(28px); background: radial-gradient(circle, rgba(115,87,255,.25), transparent 68%); }
+
+    a { color: inherit; text-decoration: none; }
+    button, input, textarea { font: inherit; }
+    img { max-width: 100%; display: block; }
+
+    .container { width: min(var(--max), calc(100% - 42px)); margin-inline: auto; }
+    .section { position: relative; padding: 124px 0; }
+    .hairline { border-top: 1px solid var(--line); }
+    .eyebrow { display: inline-flex; align-items: center; gap: 10px; color: #c7c0ff; font-size: .72rem; font-weight: 850; letter-spacing: .13em; text-transform: uppercase; }
+    .eyebrow::before { content: ""; width: 28px; height: 1px; background: linear-gradient(90deg, var(--violet), var(--blue)); }
+    .section-title { margin-top: 15px; max-width: 930px; font-size: clamp(2.65rem, 5.2vw, 5.55rem); line-height: .96; letter-spacing: -.055em; font-weight: 900; }
+    .section-copy { margin-top: 22px; max-width: 720px; color: var(--muted); font-size: 1.05rem; line-height: 1.76; }
+    .gradient-text { background: linear-gradient(95deg, #fff 0%, #cec6ff 40%, #67c4ff 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+    /* Header */
+    .site-header { position: fixed; z-index: 1000; top: 0; left: 0; right: 0; background: rgba(6,6,9,.64); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,.055); transition: background .2s ease, box-shadow .2s ease; }
+    .site-header.scrolled { background: rgba(6,6,9,.90); box-shadow: 0 14px 44px rgba(0,0,0,.30); }
+    .nav { min-height: var(--nav-h); display: grid; grid-template-columns: auto 1fr auto; gap: 32px; align-items: center; }
+    .brand { display: inline-flex; align-items: center; gap: 12px; white-space: nowrap; }
+    .brand-symbol { position: relative; width: 42px; height: 42px; display: grid; place-items: center; border-radius: 13px; border: 1px solid rgba(255,255,255,.13); background: linear-gradient(145deg, rgba(115,87,255,.38), rgba(74,156,255,.10)), #0f1017; overflow: hidden; box-shadow: inset 0 0 24px rgba(255,255,255,.04); }
+    .brand-symbol::before, .brand-symbol::after { content: ""; position: absolute; transform: rotate(45deg); border: 1px solid rgba(255,255,255,.72); }
+    .brand-symbol::before { width: 19px; height: 19px; }
+    .brand-symbol::after { width: 8px; height: 8px; border-color: #fff; background: rgba(255,255,255,.12); box-shadow: 0 0 14px rgba(255,255,255,.10); }
+    .brand-copy { line-height: 1; }
+    .brand-copy strong { display: block; font-size: .91rem; letter-spacing: .16em; font-weight: 850; }
+    .brand-copy span { display: block; margin-top: 6px; color: var(--muted-2); font-size: .59rem; letter-spacing: .26em; text-transform: uppercase; }
+    .nav-links { display: flex; align-items: center; justify-content: center; gap: 28px; color: #b7bac6; font-size: .86rem; font-weight: 650; }
+    .nav-links a { position: relative; transition: color .18s ease; }
+    .nav-links a:hover { color: white; }
+    .nav-links a::after { content: ""; position: absolute; left: 50%; right: 50%; bottom: -10px; height: 1px; background: linear-gradient(90deg, var(--violet), var(--blue)); transition: left .18s ease, right .18s ease; }
+    .nav-links a:hover::after { left: 0; right: 0; }
+    .nav-actions { display: flex; align-items: center; gap: 10px; }
+    .btn { min-height: 50px; padding: 0 20px; border: 1px solid transparent; border-radius: 14px; display: inline-flex; align-items: center; justify-content: center; gap: 9px; cursor: pointer; font-size: .89rem; font-weight: 780; transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease; }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary { background: linear-gradient(102deg, var(--violet), #6650e8 54%, var(--blue)); color: white; box-shadow: 0 16px 38px rgba(115,87,255,.22); }
+    .btn-primary:hover { box-shadow: 0 20px 48px rgba(115,87,255,.34); }
+    .btn-ghost { border-color: var(--line-2); background: rgba(255,255,255,.025); color: #f1f1f5; }
+    .btn-ghost:hover { background: rgba(255,255,255,.055); border-color: rgba(255,255,255,.24); }
+    .menu-btn { display: none; width: 46px; height: 46px; border: 1px solid var(--line); border-radius: 14px; background: var(--panel); cursor: pointer; }
+
+    /* Hero */
+    .hero { position: relative; min-height: 100svh; padding: 142px 0 84px; display: flex; align-items: center; overflow: hidden; }
+    .hero::before { content: ""; position: absolute; width: 730px; height: 730px; right: -260px; top: 90px; border-radius: 50%; background: radial-gradient(circle, rgba(115,87,255,.24), transparent 67%); filter: blur(15px); pointer-events: none; }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(430px, .95fr); gap: 64px; align-items: center; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 9px; padding: 9px 13px; border-radius: 999px; border: 1px solid rgba(115,87,255,.23); background: rgba(115,87,255,.07); color: #cfcaff; font-size: .72rem; font-weight: 850; letter-spacing: .11em; text-transform: uppercase; }
+    .hero-badge i { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 18px rgba(81,214,156,.75); }
+    .hero h1 { margin-top: 25px; max-width: 880px; font-size: clamp(3.85rem, 7.6vw, 8rem); line-height: .86; font-weight: 930; letter-spacing: -.078em; }
+    .hero h1 span { display: block; }
+    .hero-lead { margin-top: 30px; max-width: 730px; color: #b6b9c5; font-size: 1.12rem; line-height: 1.80; }
+    .hero-actions { margin-top: 34px; display: flex; flex-wrap: wrap; gap: 11px; }
+    .hero-proof { margin-top: 36px; display: flex; flex-wrap: wrap; gap: 22px; color: var(--muted-2); font-size: .79rem; }
+    .hero-proof span { display: inline-flex; align-items: center; gap: 8px; }
+    .hero-proof span::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--violet-2); }
+
+    /* Hero system console */
+    .hero-system { min-height: 635px; position: relative; display: grid; place-items: center; }
+    .system-halo { position: absolute; width: 520px; height: 520px; border-radius: 50%; background: radial-gradient(circle, rgba(115,87,255,.15), transparent 65%); filter: blur(7px); }
+    .float-chip { position: absolute; z-index: 5; padding: 12px 15px; border: 1px solid var(--line-2); border-radius: 14px; background: rgba(11,12,18,.88); box-shadow: var(--shadow-violet); font-size: .67rem; color: #c4c7d1; }
+    .float-chip strong { color: #fff; }
+    .chip-a { left: -22px; top: 115px; }
+    .chip-b { right: -22px; bottom: 126px; }
+    .system-shell { position: relative; z-index: 3; width: min(560px, 100%); border-radius: 28px; border: 1px solid rgba(255,255,255,.12); background: linear-gradient(150deg, rgba(255,255,255,.045), rgba(255,255,255,.012)), rgba(9,10,15,.86); box-shadow: var(--shadow), 0 0 0 1px rgba(115,87,255,.05), 0 0 80px rgba(115,87,255,.09); overflow: hidden; }
+    .system-topbar { height: 54px; display: flex; align-items: center; gap: 8px; padding: 0 15px; border-bottom: 1px solid var(--line); background: #101119; }
+    .sys-dot { width: 8px; height: 8px; border-radius: 50%; background: #313440; }
+    .sys-dot.a { background: #ff6b6b; }
+    .sys-dot.b { background: #febc2e; }
+    .sys-dot.c { background: #28c840; }
+    .sys-label { margin-left: 10px; color: #7e8290; font-size: .68rem; letter-spacing: .11em; text-transform: uppercase; }
+    .system-body { display: grid; grid-template-columns: 150px 1fr; min-height: 475px; }
+    .sys-side { padding: 18px 12px; display: grid; align-content: start; gap: 11px; border-right: 1px solid var(--line); background: rgba(255,255,255,.008); }
+    .sys-side-title { color: #6e7180; font-size: .62rem; letter-spacing: .13em; text-transform: uppercase; }
+    .sys-nav { display: grid; gap: 6px; }
+    .sys-nav div { padding: 10px 10px; border-radius: 10px; color: #8e929f; font-size: .71rem; }
+    .sys-nav div.active { color: #e4e0ff; border: 1px solid rgba(115,87,255,.18); background: rgba(115,87,255,.09); }
+    .sys-content { padding: 25px; }
+    .sys-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .sys-heading strong { color: #fff; font-size: .92rem; }
+    .status-live { display: inline-flex; align-items: center; gap: 7px; color: #8ee9be; font-size: .65rem; font-family: Consolas, monospace; }
+    .status-live::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--green); box-shadow: 0 0 12px rgba(81,214,156,.65); }
+    .graph { position: relative; height: 200px; margin-top: 24px; border: 1px solid var(--line); border-radius: 18px; overflow: hidden; background: linear-gradient(rgba(255,255,255,.026) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.026) 1px, transparent 1px); background-size: 26px 26px; }
+    .graph::before { content: ""; position: absolute; left: 7%; right: 7%; bottom: 25%; height: 72%; opacity: .84; clip-path: polygon(0 82%, 8% 73%, 16% 78%, 24% 58%, 31% 65%, 38% 43%, 46% 49%, 55% 28%, 63% 40%, 71% 17%, 80% 26%, 88% 10%, 100% 0, 100% 100%, 0 100%); background: linear-gradient(180deg, rgba(115,87,255,.30), rgba(74,156,255,.04)); border-bottom: 1px solid rgba(115,87,255,.38); }
+    .graph-path { position: absolute; inset: 0; background: radial-gradient(circle at 15% 67%, #9b8aff 0 3px, transparent 4px), radial-gradient(circle at 38% 48%, #9b8aff 0 3px, transparent 4px), radial-gradient(circle at 63% 37%, #70d7ff 0 3px, transparent 4px), radial-gradient(circle at 88% 21%, #70d7ff 0 3px, transparent 4px); }
+    .sys-row { margin-top: 12px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .sys-metric { padding: 13px; border: 1px solid var(--line); border-radius: 13px; background: rgba(255,255,255,.018); }
+    .sys-metric span { display: block; color: #666a77; font-size: .58rem; letter-spacing: .09em; }
+    .sys-metric strong { display: block; margin-top: 5px; font-size: .79rem; }
+    .terminal { margin-top: 12px; min-height: 114px; padding: 14px; border: 1px solid var(--line); border-radius: 13px; background: #08090c; color: #8e93a2; font-family: "Cascadia Code", Consolas, monospace; font-size: .63rem; line-height: 1.7; }
+    .terminal .purple { color: #b9adff; }
+    .terminal .cyan { color: #a8e3ff; }
+    .terminal .green { color: #79dbaa; }
+
+    /* Signal strip */
+    .signal-strip { padding: 24px 0; border-block: 1px solid rgba(255,255,255,.055); background: rgba(255,255,255,.012); }
+    .signal-grid { display: grid; grid-template-columns: auto 1fr; gap: 34px; align-items: center; }
+    .signal-label { color: #696d79; font-size: .68rem; letter-spacing: .12em; font-weight: 800; text-transform: uppercase; }
+    .signal-items { display: flex; align-items: center; justify-content: space-between; gap: 22px; flex-wrap: wrap; color: #b9bbc5; font-size: .82rem; font-weight: 700; }
+
+    /* Pillars */
+    .pillar-grid { margin-top: 56px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .pillar { position: relative; min-height: 430px; padding: 30px; overflow: hidden; border: 1px solid var(--line); border-radius: var(--r-lg); background: linear-gradient(145deg, rgba(255,255,255,.04), rgba(255,255,255,.01)), var(--panel); transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease; }
+    .pillar:hover { transform: translateY(-7px); border-color: rgba(115,87,255,.28); box-shadow: var(--shadow-violet); }
+    .pillar::after { content: ""; position: absolute; width: 260px; height: 260px; right: -110px; bottom: -140px; border-radius: 50%; background: rgba(115,87,255,.10); filter: blur(34px); }
+    .pillar-index { color: #626674; font-size: .66rem; letter-spacing: .11em; font-family: Consolas, monospace; }
+    .pillar-icon { margin-top: 70px; width: 58px; height: 58px; display: grid; place-items: center; border-radius: 17px; border: 1px solid rgba(115,87,255,.22); background: rgba(115,87,255,.07); color: #c2b9ff; font-size: 1.3rem; }
+    .pillar h3 { margin-top: 24px; font-size: 1.58rem; letter-spacing: -.034em; }
+    .pillar p { margin-top: 12px; color: var(--muted); font-size: .94rem; }
+    .pill { padding: 7px 10px; border-radius: 999px; border: 1px solid var(--line); color: #9699a7; font-size: .66rem; font-weight: 600; }
+
+    /* Product theater */
+    .product-theater { margin-top: 56px; border: 1px solid rgba(255,255,255,.10); border-radius: 34px; overflow: hidden; background: radial-gradient(circle at 82% 24%, rgba(115,87,255,.13), transparent 28rem), linear-gradient(135deg, #0d0f16, #090a0f 75%); box-shadow: var(--shadow); }
+    .product-tabs { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid var(--line); background: rgba(255,255,255,.01); }
+    .product-tab { min-height: 72px; padding: 0 24px; border: 0; border-right: 1px solid var(--line); background: transparent; color: #7d818e; text-align: left; cursor: pointer; transition: background .18s ease, color .18s ease; font-size: .86rem; }
+    .product-tab:last-child { border-right: 0; }
+    .product-tab:hover { color: #fff; }
+    .product-tab.active { color: #fff; background: rgba(115,87,255,.07); box-shadow: inset 0 -2px 0 var(--violet); }
+    .product-tab span { display: block; font-size: .61rem; text-transform: uppercase; letter-spacing: .12em; }
+    .product-tab strong { display: block; margin-top: 4px; font-size: .91rem; }
+    .product-view { display: none; grid-template-columns: .88fr 1.12fr; min-height: 650px; }
+    .product-view.active { display: grid; }
+    .product-copy { padding: 58px; display: flex; flex-direction: column; justify-content: center; }
+    .product-kicker { color: #a89cff; font-size: .68rem; letter-spacing: .12em; font-weight: 800; text-transform: uppercase; }
+    .product-copy h3 { margin-top: 17px; font-size: clamp(2.8rem, 5.2vw, 5.4rem); line-height: .90; letter-spacing: -.06em; }
+    .product-copy p { margin-top: 22px; max-width: 570px; color: var(--muted); font-size: 1rem; line-height: 1.75; }
+    .product-points { margin-top: 26px; display: grid; gap: 11px; }
+    .product-point { display: flex; align-items: center; gap: 11px; color: #c5c7cf; font-size: .85rem; }
+    .product-point::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--violet-2); box-shadow: 0 0 14px rgba(155,138,255,.48); }
+    .product-actions { margin-top: 30px; display: flex; flex-wrap: wrap; gap: 10px; }
+    .product-visual { min-height: 650px; position: relative; display: grid; place-items: center; padding: 40px; overflow: hidden; border-left: 1px solid var(--line); background: radial-gradient(circle at center, rgba(115,87,255,.08), transparent 26rem); }
+
+    /* Synapse visual */
+    .synapse-ui { width: min(590px, 100%); overflow: hidden; border: 1px solid var(--line-2); border-radius: 24px; background: #0a0b10; box-shadow: var(--shadow); }
+    .synapse-head { min-height: 50px; display: flex; align-items: center; gap: 8px; padding: 0 15px; border-bottom: 1px solid var(--line); background: #101119; }
+    .synapse-main { display: grid; grid-template-columns: 1fr 220px; min-height: 405px; }
+    .fake-page { padding: 24px; }
+    .fake-page .bar { height: 12px; border-radius: 5px; background: rgba(255,255,255,.08); margin-bottom: 12px; }
+    .fake-page .bar.a { width: 48%; background: rgba(155,138,255,.19); }
+    .fake-page .bar.b { width: 78%; }
+    .fake-page .bar.c { width: 66%; }
+    .fake-card-grid { margin-top: 26px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .fake-card { min-height: 105px; border: 1px solid var(--line); border-radius: 14px; background: linear-gradient(135deg, rgba(115,87,255,.09), rgba(255,255,255,.018)); }
+    .agent-panel { padding: 18px; border-left: 1px solid var(--line); background: #0d0e14; }
+    .agent-title { color: #d4d0f4; font-size: .72rem; font-weight: 800; }
+    .agent-status { margin-top: 16px; display: grid; gap: 9px; }
+    .agent-step { padding: 9px 10px; border: 1px solid var(--line); border-radius: 10px; color: #727684; font-size: .62rem; }
+    .agent-step.active { color: #b8f0d2; border-color: rgba(81,214,156,.17); background: rgba(81,214,156,.05); }
+    .agent-prompt { margin-top: 18px; min-height: 74px; padding: 10px; border: 1px solid rgba(115,87,255,.19); border-radius: 11px; background: rgba(115,87,255,.05); color: #969aa8; font-size: .61rem; }
+
+    /* Vista visual */
+    .vista-stage { width: 100%; min-height: 570px; position: relative; display: grid; place-items: center; }
+    .vista-red-glow { position: absolute; width: 420px; height: 420px; border-radius: 50%; background: rgba(242,13,25,.09); filter: blur(54px); }
+    .vista-phone { position: absolute; width: 285px; padding: 7px; border: 1px solid rgba(255,255,255,.16); border-radius: 35px; background: linear-gradient(145deg, #2a2a2e, #070709 28%, #191a1f); box-shadow: 0 36px 80px rgba(0,0,0,.62); }
+    .vista-phone img { width: 100%; border-radius: 29px; }
+    .vista-phone.one { transform: translateX(-145px) rotate(-5deg) scale(.93); opacity: .68; }
+    .vista-phone.two { z-index: 4; transform: translateY(-5px) scale(1.06); border-color: rgba(255,255,255,.23); }
+    .vista-phone.three { transform: translateX(145px) rotate(5deg) scale(.93); opacity: .68; }
+
+    /* Marketplace visual */
+    .market-shell { width: min(600px, 100%); border: 1px solid var(--line-2); border-radius: 25px; overflow: hidden; background: #0a0b10; box-shadow: var(--shadow); }
+    .market-head { padding: 22px; border-bottom: 1px solid var(--line); }
+    .market-search { height: 43px; border: 1px solid var(--line); border-radius: 12px; background: rgba(255,255,255,.028); }
+    .market-filters { margin-top: 13px; display: flex; gap: 8px; }
+    .market-filter { width: 64px; height: 27px; border-radius: 999px; border: 1px solid var(--line); background: rgba(255,255,255,.02); }
+    .market-filter:first-child { background: rgba(115,87,255,.10); border-color: rgba(115,87,255,.20); }
+    .market-grid { padding: 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .market-card { min-height: 180px; padding: 14px; border: 1px solid var(--line); border-radius: 15px; background: linear-gradient(145deg, rgba(255,255,255,.025), rgba(115,87,255,.045)); }
+    .market-icon { width: 46px; height: 46px; border-radius: 12px; border: 1px solid rgba(115,87,255,.17); background: rgba(115,87,255,.12); }
+    .market-card .line { height: 8px; margin-top: 12px; border-radius: 5px; background: rgba(255,255,255,.07); }
+    .market-card .line.short { width: 58%; }
+
+    /* Matrix */
+    .matrix { margin-top: 58px; border-top: 1px solid var(--line); border-left: 1px solid var(--line); display: grid; grid-template-columns: repeat(2, 1fr); }
+    .matrix-item { min-height: 210px; padding: 30px; display: grid; grid-template-columns: 60px 1fr; gap: 22px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); transition: background .18s ease; }
+    .matrix-item:hover { background: rgba(255,255,255,.018); }
+    .matrix-num { color: #656976; font-size: .68rem; font-family: Consolas, monospace; }
+    .matrix-item h3 { font-size: 1.18rem; }
+    .matrix-item p { margin-top: 9px; max-width: 480px; color: var(--muted); font-size: .88rem; }
+
+    /* Industries */
+    .industry-row { margin-top: 50px; display: grid; grid-template-columns: repeat(6, 1fr); border: 1px solid var(--line); border-radius: 24px; overflow: hidden; }
+    .industry { min-height: 180px; padding: 22px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); display: grid; grid-template-columns: 42px 1fr; gap: 22px; transition: background .18s ease; }
+    .industry:last-child { border-right: 0; }
+    .industry:hover { background: rgba(115,87,255,.035); }
+    .industry-num { color: #646875; font-size: .63rem; font-family: Consolas, monospace; }
+    .industry h3 { font-size: 1.18rem; }
+    .industry p { margin-top: 9px; max-width: 470px; color: #7b7f8b; font-size: .73rem; line-height: 1.48; }
+
+    /* Process */
+    .process-grid { margin-top: 60px; display: grid; grid-template-columns: repeat(5, 1fr); border-top: 1px solid var(--line); }
+    .process-step { position: relative; min-height: 240px; padding: 30px 28px 0 0; }
+    .process-step::before { content: ""; position: absolute; top: -4px; left: 0; width: 8px; height: 8px; border-radius: 50%; background: #434653; }
+    .process-step:first-child::before { background: var(--violet-2); box-shadow: 0 0 15px rgba(155,138,255,.7); }
+    .process-step:not(:last-child)::after { content: ""; position: absolute; top: -4px; right: 26px; width: calc(100% - 52px); height: 1px; background: linear-gradient(90deg, var(--line), transparent); }
+    .process-index { color: #666a77; font-family: Consolas, monospace; font-size: .67rem; }
+    .process-step h3 { margin-top: 34px; font-size: 1.06rem; }
+    .process-step p { margin-top: 11px; max-width: 190px; color: var(--muted); font-size: .81rem; }
+
+    /* Philosophy */
+    .philosophy { overflow: hidden; border: 1px solid rgba(255,255,255,.10); border-radius: 32px; background: radial-gradient(circle at 80% 30%, rgba(115,87,255,.22), transparent 25rem), linear-gradient(120deg, #11121b, #0a0b10 70%); }
+    .philosophy-grid { display: grid; grid-template-columns: 1.08fr .92fr; min-height: 560px; }
+    .philosophy-copy { padding: 62px; display: flex; flex-direction: column; justify-content: center; }
+    .philosophy-copy h2 { margin-top: 15px; max-width: 740px; font-size: clamp(2.8rem, 5.4vw, 5.8rem); line-height: .93; letter-spacing: -.064em; }
+    .philosophy-copy p { margin-top: 22px; max-width: 640px; color: var(--muted); font-size: 1rem; line-height: 1.76; }
+    .principles { padding: 44px; display: grid; align-content: start; gap: 0; border-left: 1px solid var(--line); }
+    .principle { padding: 23px 0; border-bottom: 1px solid var(--line); display: grid; grid-template-columns: 38px 1fr; gap: 16px; }
+    .principle:last-child { border-bottom: 0; }
+    .principle-num { color: #646875; font-size: .65rem; font-family: Consolas, monospace; }
+    .principle h3 { font-size: .98rem; }
+    .principle p { margin-top: 7px; color: var(--muted); font-size: .82rem; }
+
+    /* Final CTA */
+    .final-section { padding: 75px 0 130px; }
+    .final-card { position: relative; overflow: hidden; padding: 76px; border: 1px solid rgba(115,87,255,.24); border-radius: 36px; background: radial-gradient(circle at 84% 48%, rgba(115,87,255,.24), transparent 27rem), linear-gradient(120deg, #12131c, #090a0f 73%); box-shadow: var(--shadow-violet); }
+    .final-card::after { content: ""; position: absolute; width: 250px; height: 250px; right: -90px; bottom: -100px; transform: rotate(45deg); border: 1px solid rgba(255,255,255,.08); box-shadow: inset 0 0 50px rgba(115,87,255,.12), 0 0 55px rgba(115,87,255,.08); }
+    .final-card h2 { max-width: 1000px; font-size: clamp(3rem, 6vw, 6.4rem); line-height: .90; letter-spacing: -.068em; }
+    .final-card p { margin-top: 24px; max-width: 680px; color: var(--muted); font-size: 1.01rem; line-height: 1.76; }
+    .final-actions { margin-top: 32px; display: flex; flex-wrap: wrap; gap: 11px; }
+
+    /* Footer */
+    footer { padding: 58px 0 34px; border-top: 1px solid var(--line); }
+    .footer-grid { display: grid; grid-template-columns: 1.15fr repeat(3, .63fr); gap: 42px; }
+    .footer-brand p { margin-top: 18px; max-width: 410px; color: var(--muted); font-size: .87rem; }
+    .footer-col h4 { color: #d4d6de; font-size: .71rem; letter-spacing: .11em; text-transform: uppercase; font-weight: 800; }
+    .footer-col a { display: block; margin-top: 13px; color: #858996; font-size: .83rem; }
+    .footer-col a:hover { color: white; }
+    .footer-bottom { margin-top: 52px; padding-top: 23px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 22px; color: #626674; font-size: .73rem; }
+
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .72s cubic-bezier(.2,.7,.2,1), transform .72s cubic-bezier(.2,.7,.2,1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ===== Legacy compatibility for existing widget classes ===== */
+    .loading-bar { position: fixed; top: 0; left: 0; height: 3px; z-index: 2000; background: rgba(255,255,255,.05); }
+    .loading-bar__fill { width: 0; height: 100%; background: linear-gradient(90deg, var(--violet), var(--blue)); transition: width .3s ease; }
+
+    .announcement-bar { border-bottom: 1px solid rgba(255,255,255,.055); background: rgba(115,87,255,.055); }
+    .announcement-bar__link { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 10px 0; color: #cbc8d9; font-size: .78rem; }
+    .announcement-bar__badge { background: var(--green); color: #062215; padding: 2px 8px; border-radius: 4px; font-size: .65rem; font-weight: 800; }
+    .announcement-bar__cta { color: white; font-weight: 700; }
+
+    .search-overlay { position: fixed; inset: 0; z-index: 2000; display: none; background: rgba(0,0,0,.8); backdrop-filter: blur(6px); }
+    .search-overlay.visible { display: flex; }
+    .search-modal { position: relative; top: 30vh; width: min(600px, 90vw); margin: 0 auto; }
+    .search-modal__header { display: flex; align-items: center; gap: 10px; padding: 16px; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; }
+    .search-input { flex: 1; background: transparent; border: none; color: var(--text); outline: none; font-size: 1rem; }
+    .search-modal__close, .search-modal__shortcut { color: var(--muted); }
+    .search-results { margin-top: 8px; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; max-height: 300px; overflow-y: auto; }
+    .search-empty { padding: 20px; color: var(--muted); text-align: center; }
+
+    .chat-widget { position: fixed; right: 24px; bottom: 24px; z-index: 2000; width: 360px; border: 1px solid var(--line); border-radius: 18px; background: var(--panel); box-shadow: var(--shadow); display: none; flex-direction: column; }
+    .chat-widget.visible { display: flex; }
+    .chat-widget__header { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid var(--line); font-size: .82rem; font-weight: 700; }
+    .chat-widget__close { background: none; border: none; color: var(--muted); cursor: pointer; }
+    .chat-widget__messages { flex: 1; min-height: 200px; padding: 14px 16px; overflow-y: auto; }
+    .chat-message { margin-bottom: 10px; font-size: .84rem; max-width: 80%; }
+    .chat-message--bot { color: var(--muted); }
+    .chat-widget__footer { display: flex; gap: 8px; padding: 12px; border-top: 1px solid var(--line); }
+    .chat-widget__input { flex: 1; background: transparent; border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; color: var(--text); font-size: .82rem; }
+    .chat-widget__send { background: var(--violet); border: none; color: white; border-radius: 10px; padding: 8px 14px; cursor: pointer; font-size: .78rem; font-weight: 700; }
+
+    .floating-btn { position: fixed; right: 20px; bottom: 20px; z-index: 900; width: 48px; height: 48px; border: none; border-radius: 50%; background: var(--panel); color: var(--text); box-shadow: 0 8px 24px rgba(0,0,0,.4); cursor: pointer; display: none; align-items: center; justify-content: center; }
+    .floating-btn.visible { display: flex; }
+    .floating-btn--chat { right: 80px; }
+    .floating-btn:hover { transform: scale(1.1); }
+
+    .cookie-consent { position: fixed; z-index: 3000; left: 0; right: 0; bottom: 0; background: var(--panel-2); border-top: 1px solid var(--line); padding: 16px; display: none; }
+    .cookie-consent.visible { display: block; }
+    .cookie-consent__inner { max-width: var(--max); margin: 0 auto; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; font-size: .82rem; }
+    .cookie-consent__text { color: var(--muted); flex: 1; }
+    .cookie-consent__actions { display: flex; gap: 8px; }
+
+    .blog-overlay { position: fixed; inset: 0; z-index: 2000; display: none; background: rgba(0,0,0,.9); overflow-y: auto; }
+    .blog-overlay.visible { display: block; }
+
+    @media (max-width: 1080px) {
+      .nav-links { display: none; position: fixed; top: calc(var(--nav-h) + 10px); left: 20px; right: 20px; padding: 20px; flex-direction: column; align-items: stretch; background: rgba(9,10,15,.98); border: 1px solid var(--line); border-radius: 20px; box-shadow: 0 30px 80px rgba(0,0,0,.45); }
+      .nav-links.open { display: flex; }
+      .menu-btn { display: inline-grid; place-items: center; }
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-system { margin-top: 20px; }
+      .product-view, .philosophy-grid { grid-template-columns: 1fr; }
+      .product-visual, .principles { border-left: 0; border-top: 1px solid var(--line); }
+      .pillar-grid { grid-template-columns: repeat(2, 1fr); }
+      .product-tabs { grid-template-columns: 1fr; }
+      .matrix { grid-template-columns: 1fr; }
+      .industry-row { grid-template-columns: repeat(3, 1fr); }
+      .industry:nth-child(3) { border-right: 0; }
+      .industry:nth-child(-n+3) { border-bottom: 1px solid var(--line); }
+      .process-grid { grid-template-columns: repeat(3, 1fr); }
+      .footer-grid { grid-template-columns: 1.1fr 1fr 1fr; }
+      .footer-col:last-child { grid-column: 2; }
+    }
+
+    @media (max-width: 780px) {
+      .hero { padding: 120px 0 70px; }
+      .hero h1 { font-size: clamp(3.25rem, 16.5vw, 6rem); }
+      .hero-lead { font-size: 1rem; }
+      .hero-actions .btn { width: 100%; }
+      .hero-system { min-height: 530px; }
+      .signal-grid { grid-template-columns: 1fr; gap: 16px; }
+      .signal-items { justify-content: flex-start; }
+      .section { padding: 90px 0; }
+      .pillar-grid { grid-template-columns: 1fr; }
+      .product-view { grid-template-columns: 1fr; }
+      .industry-row { grid-template-columns: repeat(2, 1fr); }
+      .industry:nth-child(odd) { border-right: 1px solid var(--line); }
+      .industry:nth-child(even) { border-right: 0; }
+      .industry:nth-last-child(-n+2) { border-bottom: 1px solid var(--line); }
+      .industry { min-height: 150px; }
+      .industry h3 { margin-top: 26px; }
+      .process-grid { grid-template-columns: 1fr; border-top: 0; }
+      .process-step { padding: 22px 0 24px 28px; border-left: 1px solid var(--line); min-height: auto; }
+      .philosophy-grid { grid-template-columns: 1fr; }
+      .philosophy-copy { padding: 36px 28px; }
+      .principles { padding: 28px; border-left: 0; border-top: 1px solid var(--line); }
+      .final-card { padding: 40px 28px; }
+      .final-actions .btn { width: 100%; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .footer-col:last-child { grid-column: auto; }
+    }
+
+    @media (max-width: 560px) {
+      .brand-copy span { display: none; }
+      .hero-system { min-height: 470px; }
+      .system-body { grid-template-columns: 72px 1fr; }
+      .sys-side { padding: 8px; }
+      .sys-nav div { font-size: .58rem; padding: 9px 7px; }
+      .sys-content { padding: 16px; }
+      .sys-row { grid-template-columns: 1fr; }
+      .graph { height: 160px; }
+      .industry-row { grid-template-columns: 1fr; }
+      .industry { min-height: 120px; }
+      .industry h3 { margin-top: 16px; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+      #starfield, .cursor-glow { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="starfield" aria-hidden="true"></canvas>
+  <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
 
   <div class="loading-bar" aria-hidden="true">
     <div class="loading-bar__fill" id="loadingBarFill"></div>
   </div>
 
-  <!-- NAVIGATION -->
-  <nav class="nav nav--transparent" id="nav" role="navigation" aria-label="Main navigation">
-    <div class="container">
-      <div class="nav__inner">
-        <a href="index.html" class="nav__logo" aria-label="LX Obsidian Labs Home">
-          <div class="nav__logo-icon">LX</div>
-          <span class="nav__logo-text">LX <span>Obsidian</span></span>
-        </a>
-        <div class="nav__links" id="navLinks" role="menubar">
-          <a href="marketplace.html" class="nav__link">Marketplace</a>
-          <div class="nav-dropdown" role="none">
-            <button class="nav-dropdown__trigger" role="menuitem" aria-haspopup="true" aria-expanded="false">
-              Solutions
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-            </button>
-            <div class="nav-dropdown__menu" role="menu">
-              <a href="services.html#ai-automation" class="nav-dropdown__item" role="menuitem">AI & Automation</a>
-              <a href="services.html#web-platforms" class="nav-dropdown__item" role="menuitem">Web Platforms</a>
-              <a href="services.html#mobile-apps" class="nav-dropdown__item" role="menuitem">Mobile Applications</a>
-              <a href="services.html#business-systems" class="nav-dropdown__item" role="menuitem">Business Systems</a>
-              <a href="services.html#cloud-infrastructure" class="nav-dropdown__item" role="menuitem">Cloud & Infrastructure</a>
-              <a href="services.html#ui-ux-design" class="nav-dropdown__item" role="menuitem">UI/UX & Product Design</a>
-            </div>
-          </div>
-          <div class="nav-dropdown" role="none">
-            <button class="nav-dropdown__trigger" role="menuitem" aria-haspopup="true" aria-expanded="false">
-              Products
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-            </button>
-            <div class="nav-dropdown__menu" role="menu">
-              <a href="vista.html" class="nav-dropdown__item nav-dropdown__item--hot" role="menuitem">Vista Cinema</a>
-              <a href="synapse.html" class="nav-dropdown__item" role="menuitem">Synapse AI</a>
-              <a href="marketplace.html" class="nav-dropdown__item" role="menuitem">LX Marketplace</a>
-            </div>
-          </div>
-          <div class="nav-dropdown" role="none">
-            <button class="nav-dropdown__trigger" role="menuitem" aria-haspopup="true" aria-expanded="false">
-              Industries
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-            </button>
-            <div class="nav-dropdown__menu" role="menu">
-              <a href="industries.html#education" class="nav-dropdown__item" role="menuitem">Education & Training</a>
-              <a href="industries.html#retail" class="nav-dropdown__item" role="menuitem">Retail & Commerce</a>
-              <a href="industries.html#hospitality" class="nav-dropdown__item" role="menuitem">Restaurants & Hospitality</a>
-              <a href="industries.html#professional" class="nav-dropdown__item" role="menuitem">Professional Services</a>
-              <a href="industries.html#mining" class="nav-dropdown__item" role="menuitem">Industrial & Mining</a>
-              <a href="industries.html#startups" class="nav-dropdown__item" role="menuitem">Startups</a>
-            </div>
-          </div>
-          <div class="nav-dropdown" role="none">
-            <button class="nav-dropdown__trigger" role="menuitem" aria-haspopup="true" aria-expanded="false">
-              Work
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-            </button>
-            <div class="nav-dropdown__menu" role="menu">
-              <a href="portfolio.html" class="nav-dropdown__item" role="menuitem">Case Studies</a>
-              <a href="portfolio.html" class="nav-dropdown__item" role="menuitem">Portfolio</a>
-            </div>
-          </div>
-          <div class="nav-dropdown" role="none">
-            <button class="nav-dropdown__trigger" role="menuitem" aria-haspopup="true" aria-expanded="false">
-              Company
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-            </button>
-            <div class="nav-dropdown__menu" role="menu">
-              <a href="about.html" class="nav-dropdown__item" role="menuitem">About</a>
-              <a href="blog.html" class="nav-dropdown__item" role="menuitem">Insights</a>
-              <a href="partners.html" class="nav-dropdown__item" role="menuitem">Partners</a>
-              <a href="advertise.html" class="nav-dropdown__item" role="menuitem">Advertise</a>
-              <a href="contact.html" class="nav-dropdown__item" role="menuitem">Contact</a>
-            </div>
-          </div>
-        </div>
-        <div class="nav__actions">
-          <button id="searchToggle" class="btn btn--ghost btn--small" aria-label="Open search">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          </button>
-          <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-            <svg class="theme-toggle__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-            </svg>
-          </button>
-          <a href="contact.html" class="btn btn--ghost btn--small">Contact Sales</a>
-          <a href="contact.html" class="btn btn--primary btn--small">Start Project</a>
-          <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
-            <span></span><span></span><span></span>
-          </button>
-        </div>
+  <header class="site-header" id="siteHeader">
+    <div class="container nav">
+      <a class="brand" href="#home" aria-label="LX Obsidian Labs homepage">
+        <span class="brand-symbol" aria-hidden="true"></span>
+        <span class="brand-copy">
+          <strong>LX OBSIDIAN</strong>
+          <span>Labs</span>
+        </span>
+      </a>
+
+      <nav class="nav-links" id="navLinks" aria-label="Primary navigation">
+        <a href="#capabilities">Capabilities</a>
+        <a href="/marketplace">Marketplace</a>
+        <a href="#products">Products</a>
+        <a href="/industries">Industries</a>
+        <a href="/portfolio">Work</a>
+        <a href="/blog">Insights</a>
+        <a href="/about">Company</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a class="btn btn-primary" href="/contact">Start a project ↗</a>
+        <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">☰</button>
       </div>
     </div>
-  </nav>
+  </header>
 
   <!-- ANNOUNCEMENT BAR -->
   <div class="announcement-bar">
     <div class="container">
-      <a href="marketplace.html" class="announcement-bar__link">
+      <a href="/marketplace" class="announcement-bar__link">
         <span class="announcement-bar__badge">NEW</span>
-           <span>Download Vista Cinema streaming app & explore Synapse AI — 1,200+ downloads.</span>
-        <span class="announcement-bar__cta">Explore <span aria-hidden="true">→</span></span>
+        <span>Download Vista Cinema streaming app — 1,200+ downloads. Explore our marketplace.</span>
+        <span class="announcement-bar__cta">Explore →</span>
       </a>
     </div>
   </div>
 
-  <main id="main-content">
-
-  <!-- ==========================================
-       HERO — Software. Automation. Intelligence.
-       ========================================== -->
-  <section class="hero" aria-label="Software engineering and AI company">
-    <div class="container">
-      <div class="editorial-layout" style="gap:var(--space-16);">
-        <div>
-          <div class="hero__badge">SOFTWARE ENGINEERING & AI COMPANY</div>
-          <h1 class="hero__title">Software.<br><span class="hero__title-gradient">Automation.</span><br><span class="hero__title-gradient">Intelligence.</span></h1>
-          <p class="hero__subtitle">We design AI-powered software, automation and digital infrastructure that help organisations operate smarter and scale faster.</p>
-          <div class="hero__actions">
-            <a href="contact.html" class="btn btn--primary btn--large">Start a Project</a>
-            <a href="marketplace.html" class="btn btn--secondary btn--large">Explore Products</a>
+  <main>
+    <!-- HERO -->
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div class="reveal">
+          <div class="hero-badge"><i></i>South African AI & Software Engineering</div>
+          <h1>
+            <span>We engineer</span>
+            <span class="gradient-text">intelligent systems.</span>
+          </h1>
+          <p class="hero-lead">
+            LX Obsidian Labs designs and builds AI systems, automation and digital
+            infrastructure that help organisations operate smarter, move faster
+            and build with confidence.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="/contact">Start a project ↗</a>
+            <a class="btn btn-ghost" href="#products">Explore products</a>
           </div>
-          <p style="margin-top:var(--space-4);font-size:var(--text-sm);color:var(--color-text-muted);"><a href="portfolio.html" style="color:var(--color-accent-light);text-decoration:none;">See Our Work <span aria-hidden="true">→</span></a></p>
+          <div class="hero-proof">
+            <span>AI & browser agents</span>
+            <span>Web & mobile products</span>
+            <span>Business systems</span>
+            <span>Cloud & APIs</span>
+          </div>
         </div>
-        <div class="hero__visual">
-          <div class="hero__core">
-            <div style="position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
-              <svg width="320" height="320" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg" style="opacity:0.9;">
-                <defs>
-                  <linearGradient id="heroGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#E50914" stop-opacity="0.8"/>
-                    <stop offset="50%" stop-color="#FF3D47" stop-opacity="0.5"/>
-                    <stop offset="100%" stop-color="#22D3EE" stop-opacity="0.3"/>
-                  </linearGradient>
-                  <linearGradient id="heroGrad2" x1="100%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stop-color="#22D3EE" stop-opacity="0.6"/>
-                    <stop offset="100%" stop-color="#E50914" stop-opacity="0.2"/>
-                  </linearGradient>
-                  <filter id="glow"><feGaussianBlur stdDeviation="8" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-                </defs>
-                <circle cx="160" cy="160" r="140" stroke="url(#heroGrad1)" stroke-width="1.5" fill="none" opacity="0.5">
-                  <animateTransform attributeName="transform" type="rotate" from="0 160 160" to="360 160 160" dur="40s" repeatCount="indefinite"/>
-                </circle>
-                <circle cx="160" cy="160" r="110" stroke="url(#heroGrad2)" stroke-width="1" fill="none" opacity="0.4">
-                  <animateTransform attributeName="transform" type="rotate" from="360 160 160" to="0 160 160" dur="30s" repeatCount="indefinite"/>
-                </circle>
-                <circle cx="160" cy="160" r="80" stroke="#E50914" stroke-width="0.8" fill="none" opacity="0.3">
-                  <animateTransform attributeName="transform" type="rotate" from="0 160 160" to="360 160 160" dur="20s" repeatCount="indefinite"/>
-                </circle>
-                <g filter="url(#glow)">
-                  <rect x="130" y="130" width="60" height="60" rx="12" fill="url(#heroGrad1)" opacity="0.9">
-                    <animate attributeName="rx" values="12;20;12" dur="4s" repeatCount="indefinite"/>
-                  </rect>
-                  <text x="160" y="168" text-anchor="middle" fill="white" font-size="22" font-weight="700" font-family="Space Grotesk, sans-serif">LX</text>
-                </g>
-                <circle cx="160" cy="40" r="4" fill="#E50914" opacity="0.8">
-                  <animate attributeName="opacity" values="0.8;0.3;0.8" dur="3s" repeatCount="indefinite"/>
-                </circle>
-                <circle cx="280" cy="160" r="3" fill="#22D3EE" opacity="0.7">
-                  <animate attributeName="opacity" values="0.7;0.2;0.7" dur="4s" repeatCount="indefinite"/>
-                </circle>
-                <circle cx="160" cy="280" r="3.5" fill="#FF3D47" opacity="0.6">
-                  <animate attributeName="opacity" values="0.6;0.2;0.6" dur="3.5s" repeatCount="indefinite"/>
-                </circle>
-                <circle cx="40" cy="160" r="3" fill="#22D3EE" opacity="0.5">
-                  <animate attributeName="opacity" values="0.5;0.1;0.5" dur="5s" repeatCount="indefinite"/>
-                </circle>
-              </svg>
+
+        <div class="hero-system reveal">
+          <div class="system-halo" aria-hidden="true"></div>
+          <div class="float-chip chip-a"><span class="mono">01 //</span> <strong>OBSERVE</strong><br />Context acquired</div>
+          <div class="float-chip chip-b"><span class="mono">04 //</span> <strong>VERIFY</strong><br />Outcome confirmed</div>
+
+          <div class="system-shell" aria-label="Obsidian Intelligence Core console">
+            <div class="system-topbar">
+              <span class="sys-dot a"></span>
+              <span class="sys-dot b"></span>
+              <span class="sys-dot c"></span>
+              <span class="sys-label mono">LX // Intelligence System</span>
+            </div>
+            <div class="system-body">
+              <aside class="sys-side">
+                <div class="sys-side-title mono">Core</div>
+                <div class="sys-nav">
+                  <div class="active">◈ Overview</div>
+                  <div>◎ Agents</div>
+                  <div>⌁ Workflows</div>
+                  <div>▦ Systems</div>
+                  <div>◫ Deploy</div>
+                </div>
+              </aside>
+              <div class="sys-content">
+                <div class="sys-heading">
+                  <strong>Operational intelligence</strong>
+                  <span class="status-live">SYSTEM ACTIVE</span>
+                </div>
+                <div class="graph"><div class="graph-path"></div></div>
+
+                <div class="sys-row">
+                  <div class="sys-metric">
+                    <span>State</span>
+                    <strong>READY</strong>
+                  </div>
+                  <div class="sys-metric">
+                    <span>Mode</span>
+                    <strong>AGENTIC</strong>
+                  </div>
+                  <div class="sys-metric">
+                    <span>Control</span>
+                    <strong>HUMAN</strong>
+                  </div>
+                </div>
+
+                <div class="terminal">
+                  <div><span class="purple">lx.agent</span> › objective received</div>
+                  <div><span class="cyan">observe</span> › interface context mapped</div>
+                  <div><span class="cyan">plan</span> › best next action selected</div>
+                  <div><span class="green">verify</span> › outcome confirmed ✓</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ==========================================
-       COMMAND STRIP — What do you need to build?
-       ========================================== -->
-  <section class="command-strip" aria-label="Capabilities">
-    <div class="container">
-      <div class="command-strip__inner">
-        <p class="command-strip__label">Built for</p>
-        <div class="command-strip__options">
-          <a href="services.html#ai-automation" class="command-strip__option">AI & Automation</a>
-          <a href="services.html#web-platforms" class="command-strip__option">Web Platforms</a>
-          <a href="services.html#mobile-apps" class="command-strip__option">Mobile Apps</a>
-          <a href="services.html#business-systems" class="command-strip__option">Business Systems</a>
-          <a href="services.html#cloud-infrastructure" class="command-strip__option">Cloud & Infrastructure</a>
+    <!-- SIGNAL STRIP -->
+    <section class="signal-strip" aria-label="LX Obsidian Labs capabilities">
+      <div class="container signal-grid">
+        <div class="signal-label">Built for modern operations</div>
+        <div class="signal-items">
+          <span>AI & Automation</span>
+          <span>Web Platforms</span>
+          <span>Mobile Apps</span>
+          <span>Business Systems</span>
+          <span>Cloud & APIs</span>
+          <span>Product Engineering</span>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ==========================================
-       01/BUILD — What We Build
-       ========================================== -->
-  <section class="editorial-section" aria-label="Build software">
-    <div class="container">
-      <div class="editorial-layout">
-        <div>
-          <div class="editorial-number">01 / BUILD</div>
-          <h2 class="editorial-heading">Software that<br>runs your business.</h2>
-          <p class="editorial-subtext">Custom platforms, web applications, mobile apps and business systems — engineered around how your team actually works.</p>
-          <div class="editorial-features">
-            <span class="editorial-feature-tag">Web Platforms</span>
-            <span class="editorial-feature-tag">Mobile Apps</span>
-            <span class="editorial-feature-tag">Business Systems</span>
-            <span class="editorial-feature-tag">SaaS Products</span>
-            <span class="editorial-feature-tag">Ecommerce</span>
-          </div>
-          <a href="services.html" class="editorial-link">Explore Solutions <span aria-hidden="true">→</span></a>
-        </div>
-        <div class="editorial-visual">
-          <div class="editorial-visual__icon">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
-            </svg>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ==========================================
-       02/AUTOMATE — AI & Automation
-       ========================================== -->
-  <section class="editorial-section" aria-label="Automate with AI">
-    <div class="container">
-      <div class="editorial-layout editorial-layout--reverse">
-        <div>
-          <div class="editorial-number">02 / AUTOMATE</div>
-          <h2 class="editorial-heading">AI that works<br>while you sleep.</h2>
-          <p class="editorial-subtext">Intelligent workflows, AI agents, document automation, customer support and operational automation that eliminate repetitive work.</p>
-          <div class="editorial-features">
-            <span class="editorial-feature-tag">AI Agents</span>
-            <span class="editorial-feature-tag">Workflow Automation</span>
-            <span class="editorial-feature-tag">Document Processing</span>
-            <span class="editorial-feature-tag">Customer Support AI</span>
-            <span class="editorial-feature-tag">Operational Automation</span>
-          </div>
-          <a href="services.html#ai-automation" class="editorial-link">Explore AI Solutions <span aria-hidden="true">→</span></a>
-        </div>
-        <div class="editorial-visual">
-          <div class="editorial-visual__icon">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/>
-            </svg>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ==========================================
-       03/SCALE — Cloud & Infrastructure
-       ========================================== -->
-  <section class="editorial-section" aria-label="Scale infrastructure">
-    <div class="container">
-      <div class="editorial-layout">
-        <div>
-          <div class="editorial-number">03 / SCALE</div>
-          <h2 class="editorial-heading">Infrastructure<br>built to grow.</h2>
-          <p class="editorial-subtext">Cloud architecture, APIs, databases, DevOps and deployment — systems designed to scale with your business, not against it.</p>
-          <div class="editorial-features">
-            <span class="editorial-feature-tag">Cloud Architecture</span>
-            <span class="editorial-feature-tag">APIs & Integrations</span>
-            <span class="editorial-feature-tag">DevOps</span>
-            <span class="editorial-feature-tag">Database Design</span>
-            <span class="editorial-feature-tag">Monitoring</span>
-          </div>
-          <a href="services.html#cloud-infrastructure" class="editorial-link">Explore Infrastructure <span aria-hidden="true">→</span></a>
-        </div>
-        <div class="editorial-visual">
-          <div class="editorial-visual__icon">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/>
-            </svg>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ==========================================
-       SELECTED WORK — Our Apps
-       ========================================== -->
-  <section class="selected-work" aria-label="Our apps">
-    <div class="container">
-      <div class="editorial-number" style="justify-content:flex-start;margin-bottom:var(--space-12);">OUR APPS</div>
-
-      <div class="work-item">
-        <div>
-          <div class="work-item__number">01</div>
-          <div class="work-item__category">LX Product · Media & Entertainment</div>
-          <h3 class="work-item__name">Vista Cinema</h3>
-          <p class="work-item__desc">AI-powered video streaming and production suite. Edit films, add multi-language dubbing, create AI actors and publish directly to YouTube and TikTok. Download free on Android.</p>
-           <div class="work-item__stats">
-             <span class="work-item__rating">&#9733; 5.0</span>
-             <span>&middot;</span>
-             <span>1,200 downloads</span>
-             <span>&middot;</span>
-             <span>v1.0.0</span>
-           </div>
-           <a href="vista.html" class="editorial-link">View Product <span aria-hidden="true">→</span></a>
-        </div>
-        <div class="work-item__mockup" style="position:relative;overflow:hidden;border:1px solid rgba(229,9,20,0.2);">
-           <img src="assets/vista-marketing-1.png" alt="Vista Cinema movie streaming app — browse and discover films" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;">
-           <div style="position:absolute;inset:0;background:linear-gradient(135deg, rgba(229,9,20,0.15), rgba(10,10,24,0.9));pointer-events:none;"></div>
-           <div style="position:absolute;bottom:12px;right:12px;font-size:11px;color:rgba(229,9,20,0.7);z-index:1;font-weight:600;">v1.0.0</div>
-         </div>
-      </div>
-
-      <div class="work-item">
-        <div>
-          <div class="work-item__number">02</div>
-          <div class="work-item__category">LX Product · AI & Automation</div>
-          <h3 class="work-item__name">Synapse AI</h3>
-          <p class="work-item__desc">AI that works inside the browser. Observe, understand, act and verify — on any website. Free Chrome extension open to everyone.</p>
-           <div class="work-item__stats">
-             <span class="work-item__rating">&#9733; 5.0</span>
-             <span>&middot;</span>
-             <span>5,400 downloads</span>
-             <span>&middot;</span>
-             <span>v1.1.1</span>
-           </div>
-           <a href="synapse.html" class="editorial-link">View Product <span aria-hidden="true">→</span></a>
-        </div>
-         <div class="work-item__mockup" style="position:relative;overflow:hidden;border:1px solid rgba(34,211,238,0.2);">
-           <img src="https://images.unsplash.com/photo-1542744095023-831a9c40c86b?w=600&h=400&fit=crop&auto=format&q=80" alt="Synapse AI browser extension interface showing AI automation" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;">
-           <div style="position:absolute;inset:0;background:linear-gradient(135deg, rgba(34,211,238,0.15), rgba(10,10,24,0.9));pointer-events:none;"></div>
-           <div style="position:absolute;bottom:12px;right:12px;font-size:11px;color:rgba(34,211,238,0.7);z-index:1;font-weight:600;">Free</div>
-         </div>
-      </div>
-
-      <div class="work-item">
-        <div>
-          <div class="work-item__number">03</div>
-          <div class="work-item__category">LX Product · Marketplace</div>
-          <h3 class="work-item__name">LX Marketplace</h3>
-          <p class="work-item__desc">A curated marketplace for business software, AI tools and digital products built by LX and independent creators. Browse, download and get started.</p>
-          <a href="marketplace.html" class="editorial-link">Visit Marketplace <span aria-hidden="true">→</span></a>
-        </div>
-         <div class="work-item__mockup" style="position:relative;overflow:hidden;border:1px solid rgba(255,255,255,0.1);">
-           <img src="https://images.unsplash.com/photo-1551288040-b93b40b86f5c?w=600&h=400&fit=crop&auto=format&q=80" alt="LX Marketplace interface showing product listings and downloads" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;">
-           <div style="position:absolute;inset:0;background:linear-gradient(135deg, rgba(255,255,255,0.05), rgba(10,10,24,0.9));pointer-events:none;"></div>
-           <div style="position:absolute;bottom:12px;right:12px;font-size:11px;color:rgba(255,255,255,0.5);z-index:1;font-weight:600;">Marketplace</div>
-         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ==========================================
-       INDUSTRIES
-       ========================================== -->
-  <section class="industries-grid" aria-label="Industries">
-    <div class="container">
-      <div class="editorial-number" style="justify-content:flex-start;margin-bottom:var(--space-12);">INDUSTRIES</div>
-      <div class="industries-grid__layout">
-        <a href="industries.html#education" class="industry-card industry-card--large">
-          <div class="industry-card__label">01</div>
-          <h3 class="industry-card__title">Education & Training</h3>
-          <p class="industry-card__text">Student management, applications, certificates, attendance, learning systems and AI support.</p>
-          <span class="industry-card__link">Learn More <span aria-hidden="true">→</span></span>
-        </a>
-        <a href="industries.html#retail" class="industry-card">
-          <div class="industry-card__label">02</div>
-          <h3 class="industry-card__title">Retail & Commerce</h3>
-          <p class="industry-card__text">POS, inventory, ecommerce, customer analytics and automated support.</p>
-          <span class="industry-card__link">Learn More <span aria-hidden="true">→</span></span>
-        </a>
-        <a href="industries.html#hospitality" class="industry-card">
-          <div class="industry-card__label">03</div>
-          <h3 class="industry-card__title">Restaurants & Hospitality</h3>
-          <p class="industry-card__text">Ordering, bookings, loyalty, delivery and WhatsApp automation.</p>
-          <span class="industry-card__link">Learn More <span aria-hidden="true">→</span></span>
-        </a>
-        <a href="industries.html#professional" class="industry-card">
-          <div class="industry-card__label">04</div>
-          <h3 class="industry-card__title">Professional Services</h3>
-          <p class="industry-card__text">CRM, invoices, bookings and workflow automation.</p>
-          <span class="industry-card__link">Learn More <span aria-hidden="true">→</span></span>
-        </a>
-        <a href="industries.html#mining" class="industry-card">
-          <div class="industry-card__label">05</div>
-          <h3 class="industry-card__title">Industrial & Mining</h3>
-          <p class="industry-card__text">Training management, compliance, operations dashboards and asset tracking.</p>
-          <span class="industry-card__link">Learn More <span aria-hidden="true">→</span></span>
-        </a>
-        <a href="industries.html#startups" class="industry-card">
-          <div class="industry-card__label">06</div>
-          <h3 class="industry-card__title">Startups</h3>
-          <p class="industry-card__text">MVP development, AI products, SaaS platforms and mobile apps.</p>
-          <span class="industry-card__link">Learn More <span aria-hidden="true">→</span></span>
-        </a>
-      </div>
-    </div>
-  </section>
-
-   <!-- Solutions -->
-   <section class="section solutions-section" aria-labelledby="solutions-heading">
-     <div class="container">
-       <h2 class="section__title" id="solutions-heading">How We <span>Help</span></h2>
-       <p class="section__subtitle">From AI automation to full-stack platforms — we build what your business needs to operate smarter.</p>
-       <div class="solutions-grid">
-         <a href="services.html#ai-automation" class="solution-card">
-           <div class="solution-card__icon solution-card__icon--red">
-             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-           </div>
-           <h3>AI & Automation</h3>
-           <p>Intelligent automation that eliminates repetitive tasks and lets your team focus on what matters.</p>
-         </a>
-         <a href="services.html#web-platforms" class="solution-card">
-           <div class="solution-card__icon solution-card__icon--cyan">
-             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-           </div>
-           <h3>Web Platforms</h3>
-           <p>Custom web applications, SaaS platforms and digital products built for scale.</p>
-         </a>
-         <a href="services.html#mobile-apps" class="solution-card">
-           <div class="solution-card__icon solution-card__icon--green">
-             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
-           </div>
-           <h3>Mobile Apps</h3>
-           <p>Native and cross-platform mobile applications for Android and iOS.</p>
-         </a>
-         <a href="services.html#business-systems" class="solution-card">
-           <div class="solution-card__icon solution-card__icon--amber">
-             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-           </div>
-           <h3>Business Systems</h3>
-           <p>ERP, POS, CRM and workflow automation that streamlines your operations.</p>
-         </a>
-       </div>
-     </div>
-   </section>
-
-   <!-- AI Showcase -->
-   <section class="section ai-showcase" aria-labelledby="ai-showcase-heading">
-     <div class="container">
-       <div class="ai-showcase__grid">
-         <div>
-           <div class="hero__badge"><span class="hero__badge-dot"></span> AI-First Engineering</div>
-           <h2 class="section__title" id="ai-showcase-heading">Every product we build<br><span>is AI-native</span></h2>
-           <p class="ai-showcase__text">We don't bolt AI onto legacy systems. We engineer AI into the foundation — from intelligent automation and natural language interfaces to computer vision and real-time decision engines.</p>
-           <div class="ai-showcase__features">
-             <div><span class="ai-showcase__dot"></span> Browser automation with Synapse AI</div>
-             <div><span class="ai-showcase__dot"></span> AI video production with Vista Cinema</div>
-             <div><span class="ai-showcase__dot"></span> Custom AI agents for enterprise workflows</div>
-             <div><span class="ai-showcase__dot"></span> NLP, computer vision and predictive analytics</div>
-           </div>
-         </div>
-         <div class="ai-showcase__visual">
-           <div class="ai-showcase__ring">
-             <div class="ai-showcase__core">
-               <div class="ai-showcase__label">AI</div>
-               <div class="ai-showcase__label-sub">Engineered</div>
-             </div>
-           </div>
-         </div>
-       </div>
-     </div>
-   </section>
-
-   <!-- ==========================================
-        PROCESS — How We Work
-        ========================================== -->
-    <section class="editorial-section" aria-label="How we work">
+    <!-- CAPABILITIES -->
+    <section class="section" id="capabilities">
       <div class="container">
-        <div class="editorial-number" style="justify-content:flex-start;margin-bottom:var(--space-12);">HOW WE WORK</div>
-        <div class="process-steps">
-          <div class="process-step">
-            <div class="process-step__number">01</div>
-            <h3 class="process-step__title">Discover</h3>
-            <p class="process-step__desc">We learn your business, your goals and the problem you're solving.</p>
+        <div class="eyebrow reveal">What we build</div>
+        <h2 class="section-title reveal">
+          Systems designed to <span class="gradient-text">work, adapt and scale.</span>
+        </h2>
+        <p class="section-copy reveal">
+          We combine product thinking, software engineering and applied AI to
+          build technology around real operational needs rather than generic templates.
+        </p>
+
+        <div class="pillar-grid">
+          <article class="pillar reveal">
+            <div class="pillar-index">01 / BUILD</div>
+            <div class="pillar-icon">◫</div>
+            <h3>Software that runs the business</h3>
+            <p>Custom platforms, web applications, mobile apps and business systems — engineered around how teams actually work.</p>
+            <div class="pill">Web Platforms</div>
+            <div class="pill">Mobile Apps</div>
+          </article>
+
+          <article class="pillar reveal">
+            <div class="pillar-index">02 / AUTOMATE</div>
+            <div class="pillar-icon">✦</div>
+            <h3>AI that participates in the work</h3>
+            <p>Intelligent agents, browser automation, document workflows and customer-facing AI designed to handle repetitive digital operations.</p>
+            <div class="pill">AI Agents</div>
+            <div class="pill">Automation</div>
+          </article>
+
+          <article class="pillar reveal">
+            <div class="pillar-index">03 / SCALE</div>
+            <div class="pillar-icon">⌘</div>
+            <h3>Infrastructure built to grow</h3>
+            <p>APIs, databases, integrations, cloud architecture, observability and deployment foundations designed for long-term product growth.</p>
+            <div class="pill">Cloud</div>
+            <div class="pill">APIs</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUCT THEATER -->
+    <section class="section hairline" id="products">
+      <div class="container">
+        <div class="eyebrow reveal">LX products</div>
+        <h2 class="section-title reveal">
+          The strongest proof is the
+          <span class="gradient-text">software we ship.</span>
+        </h2>
+        <p class="section-copy reveal">
+          Alongside client engineering, LX Obsidian Labs develops its own software products across AI automation, entertainment and digital distribution.
+        </p>
+
+        <div class="product-theater reveal">
+          <div class="product-tabs" role="tablist" aria-label="LX products">
+            <button class="product-tab active" data-product="synapse" role="tab" aria-selected="true">
+              <span>AI & Automation</span>
+              <strong>Synapse AI</strong>
+            </button>
+            <button class="product-tab" data-product="vista" role="tab" aria-selected="false">
+              <span>Android · Entertainment</span>
+              <strong>Vista Cinema</strong>
+            </button>
+            <button class="product-tab" data-product="marketplace" role="tab" aria-selected="false">
+              <span>Marketplace</span>
+              <strong>LX Marketplace</strong>
+            </button>
           </div>
-          <div class="process-step">
-            <div class="process-step__number">02</div>
-          <h3 class="process-step__title">Design</h3>
-          <p class="process-step__desc">We architect the solution and design the user experience.</p>
-        </div>
-        <div class="process-step">
-          <div class="process-step__number">03</div>
-          <h3 class="process-step__title">Build</h3>
-          <p class="process-step__desc">We develop in sprints with regular demos and feedback cycles.</p>
-        </div>
-        <div class="process-step">
-          <div class="process-step__number">04</div>
-          <h3 class="process-step__title">Launch</h3>
-          <p class="process-step__desc">We deploy, monitor and ensure everything runs smoothly.</p>
-        </div>
-        <div class="process-step">
-          <div class="process-step__number">05</div>
-          <h3 class="process-step__title">Improve</h3>
-          <p class="process-step__desc">We iterate based on data and real user feedback.</p>
+
+          <!-- Synapse -->
+          <div class="product-view active" data-view="synapse">
+            <div class="product-copy">
+              <div class="product-kicker">Browser intelligence</div>
+              <h3>Synapse AI</h3>
+              <p>
+                An AI browser agent built around an observe → plan → execute → verify
+                loop. It interprets a live webpage, chooses the next action,
+                interacts with the interface and confirms the objective was achieved.
+              </p>
+              <div class="product-points">
+                <div>Autonomous browser actions</div>
+                <div>Vision fallback when page structure is unclear</div>
+                <div>Human-controlled pause and stop states</div>
+                <div>Chrome, Edge and Brave support</div>
+              </div>
+              <div class="product-actions">
+                <a class="btn btn-primary" href="/synapse">Explore Synapse ↗</a>
+                <a class="btn btn-ghost" href="/marketplace">Marketplace</a>
+              </div>
+            </div>
+            <div class="product-visual">
+              <div class="synapse-ui" aria-label="Synapse AI browser agent interface">
+                <div class="synapse-head">
+                  <span class="sys-dot a"></span>
+                  <span class="sys-dot b"></span>
+                  <span class="sys-dot c"></span>
+                  <div class="url"></div>
+                </div>
+                <div class="synapse-main">
+                  <div class="fake-page">
+                    <div class="bar a"></div>
+                    <div class="bar b"></div>
+                    <div class="bar c"></div>
+                    <div class="fake-card-grid">
+                      <div class="fake-card"></div>
+                      <div class="fake-card"></div>
+                      <div class="fake-card"></div>
+                      <div class="fake-card"></div>
+                    </div>
+                  </div>
+                  <aside class="agent-panel">
+                    <div class="agent-title">SYNAPSE // AGENT</div>
+                    <div class="agent-status">
+                      <div class="agent-step active">✓ Observe</div>
+                      <div class="agent-step active">✓ Plan</div>
+                      <div class="agent-step active">✓ Execute</div>
+                      <div class="agent-step">○ Verify</div>
+                    </div>
+                    <div class="agent-prompt">
+                      Objective:<br />
+                      Complete the requested browser workflow and verify the result.
+                    </div>
+                  </aside>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Vista -->
+          <div class="product-view" data-view="vista">
+            <div class="product-copy">
+              <div class="product-kicker">Cinematic Android experience</div>
+              <h3>Vista Cinema</h3>
+              <p>
+                A dark, cinematic Android entertainment experience for discovering and
+                streaming movies, TV shows and anime, with watchlists, schedules and profiles.
+              </p>
+              <div class="product-points">
+                <div>Movies, TV shows and anime discovery</div>
+                <div>Trending and genre browsing</div>
+                <div>TV Guide and upcoming schedules</div>
+                <div>Free account with username, email and password</div>
+              </div>
+              <div class="product-actions">
+                <a class="btn btn-primary" href="/vista">Explore Vista ↗</a>
+                <a class="btn btn-ghost" href="/marketplace">View in Marketplace</a>
+              </div>
+            </div>
+            <div class="product-visual">
+              <div class="vista-stage">
+                <div class="vista-red-glow"></div>
+                <div class="vista-phone one"><img src="assets/vista-marketing-1.png" alt="Vista Cinema Discover — browse and stream films" /></div>
+                <div class="vista-phone two"><img src="assets/vista-marketing-2.png" alt="Vista Cinema video player with AI tools" /></div>
+                <div class="vista-phone three"><img src="assets/vista-marketing-1.png" alt="Vista Cinema Home — trending movies" /></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Marketplace -->
+          <div class="product-view" data-view="marketplace">
+            <div class="product-copy">
+              <div class="product-kicker">Software distribution</div>
+              <h3>LX Marketplace</h3>
+              <p>
+                A destination for software, AI tools and digital products from
+                LX Obsidian Labs and a growing product ecosystem.
+              </p>
+              <div class="product-points">
+                <div>Discover LX software and AI tools</div>
+                <div>Free and paid product catalogue</div>
+                <div>Search, filtering and product comparison</div>
+                <div>Growing creator and partner ecosystem</div>
+              </div>
+              <div class="product-actions">
+                <a class="btn btn-primary" href="/marketplace">Open Marketplace ↗</a>
+                <a class="btn btn-ghost" href="/portfolio">View our work</a>
+              </div>
+            </div>
+            <div class="product-visual">
+              <div class="market-shell" aria-label="LX Marketplace product grid">
+                <div class="market-head">
+                  <div class="market-search"></div>
+                  <div class="market-filters">
+                    <div class="market-filter"></div>
+                    <div class="market-filter"></div>
+                    <div class="market-filter"></div>
+                  </div>
+                </div>
+                <div class="market-grid">
+                  <div class="market-card"><div class="market-icon"></div><div class="line"></div><div class="line short"></div></div>
+                  <div class="market-card"><div class="market-icon"></div><div class="line"></div><div class="line short"></div></div>
+                  <div class="market-card"><div class="market-icon"></div><div class="line"></div><div class="line short"></div></div>
+                  <div class="market-card"><div class="market-icon"></div><div class="line"></div><div class="line short"></div></div>
+                  <div class="market-card"><div class="market-icon"></div><div class="line"></div><div class="line short"></div></div>
+                  <div class="market-card"><div class="market-icon"></div><div class="line"></div><div class="line short"></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ==========================================
-       INSIGHTS
-       ========================================== -->
-  <section class="insights-section" aria-label="Insights">
-    <div class="container">
-      <div class="editorial-number" style="justify-content:flex-start;margin-bottom:var(--space-12);">INSIGHTS</div>
-      <div class="insights-grid">
-        <a href="blog.html" class="insight-card">
-          <div class="insight-card__tag">Engineering</div>
-          <h3 class="insight-card__title">Why we rebuild before we scale</h3>
-          <p class="insight-card__excerpt">The engineering decisions behind building systems that last. How we approach architecture for growth.</p>
-        </a>
-        <a href="blog.html" class="insight-card">
-          <div class="insight-card__tag">AI & Business</div>
-          <h3 class="insight-card__title">How AI changes the way businesses operate</h3>
-          <p class="insight-card__excerpt">From automation to decision-making, artificial intelligence is reshaping how businesses operate and compete.</p>
-        </a>
-        <a href="blog.html" class="insight-card">
-          <div class="insight-card__tag">Case Studies</div>
-          <h3 class="insight-card__title">Building Newton's 4th digital ecosystem</h3>
-          <p class="insight-card__excerpt">How we transformed a training academy's digital presence and lead generation system.</p>
-        </a>
+    <!-- CAPABILITY MATRIX -->
+    <section class="section hairline" id="build">
+      <div class="container">
+        <div class="eyebrow reveal">Engineering range</div>
+        <h2 class="section-title reveal">
+          One partner across the
+          <span class="gradient-text">product stack.</span>
+        </h2>
+        <div class="matrix">
+          <article class="matrix-item reveal">
+            <div class="matrix-num">01</div>
+            <div>
+              <h3>AI & Agentic Systems</h3>
+              <p>AI agents, natural-language workflows, browser automation, document intelligence and AI-assisted operational systems.</p>
+            </div>
+          </article>
+          <article class="matrix-item reveal">
+            <div class="matrix-num">02</div>
+            <div>
+              <h3>Web Platforms</h3>
+              <p>Customer portals, SaaS products, ecommerce, dashboards and internal web applications designed for maintainability and scale.</p>
+            </div>
+          </article>
+          <article class="matrix-item reveal">
+            <div class="matrix-num">03</div>
+            <div>
+              <h3>Mobile Applications</h3>
+              <p>Android, iOS and cross-platform products with intentional UX, backend integration and release-ready engineering.</p>
+            </div>
+          </article>
+          <article class="matrix-item reveal">
+            <div class="matrix-num">04</div>
+            <div>
+              <h3>Business Systems</h3>
+              <p>ERP, CRM, POS, MIS, invoicing, operational dashboards and workflow tools tailored to the organisation using them.</p>
+            </div>
+          </article>
+          <article class="matrix-item reveal">
+            <div class="matrix-num">05</div>
+            <div>
+              <h3>Cloud, APIs & Integrations</h3>
+              <p>Databases, APIs, third-party integrations, deployment pipelines, monitoring and infrastructure for production software.</p>
+            </div>
+          </article>
+          <article class="matrix-item reveal">
+            <div class="matrix-num">06</div>
+            <div>
+              <h3>Product & UI Engineering</h3>
+              <p>Product architecture, interaction design, reusable design systems and frontend engineering that keep products coherent as they grow.</p>
+            </div>
+          </article>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ==========================================
-       FINAL CTA
-       ========================================== -->
-  <section class="final-cta" aria-label="Call to action">
-    <div class="container">
-      <h2 class="final-cta__heading">Ready to build<br><span>something exceptional?</span></h2>
-      <p style="color:var(--color-text-secondary);font-size:var(--text-lg);max-width:520px;margin:var(--space-4) auto 0;text-align:center;">Whether you need a custom platform, AI automation or a product built from scratch — we're ready.</p>
-      <div class="hero__actions" style="justify-content:center;margin-top:var(--space-8);">
-        <a href="contact.html" class="btn btn--primary btn--large">Start Your Project</a>
-        <a href="marketplace.html" class="btn btn--secondary btn--large">Browse Products</a>
+    <!-- INDUSTRIES -->
+    <section class="section hairline" id="industries">
+      <div class="container">
+        <div class="eyebrow reveal">Industries</div>
+        <h2 class="section-title reveal">
+          Different industries.
+          <span class="gradient-text">One engineering standard.</span>
+        </h2>
+
+        <div class="industry-row reveal">
+          <article class="industry">
+            <div class="industry-num">01</div>
+            <h3>Education & Training</h3>
+            <p>Student management, applications, certificates, attendance, learning systems and AI support.</p>
+          </article>
+          <article class="industry">
+            <div class="industry-num">02</div>
+            <h3>Retail & Commerce</h3>
+            <p>POS, inventory, ecommerce, customer analytics and automated support.</p>
+          </article>
+          <article class="industry">
+            <div class="industry-num">03</div>
+            <h3>Hospitality</h3>
+            <p>Ordering, bookings, loyalty, delivery workflows and WhatsApp automation.</p>
+          </article>
+          <article class="industry">
+            <div class="industry-num">04</div>
+            <h3>Professional Services</h3>
+            <p>CRM, invoicing, bookings and workflow automation.</p>
+          </article>
+          <article class="industry">
+            <div class="industry-num">05</div>
+            <h3>Industrial & Mining</h3>
+            <p>Training management, compliance, operations dashboards and asset tracking.</p>
+          </article>
+          <article class="industry">
+            <div class="industry-num">06</div>
+            <h3>Startups</h3>
+            <p>MVP development, AI products, SaaS applications and mobile apps.</p>
+          </article>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
+    <!-- PROCESS -->
+    <section class="section hairline">
+      <div class="container">
+        <div class="eyebrow reveal">How we work</div>
+        <h2 class="section-title reveal">
+          From ambiguity to
+          <span class="gradient-text">production.</span>
+        </h2>
+        <p class="section-copy reveal">
+          Each engagement starts with the problem and moves toward the simplest
+          architecture that can solve it well — then we design, build, validate,
+          launch and improve.
+        </p>
+
+        <div class="process-grid">
+          <article class="process-step reveal">
+            <div class="process-index">01</div>
+            <h3>Discover</h3>
+            <p>Understand the business, user, constraints and desired outcome.</p>
+          </article>
+          <article class="process-step reveal">
+            <div class="process-index">02</div>
+            <h3>Architect</h3>
+            <p>Define the system, data model, integration points and technical direction.</p>
+          </article>
+          <article class="process-step reveal">
+            <div class="process-index">03</div>
+            <h3>Design</h3>
+            <p>Shape the journeys, interaction model and reusable visual language.</p>
+          </article>
+          <article class="process-step reveal">
+            <div class="process-index">04</div>
+            <h3>Build &amp; Validate</h3>
+            <p>Develop iteratively, test continuously and review against real requirements.</p>
+          </article>
+          <article class="process-step reveal">
+            <div class="process-index">05</div>
+            <h3>Launch &amp; Improve</h3>
+            <p>Deploy, monitor and continue improving from usage and feedback.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- PHILOSOPHY -->
+    <section class="section hairline">
+      <div class="container">
+        <div class="philosophy reveal">
+          <div class="philosophy-grid">
+            <div class="philosophy-copy">
+              <div class="eyebrow">Engineering philosophy</div>
+              <h2>
+                AI-native does not mean
+                <span class="gradient-text">AI everywhere.</span>
+              </h2>
+              <p>
+                We use AI where it improves the product or operation. Where a
+                deterministic workflow is better, we build a deterministic workflow.
+                The architecture should serve the outcome — not the trend.
+              </p>
+            </div>
+            <div class="principles">
+              <article class="principle">
+                <div class="principle-num">01</div>
+                <div>
+                  <h3>Clarity before complexity</h3>
+                  <p>Users should understand what the system does and what it needs from them.</p>
+                </div>
+              </article>
+              <article class="principle">
+                <div class="principle-num">02</div>
+                <div>
+                  <h3>Automation with control</h3>
+                  <p>High-value automation should remain observable, interruptible and accountable.</p>
+                </div>
+              </article>
+              <article class="principle">
+                <div class="principle-num">03</div>
+                <div>
+                  <h3>Design is part of engineering</h3>
+                  <p>The interface, states and workflows are part of the product architecture.</p>
+                </div>
+              </article>
+              <article class="principle">
+                <div class="principle-num">04</div>
+                <div>
+                  <h3>Production over prototypes</h3>
+                  <p>The goal is software that can be operated, supported and improved after launch.</p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INSIGHTS -->
+    <section class="section hairline">
+      <div class="container">
+        <div class="eyebrow reveal">Insights</div>
+        <h2 class="section-title reveal">
+          Engineering decisions,
+          <span class="gradient-text">explained clearly.</span>
+        </h2>
+        <div class="insights-grid">
+          <article class="insight reveal">
+            <div class="insight-meta">Engineering</div>
+            <h3>Why architecture matters before a product starts to scale</h3>
+            <p>How early engineering decisions influence maintainability, reliability and the cost of growth.</p>
+            <a href="/blog">Read insight →</a>
+          </article>
+          <article class="insight reveal">
+            <div class="insight-meta">AI & Business</div>
+            <h3>Where AI automation creates practical operational value</h3>
+            <p>A grounded look at agents, workflow automation and where human oversight still matters.</p>
+            <a href="/blog">Read insight →</a>
+          </article>
+          <article class="insight reveal">
+            <div class="insight-meta">Product</div>
+            <h3>Good software starts with the job the user is trying to do</h3>
+            <p>Why UX, product strategy and engineering should be designed together instead of in isolation.</p>
+            <a href="/blog">Read insight →</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="final-section">
+      <div class="container">
+        <div class="final-card reveal">
+          <div class="eyebrow">Build with LX Obsidian Labs</div>
+          <h2>
+            Your next system should do more than
+            <span class="gradient-text">exist.</span>
+          </h2>
+          <p>
+            It should solve the right problem, feel intentional, operate reliably
+            and create a foundation your organisation can keep building on.
+          </p>
+          <div class="final-actions">
+            <a class="btn btn-primary" href="/contact">Discuss your project ↗</a>
+            <a class="btn btn-ghost" href="/portfolio">See our work</a>
+            <a class="btn btn-ghost" href="/marketplace">Browse products</a>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <!-- ==========================================
-       FOOTER
-       ========================================== -->
-  <footer class="footer" role="contentinfo">
+  <!-- FOOTER -->
+  <footer>
     <div class="container">
-      <div class="footer__grid">
-        <div class="footer__brand-col">
-          <div class="footer__brand">LX <span>Obsidian</span></div>
-          <p class="footer__description">LX Obsidian Labs is a South African software and AI engineering company building digital products, automation systems and custom business software.</p>
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="brand" href="#home" aria-label="LX Obsidian Labs homepage">
+            <span class="brand-symbol" aria-hidden="true"></span>
+            <span class="brand-copy">
+              <strong>LX OBSIDIAN</strong>
+              <span>Labs</span>
+            </span>
+          </a>
+          <p>Software engineering, AI automation and digital products built from South Africa.</p>
         </div>
-        <div>
-          <h4 class="footer__heading">Solutions</h4>
-          <div class="footer__links">
-            <a href="services.html#ai-automation" class="footer__link">AI & Automation</a>
-            <a href="services.html#web-platforms" class="footer__link">Web Platforms</a>
-            <a href="services.html#mobile-apps" class="footer__link">Mobile Applications</a>
-            <a href="services.html#business-systems" class="footer__link">Business Systems</a>
-            <a href="services.html#cloud-infrastructure" class="footer__link">Cloud & Infrastructure</a>
-            <a href="services.html#ui-ux-design" class="footer__link">UI/UX Design</a>
-          </div>
+
+        <div class="footer-col">
+          <h4>Capabilities</h4>
+          <a href="#capabilities">AI & Automation</a>
+          <a href="#capabilities">Web Platforms</a>
+          <a href="#capabilities">Mobile Apps</a>
+          <a href="#capabilities">Business Systems</a>
         </div>
-        <div>
-          <h4 class="footer__heading">Products</h4>
-          <div class="footer__links">
-            <a href="vista.html" class="footer__link">Vista Cinema</a>
-            <a href="synapse.html" class="footer__link">Synapse AI</a>
-            <a href="marketplace.html" class="footer__link">LX Marketplace</a>
-          </div>
+
+        <div class="footer-col">
+          <h4>Products</h4>
+          <a href="/synapse">Synapse AI</a>
+          <a href="/vista">Vista Cinema</a>
+          <a href="/marketplace">LX Marketplace</a>
         </div>
-        <div>
-          <h4 class="footer__heading">Company</h4>
-          <div class="footer__links">
-            <a href="about.html" class="footer__link">About</a>
-            <a href="portfolio.html" class="footer__link">Portfolio</a>
-            <a href="partners.html" class="footer__link">Partners</a>
-            <a href="contact.html" class="footer__link">Contact</a>
-            <a href="contact.html" class="footer__link">Careers</a>
-          </div>
-        </div>
-        <div>
-          <h4 class="footer__heading">Resources</h4>
-          <div class="footer__links">
-            <a href="blog.html" class="footer__link">Insights</a>
-            <a href="faq.html" class="footer__link">FAQ</a>
-            <a href="faq.html" class="footer__link">Privacy Policy</a>
-            <a href="faq.html" class="footer__link">Terms of Service</a>
-          </div>
-        </div>
-        <div>
-          <h4 class="footer__heading">Connect</h4>
-          <div class="footer__links">
-            <a href="https://github.com/lx-obsidian-labs" class="footer__link" target="_blank" rel="noopener">GitHub</a>
-            <a href="https://www.instagram.com/lx_obsidian_labs/" class="footer__link" target="_blank" rel="noopener">Instagram</a>
-            <a href="mailto:vilanenathan@gmail.com" class="footer__link">Email</a>
-            <a href="https://wa.me/27694829711" class="footer__link" target="_blank" rel="noopener">WhatsApp</a>
-            <a href="tel:+27694829711" class="footer__link">+27 69 482 9711</a>
-            <span class="footer__link footer__link--muted">Cape Town, South Africa</span>
-          </div>
+
+        <div class="footer-col">
+          <h4>Company</h4>
+          <a href="/portfolio">Work</a>
+          <a href="/blog">Insights</a>
+          <a href="/about">About</a>
+          <a href="/contact">Contact</a>
         </div>
       </div>
-      <div class="footer__bottom">
-        <span>&copy; 2026 LX Obsidian Labs. All rights reserved.</span>
-        <div class="footer__social">
-          <a href="https://github.com/lx-obsidian-labs" class="footer__social-link" aria-label="GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a>
-          <a href="https://www.instagram.com/lx_obsidian_labs/" class="footer__social-link" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 01-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 017.8 2m-.2 2A3.6 3.6 0 004 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 003.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 010 2.5 1.25 1.25 0 010-2.5M12 7a5 5 0 110 10 5 5 0 010-10m0 2a3 3 0 100 6 3 3 0 000-6z"/></svg></a>
-          <a href="mailto:vilanenathan@gmail.com" class="footer__social-link" aria-label="Email"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a>
-          <a href="https://wa.me/27694829711" class="footer__social-link" aria-label="WhatsApp"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
-        </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 LX Obsidian Labs. All rights reserved.</span>
+        <span>Software · Automation · Intelligence</span>
       </div>
     </div>
   </footer>
 
-  <!-- ==========================================
-       CHAT WIDGET
-       ========================================== -->
-  <div class="chat-widget" id="chatWidget">
-    <div class="chat-widget__header">
-      <div class="chat-widget__title">
-        <span class="chat-widget__status"></span>
-        LX Assistant
-      </div>
-      <button class="chat-widget__close" id="chatClose" aria-label="Close chat">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-        </svg>
-      </button>
-    </div>
-    <div class="chat-widget__messages" id="chatMessages">
-      <div class="chat-message chat-message--bot">Hi there! I'm the LX Assistant. How can I help you today?</div>
-    </div>
-    <div class="chat-widget__footer">
-      <input type="text" class="chat-widget__input" id="chatInput" placeholder="Type your message..." aria-label="Chat message">
-      <button class="chat-widget__send" id="chatSend" aria-label="Send message">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
-        </svg>
-      </button>
-    </div>
-  </div>
 
-  <!-- ==========================================
-       COOKIE CONSENT
-       ========================================== -->
-  <div class="cookie-consent" id="cookieConsent">
-    <div class="cookie-consent__inner">
-      <p class="cookie-consent__text">We use cookies to enhance your experience. By continuing to visit this site you agree to our <a href="faq.html">Privacy Policy</a> and <a href="faq.html">Cookie Policy</a>.</p>
-      <div class="cookie-consent__actions">
-        <button class="btn btn--ghost btn--small" id="cookieDecline">Decline</button>
-        <button class="btn btn--primary btn--small" id="cookieAccept">Accept All</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ==========================================
-       BLOG ARTICLE MODAL
-       ========================================== -->
-  <div class="blog-overlay" id="blogOverlay">
-    <div class="blog-modal">
-      <div class="blog-modal__header">
-        <span class="blog-modal__tag" id="blogModalTag">Engineering</span>
-        <h3 class="blog-modal__title" id="blogModalTitle">Select an Article</h3>
-        <button class="blog-modal__close" id="blogModalClose" aria-label="Close article">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-          </svg>
-        </button>
-      </div>
-      <div class="blog-modal__body" id="blogModalBody">
-        <p>Choose an article from the insights section to read here.</p>
-      </div>
-      <div class="blog-modal__footer">
-        <div class="blog-modal__author">
-          <div class="blog-modal__author-avatar">LX</div>
-          <div>
-            <div class="blog-modal__author-name" id="blogModalAuthor">LX Obsidian Team</div>
-            <div class="blog-modal__author-date" id="blogModalDate">June 26, 2026</div>
-          </div>
-        </div>
-        <div class="blog-modal__share">
-          <button class="blog-modal__share-btn" aria-label="Share on Twitter">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-          </button>
-          <button class="blog-modal__share-btn" aria-label="Share on LinkedIn">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ==========================================
-       FLOATING BUTTONS
-       ========================================== -->
-  <div class="floating-buttons">
-    <button class="floating-btn floating-btn--chat" aria-label="AI Assistant">
-      <svg class="floating-btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-      </svg>
-      <span class="floating-btn__tooltip floating-btn__label">AI Assistant</span>
-    </button>
-    <button class="floating-btn floating-btn--chat" aria-label="WhatsApp">
-      <svg class="floating-btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/>
-      </svg>
-      <span class="floating-btn__tooltip floating-btn__label">WhatsApp</span>
-    </button>
-    <button class="floating-btn floating-btn--scroll" id="scrollToTop" aria-label="Scroll to top">
-      <svg class="floating-btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="18 15 12 9 6 15"/>
-      </svg>
-      <span class="floating-btn__tooltip floating-btn__label">Scroll to Top</span>
-    </button>
-    <button class="floating-btn floating-btn--scroll" aria-label="Book Consultation">
-      <svg class="floating-btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-        <line x1="16" y1="2" x2="16" y2="6"/>
-        <line x1="8" y1="2" x2="8" y2="6"/>
-        <line x1="3" y1="10" x2="21" y2="10"/>
-      </svg>
-      <span class="floating-btn__tooltip floating-btn__label">Book Consultation</span>
-    </button>
-  </div>
-
-  <!-- ==========================================
-       SEARCH MODAL
-       ========================================== -->
+  <!-- SEARCH OVERLAY -->
   <div class="search-overlay" id="searchOverlay" role="dialog" aria-modal="true" aria-label="Search">
     <div class="search-modal">
       <div class="search-modal__header">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="11" cy="11" r="8"/>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-        </svg>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         <input type="text" class="search-input" id="searchInput" placeholder="Search services, applications, articles..." aria-label="Search input">
-        <kbd class="search-modal__shortcut">ESC</kbd>
-        <button class="search-modal__close" id="searchClose" aria-label="Close search">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="18" y1="6" x2="6" y2="18"/>
-            <line x1="6" y1="6" x2="18" y2="18"/>
-          </svg>
-        </button>
+        <kbd class="search-modal__shortcut" style="color:var(--muted);font-size:.65rem;">ESC</kbd>
+        <button class="search-modal__close" id="searchClose" aria-label="Close search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
       </div>
-      <div class="search-results" id="searchResults">
-        <p class="search-empty">Start typing to search...</p>
+      <div class="search-results" id="searchResults"><p class="search-empty">Start typing to search...</p></div>
+    </div>
+  </div>
+
+  <!-- CHAT WIDGET -->
+  <div class="chat-widget" id="chatWidget">
+    <div class="chat-widget__header">
+      <div class="chat-widget__title"><span class="status-live"></span>LX Assistant</div>
+      <button class="chat-widget__close" id="chatClose" aria-label="Close chat"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="chat-widget__messages" id="chatMessages"><div class="chat-message chat-message--bot">Hi there! I'm the LX Assistant. How can I help you today?</div></div>
+    <div class="chat-widget__footer">
+      <input type="text" class="chat-widget__input" id="chatInput" placeholder="Type your message..." aria-label="Chat message">
+      <button class="chat-widget__send" id="chatSend" aria-label="Send message"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+    </div>
+  </div>
+
+  <!-- FLOATING BUTTONS -->
+  <div class="floating-buttons">
+    <button class="floating-btn floating-btn--chat visible" aria-label="AI Assistant" onclick="openChat()">
+      <svg class="floating-btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+    </button>
+    <button class="floating-btn floating-btn--chat visible" aria-label="WhatsApp" onclick="window.open('https://wa.me/27694829711','_blank')">
+      <svg class="floating-btn__icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2.01C6.5 2.01 2.04 6.47 2.04 12c0 2.11.84 4.03 2.18 5.47l-1.37 4.02 4.27-2.76c1.15.53 2.45.85 3.86.85 5.53 0 9.96-4.47 9.96-9.97S17.57 2.01 12.04 2.01zm5.19 13.44c-.34.94-2.03.92-2.92.54l-1.01-.49c-.56-.27-.77-.45-.81-.59-.03-.11-.1-.27-.07-.41.03-.18.09-.31.12-.38.36-.97.1-1.25.17-1.31.09-.1.62-1.06 1.3-2.02.48-.71.62-.98.93-1.44.27-.4.57-.53.92-.53.42 0 .58.12 1 1.05.33.73 1.37 1.9 2.14 2.33.62.32 1.24.4 1.25.75.01.37-.19 1.17-.74 2.19-.16.29-.4.47-.79.43-.36-.04-1.6-.24-2.89-1.25-.41-.29-1.41-.93-1.41-1.82 0-.27.1-.57 2.03-2.55A10.5 10.5 0 0 1 14.5 5c.28 0 .99 0 2.84 2.35 1.6 1.88 2.31 4.23 1.89 5.83l-.02.17z"/></svg>
+    </button>
+    <button class="floating-btn floating-btn--scroll visible" id="scrollToTop" aria-label="Scroll to top">
+      <svg class="floating-btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+    </button>
+  </div>
+
+  <!-- COOKIE CONSENT -->
+  <div class="cookie-consent" id="cookieConsent">
+    <div class="cookie-consent__inner">
+      <p class="cookie-consent__text">We use cookies to enhance your experience. By continuing to visit this site you agree to our <a href="/faq">Privacy Policy</a> and <a href="/faq">Cookie Policy</a>.</p>
+      <div class="cookie-consent__actions">
+        <button class="btn btn-ghost btn-sm" id="cookieDecline" style="min-height:36px;padding:0 16px;font-size:.78rem;">Decline</button>
+        <button class="btn btn-primary btn-sm" id="cookieAccept" style="min-height:36px;padding:0 16px;font-size:.78rem;">Accept All</button>
       </div>
     </div>
   </div>
 
-  <noscript>
-    <div style="padding:1rem;background:var(--color-card,#111);border:1px solid var(--color-accent,#C89B3C);border-radius:8px;text-align:center;margin:1rem;color:var(--color-text,#eee);font-size:0.875rem;font-family:system-ui,sans-serif;">
-      LX Obsidian Labs requires JavaScript for the best experience. Please enable JavaScript in your browser settings.
-    </div>
-  </noscript>
+  <style>
+    .floating-btn__icon { width: 20px; height: 20px; }
+    .floating-btn { display: flex !important; }
+    .btn-sm { min-height: 36px; font-size: .78rem; }
+    .insights-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; margin-top: 50px; }
+    .insight { min-height: 280px; padding: 28px; border: 1px solid var(--line); border-radius: 22px; background: rgba(255,255,255,.018); display: flex; flex-direction: column; transition: .2s ease; }
+    .insight:hover { transform: translateY(-4px); background: rgba(255,255,255,.028); }
+    .insight-meta { color: var(--violet-2); font-size: .71rem; font-weight: 750; text-transform: uppercase; letter-spacing: .09em; }
+    .insight h3 { margin-top: 18px; font-size: 1.36rem; line-height: 1.2; letter-spacing: -.025em; }
+    .insight p { margin-top: 12px; color: var(--muted); flex: 1; font-size: .86rem; }
+    .insight a { margin-top: auto; padding-top: 20px; color: #d6d0ff; font-weight: 750; font-size: .82rem; }
+    @media (max-width: 780px) { .insights-grid { grid-template-columns: 1fr; } }
+  </style>
 
-  <!-- ==========================================
-       SCRIPTS
-       ========================================== -->
-  <script src="js/navigation.js"></script>
-  <script src="js/scroll.js"></script>
-  <script src="js/animations.js"></script>
-  <script src="js/app.js"></script>
-  <script src="js/features.js"></script>
-  <script src="js/seo.js"></script>
-  <script src="js/ux.js"></script>
-  <script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js');}</script>
+  <script>
+    /* ===== NAV / HEADER ===== */
+    const header = document.getElementById("siteHeader");
+    const menuBtn = document.getElementById("menuBtn");
+    const navLinks = document.getElementById("navLinks");
+
+    function updateHeader() { header.classList.toggle("scrolled", window.scrollY > 20); }
+    updateHeader();
+    window.addEventListener("scroll", updateHeader, { passive: true });
+
+    menuBtn.addEventListener("click", () => {
+      const open = navLinks.classList.toggle("open");
+      menuBtn.textContent = open ? "×" : "☰";
+      menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+    navLinks.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => {
+        navLinks.classList.remove("open");
+        menuBtn.textContent = "☰";
+        menuBtn.setAttribute("aria-expanded", "false");
+      });
+    });
+
+    /* ===== REVEAL ===== */
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) { entry.target.classList.add("visible"); revealObserver.unobserve(entry.target); }
+      });
+    }, { threshold: 0.10 });
+    document.querySelectorAll(".reveal").forEach(el => revealObserver.observe(el));
+
+    /* ===== LOADING BAR ===== */
+    const loadingBar = document.getElementById("loadingBarFill");
+    let loaded = false;
+    if (loadingBar) {
+      const interval = setInterval(() => { if (loaded) { loadingBar.style.width = "100%"; clearInterval(interval); } }, 200);
+      window.addEventListener("load", () => { loaded = true; setTimeout(() => { loadingBar.parentElement.style.opacity = "0"; }, 300); });
+    }
+
+    /* ===== PRODUCT TABS ===== */
+    document.querySelectorAll(".product-tab").forEach(tab => {
+      tab.addEventListener("click", () => {
+        const product = tab.dataset.product;
+        document.querySelectorAll(".product-tab").forEach(t => t.classList.toggle("active", t === tab));
+        document.querySelectorAll(".product-view").forEach(v => v.classList.toggle("active", v.dataset.view === product));
+      });
+    });
+
+    /* ===== CURSOR GLOW ===== */
+    const cursorGlow = document.getElementById("cursorGlow");
+    if (cursorGlow && window.matchMedia("(pointer: fine)").matches) {
+      window.addEventListener("pointermove", e => { cursorGlow.style.left = e.clientX + "px"; cursorGlow.style.top = e.clientY + "px"; }, { passive: true });
+    } else if (cursorGlow) { cursorGlow.style.display = "none"; }
+
+    /* ===== STARFIELD ===== */
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const canvas = document.getElementById("starfield");
+    function drawStars() {
+      const ctx = canvas.getContext("2d");
+      const w = window.innerWidth, h = window.innerHeight;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = w * dpr; canvas.height = h * dpr;
+      canvas.style.width = w + "px"; canvas.style.height = h + "px";
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      const count = Math.min(95, Math.floor(w / 14));
+      for (let i = 0; i < count; i++) {
+        const x = Math.random() * w, y = Math.random() * h;
+        const r = Math.random() * 1.1 + .25, a = Math.random() * .30 + .08;
+        ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(185, 180, 255, " + a + ")"; ctx.fill();
+      }
+    }
+    let starAniId = null;
+    if (!reduceMotion && canvas) { drawStars(); canvas.style.display = "block"; }
+
+    /* ===== SEARCH ===== */
+    const searchOverlay = document.getElementById("searchOverlay");
+    const searchInput = document.getElementById("searchInput");
+    const searchResults = document.getElementById("searchResults");
+    const searchPages = [
+      { title: "AI & Automation Services", url: "services.html#ai-automation" },
+      { title: "Web Platforms Services", url: "services.html#web-platforms" },
+      { title: "Mobile Applications Services", url: "services.html#mobile-apps" },
+      { title: "Business Systems Services", url: "services.html#business-systems" },
+      { title: "Cloud & Infrastructure Services", url: "services.html#cloud-infrastructure" },
+      { title: "Vista Cinema — AI Video Production", url: "vista.html" },
+      { title: "Synapse AI — Browser Automation", url: "synapse.html" },
+      { title: "LX Marketplace", url: "marketplace.html" },
+      { title: "Our Work — Portfolio", url: "portfolio.html" },
+      { title: "Contact LX Obsidian Labs", url: "contact.html" },
+      { title: "Insights & Blog", url: "blog.html" },
+    ];
+    function doSearch(q) {
+      if (!q.trim()) { searchResults.innerHTML = '<p class="search-empty">Start typing to search...</p>'; return; }
+      const results = searchResults;
+      const matches = searchPages.filter(p => p.title.toLowerCase().includes(q.toLowerCase()));
+      if (matches.length === 0) { results.innerHTML = '<p class="search-empty">No results found.</p>'; return; }
+      results.innerHTML = matches.map(p => '<div style="padding:12px 16px;border-bottom:1px solid var(--line);"><a href="' + p.url + '" style="color:var(--text);display:block;">' + p.title + '</a></div>').join('');
+    }
+    function openSearch() { if (searchOverlay) searchOverlay.classList.add("visible"); if (searchInput) setTimeout(() => searchInput.focus(), 100); }
+    function closeSearch() { if (searchOverlay) searchOverlay.classList.remove("visible"); if (searchResults) searchResults.innerHTML = '<p class="search-empty">Start typing to search...</p>'; }
+    document.addEventListener("keydown", e => {
+      if (e.key === "/" && !["INPUT","TEXTAREA"].includes(document.activeElement.tagName)) { e.preventDefault(); openSearch(); }
+      if (e.key === "Escape") closeSearch();
+    });
+    document.getElementById("searchClose")?.addEventListener("click", closeSearch);
+    searchOverlay?.addEventListener("click", e => { if (e.target === searchOverlay) closeSearch(); });
+    let searchDebounce;
+    searchInput?.addEventListener("input", () => { clearTimeout(searchDebounce); searchDebounce = setTimeout(() => doSearch(searchInput.value), 200); });
+
+    /* ===== CHAT ===== */
+    function openChat() { const w = document.getElementById("chatWidget"); if (w) w.classList.add("visible"); }
+    function closeChat() { const w = document.getElementById("chatWidget"); if (w) w.classList.remove("visible"); }
+    document.getElementById("chatClose")?.addEventListener("click", closeChat);
+    let chatDebounce;
+    document.getElementById("chatSend")?.addEventListener("click", () => {
+      const input = document.getElementById("chatInput");
+      const messages = document.getElementById("chatMessages");
+      if (!input || !messages) return;
+      const text = input.value.trim();
+      if (!text) return;
+      input.value = "";
+      const msg = document.createElement("div");
+      msg.className = "chat-message";
+      msg.textContent = text;
+      messages.appendChild(msg);
+      messages.scrollTop = messages.scrollHeight;
+      const botReply = document.createElement("div");
+      botReply.className = "chat-message chat-message--bot";
+      botReply.textContent = "Thank you for your message. A team member will respond shortly.";
+      setTimeout(() => { messages.appendChild(botReply); messages.scrollTop = messages.scrollHeight; }, 500);
+    });
+
+    /* ===== COOKIE CONSENT ===== */
+    const cookieConsent = document.getElementById("cookieConsent");
+    if (cookieConsent) {
+      if (localStorage.getItem("cookies-accepted") === "true") cookieConsent.classList.remove("visible");
+      else cookieConsent.classList.add("visible");
+      document.getElementById("cookieAccept")?.addEventListener("click", () => { localStorage.setItem("cookies-accepted", "true"); cookieConsent.classList.remove("visible"); });
+      document.getElementById("cookieDecline")?.addEventListener("click", () => { localStorage.setItem("cookies-declined", "true"); cookieConsent.classList.remove("visible"); });
+    }
+
+    /* ===== SCROLL TO TOP ===== */
+    const scrollBtn = document.getElementById("scrollToTop");
+    if (scrollBtn) {
+      window.addEventListener("scroll", () => { if (window.scrollY > 400) scrollBtn.classList.add("visible"); else scrollBtn.classList.remove("visible"); }, { passive: true });
+      scrollBtn.addEventListener("click", () => { window.scrollTo({ top: 0, behavior: "smooth" }); });
+    }
+
+    /* ===== SERVICE WORKER ===== */
+    if ("serviceWorker" in navigator) { navigator.serviceWorker.register("/sw.js").catch(() => {}); }
+  </script>
 </body>
 </html>
