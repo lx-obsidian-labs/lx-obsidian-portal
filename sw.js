@@ -1,6 +1,6 @@
 // Bump this whenever HTML/CSS behavior changes so production clients discard
 // stale preview-era assets after the next deployment.
-const CACHE = 'lx-obsidian-v7';
+const CACHE = 'lx-obsidian-v8';
 const ASSETS = [
   '/',
   '/index.html',
@@ -15,6 +15,9 @@ const ASSETS = [
   '/industries.html',
   '/partners.html',
   '/css/style.css',
+  '/assets/generated/lx-hero-core.webp',
+  '/assets/generated/lx-ai-automation.webp',
+  '/assets/generated/lx-product-ui.webp',
   '/js/navigation.js',
   '/js/scroll.js',
   '/js/animations.js',
@@ -50,8 +53,6 @@ self.addEventListener('activate', function (e) {
 self.addEventListener('fetch', function (e) {
   if (e.request.method !== 'GET') return;
 
-  // HTML and CSS must revalidate in production. A cache-first response here
-  // can make Cloudflare deployments appear stuck on an older preview.
   var requestUrl = new URL(e.request.url);
   var isDocumentOrStyle = e.request.mode === 'navigate' ||
     requestUrl.pathname.endsWith('.html') ||
