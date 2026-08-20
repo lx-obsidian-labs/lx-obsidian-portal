@@ -1,6 +1,6 @@
 // Bump this whenever HTML/CSS behavior changes so production clients discard
 // stale preview-era assets after the next deployment.
-const CACHE = 'lx-obsidian-v13';
+const CACHE = 'lx-obsidian-v14';
 const ASSETS = [
   '/',
   '/index.html',
@@ -15,12 +15,6 @@ const ASSETS = [
   '/industries.html',
   '/partners.html',
   '/css/style.css',
-  '/assets/generated/lx-cube-swarm.webp',
-  '/assets/generated/lx-geometric-core.webp',
-  '/assets/generated/lx-geodesic-sphere.webp',
-  '/assets/generated/lx-hollow-cube.webp',
-  '/assets/generated/lx-code-dashboard.webp',
-  '/assets/generated/lx-system-monitor.webp',
   '/assets/generated/lx-home-hero-v2.webp',
   '/assets/generated/lx-hero-core.webp',
   '/assets/generated/lx-ai-automation.webp',
@@ -54,7 +48,7 @@ self.addEventListener('activate', function (e) {
 self.addEventListener('fetch', function (e) {
   if (e.request.method !== 'GET') return;
   var requestUrl = new URL(e.request.url);
-  var isDocumentOrStyle = e.request.mode === 'navigate' || requestUrl.pathname.endsWith('.html') || requestUrl.pathname.endsWith('/css/style.css');
+  var isDocumentOrStyle = e.request.mode === 'navigate' || requestUrl.pathname.endsWith('.html') || requestUrl.pathname.endsWith('/css/style.css') || requestUrl.pathname.endsWith('/js/experience.js');
   if (isDocumentOrStyle) {
     e.respondWith(fetch(e.request).then(function (response) {
       if (response && response.status === 200 && response.type === 'basic') caches.open(CACHE).then(function (cache) { cache.put(e.request, response.clone()); });
