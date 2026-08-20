@@ -1,6 +1,6 @@
 // Bump this whenever HTML/CSS behavior changes so production clients discard
 // stale preview-era assets after the next deployment.
-const CACHE = 'lx-obsidian-v9';
+const CACHE = 'lx-obsidian-v10';
 const ASSETS = [
   '/',
   '/index.html',
