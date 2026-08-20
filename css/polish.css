@@ -1,109 +1,16 @@
-/* LX OBSIDIAN LABS — VISUAL POLISH PASS
-   Purposeful imagery, cleaner hierarchy and page-level consistency.
-   Functional routes/downloads remain untouched. */
-
-:root{
-  --polish-glow:rgba(126,158,255,.18);
-  --polish-cyan:rgba(91,214,255,.14);
-  --polish-line:rgba(255,255,255,.09);
-}
-
-/* Reduce UI clutter that diluted the premium presentation. */
+/* LX OBSIDIAN LABS — GENERATED VISUAL ARTWORK INTEGRATION */
+:root{--polish-glow:rgba(126,158,255,.18);--polish-cyan:rgba(91,214,255,.14);--polish-line:rgba(255,255,255,.09)}
 .theme-toggle,.floating-buttons,.quick-nav,.bottom-nav{display:none!important}
+.nav__logo-icon{position:relative;overflow:hidden;background:linear-gradient(145deg,rgba(126,158,255,.28),rgba(91,214,255,.08)),#0b1119!important;border:1px solid rgba(255,255,255,.16)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 10px 28px rgba(0,0,0,.28)!important}.nav__logo-icon:after{content:"";position:absolute;inset:7px;border:1px solid rgba(255,255,255,.22);border-radius:8px;transform:rotate(45deg)}.nav__logo-text{letter-spacing:-.025em}.nav__logo-text span{color:#fff!important}
 
-/* Stronger shared navigation and brand mark. */
-.nav__logo-icon{
-  position:relative;overflow:hidden;
-  background:linear-gradient(145deg,rgba(126,158,255,.28),rgba(91,214,255,.08)),#0b1119!important;
-  border:1px solid rgba(255,255,255,.16)!important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 10px 28px rgba(0,0,0,.28)!important;
-}
-.nav__logo-icon:after{content:"";position:absolute;inset:7px;border:1px solid rgba(255,255,255,.22);border-radius:8px;transform:rotate(45deg)}
-.nav__logo-text{letter-spacing:-.025em}.nav__logo-text span{color:#fff!important}
+.page-services #main-content,.page-about #main-content,.page-contact #main-content,.page-portfolio #main-content,.page-blog #main-content,.page-industries #main-content,.page-partners #main-content,.page-advertise #main-content,.page-faq #main-content{position:relative;overflow:hidden;padding-top:clamp(130px,15vw,190px)!important;padding-bottom:clamp(76px,9vw,120px)!important;border-bottom:1px solid var(--polish-line);background:linear-gradient(90deg,rgba(5,8,13,.97) 0%,rgba(5,8,13,.90) 46%,rgba(5,8,13,.48) 100%),url('../assets/generated/lx-hero-core.webp') right center/58% auto no-repeat,radial-gradient(circle at 82% 10%,var(--polish-glow),transparent 34rem),#05080d!important}.page-services #main-content:after,.page-about #main-content:after,.page-contact #main-content:after,.page-portfolio #main-content:after,.page-blog #main-content:after,.page-industries #main-content:after,.page-partners #main-content:after,.page-advertise #main-content:after,.page-faq #main-content:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);background-size:54px 54px;mask-image:linear-gradient(90deg,#000,transparent 88%);opacity:.5}.section__header{position:relative;z-index:1;max-width:900px}.section__title{max-width:920px!important}.section__subtitle{max-width:720px!important}
 
-/* Shared editorial page heroes. */
-.page-services #main-content,
-.page-about #main-content,
-.page-contact #main-content,
-.page-portfolio #main-content,
-.page-blog #main-content,
-.page-industries #main-content,
-.page-partners #main-content,
-.page-advertise #main-content,
-.page-faq #main-content{
-  position:relative;overflow:hidden;
-  padding-top:clamp(130px,15vw,190px)!important;
-  padding-bottom:clamp(76px,9vw,120px)!important;
-  border-bottom:1px solid var(--polish-line);
-  background:
-    linear-gradient(90deg,rgba(5,8,13,.97) 0%,rgba(5,8,13,.88) 48%,rgba(5,8,13,.50) 100%),
-    url('../assets/hero-tech.svg') right center/58% auto no-repeat,
-    radial-gradient(circle at 82% 10%,var(--polish-glow),transparent 34rem),
-    #05080d!important;
-}
-.page-services #main-content:after,
-.page-about #main-content:after,
-.page-contact #main-content:after,
-.page-portfolio #main-content:after,
-.page-blog #main-content:after,
-.page-industries #main-content:after,
-.page-partners #main-content:after,
-.page-advertise #main-content:after,
-.page-faq #main-content:after{
-  content:"";position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
-  background-size:54px 54px;mask-image:linear-gradient(90deg,#000,transparent 88%);opacity:.55
-}
-.section__header{position:relative;z-index:1;max-width:900px}.section__title{max-width:920px!important}.section__subtitle{max-width:720px!important}
+.page-home .signal{border-radius:34px;isolation:isolate;overflow:hidden;background:#071019;box-shadow:0 32px 100px rgba(0,0,0,.34)}.page-home .signal:after{content:"";position:absolute;inset:0;z-index:0;background:linear-gradient(180deg,rgba(5,8,13,.03),rgba(5,8,13,.64)),url('../assets/generated/lx-hero-core.webp') center/cover no-repeat;opacity:.82;filter:saturate(.94) contrast(1.06)}.page-home .signal:before{z-index:1!important}.page-home .console{z-index:2!important;backdrop-filter:blur(20px);background:linear-gradient(150deg,rgba(10,15,23,.83),rgba(8,12,18,.68))!important}.page-home .home-hero:after{content:"";position:absolute;left:-14vw;bottom:-28%;width:50vw;height:50vw;border-radius:50%;background:radial-gradient(circle,var(--polish-cyan),transparent 68%);filter:blur(18px);pointer-events:none}.page-home .cap-card{position:relative;overflow:hidden}.page-home .cap-card:after{content:"";position:absolute;inset:auto -20% -45% 20%;height:170px;background:radial-gradient(circle,rgba(126,158,255,.10),transparent 70%);pointer-events:none}.page-home .product-card{min-height:560px!important}.page-home .product-card:nth-child(1){background:linear-gradient(180deg,rgba(4,8,13,.08),#0a1018 84%),url('../assets/generated/lx-product-ui.webp') center 22%/cover no-repeat!important}.page-home .product-card:nth-child(2){background:linear-gradient(180deg,rgba(4,8,13,.10),#0a1018 84%),url('../assets/generated/lx-ai-automation.webp') center 22%/cover no-repeat!important}.page-home .product-card h3{margin-top:210px!important;text-shadow:0 3px 30px rgba(0,0,0,.75)}
 
-/* Homepage hero gains a real visual layer while retaining the engineering console. */
-.page-home .signal{border-radius:34px;isolation:isolate;overflow:hidden;background:#071019}
-.page-home .signal:after{
-  content:"";position:absolute;inset:0;z-index:0;
-  background:
-    linear-gradient(180deg,rgba(5,8,13,.05),rgba(5,8,13,.76)),
-    linear-gradient(90deg,rgba(5,8,13,.18),rgba(5,8,13,.02)),
-    url('../assets/hero-image.png') center/cover no-repeat;
-  opacity:.48;filter:saturate(.72) contrast(1.06)
-}
-.page-home .signal:before{z-index:1!important;box-shadow:0 0 0 60px rgba(255,255,255,.012),0 0 0 120px rgba(255,255,255,.006)!important}
-.page-home .console{z-index:2!important;backdrop-filter:blur(20px);background:linear-gradient(150deg,rgba(10,15,23,.88),rgba(8,12,18,.72))!important}
-.page-home .home-hero:after{content:"";position:absolute;left:-14vw;bottom:-28%;width:50vw;height:50vw;border-radius:50%;background:radial-gradient(circle,var(--polish-cyan),transparent 68%);filter:blur(18px);pointer-events:none}
-.page-home .cap-card{position:relative;overflow:hidden}.page-home .cap-card:after{content:"";position:absolute;inset:auto -20% -45% 20%;height:170px;background:radial-gradient(circle,rgba(126,158,255,.10),transparent 70%);pointer-events:none}
-.page-home .product-card{min-height:560px!important}.page-home .product-card:nth-child(1){background:linear-gradient(180deg,rgba(4,8,13,.08),#0a1018 84%),url('../assets/vista-marketing-1.png') center 18%/cover no-repeat!important}.page-home .product-card:nth-child(2){background:linear-gradient(180deg,rgba(4,8,13,.12),#0a1018 84%),url('../assets/synapse-screenshot-1.png') center 18%/cover no-repeat!important}.page-home .product-card h3{margin-top:210px!important;text-shadow:0 3px 30px rgba(0,0,0,.7)}
+.page-services .service-block__visual{position:relative;min-height:380px;overflow:hidden!important;border:1px solid rgba(255,255,255,.10)!important;border-radius:26px!important;background:linear-gradient(180deg,rgba(8,12,18,.04),rgba(8,12,18,.62)),url('../assets/generated/lx-product-ui.webp') center/cover no-repeat!important;box-shadow:0 32px 90px rgba(0,0,0,.28)!important}.page-services #ai-automation .service-block__visual{background:linear-gradient(180deg,rgba(8,12,18,.03),rgba(8,12,18,.58)),url('../assets/generated/lx-ai-automation.webp') center/cover no-repeat!important}.page-services #web-platforms .service-block__visual,.page-services #mobile-apps .service-block__visual{background:linear-gradient(180deg,rgba(8,12,18,.03),rgba(8,12,18,.58)),url('../assets/generated/lx-product-ui.webp') center/cover no-repeat!important}.page-services #cloud-infrastructure .service-block__visual,.page-services #business-systems .service-block__visual,.page-services #ui-ux-design .service-block__visual{background:linear-gradient(180deg,rgba(8,12,18,.04),rgba(8,12,18,.60)),url('../assets/generated/lx-hero-core.webp') center/cover no-repeat!important}.page-services .service-block__visual:before{content:"";position:absolute;inset:16px;border:1px solid rgba(255,255,255,.07);border-radius:19px;background:linear-gradient(135deg,rgba(255,255,255,.025),transparent 45%)}.page-services .service-block__icon{position:relative;z-index:2;width:92px!important;height:92px!important;border-radius:24px!important;background:rgba(6,11,18,.70)!important;border:1px solid rgba(255,255,255,.16)!important;backdrop-filter:blur(16px);box-shadow:0 20px 50px rgba(0,0,0,.34)!important}.page-services .service-block{gap:clamp(36px,7vw,92px)!important;align-items:center}
 
-/* Service visuals become intentional technical scenes instead of empty icon boxes. */
-.page-services .service-block__visual{
-  position:relative;min-height:380px;overflow:hidden!important;border:1px solid rgba(255,255,255,.10)!important;border-radius:26px!important;
-  background:
-    linear-gradient(180deg,rgba(8,12,18,.08),rgba(8,12,18,.80)),
-    url('../assets/hero-tech.svg') center/cover no-repeat,
-    radial-gradient(circle at 70% 20%,rgba(126,158,255,.18),transparent 26rem),#081019!important;
-  box-shadow:0 32px 90px rgba(0,0,0,.28)!important
-}
-.page-services .service-block__visual:before{content:"";position:absolute;inset:16px;border:1px solid rgba(255,255,255,.07);border-radius:19px;background:linear-gradient(135deg,rgba(255,255,255,.025),transparent 45%)}
-.page-services .service-block__icon{position:relative;z-index:2;width:92px!important;height:92px!important;border-radius:24px!important;background:rgba(6,11,18,.76)!important;border:1px solid rgba(255,255,255,.16)!important;backdrop-filter:blur(16px);box-shadow:0 20px 50px rgba(0,0,0,.34)!important}
-.page-services .service-block{gap:clamp(36px,7vw,92px)!important;align-items:center}
-
-/* Contact form: remove card-soup feeling and give the form a deliberate workspace treatment. */
-.page-contact .contact-form,.page-contact .form-card,.page-contact .contact-form__container{background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,.006)),#091019!important;border-color:rgba(255,255,255,.10)!important;box-shadow:0 28px 90px rgba(0,0,0,.30)!important}
-.page-contact .project-type-card{min-height:150px;justify-content:center;background:linear-gradient(180deg,rgba(255,255,255,.024),rgba(255,255,255,.006)),#0a111a!important;border:1px solid rgba(255,255,255,.10)!important}
-.page-contact .project-type-card.selected{border-color:rgba(126,158,255,.60)!important;box-shadow:0 0 0 4px rgba(126,158,255,.10)!important}
-
-/* Marketplace: protect real product imagery and make it the visual focus. */
-.page-marketplace .store-card__visual img{opacity:.92!important;filter:saturate(.92) contrast(1.06)!important;transition:transform .5s ease,filter .3s ease}.page-marketplace .store-card:hover .store-card__visual img{transform:scale(1.025);filter:saturate(1) contrast(1.08)!important}.page-marketplace .store-card__monogram{background:rgba(6,10,16,.74)!important;box-shadow:0 18px 44px rgba(0,0,0,.40),inset 0 1px 0 rgba(255,255,255,.07)!important}.page-marketplace .store-note{background:rgba(8,13,20,.72)!important;backdrop-filter:blur(16px)}
-
-/* About/portfolio cards receive more dimensional hierarchy without inventing proof. */
-.page-about .card,.page-portfolio .portfolio-card,.page-blog .card,.page-industries .card,.page-partners .card{position:relative;overflow:hidden}.page-about .card:after,.page-portfolio .portfolio-card:after,.page-blog .card:after,.page-industries .card:after,.page-partners .card:after{content:"";position:absolute;inset:auto -10% -60px 30%;height:150px;background:radial-gradient(circle,rgba(126,158,255,.09),transparent 70%);pointer-events:none}
-
-/* Keep claims visually quiet; emphasis belongs on verifiable products/capabilities. */
-.stats,.stats-grid,.trust-stats,.metric-strip{box-shadow:none!important}
-
-@media(max-width:900px){
-  .page-services #main-content,.page-about #main-content,.page-contact #main-content,.page-portfolio #main-content,.page-blog #main-content,.page-industries #main-content,.page-partners #main-content,.page-advertise #main-content,.page-faq #main-content{background:linear-gradient(180deg,rgba(5,8,13,.78),#05080d),url('../assets/hero-tech.svg') center top/cover no-repeat!important}
-  .page-home .product-card h3{margin-top:170px!important}
-}
-
-@media(max-width:640px){
-  .page-home .signal:after{opacity:.34}.page-home .product-card{min-height:500px!important}.page-home .product-card h3{margin-top:150px!important}.page-services .service-block__visual{min-height:300px}
-}
+.page-contact .contact-form,.page-contact .form-card,.page-contact .contact-form__container{background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,.006)),#091019!important;border-color:rgba(255,255,255,.10)!important;box-shadow:0 28px 90px rgba(0,0,0,.30)!important}.page-contact .project-type-card{min-height:150px;justify-content:center;background:linear-gradient(180deg,rgba(255,255,255,.024),rgba(255,255,255,.006)),#0a111a!important;border:1px solid rgba(255,255,255,.10)!important}.page-contact .project-type-card.selected{border-color:rgba(126,158,255,.60)!important;box-shadow:0 0 0 4px rgba(126,158,255,.10)!important}
+.page-marketplace .store-card__visual img{opacity:.94!important;filter:saturate(.96) contrast(1.06)!important;transition:transform .5s ease,filter .3s ease}.page-marketplace .store-card:hover .store-card__visual img{transform:scale(1.025);filter:saturate(1) contrast(1.08)!important}.page-marketplace .store-note{background:rgba(8,13,20,.72)!important;backdrop-filter:blur(16px)}
+.page-about .card,.page-portfolio .portfolio-card,.page-blog .card,.page-industries .card,.page-partners .card{position:relative;overflow:hidden}.page-about .card:after,.page-portfolio .portfolio-card:after,.page-blog .card:after,.page-industries .card:after,.page-partners .card:after{content:"";position:absolute;inset:auto -10% -60px 30%;height:150px;background:radial-gradient(circle,rgba(126,158,255,.09),transparent 70%);pointer-events:none}.stats,.stats-grid,.trust-stats,.metric-strip{box-shadow:none!important}
+@media(max-width:900px){.page-services #main-content,.page-about #main-content,.page-contact #main-content,.page-portfolio #main-content,.page-blog #main-content,.page-industries #main-content,.page-partners #main-content,.page-advertise #main-content,.page-faq #main-content{background:linear-gradient(180deg,rgba(5,8,13,.68),#05080d),url('../assets/generated/lx-hero-core.webp') center top/cover no-repeat!important}.page-home .product-card h3{margin-top:170px!important}}
+@media(max-width:640px){.page-home .signal:after{opacity:.62}.page-home .product-card{min-height:500px!important}.page-home .product-card h3{margin-top:150px!important}.page-services .service-block__visual{min-height:300px}}
