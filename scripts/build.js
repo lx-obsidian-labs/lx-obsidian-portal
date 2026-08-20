@@ -16,6 +16,9 @@ const INCLUDE = [
   'package.json'
 ];
 
+// IMPORTANT: This is the production CSS order used by Cloudflare Pages.
+// Keep it aligned with css/style.css. Legacy bright/refresh layers are
+// intentionally excluded because they conflict with the current design system.
 const CSS_ORDER = [
   'variables.css',
   'reset.css',
@@ -24,8 +27,8 @@ const CSS_ORDER = [
   'animations.css',
   'responsive.css',
   'features.css',
-  'bright.css',
-  'refresh.css'
+  'investor-ui.css',
+  'polish.css'
 ];
 
 if (fs.existsSync(DIST)) {
@@ -47,7 +50,7 @@ for (const name of INCLUDE) {
   }
 }
 
-// Concatenate CSS into a single file to avoid @import waterfall
+// Concatenate CSS into a single file to avoid @import waterfall.
 const cssDir = path.join(ROOT, 'css');
 const distCssDir = path.join(DIST, 'css');
 fs.mkdirSync(distCssDir, { recursive: true });
@@ -56,13 +59,13 @@ let combinedCss = '';
 for (const file of CSS_ORDER) {
   const filePath = path.join(cssDir, file);
   if (fs.existsSync(filePath)) {
-    combinedCss += fs.readFileSync(filePath, 'utf8') + '\n\n';
+    combinedCss += `/* ${file} */\n` + fs.readFileSync(filePath, 'utf8') + '\n\n';
   }
 }
 fs.writeFileSync(path.join(distCssDir, 'style.css'), combinedCss);
 console.log(`CSS concatenated: ${CSS_ORDER.length} files -> dist/css/style.css (${Math.round(combinedCss.length / 1024)} KB)`);
 
-// Copy remaining CSS files that pages might reference individually
+// Copy remaining CSS files that pages might reference individually.
 for (const file of fs.readdirSync(cssDir)) {
   if (!CSS_ORDER.includes(file) && file !== 'style.css') {
     fs.copyFileSync(path.join(cssDir, file), path.join(distCssDir, file));
