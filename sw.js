@@ -1,6 +1,6 @@
 // Bump this whenever HTML/CSS behavior changes so production clients discard
 // stale preview-era assets after the next deployment.
-const CACHE = 'lx-obsidian-v12';
+const CACHE = 'lx-obsidian-v13';
 const ASSETS = [
   '/',
   '/index.html',
@@ -15,6 +15,12 @@ const ASSETS = [
   '/industries.html',
   '/partners.html',
   '/css/style.css',
+  '/assets/generated/lx-cube-swarm.webp',
+  '/assets/generated/lx-geometric-core.webp',
+  '/assets/generated/lx-geodesic-sphere.webp',
+  '/assets/generated/lx-hollow-cube.webp',
+  '/assets/generated/lx-code-dashboard.webp',
+  '/assets/generated/lx-system-monitor.webp',
   '/assets/generated/lx-home-hero-v2.webp',
   '/assets/generated/lx-hero-core.webp',
   '/assets/generated/lx-ai-automation.webp',
