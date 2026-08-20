@@ -28,7 +28,8 @@ const CSS_ORDER = [
   'responsive.css',
   'features.css',
   'investor-ui.css',
-  'polish.css'
+  'polish.css',
+  'refinement.css'
 ];
 
 if (fs.existsSync(DIST)) {
