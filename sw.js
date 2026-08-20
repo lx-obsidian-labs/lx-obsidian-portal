@@ -1,6 +1,6 @@
 // Bump this whenever HTML/CSS behavior changes so production clients discard
 // stale preview-era assets after the next deployment.
-const CACHE = 'lx-obsidian-v14';
+const CACHE = 'lx-obsidian-v15';
 const ASSETS = [
   '/',
   '/index.html',
@@ -48,8 +48,8 @@ self.addEventListener('activate', function (e) {
 self.addEventListener('fetch', function (e) {
   if (e.request.method !== 'GET') return;
   var requestUrl = new URL(e.request.url);
-  var isDocumentOrStyle = e.request.mode === 'navigate' || requestUrl.pathname.endsWith('.html') || requestUrl.pathname.endsWith('/css/style.css') || requestUrl.pathname.endsWith('/js/experience.js');
-  if (isDocumentOrStyle) {
+  var isFreshCritical = e.request.mode === 'navigate' || requestUrl.pathname.endsWith('.html') || requestUrl.pathname.endsWith('/css/style.css') || requestUrl.pathname.endsWith('/js/experience.js');
+  if (isFreshCritical) {
     e.respondWith(fetch(e.request).then(function (response) {
       if (response && response.status === 200 && response.type === 'basic') caches.open(CACHE).then(function (cache) { cache.put(e.request, response.clone()); });
       return response;
