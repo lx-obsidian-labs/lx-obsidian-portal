@@ -1,15 +1,15 @@
-/* LX OBSIDIAN LABS — UNIFIED THEME BASELINE
+﻿/* LX OBSIDIAN LABS â€” UNIFIED THEME BASELINE
    Final cascade layer: cross-cutting consistency guarantees.
-   Identity: Obsidian violet (#745cff) + cyan (#45ddff) on graphite.
+   Identity: Obsidian violet (#E50914) + cyan (#FFC400) on graphite.
    Product pages may keep their own accent (Vista red) via inline styles. */
 
 :root {
-  --accent-site: #745cff;
-  --accent-site-light: #9b7cff;
-  --accent-site-cyan: #45ddff;
+  --accent-site: #E50914;
+  --accent-site-light: #FF3D47;
+  --accent-site-cyan: #FFC400;
 }
 
-/* ── Keyboard focus: one consistent, visible ring everywhere ── */
+/* â”€â”€ Keyboard focus: one consistent, visible ring everywhere â”€â”€ */
 :focus-visible {
   outline: 2px solid var(--accent-site-light);
   outline-offset: 3px;
@@ -22,13 +22,13 @@
   outline-offset: 3px;
 }
 
-/* ── Selection matches the site accent ── */
+/* â”€â”€ Selection matches the site accent â”€â”€ */
 ::selection {
   background: rgba(116, 92, 255, 0.32);
   color: #fff;
 }
 
-/* ── Typography rhythm ── */
+/* â”€â”€ Typography rhythm â”€â”€ */
 h1, h2, h3, .section__title, .store-title {
   text-wrap: balance;
 }
@@ -36,7 +36,7 @@ p, .section__subtitle, .card__text, .service-card p, .portfolio-card p {
   text-wrap: pretty;
 }
 
-/* ── Numerals in stats, metadata and metrics align ── */
+/* â”€â”€ Numerals in stats, metadata and metrics align â”€â”€ */
 .syn-meta,
 .stat-card,
 .stat-card strong,
@@ -46,14 +46,14 @@ p, .section__subtitle, .card__text, .service-card p, .portfolio-card p {
   font-variant-numeric: tabular-nums;
 }
 
-/* ── Interaction feedback: compositor-only, under 200ms ── */
+/* â”€â”€ Interaction feedback: compositor-only, under 200ms â”€â”€ */
 .card, .service-card, .portfolio-card, .knowledge-card, .faq-item,
 .project-type-card, .syn-card, .store-card, .feature-card, .blog-card,
 .industry-card, .partner-card, .btn {
   will-change: auto;
 }
 
-/* ── Reduced motion: respect the user preference globally ── */
+/* â”€â”€ Reduced motion: respect the user preference globally â”€â”€ */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
@@ -68,7 +68,7 @@ p, .section__subtitle, .card__text, .service-card p, .portfolio-card p {
   }
 }
 
-/* ── Empty states: always one clear next action ── */
+/* â”€â”€ Empty states: always one clear next action â”€â”€ */
 .empty-state__actions, .empty-state .btn {
   margin-top: var(--space-4);
 }

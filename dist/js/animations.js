@@ -192,6 +192,11 @@ void (function () {
             item.style.display = 'none';
           }
         });
+
+        document.querySelectorAll('.portfolio-category-label').forEach(function (label) {
+          var cats = label.getAttribute('data-categories') || '';
+          label.style.display = (value === 'all' || cats.indexOf(value) !== -1) ? '' : 'none';
+        });
       });
     });
   }

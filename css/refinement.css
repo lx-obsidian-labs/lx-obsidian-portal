@@ -20,7 +20,7 @@ img{max-width:100%}
 .nav__links{gap:4px!important}
 .nav__link,.nav-dropdown__trigger{padding:10px 11px!important;border-radius:9px!important}
 .nav__link:hover,.nav-dropdown__trigger:hover{background:rgba(255,255,255,.035)!important}
-.nav__link--active{background:rgba(116,92,255,.075)!important;color:#fff!important}
+.nav__link--active{background:rgba(229,9,20,.075)!important;color:#fff!important}
 .nav-dropdown__menu{padding:8px!important;min-width:238px!important}
 .nav-dropdown__item{border-radius:10px!important;padding:11px 12px!important}
 .nav__actions{gap:8px!important}
@@ -59,7 +59,7 @@ img{max-width:100%}
 .page-marketplace .store-search input{background:#0a0f17!important}
 
 /* Product pages belong to LX while retaining product accents */
-.page-synapse,.page-vista{background:radial-gradient(circle at 82% 0,rgba(116,92,255,.10),transparent 34rem),#05070a!important}
+.page-synapse,.page-vista{background:radial-gradient(circle at 82% 0,rgba(229,9,20,.10),transparent 34rem),#05070a!important}
 .page-synapse .syn-hero,.page-vista .syn-hero{padding:clamp(110px,13vw,165px) 0 clamp(72px,8vw,108px)!important;border-bottom:1px solid var(--lx-hairline);min-height:610px;display:flex;align-items:center}
 .page-synapse .syn-hero:after,.page-vista .syn-hero:after{content:"";position:absolute;inset:0 0 0 45%;pointer-events:none;background:linear-gradient(90deg,#05070a 0%,rgba(5,7,10,.36) 28%,rgba(5,7,10,.08) 100%),url('../assets/generated/lx-product-ui.webp') center/cover no-repeat;opacity:.62;mask-image:linear-gradient(90deg,transparent,#000 35%)}
 .page-vista .syn-hero:after{background:linear-gradient(90deg,#070608 0%,rgba(7,6,8,.34) 28%,rgba(7,6,8,.10) 100%),url('../assets/vista-marketing-1.png') center/cover no-repeat;opacity:.72}
