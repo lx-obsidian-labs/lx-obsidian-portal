@@ -73,11 +73,13 @@
       font-size: clamp(2.2rem, 6vw, 3.4rem);
       line-height: 1.05; font-weight: 800; margin: 1rem 0;
       color: var(--vc-text-primary);
+      text-wrap: balance;
     }
     .syn-hero__title span { color: var(--vc-primary); }
     .syn-hero__text {
       font-size: 1.1rem; line-height: 1.7;
       color: var(--vc-text-secondary); max-width: 640px;
+      text-wrap: pretty;
     }
     .syn-hero__actions { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 2rem; }
 
@@ -134,8 +136,27 @@
     .syn-hero__stats {
       display: flex; align-items: center; gap: var(--space-4); margin-top: 1.5rem;
       font-size: var(--text-sm); color: var(--vc-text-muted);
+      font-variant-numeric: tabular-nums;
     }
     .syn-hero__rating { color: var(--vc-rating); }
+
+    /* Keyboard focus */
+    .syn-download:focus-visible,
+    a:focus-visible,
+    button:focus-visible {
+      outline: 2px solid #fff;
+      outline-offset: 3px;
+      border-radius: 20px;
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .syn-download, .syn-card, .vc-version-card, .reveal {
+        transition: none !important;
+        animation: none !important;
+      }
+      .syn-download:hover, .syn-card:hover { transform: none; }
+    }
 
     /* Features grid */
     .syn-grid {
@@ -200,7 +221,8 @@
       font-family: 'Space Grotesk', sans-serif; font-weight: 700;
       color: var(--vc-text-primary); margin-bottom: 1rem;
     }
-    .syn-install__list { list-style: none; counter-reset: inst; display: grid; gap: .9rem; }
+    .syn-install__list { list-style: none; counter-reset: inst; display: grid; gap: .9rem; margin: 0; padding: 0; }
+    .vc-version-card .syn-install__list { flex: 1; }
     .syn-install__list li { display: flex; gap: .8rem; align-items: flex-start; color: var(--vc-text-secondary); font-size: .95rem; line-height: 1.6; }
     .syn-install__list li::before {
       counter-increment: inst; content: counter(inst);
@@ -217,6 +239,7 @@
     .syn-meta {
       display: flex; flex-wrap: wrap; gap: 1.5rem; margin-top: 1.5rem;
       color: var(--vc-text-muted); font-size: .9rem;
+      font-variant-numeric: tabular-nums;
     }
     .syn-meta strong { color: var(--vc-text-primary); }
 
@@ -541,7 +564,7 @@
   <section class="section" id="download" aria-label="Download and install">
     <div class="container">
       <div class="section__header reveal">
-        <p class="section__label">Get Vista Cinema</p>
+        <p class="section__label">Download</p>
         <h2 class="section__title">Get Vista Cinema</h2>
         <p class="section__subtitle">Free APK downloads — no subscription. Pick the version for your device.</p>
       </div>
