@@ -19,7 +19,7 @@ const INCLUDE = [
 const CSS_ORDER = [
   'variables.css','reset.css','layout.css','components.css','animations.css',
   'responsive.css','features.css','investor-ui.css','polish.css','refinement.css',
-  'advanced-theme.css'
+  'advanced-theme.css','unified-theme.css'
 ];
 
 if (fs.existsSync(DIST)) fs.rmSync(DIST, { recursive: true });

@@ -1,0 +1,74 @@
+/* LX OBSIDIAN LABS — UNIFIED THEME BASELINE
+   Final cascade layer: cross-cutting consistency guarantees.
+   Identity: Obsidian violet (#745cff) + cyan (#45ddff) on graphite.
+   Product pages may keep their own accent (Vista red) via inline styles. */
+
+:root {
+  --accent-site: #745cff;
+  --accent-site-light: #9b7cff;
+  --accent-site-cyan: #45ddff;
+}
+
+/* ── Keyboard focus: one consistent, visible ring everywhere ── */
+:focus-visible {
+  outline: 2px solid var(--accent-site-light);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+.btn:focus-visible,
+.btn--primary:focus-visible,
+.btn--secondary:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+/* ── Selection matches the site accent ── */
+::selection {
+  background: rgba(116, 92, 255, 0.32);
+  color: #fff;
+}
+
+/* ── Typography rhythm ── */
+h1, h2, h3, .section__title, .store-title {
+  text-wrap: balance;
+}
+p, .section__subtitle, .card__text, .service-card p, .portfolio-card p {
+  text-wrap: pretty;
+}
+
+/* ── Numerals in stats, metadata and metrics align ── */
+.syn-meta,
+.stat-card,
+.stat-card strong,
+.store-card__meta,
+.announcement-bar,
+.footer__bottom {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Interaction feedback: compositor-only, under 200ms ── */
+.card, .service-card, .portfolio-card, .knowledge-card, .faq-item,
+.project-type-card, .syn-card, .store-card, .feature-card, .blog-card,
+.industry-card, .partner-card, .btn {
+  will-change: auto;
+}
+
+/* ── Reduced motion: respect the user preference globally ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  html { scroll-behavior: auto; }
+  .card:hover, .service-card:hover, .portfolio-card:hover,
+  .knowledge-card:hover, .store-card:hover, .btn:hover {
+    transform: none !important;
+  }
+}
+
+/* ── Empty states: always one clear next action ── */
+.empty-state__actions, .empty-state .btn {
+  margin-top: var(--space-4);
+}
