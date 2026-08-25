@@ -6,9 +6,26 @@
   Permissions-Policy: camera=(), microphone=(), geolocation=()
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
 
+# Never allow the production shell or service worker to become stuck on an old deploy.
+/
+  Cache-Control: no-cache, no-store, must-revalidate
+/*.html
+  Cache-Control: no-cache, no-store, must-revalidate
+/css/style.css
+  Cache-Control: no-cache, no-store, must-revalidate
+/sw.js
+  Cache-Control: no-cache, no-store, must-revalidate
+  Service-Worker-Allowed: /
+
+# Generated artwork uses immutable filenames within each release but should revalidate
+# while the deployment issue is being stabilized.
+/assets/generated/*
+  Cache-Control: public, max-age=0, must-revalidate
+
 # Font files - allow cross-origin
 /assets/fonts/*
   Access-Control-Allow-Origin: *
+  Cache-Control: public, max-age=31536000, immutable
 
 # API endpoints
 /api/*

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Vista Cinema — AI-powered video production suite by LX Obsidian Labs. Hollywood-grade editing, multi-language AI dubbing, AI actors and direct YouTube/TikTok publishing. Download free on Android.">
-  <meta name="theme-color" content="#050505">
+  <meta name="theme-color" content="#020204">
   <meta property="og:title" content="Vista Cinema — AI Video Production Suite | LX Obsidian Labs">
   <meta property="og:description" content="Vista Cinema — AI-powered video production suite by LX Obsidian Labs. Hollywood-grade editing, multi-language AI dubbing, AI actors and direct YouTube/TikTok publishing.">
   <meta property="og:type" content="website">
@@ -98,6 +98,37 @@
     .syn-download__icon { width: 22px; height: 22px; flex: none; }
     .syn-download__meta { display: block; font-size: .75rem; font-weight: 500; color: rgba(255,255,255,.7); margin-top: 2px; }
     .syn-download__label { line-height: 1.1; }
+
+    /* TV download button variant */
+    .syn-download--tv {
+      background: transparent;
+      border: 2px solid var(--vc-primary);
+      box-shadow: none;
+    }
+    .syn-download--tv:hover {
+      background: rgba(242, 13, 25, 0.12);
+      box-shadow: 0 0 30px rgba(242, 13, 25, 0.3);
+    }
+
+    /* Platform version chooser cards */
+    .vc-versions { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+    .vc-version-card {
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 20px;
+      padding: 1.75rem;
+      display: flex; flex-direction: column; gap: 1rem;
+      background: rgba(255,255,255,.03);
+    }
+    .vc-version-card__badge {
+      align-self: flex-start;
+      padding: .35rem .8rem; border-radius: 999px;
+      font-size: .75rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+    }
+    .vc-version-card--phone .vc-version-card__badge { background: var(--vc-primary); color: #fff; }
+    .vc-version-card--tv .vc-version-card__badge { background: transparent; border: 1px solid var(--vc-primary); color: var(--vc-primary); }
+    .vc-version-card h3 { margin: 0; font-size: 1.25rem; }
+    .vc-version-card p { margin: 0; color: var(--vc-text-muted); font-size: .95rem; line-height: 1.5; flex: 1; }
+    .vc-version-card .syn-download { align-self: flex-start; }
 
     /* Hero stats (rating, downloads) */
     .syn-hero__stats {
@@ -365,11 +396,21 @@
               <line x1="12" y1="15" x2="12" y2="3"/>
             </svg>
             <span>
-              <span class="syn-download__label">Download APK</span>
-              <span class="syn-download__meta">v1.0.0 · free · Android</span>
+              <span class="syn-download__label">Download for Android</span>
+              <span class="syn-download__meta">v1.0.0 · free · Phones &amp; tablets</span>
             </span>
           </a>
-          <a href="marketplace.html" class="btn btn--secondary btn--large">View in Marketplace</a>
+          <a href="tv/VistaCinema-TV-v1.0.0.apk" download class="syn-download syn-download--tv">
+            <svg class="syn-download__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2"/>
+              <line x1="8" y1="21" x2="16" y2="21"/>
+              <line x1="12" y1="17" x2="12" y2="21"/>
+            </svg>
+            <span>
+              <span class="syn-download__label">Download for Smart TV</span>
+              <span class="syn-download__meta">v1.0.0 · free · Android TV &amp; Google TV</span>
+            </span>
+          </a>
         </div>
         <div class="syn-hero__stats" style="display:flex;align-items:center;gap:var(--space-4);margin-top:var(--space-6);font-size:var(--text-sm);color:var(--color-text-muted);">
           <span style="display:inline-flex;align-items:center;gap:.25rem;color:var(--color-accent-light);">&#9733; 5.0 (45 reviews)</span>
@@ -502,39 +543,71 @@
       <div class="section__header reveal">
         <p class="section__label">Get Vista Cinema</p>
         <h2 class="section__title">Get Vista Cinema</h2>
-        <p class="section__subtitle">Free Android APK — no subscription. Create a free account to start streaming.</p>
+        <p class="section__subtitle">Free APK downloads — no subscription. Pick the version for your device.</p>
       </div>
 
-      <div class="syn-install reveal">
-        <h3 class="syn-install__title">Install the APK on Android</h3>
-        <ol class="syn-install__list">
-          <li>Tap <strong>Download APK</strong> below.</li>
-          <li>If prompted, allow install from <strong>unknown sources</strong> in your device settings.</li>
-          <li>Open the downloaded APK file.</li>
-          <li>Tap <strong>Install</strong> and wait for it to finish.</li>
-          <li>Open <strong>Vista Cinema</strong> from your app drawer.</li>
-        </ol>
+      <div class="vc-versions reveal">
+        <div class="vc-version-card vc-version-card--phone" id="download-android">
+          <span class="vc-version-card__badge">Android</span>
+          <h3>For phones &amp; tablets</h3>
+          <ol class="syn-install__list">
+            <li>Tap <strong>Download for Android</strong>.</li>
+            <li>If prompted, allow install from <strong>unknown sources</strong> in your device settings.</li>
+            <li>Open the downloaded APK file and tap <strong>Install</strong>.</li>
+            <li>Open <strong>Vista Cinema</strong> from your app drawer.</li>
+          </ol>
 
-        <div class="syn-meta">
-          <span>Version: <strong>v1.0.0</strong></span>
-          <span>Platform: <strong>Android 7.0+</strong></span>
-          <span>Size: <strong>~35 MB</strong></span>
-          <span>Updated: <strong>August 2026</strong></span>
-          <span>License: <strong>Free</strong> — no subscription</span>
-          <span>Account: <strong>Username, Email, Password</strong></span>
+          <div class="syn-meta">
+            <span>Version: <strong>v1.0.0</strong></span>
+            <span>Platform: <strong>Android 7.0+</strong></span>
+            <span>Size: <strong>~35 MB</strong></span>
+            <span>Updated: <strong>August 2026</strong></span>
+            <span>License: <strong>Free</strong> — no subscription</span>
+          </div>
+
+          <a href="https://github.com/lx-obsidian-labs/lx-obsidian-portal/raw/master/VistaCinema-v1.0.0.apk" download class="syn-download">
+            <svg class="syn-download__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            <span>
+              <span class="syn-download__label">Download for Android</span>
+              <span class="syn-download__meta">v1.0.0 · free · Phones &amp; tablets</span>
+            </span>
+          </a>
         </div>
 
-        <a href="https://github.com/lx-obsidian-labs/lx-obsidian-portal/raw/master/VistaCinema-v1.0.0.apk" download class="syn-download">
-          <svg class="syn-download__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
-            <polyline points="7 10 12 15 17 10"/>
-            <line x1="12" y1="15" x2="12" y2="3"/>
-          </svg>
-          <span>
-            <span class="syn-download__label">Download Vista Cinema APK</span>
-            <span class="syn-download__meta">v1.0.0 · free · Android</span>
-          </span>
-        </a>
+        <div class="vc-version-card vc-version-card--tv" id="download-tv">
+          <span class="vc-version-card__badge">Smart TV</span>
+          <h3>For Android TV &amp; Google TV</h3>
+          <ol class="syn-install__list">
+            <li>Enable <strong>Unknown Sources</strong> in your TV settings.</li>
+            <li>Transfer the APK to your TV (USB drive or &ldquo;Send Files to TV&rdquo; app).</li>
+            <li>Open the APK on your TV and tap <strong>Install</strong>.</li>
+            <li>Navigate with your <strong>remote (D-pad)</strong> — fully remote optimized.</li>
+          </ol>
+
+          <div class="syn-meta">
+            <span>Version: <strong>v1.0.0</strong></span>
+            <span>Platform: <strong>Android TV / Google TV</strong></span>
+            <span>UI: <strong>Cinematic large-screen layout</strong></span>
+            <span>Remote: <strong>Full D-pad navigation</strong></span>
+            <span>License: <strong>Free</strong> — no subscription</span>
+          </div>
+
+          <a href="tv/VistaCinema-TV-v1.0.0.apk" download class="syn-download syn-download--tv">
+            <svg class="syn-download__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2"/>
+              <line x1="8" y1="21" x2="16" y2="21"/>
+              <line x1="12" y1="17" x2="12" y2="21"/>
+            </svg>
+            <span>
+              <span class="syn-download__label">Download for Smart TV</span>
+              <span class="syn-download__meta">VistaCinema-TV-v1.0.0.apk · free</span>
+            </span>
+          </a>
+        </div>
       </div>
     </div>
   </section>
@@ -556,11 +629,21 @@
               <line x1="12" y1="15" x2="12" y2="3"/>
             </svg>
             <span>
-              <span class="syn-download__label">Download Free</span>
-              <span class="syn-download__meta">v1.0.0 · Android · No subscription</span>
+              <span class="syn-download__label">Download for Android</span>
+              <span class="syn-download__meta">v1.0.0 · Phones &amp; tablets · No subscription</span>
             </span>
           </a>
-          <a href="marketplace.html" class="btn btn--secondary btn--large">Browse Marketplace</a>
+          <a href="tv/VistaCinema-TV-v1.0.0.apk" download class="syn-download syn-download--tv">
+            <svg class="syn-download__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2"/>
+              <line x1="8" y1="21" x2="16" y2="21"/>
+              <line x1="12" y1="17" x2="12" y2="21"/>
+            </svg>
+            <span>
+              <span class="syn-download__label">Download for Smart TV</span>
+              <span class="syn-download__meta">v1.0.0 · Android TV &amp; Google TV</span>
+            </span>
+          </a>
         </div>
       </div>
     </div>
