@@ -1,684 +1,260 @@
 ﻿<!DOCTYPE html>
-<html lang="en" class="theme-refresh">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Explore our work across client projects, LX products, and experimental labs. Software, AI, and automation built by LX Obsidian Labs.">
-  <meta name="theme-color" content="#020204">
-  <meta property="og:title" content="Work â€” LX Obsidian Labs">
-  <meta property="og:description" content="Explore our work across client projects, LX products, and experimental labs. Software, AI, and automation built by LX Obsidian Labs.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://www.lxobsidianportal.co.za/portfolio">
-  <meta property="og:locale" content="en_ZA">
-  <meta property="og:image" content="https://www.lxobsidianportal.co.za/assets/og-default.svg">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Work â€” LX Obsidian Labs">
-  <meta name="twitter:description" content="Explore our work across client projects, LX products, and experimental labs. Software, AI, and automation built by LX Obsidian Labs.">
-  <meta name="twitter:image" content="https://www.lxobsidianportal.co.za/assets/og-default.svg">
-  <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://www.lxobsidianportal.co.za/portfolio">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="dns-prefetch" href="https://www.google-analytics.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="css/style.css">
-  <title>Work â€” LX Obsidian Labs</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#030305">
+<meta name="description" content="Explore our work across AI products, platforms, client projects and web applications. Software, AI, and automation built by LX Obsidian Labs.">
+<meta property="og:title" content="Work — LX Obsidian Labs">
+<meta property="og:description" content="Explore our work across AI products, platforms, client projects and web applications.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://www.lxobsidianportal.co.za/portfolio">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="css/lx.css">
+<title>Work — LX Obsidian Labs</title>
+<style>
+  .work-filters{display:flex;gap:8px;justify-content:center;margin-top:32px;flex-wrap:wrap}
+  .work-filter{padding:8px 18px;border-radius:100px;font-size:.82rem;font-weight:500;cursor:pointer;border:1px solid var(--saas-border);background:transparent;color:var(--saas-muted);transition:all .2s}
+  .work-filter:hover,.work-filter--active{background:var(--saas-accent);color:#fff;border-color:var(--saas-accent)}
+  .work-category{font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--saas-accent-light);margin:40px 0 20px;padding-left:2px;display:none}
+  .work-category.show{display:block}
+  .work-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+  .work-card{background:var(--saas-card);border:1px solid var(--saas-border);border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:12px;transition:transform .2s,border-color .2s}
+  .work-card:hover{transform:translateY(-2px);border-color:var(--saas-accent)}
+  .work-card__icon{width:44px;height:44px;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid var(--saas-border);display:grid;place-items:center;color:var(--saas-accent-light);flex-shrink:0}
+  .work-card__icon svg{width:20px;height:20px}
+  .work-card__tag{font-size:.68rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--saas-accent-light);background:rgba(255,255,255,.04);padding:3px 8px;border-radius:6px;width:fit-content}
+  .work-card__title{font-size:1.05rem;font-weight:600;margin:0}
+  .work-card__desc{color:var(--saas-muted);font-size:.88rem;line-height:1.6;margin:0;flex:1}
+  .work-card__tags{display:flex;gap:6px;flex-wrap:wrap}
+  .work-card__tags span{font-size:.72rem;padding:3px 8px;border-radius:6px;background:rgba(255,255,255,.04);color:var(--saas-muted)}
+  .work-card__link{font-size:.82rem;font-weight:500;color:var(--saas-accent-light);text-decoration:none;display:flex;align-items:center;gap:4px;transition:color .2s}
+  .work-card__link:hover{color:#fff}
+</style>
 </head>
-<body class="page-portfolio">
+<body>
 
-  <a href="#main-content" class="skip-link">Skip to main content</a>
-
-  <!-- Loading Bar -->
-  <div class="loading-bar" aria-hidden="true">
-    <div class="loading-bar__fill" id="loadingBarFill"></div>
+<nav class="saas-nav"><div class="saas-nav__inner">
+  <a class="saas-nav__brand" href="index.html"><span class="saas-nav__mark">LX</span><span class="saas-nav__label">Obsidian Labs</span></a>
+  <div class="saas-nav__links" id="navLinks">
+    <a href="ai.html">AI Platform</a>
+    <a href="services.html">Solutions</a>
+    <a href="marketplace.html">Marketplace</a>
+    <a href="portfolio.html" style="color:#fff">Work</a>
+    <a href="about.html">Company</a>
   </div>
-
-  <!-- ANNOUNCEMENT BAR -->
-  <div class="announcement-bar">
-    <div class="container">
-      <a href="synapse.html" class="announcement-bar__link">
-        <span class="announcement-bar__badge">NEW</span>
-        <span>Synapse AI is now available â€” Free browser automation powered by AI.</span>
-        <span class="announcement-bar__cta">Explore <span aria-hidden="true">â†’</span></span>
-      </a>
-    </div>
+  <div class="saas-nav__actions">
+    <a class="saas-btn saas-btn--ghost" href="contact.html">Login</a>
+    <a class="saas-btn saas-btn--primary" href="contact.html">Start Free</a>
+    <button class="saas-nav__menu" id="saasMenu" aria-label="Open menu">☰</button>
   </div>
+</div></nav>
 
-  <!-- ==========================================
-       NAVIGATION
-       ========================================== -->
-  <nav class="nav nav--solid" id="nav" role="navigation" aria-label="Main navigation">
-    <div class="container">
-      <div class="nav__inner">
-        <a href="index.html" class="nav__logo" aria-label="LX Obsidian Labs Home">
-          <div class="nav__logo-icon">LX</div>
-          <span class="nav__logo-text">LX <span>Obsidian</span></span>
-        </a>
-        <div class="nav__links" id="navLinks" role="menubar">
-          <div class="nav-dropdown" role="none">
-            <button class="nav-dropdown__trigger" role="menuitem" aria-haspopup="true" aria-expanded="false">
-              Solutions
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-            </button>
-            <div class="nav-dropdown__menu" role="menu">
-              <a href="services.html#ai-automation" class="nav-dropdown__item" role="menuitem">AI & Automation</a>
-              <a href="services.html#web-platforms" class="nav-dropdown__item" role="menuitem">Web Platforms</a>
-              <a href="services.html#mobile-apps" class="nav-dropdown__item" role="menuitem">Mobile Applications</a>
-              <a href="services.html#business-systems" class="nav-dropdown__item" role="menuitem">Business Systems</a>
-              <a href="services.html#cloud-infrastructure" class="nav-dropdown__item" role="menuitem">Cloud & Infrastructure</a>
-              <a href="services.html#ui-ux-design" class="nav-dropdown__item" role="menuitem">UI/UX & Product Design</a>
-            </div>
-          </div>
-          <div class="nav-dropdown" role="none">
-            <button class="nav-dropdown__trigger" role="menuitem" aria-haspopup="true" aria-expanded="false">
-              Products
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-            </button>
-            <div class="nav-dropdown__menu" role="menu">
-              <a href="vista.html" class="nav-dropdown__item nav-dropdown__item--hot" role="menuitem">Vista Cinema</a>
-              <a href="synapse.html" class="nav-dropdown__item" role="menuitem">Synapse AI</a>
-            </div>
-          </div>
-          <div class="nav-dropdown" role="none">
-            <button class="nav-dropdown__trigger" role="menuitem" aria-haspopup="true" aria-expanded="false">
-              Industries
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-            </button>
-            <div class="nav-dropdown__menu" role="menu">
-              <a href="industries.html#education" class="nav-dropdown__item" role="menuitem">Education & Training</a>
-              <a href="industries.html#retail" class="nav-dropdown__item" role="menuitem">Retail & Commerce</a>
-              <a href="industries.html#hospitality" class="nav-dropdown__item" role="menuitem">Restaurants & Hospitality</a>
-              <a href="industries.html#professional" class="nav-dropdown__item" role="menuitem">Professional Services</a>
-              <a href="industries.html#mining" class="nav-dropdown__item" role="menuitem">Industrial & Mining</a>
-              <a href="industries.html#startups" class="nav-dropdown__item" role="menuitem">Startups</a>
-            </div>
-          </div>
-          <div class="nav-dropdown" role="none">
-            <button class="nav-dropdown__trigger nav-dropdown__trigger--active" role="menuitem" aria-haspopup="true" aria-expanded="false">
-              Work
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-            </button>
-            <div class="nav-dropdown__menu" role="menu">
-              <a href="portfolio.html#case-studies" class="nav-dropdown__item" role="menuitem">Case Studies</a>
-              <a href="portfolio.html" class="nav-dropdown__item" role="menuitem">Portfolio</a>
-            </div>
-          </div>
-          <a href="marketplace.html" class="nav__link">Marketplace</a>
-          <div class="nav-dropdown" role="none">
-            <button class="nav-dropdown__trigger" role="menuitem" aria-haspopup="true" aria-expanded="false">
-              Company
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-            </button>
-            <div class="nav-dropdown__menu" role="menu">
-              <a href="about.html" class="nav-dropdown__item" role="menuitem">About</a>
-              <a href="blog.html" class="nav-dropdown__item" role="menuitem">Insights</a>
-              <a href="partners.html" class="nav-dropdown__item" role="menuitem">Partners</a>
-              <a href="advertise.html" class="nav-dropdown__item" role="menuitem">Advertise</a>
-              <a href="contact.html" class="nav-dropdown__item" role="menuitem">Contact</a>
-            </div>
-          </div>
-        </div>
-        <div class="nav__actions">
-          <button id="searchToggle" class="btn btn--ghost btn--small" aria-label="Open search">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          </button>
-          <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-            <svg class="theme-toggle__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
-          </button>
-          <a href="contact.html" class="btn btn--ghost btn--small">Contact Sales</a>
-          <a href="contact.html" class="btn btn--primary btn--small">Start Project</a>
-          <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
-            <div class="nav__toggle-icon">
-              <span class="nav__toggle-line"></span>
-              <span class="nav__toggle-line"></span>
-              <span class="nav__toggle-line"></span>
-            </div>
-          </button>
-        </div>
-      </div>
-    </div>
-  </nav>
+<main style="padding-top:64px">
 
-  <!-- ==========================================
-       PAGE HEADER
-       ========================================== -->
-  <main class="section" id="main-content" aria-label="Portfolio">
-    <div class="container">
-      <div class="section__header reveal">
-        <p class="section__label">Our Work</p>
-        <h1 class="section__title">Real products. Real clients. Real experiments.</h1>
-        <p class="section__subtitle">Every project here is live on our GitHub. Explore what we build — from AI products to client platforms.</p>
-      </div>
-    </div>
-  </main>
-
-  <section class="section" aria-label="Portfolio filters">
-    <div class="container">
-      <div class="portfolio-filters reveal">
-        <button class="portfolio-filter portfolio-filter--active" data-filter="all">All</button>
-        <button class="portfolio-filter" data-filter="products">Products &amp; Platforms</button>
-        <button class="portfolio-filter" data-filter="client">Client &amp; Commercial</button>
+  <!-- HERO -->
+  <section class="saas-section" style="border-top:none;padding:80px 0 60px">
+    <div class="saas-wrap" style="text-align:center">
+      <div class="saas-eyebrow">OUR WORK</div>
+      <h1 class="saas-heading" style="margin-top:14px">Real products. Real clients. Real experiments.</h1>
+      <p style="color:var(--saas-muted);max-width:600px;margin:16px auto 0;line-height:1.7">Every project here is live on our GitHub. Explore what we build — from AI products to client platforms.</p>
+      <div class="work-filters">
+        <button class="work-filter work-filter--active" data-filter="all">All</button>
+        <button class="work-filter" data-filter="products">Products & Platforms</button>
+        <button class="work-filter" data-filter="client">Client & Commercial</button>
       </div>
     </div>
   </section>
 
-  <!-- ==========================================
-       PORTFOLIO GRID
-       ========================================== -->
-  <section class="section" aria-label="Portfolio projects">
-    <div class="container">
+  <!-- PRODUCTS & PLATFORMS -->
+  <section class="saas-section" style="border-top:none;padding:0 0 20px">
+    <div class="saas-wrap">
+      <div class="work-category show" data-cat="products">PRODUCTS & PLATFORMS</div>
+      <div class="work-grid" data-filter-grid="products">
 
-      <!-- Category: Products & Platforms -->
-      <p class="portfolio-category-label" data-categories="products">Products &amp; Platforms</p>
-      <div class="portfolio-grid" id="portfolioGrid">
-
-        <!-- Synapse Social -->
-        <div class="portfolio-item" data-categories="products">
-          <div class="portfolio-item__image">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><circle cx="12" cy="12" r="3"/></svg>
-          </div>
-          <div class="portfolio-item__body">
-            <span class="portfolio-item__tag portfolio-item__tag--category">AI Product</span>
-            <h3 class="portfolio-item__title">Synapse Social</h3>
-            <p class="portfolio-item__description">AI-powered browser extension for Facebook Page management â€” browser automation, AI content generation, community management, analytics intelligence and competitor analysis in one tool.</p>
-            <div class="portfolio-item__tags">
-              <span class="portfolio-item__tag">TypeScript</span>
-              <span class="portfolio-item__tag">AI</span>
-              <span class="portfolio-item__tag">Browser Extension</span>
-            </div>
-            <a href="https://github.com/lx-obsidian-labs/synapse-social" class="portfolio-item__link" target="_blank" rel="noopener">View on GitHub â†’</a>
-          </div>
+        <div class="work-card" data-categories="products">
+          <div class="work-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><circle cx="12" cy="12" r="3"/></svg></div>
+          <span class="work-card__tag">AI Product</span>
+          <h3 class="work-card__title">Synapse Social</h3>
+          <p class="work-card__desc">AI-powered browser extension for Facebook Page management — browser automation, AI content generation, community management, analytics intelligence and competitor analysis.</p>
+          <div class="work-card__tags"><span>TypeScript</span><span>AI</span><span>Browser Extension</span></div>
+          <a class="work-card__link" href="https://github.com/lx-obsidian-labs/synapse-social" target="_blank" rel="noopener">View on GitHub →</a>
         </div>
 
-        <!-- Nexus AI -->
-        <div class="portfolio-item" data-categories="products">
-          <div class="portfolio-item__image">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M19.1 4.9l-2.8 2.8M7.7 16.3l-2.8 2.8"/></svg>
-          </div>
-          <div class="portfolio-item__body">
-            <span class="portfolio-item__tag portfolio-item__tag--category">AI Platform</span>
-            <h3 class="portfolio-item__title">Nexus AI</h3>
-            <p class="portfolio-item__description">All-in-one AI platform bringing models, workflows and tools together behind a single interface.</p>
-            <div class="portfolio-item__tags">
-              <span class="portfolio-item__tag">TypeScript</span>
-              <span class="portfolio-item__tag">AI</span>
-              <span class="portfolio-item__tag">SaaS</span>
-            </div>
-            <a href="https://github.com/lx-obsidian-labs/nexus-ai" class="portfolio-item__link" target="_blank" rel="noopener">View on GitHub â†’</a>
-          </div>
+        <div class="work-card" data-categories="products">
+          <div class="work-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M19.1 4.9l-2.8 2.8M7.7 16.3l-2.8 2.8"/></svg></div>
+          <span class="work-card__tag">AI Platform</span>
+          <h3 class="work-card__title">Nexus AI</h3>
+          <p class="work-card__desc">All-in-one AI platform bringing models, workflows and tools together behind a single interface.</p>
+          <div class="work-card__tags"><span>TypeScript</span><span>AI</span><span>SaaS</span></div>
+          <a class="work-card__link" href="https://github.com/lx-obsidian-labs/nexus-ai" target="_blank" rel="noopener">View on GitHub →</a>
         </div>
 
-        <!-- Revona CLI -->
-        <div class="portfolio-item" data-categories="products">
-          <div class="portfolio-item__image">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
-          </div>
-          <div class="portfolio-item__body">
-            <span class="portfolio-item__tag portfolio-item__tag--category">Developer Tool</span>
-            <h3 class="portfolio-item__title">Revona CLI</h3>
-            <p class="portfolio-item__description">Autonomous AI engineering platform by LX Obsidian Labs â€” an agentic command-line companion that plans, writes and verifies code.</p>
-            <div class="portfolio-item__tags">
-              <span class="portfolio-item__tag">Python</span>
-              <span class="portfolio-item__tag">CLI</span>
-              <span class="portfolio-item__tag">AI Agents</span>
-            </div>
-            <a href="https://github.com/lx-obsidian-labs/revona-cli" class="portfolio-item__link" target="_blank" rel="noopener">View on GitHub â†’</a>
-          </div>
+        <div class="work-card" data-categories="products">
+          <div class="work-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></div>
+          <span class="work-card__tag">Developer Tool</span>
+          <h3 class="work-card__title">Revona CLI</h3>
+          <p class="work-card__desc">Autonomous AI engineering platform — an agentic command-line companion that plans, writes and verifies code.</p>
+          <div class="work-card__tags"><span>Python</span><span>CLI</span><span>AI Agents</span></div>
+          <a class="work-card__link" href="https://github.com/lx-obsidian-labs/revona-cli" target="_blank" rel="noopener">View on GitHub →</a>
         </div>
 
-        <!-- Edu Learn -->
-        <div class="portfolio-item" data-categories="products">
-          <div class="portfolio-item__image">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
-          </div>
-          <div class="portfolio-item__body">
-            <span class="portfolio-item__tag portfolio-item__tag--category">EdTech Platform</span>
-            <h3 class="portfolio-item__title">Edu Learn</h3>
-            <p class="portfolio-item__description">Mobile-first, full-stack AI-powered e-learning platform with gamification, spaced repetition, adaptive reviews, social learning and blockchain-verified certificates.</p>
-            <div class="portfolio-item__tags">
-              <span class="portfolio-item__tag">TypeScript</span>
-              <span class="portfolio-item__tag">EdTech</span>
-              <span class="portfolio-item__tag">Mobile-first</span>
-            </div>
-            <a href="https://github.com/lx-obsidian-labs/e-learning-platform" class="portfolio-item__link" target="_blank" rel="noopener">View on GitHub â†’</a>
-          </div>
+        <div class="work-card" data-categories="products">
+          <div class="work-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
+          <span class="work-card__tag">EdTech Platform</span>
+          <h3 class="work-card__title">Edu Learn</h3>
+          <p class="work-card__desc">Mobile-first, full-stack AI-powered e-learning platform with gamification, spaced repetition, adaptive reviews, social learning and blockchain-verified certificates.</p>
+          <div class="work-card__tags"><span>TypeScript</span><span>EdTech</span><span>Mobile-first</span></div>
+          <a class="work-card__link" href="https://github.com/lx-obsidian-labs/e-learning-platform" target="_blank" rel="noopener">View on GitHub →</a>
         </div>
 
-        <!-- Incognito Party -->
-        <div class="portfolio-item" data-categories="products">
-          <div class="portfolio-item__image">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
-          </div>
-          <div class="portfolio-item__body">
-            <span class="portfolio-item__tag portfolio-item__tag--category">Social PWA</span>
-            <h3 class="portfolio-item__title">Incognito Party</h3>
-            <p class="portfolio-item__description">Anonymous social PWA with a built-in tipping economy â€” post and interact without identities (private MVP).</p>
-            <div class="portfolio-item__tags">
-              <span class="portfolio-item__tag">TypeScript</span>
-              <span class="portfolio-item__tag">PWA</span>
-              <span class="portfolio-item__tag">Social</span>
-            </div>
-            <a href="https://github.com/lx-obsidian-labs/incognito-party" class="portfolio-item__link" target="_blank" rel="noopener">View on GitHub â†’</a>
-          </div>
+        <div class="work-card" data-categories="products">
+          <div class="work-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></div>
+          <span class="work-card__tag">Social PWA</span>
+          <h3 class="work-card__title">Incognito Party</h3>
+          <p class="work-card__desc">Anonymous social PWA with a built-in tipping economy — post and interact without identities.</p>
+          <div class="work-card__tags"><span>TypeScript</span><span>PWA</span><span>Social</span></div>
+          <a class="work-card__link" href="https://github.com/lx-obsidian-labs/incognito-party" target="_blank" rel="noopener">View on GitHub →</a>
         </div>
 
-        <!-- hookd -->
-        <div class="portfolio-item" data-categories="products">
-          <div class="portfolio-item__image">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
-          </div>
-          <div class="portfolio-item__body">
-            <span class="portfolio-item__tag portfolio-item__tag--category">Web App</span>
-            <h3 class="portfolio-item__title">hookd</h3>
-            <p class="portfolio-item__description">A web platform experiment from LX Obsidian Labs â€” currently in early development, details landing soon.</p>
-            <div class="portfolio-item__tags">
-              <span class="portfolio-item__tag">TypeScript</span>
-              <span class="portfolio-item__tag">Web</span>
-              <span class="portfolio-item__tag">Early Dev</span>
-            </div>
-            <a href="https://github.com/lx-obsidian-labs/hookd" class="portfolio-item__link" target="_blank" rel="noopener">View on GitHub â†’</a>
-          </div>
+        <div class="work-card" data-categories="products">
+          <div class="work-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg></div>
+          <span class="work-card__tag">Web App</span>
+          <h3 class="work-card__title">hookd</h3>
+          <p class="work-card__desc">A web platform experiment — currently in early development, details landing soon.</p>
+          <div class="work-card__tags"><span>TypeScript</span><span>Web</span><span>Early Dev</span></div>
+          <a class="work-card__link" href="https://github.com/lx-obsidian-labs/hookd" target="_blank" rel="noopener">View on GitHub →</a>
         </div>
 
-        <!-- LX Obsidian Portal -->
-        <div class="portfolio-item" data-categories="products">
-          <div class="portfolio-item__image">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
-          </div>
-          <div class="portfolio-item__body">
-            <span class="portfolio-item__tag portfolio-item__tag--category">Dashboard Platform</span>
-            <h3 class="portfolio-item__title">LX Obsidian Portal</h3>
-            <p class="portfolio-item__description">Full-stack dashboard platform that powers the business â€” licensing, store, bookings and client management.</p>
-            <div class="portfolio-item__tags">
-              <span class="portfolio-item__tag">HTML</span>
-              <span class="portfolio-item__tag">Full-stack</span>
-              <span class="portfolio-item__tag">Dashboard</span>
-            </div>
-            <a href="https://github.com/lx-obsidian-labs/lx-obsidian-portal" class="portfolio-item__link" target="_blank" rel="noopener">View on GitHub â†’</a>
-          </div>
+        <div class="work-card" data-categories="products">
+          <div class="work-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div>
+          <span class="work-card__tag">Dashboard Platform</span>
+          <h3 class="work-card__title">LX Obsidian Portal</h3>
+          <p class="work-card__desc">Full-stack dashboard platform that powers the business — licensing, store, bookings and client management.</p>
+          <div class="work-card__tags"><span>HTML</span><span>Full-stack</span><span>Dashboard</span></div>
+          <a class="work-card__link" href="https://github.com/lx-obsidian-labs/lx-obsidian-portal" target="_blank" rel="noopener">View on GitHub →</a>
         </div>
 
-        <!-- LX Obsidian Labs Website -->
-        <div class="portfolio-item" data-categories="products">
-          <div class="portfolio-item__image">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
-          </div>
-          <div class="portfolio-item__body">
-            <span class="portfolio-item__tag portfolio-item__tag--category">Website</span>
-            <h3 class="portfolio-item__title">LX Obsidian Labs Website</h3>
-            <p class="portfolio-item__description">Modern conversion-focused company website built with Next.js App Router, Tailwind CSS, shadcn/ui, Framer Motion and Lucide icons.</p>
-            <div class="portfolio-item__tags">
-              <span class="portfolio-item__tag">TypeScript</span>
-              <span class="portfolio-item__tag">Next.js</span>
-              <span class="portfolio-item__tag">Tailwind CSS</span>
-            </div>
-            <a href="https://github.com/lx-obsidian-labs/lx-obsidian-labs-website" class="portfolio-item__link" target="_blank" rel="noopener">View on GitHub â†’</a>
-          </div>
+        <div class="work-card" data-categories="products">
+          <div class="work-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div>
+          <span class="work-card__tag">Website</span>
+          <h3 class="work-card__title">LX Obsidian Labs Website</h3>
+          <p class="work-card__desc">Modern conversion-focused company website — this very site, built with vanilla HTML/CSS/JS and Cloudflare Pages.</p>
+          <div class="work-card__tags"><span>HTML</span><span>CSS</span><span>Cloudflare</span></div>
+          <a class="work-card__link" href="https://github.com/lx-obsidian-labs/lx-obsidian-labs-website" target="_blank" rel="noopener">View on GitHub →</a>
         </div>
 
       </div>
 
-      <!-- Category: Client & Commercial -->
-      <p class="portfolio-category-label" data-categories="client">Client &amp; Commercial</p>
-      <div class="portfolio-grid">
+      <!-- CLIENT & COMMERCIAL -->
+      <div class="work-category show" data-cat="client">CLIENT & COMMERCIAL</div>
+      <div class="work-grid" data-filter-grid="client">
 
-        <!-- Newton's 4th Training Academy -->
-        <div class="portfolio-item" data-categories="client">
-          <div class="portfolio-item__image">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
-          </div>
-          <div class="portfolio-item__body">
-            <span class="portfolio-item__tag portfolio-item__tag--category">Education</span>
-            <h3 class="portfolio-item__title">Newton's 4th Training Academy</h3>
-            <p class="portfolio-item__description">Practical mining and construction training academy in Middelburg, Mpumalanga â€” digital presence built to drive enrolments.</p>
-            <div class="portfolio-item__tags">
-              <span class="portfolio-item__tag">TypeScript</span>
-              <span class="portfolio-item__tag">Education</span>
-              <span class="portfolio-item__tag">Web</span>
-            </div>
-            <a href="https://github.com/lx-obsidian-labs/newtons-4th-training-academy" class="portfolio-item__link" target="_blank" rel="noopener">View on GitHub â†’</a>
-          </div>
+        <div class="work-card" data-categories="client">
+          <div class="work-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
+          <span class="work-card__tag">Education</span>
+          <h3 class="work-card__title">Newton's 4th Training Academy</h3>
+          <p class="work-card__desc">Practical mining and construction training academy in Middelburg, Mpumalanga — digital presence built to drive enrolments.</p>
+          <div class="work-card__tags"><span>TypeScript</span><span>Education</span><span>Web</span></div>
+          <a class="work-card__link" href="https://github.com/lx-obsidian-labs/newtons-4th-training-academy" target="_blank" rel="noopener">View on GitHub →</a>
         </div>
 
-        <!-- SA Innovation College -->
-        <div class="portfolio-item" data-categories="client">
-          <div class="portfolio-item__image">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
-          </div>
-          <div class="portfolio-item__body">
-            <span class="portfolio-item__tag portfolio-item__tag--category">Education</span>
-            <h3 class="portfolio-item__title">SA Innovation College</h3>
-            <p class="portfolio-item__description">Headless WordPress + Next.js website delivering fast, editable content for the college.</p>
-            <div class="portfolio-item__tags">
-              <span class="portfolio-item__tag">TypeScript</span>
-              <span class="portfolio-item__tag">WordPress</span>
-              <span class="portfolio-item__tag">Headless CMS</span>
-            </div>
-            <a href="https://github.com/lx-obsidian-labs/sa-innovation-college" class="portfolio-item__link" target="_blank" rel="noopener">View on GitHub â†’</a>
-          </div>
+        <div class="work-card" data-categories="client">
+          <div class="work-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
+          <span class="work-card__tag">Education</span>
+          <h3 class="work-card__title">SA Innovation College</h3>
+          <p class="work-card__desc">Headless WordPress + Next.js website delivering fast, editable content for the college.</p>
+          <div class="work-card__tags"><span>TypeScript</span><span>WordPress</span><span>Headless CMS</span></div>
+          <a class="work-card__link" href="https://github.com/lx-obsidian-labs/sa-innovation-college" target="_blank" rel="noopener">View on GitHub →</a>
         </div>
 
-        <!-- MMS Platform -->
-        <div class="portfolio-item" data-categories="client">
-          <div class="portfolio-item__image">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="M5 20V8l5-4 5 4v12"/><path d="M17 20V12l4-2v10"/></svg>
-          </div>
-          <div class="portfolio-item__body">
-            <span class="portfolio-item__tag portfolio-item__tag--category">Training Ecosystem</span>
-            <h3 class="portfolio-item__title">Mpumalanga Mining Solutions</h3>
-            <p class="portfolio-item__description">Digital training ecosystem for the mining sector â€” courses, compliance and learner management.</p>
-            <div class="portfolio-item__tags">
-              <span class="portfolio-item__tag">TypeScript</span>
-              <span class="portfolio-item__tag">Mining</span>
-              <span class="portfolio-item__tag">Training</span>
-            </div>
-            <a href="https://github.com/lx-obsidian-labs/mms-platform" class="portfolio-item__link" target="_blank" rel="noopener">View on GitHub â†’</a>
-          </div>
+        <div class="work-card" data-categories="client">
+          <div class="work-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="M5 20V8l5-4 5 4v12"/><path d="M17 20V12l4-2v10"/></svg></div>
+          <span class="work-card__tag">Training Ecosystem</span>
+          <h3 class="work-card__title">Mpumalanga Mining Solutions</h3>
+          <p class="work-card__desc">Digital training ecosystem for the mining sector — courses, compliance and learner management.</p>
+          <div class="work-card__tags"><span>TypeScript</span><span>Mining</span><span>Training</span></div>
+          <a class="work-card__link" href="https://github.com/lx-obsidian-labs/mms-platform" target="_blank" rel="noopener">View on GitHub →</a>
         </div>
 
-        <!-- EC Tech Hub -->
-        <div class="portfolio-item" data-categories="client">
-          <div class="portfolio-item__image">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
-          </div>
-          <div class="portfolio-item__body">
-            <span class="portfolio-item__tag portfolio-item__tag--category">Community</span>
-            <h3 class="portfolio-item__title">EC Tech Hub</h3>
-            <p class="portfolio-item__description">Community tech hub platform built on Next.js â€” connecting developers, learners and opportunities.</p>
-            <div class="portfolio-item__tags">
-              <span class="portfolio-item__tag">TypeScript</span>
-              <span class="portfolio-item__tag">Next.js</span>
-              <span class="portfolio-item__tag">Community</span>
-            </div>
-            <a href="https://github.com/lx-obsidian-labs/ec-tech-hub" class="portfolio-item__link" target="_blank" rel="noopener">View on GitHub â†’</a>
-          </div>
+        <div class="work-card" data-categories="client">
+          <div class="work-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+          <span class="work-card__tag">Community</span>
+          <h3 class="work-card__title">EC Tech Hub</h3>
+          <p class="work-card__desc">Community tech hub platform built on Next.js — connecting developers, learners and opportunities.</p>
+          <div class="work-card__tags"><span>TypeScript</span><span>Next.js</span><span>Community</span></div>
+          <a class="work-card__link" href="https://github.com/lx-obsidian-labs/ec-tech-hub" target="_blank" rel="noopener">View on GitHub →</a>
         </div>
 
-        <!-- All Things Store -->
-        <div class="portfolio-item" data-categories="client">
-          <div class="portfolio-item__image">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
-          </div>
-          <div class="portfolio-item__body">
-            <span class="portfolio-item__tag portfolio-item__tag--category">Ecommerce</span>
-            <h3 class="portfolio-item__title">All Things Store</h3>
-            <p class="portfolio-item__description">All Things â€” dropshipping storefront built and operated by LX Obsidian Labs.</p>
-            <div class="portfolio-item__tags">
-              <span class="portfolio-item__tag">TypeScript</span>
-              <span class="portfolio-item__tag">Ecommerce</span>
-              <span class="portfolio-item__tag">Retail</span>
-            </div>
-            <a href="https://github.com/lx-obsidian-labs/all-things-store" class="portfolio-item__link" target="_blank" rel="noopener">View on GitHub â†’</a>
-          </div>
+        <div class="work-card" data-categories="client">
+          <div class="work-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></div>
+          <span class="work-card__tag">Ecommerce</span>
+          <h3 class="work-card__title">All Things Store</h3>
+          <p class="work-card__desc">Dropshipping storefront built and operated by LX Obsidian Labs.</p>
+          <div class="work-card__tags"><span>TypeScript</span><span>Ecommerce</span><span>Retail</span></div>
+          <a class="work-card__link" href="https://github.com/lx-obsidian-labs/all-things-store" target="_blank" rel="noopener">View on GitHub →</a>
         </div>
 
-        <!-- lxobsidianportal (mining education) -->
-        <div class="portfolio-item" data-categories="client">
-          <div class="portfolio-item__image">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
-          </div>
-          <div class="portfolio-item__body">
-            <span class="portfolio-item__tag portfolio-item__tag--category">Education</span>
-            <h3 class="portfolio-item__title">Mining Education Portal</h3>
-            <p class="portfolio-item__description">LX Obsidian Portal â€” mining education website serving learners across South Africa.</p>
-            <div class="portfolio-item__tags">
-              <span class="portfolio-item__tag">HTML</span>
-              <span class="portfolio-item__tag">Education</span>
-              <span class="portfolio-item__tag">Website</span>
-            </div>
-            <a href="https://github.com/lx-obsidian-labs/lxobsidianportal" class="portfolio-item__link" target="_blank" rel="noopener">View on GitHub â†’</a>
-          </div>
+        <div class="work-card" data-categories="client">
+          <div class="work-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div>
+          <span class="work-card__tag">Education</span>
+          <h3 class="work-card__title">Mining Education Portal</h3>
+          <p class="work-card__desc">Mining education website serving learners across South Africa.</p>
+          <div class="work-card__tags"><span>HTML</span><span>Education</span><span>Website</span></div>
+          <a class="work-card__link" href="https://github.com/lx-obsidian-labs/lxobsidianportal" target="_blank" rel="noopener">View on GitHub →</a>
         </div>
 
       </div>
     </div>
   </section>
-  <!-- ==========================================
-       LARGE CTA SECTION
-       ========================================== -->
-  <section class="section cta-section" id="cta" aria-label="Call to action">
-    <div class="container">
-      <div class="cta-content reveal">
-        <div class="cta-gradient"></div>
-        <h2 class="cta-content__title">Have a project in mind?</h2>
-        <p class="cta-content__text">We'd love to hear about it.</p>
-        <div class="cta-content__actions">
-          <a href="contact.html" class="btn btn--primary btn--large">Start Your Project</a>
-          <a href="contact.html" class="btn btn--secondary btn--large">Contact Sales</a>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- ==========================================
-       FOOTER
-       ========================================== -->
-  <footer class="footer" role="contentinfo">
-    <div class="container">
-      <div class="footer__grid">
-        <div class="footer__brand-col">
-          <div class="footer__brand">LX <span>Obsidian</span></div>
-          <p class="footer__description">A South African software company that builds, sells, and scales intelligent software for developers, businesses, and creators worldwide.</p>
+  <!-- CTA -->
+  <section class="saas-cta"><div class="saas-wrap saas-cta__inner"><div>
+    <h2>Have a project in mind?</h2>
+    <p>We'd love to hear about it.</p>
+  </div><div style="display:flex;gap:10px;flex-wrap:wrap">
+    <a class="saas-btn saas-btn--primary saas-btn--large" href="contact.html">Start Your Project</a>
+    <a class="saas-btn saas-btn--large" href="contact.html">Contact Sales</a>
+  </div></div></section>
 
-        </div>
-        <div>
-          <h4 class="footer__heading">Solutions</h4>
-          <div class="footer__links">
-            <a href="services.html#ai-automation" class="footer__link">AI & Automation</a>
-            <a href="services.html#web-platforms" class="footer__link">Web Platforms</a>
-            <a href="services.html#mobile-apps" class="footer__link">Mobile Applications</a>
-            <a href="services.html#business-systems" class="footer__link">Business Systems</a>
-            <a href="services.html#cloud-infrastructure" class="footer__link">Cloud & Infrastructure</a>
-            <a href="services.html#ui-ux-design" class="footer__link">UI/UX & Product Design</a>
-          </div>
-        </div>
-        <div>
-          <h4 class="footer__heading">Products</h4>
-          <div class="footer__links">
-            <a href="vista.html" class="footer__link">Vista Cinema</a>
-            <a href="synapse.html" class="footer__link">Synapse AI</a>
-          </div>
-        </div>
-        <div>
-          <h4 class="footer__heading">Company</h4>
-          <div class="footer__links">
-            <a href="about.html" class="footer__link">About</a>
-            <a href="blog.html" class="footer__link">Insights</a>
-            <a href="contact.html" class="footer__link">Careers</a>
-            <a href="partners.html" class="footer__link">Partners</a>
-            <a href="contact.html" class="footer__link">Contact</a>
-          </div>
-        </div>
-        <div>
-          <h4 class="footer__heading">Resources</h4>
-          <div class="footer__links">
-            <a href="blog.html" class="footer__link">Blog</a>
-            <a href="blog.html" class="footer__link">Documentation</a>
-            <a href="faq.html" class="footer__link">FAQ</a>
-            <a href="contact.html" class="footer__link">Support</a>
-            <a href="faq.html" class="footer__link">Privacy Policy</a>
-            <a href="faq.html" class="footer__link">Terms of Service</a>
-          </div>
-        </div>
-        <div>
-          <h4 class="footer__heading">Connect</h4>
-          <div class="footer__links">
-            <a href="https://github.com/lx-obsidian-labs" class="footer__link" target="_blank" rel="noopener">GitHub</a>
-            <a href="https://www.instagram.com/lx_obsidian_labs/" class="footer__link" target="_blank" rel="noopener">Instagram</a>
-            <a href="mailto:vilanenathan@gmail.com" class="footer__link">Email</a>
-            <a href="https://wa.me/27694829711" class="footer__link" target="_blank" rel="noopener">WhatsApp</a>
-            <a href="tel:+27694829711" class="footer__link">+27 69 482 9711</a>
-            <span class="footer__link footer__link--muted">Cape Town, South Africa</span>
-          </div>
-        </div>
-      </div>
-        <div class="footer__bottom">
-        <span>&copy; 2026 LX Obsidian Labs. All rights reserved.</span>
-        <div class="footer__social">
-          <a href="https://github.com/lx-obsidian-labs" class="footer__social-link" aria-label="GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a>
-          <a href="https://www.instagram.com/lx_obsidian_labs/" class="footer__social-link" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 01-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 017.8 2m-.2 2A3.6 3.6 0 004 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 003.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 010 2.5 1.25 1.25 0 010-2.5M12 7a5 5 0 110 10 5 5 0 010-10m0 2a3 3 0 100 6 3 3 0 000-6z"/></svg></a>
-          <a href="mailto:vilanenathan@gmail.com" class="footer__social-link" aria-label="Email"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a>
-          <a href="https://wa.me/27694829711" class="footer__social-link" aria-label="WhatsApp"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
-        </div>
-      </div>
-    </div>
-  </footer>
+</main>
 
-  <!-- ==========================================
-       CHAT WIDGET
-       ========================================== -->
-  <div class="chat-widget" id="chatWidget">
-    <div class="chat-widget__header">
-      <div class="chat-widget__title">
-        <span class="chat-widget__status"></span>
-        LX Assistant
-      </div>
-      <button class="chat-widget__close" id="chatClose" aria-label="Close chat">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-        </svg>
-      </button>
-    </div>
-    <div class="chat-widget__messages" id="chatMessages">
-      <div class="chat-message chat-message--bot">Hi there! ðŸ‘‹ I'm the LX Assistant. How can I help you today?</div>
-    </div>
-    <div class="chat-widget__footer">
-      <input type="text" class="chat-widget__input" id="chatInput" placeholder="Type your message..." aria-label="Chat message">
-      <button class="chat-widget__send" id="chatSend" aria-label="Send message">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
-        </svg>
-      </button>
-    </div>
-  </div>
+<footer class="saas-footer"><div class="saas-footer__grid">
+  <div><a class="saas-nav__brand" href="index.html"><span class="saas-nav__mark">LX</span><span class="saas-nav__label">OBSIDIAN LABS</span></a><p>South African AI and software engineering company building intelligent platforms, automation systems and digital infrastructure.</p></div>
+  <div><h4>Platform</h4><a href="ai.html">AI Platform</a><a href="services.html">Solutions</a><a href="marketplace.html">Marketplace</a></div>
+  <div><h4>Products</h4><a href="synapse.html">Synapse AI</a><a href="vista.html">Vista Cinema</a><a href="portfolio.html">Work</a></div>
+  <div><h4>Company</h4><a href="about.html">About</a><a href="blog.html">Insights</a><a href="contact.html">Contact</a></div>
+  <div><h4>Developers</h4><a href="ai.html">AI Platform</a><a href="https://github.com/lx-obsidian-labs" target="_blank" rel="noopener">GitHub</a></div>
+</div><div class="saas-footer__bottom"><span>&copy; 2026 LX Obsidian Labs. All rights reserved.</span><span>AI · Automation · Intelligence</span></div></footer>
 
-  <!-- ==========================================
-       COOKIE CONSENT
-       ========================================== -->
-  <div class="cookie-consent" id="cookieConsent">
-    <div class="cookie-consent__inner">
-      <p class="cookie-consent__text">We use cookies to enhance your experience. By continuing to visit this site you agree to our <a href="faq.html">Privacy Policy</a> and <a href="faq.html">Cookie Policy</a>.</p>
-      <div class="cookie-consent__actions">
-        <button class="btn btn--ghost btn--small" id="cookieDecline">Decline</button>
-        <button class="btn btn--primary btn--small" id="cookieAccept">Accept All</button>
-      </div>
-    </div>
-  </div>
+<script src="js/chat-widget.js"></script>
+<script>
+  document.getElementById('saasMenu')?.addEventListener('click', function () {
+    var links = document.getElementById('navLinks');
+    var open = links.classList.toggle('open');
+    this.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
 
-  <!-- ==========================================
-       BLOG ARTICLE MODAL
-       ========================================== -->
-  <div class="blog-overlay" id="blogOverlay">
-    <div class="blog-modal">
-      <div class="blog-modal__header">
-        <span class="blog-modal__tag" id="blogModalTag">Engineering</span>
-        <h3 class="blog-modal__title" id="blogModalTitle">Select an Article</h3>
-        <button class="blog-modal__close" id="blogModalClose" aria-label="Close article">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-          </svg>
-        </button>
-      </div>
-      <div class="blog-modal__body" id="blogModalBody">
-        <p>Choose an article from the insights section to read here.</p>
-      </div>
-      <div class="blog-modal__footer">
-        <div class="blog-modal__author">
-          <div class="blog-modal__author-avatar">LX</div>
-          <div>
-            <div class="blog-modal__author-name" id="blogModalAuthor">LX Obsidian Team</div>
-            <div class="blog-modal__author-date" id="blogModalDate">June 26, 2026</div>
-          </div>
-        </div>
-        <div class="blog-modal__share">
-          <button class="blog-modal__share-btn" aria-label="Share on Twitter">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-          </button>
-          <button class="blog-modal__share-btn" aria-label="Share on LinkedIn">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ==========================================
-       FLOATING BUTTONS
-       ========================================== -->
-  <div class="floating-buttons">
-    <button class="floating-btn floating-btn--chat" aria-label="AI Assistant">
-      <svg class="floating-btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-      </svg>
-      <span class="floating-btn__tooltip floating-btn__label">AI Assistant</span>
-    </button>
-    <button class="floating-btn floating-btn--chat" aria-label="WhatsApp">
-      <svg class="floating-btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/>
-      </svg>
-      <span class="floating-btn__tooltip floating-btn__label">WhatsApp</span>
-    </button>
-    <button class="floating-btn floating-btn--scroll" id="scrollToTop" aria-label="Scroll to top">
-      <svg class="floating-btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="18 15 12 9 6 15"/>
-      </svg>
-      <span class="floating-btn__tooltip floating-btn__label">Scroll to Top</span>
-    </button>
-    <button class="floating-btn floating-btn--scroll" aria-label="Book Consultation">
-      <svg class="floating-btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-        <line x1="16" y1="2" x2="16" y2="6"/>
-        <line x1="8" y1="2" x2="8" y2="6"/>
-        <line x1="3" y1="10" x2="21" y2="10"/>
-      </svg>
-      <span class="floating-btn__tooltip floating-btn__label">Book Consultation</span>
-    </button>
-  </div>
-
-  <!-- ==========================================
-       SEARCH MODAL
-       ========================================== -->
-  <div class="search-overlay" id="searchOverlay" role="dialog" aria-modal="true" aria-label="Search">
-    <div class="search-modal">
-      <div class="search-modal__header">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="11" cy="11" r="8"/>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-        </svg>
-        <input type="text" class="search-input" id="searchInput" placeholder="Search services, applications, articles..." aria-label="Search input">
-        <kbd class="search-modal__shortcut">ESC</kbd>
-        <button class="search-modal__close" id="searchClose" aria-label="Close search">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="18" y1="6" x2="6" y2="18"/>
-            <line x1="6" y1="6" x2="18" y2="18"/>
-          </svg>
-        </button>
-      </div>
-      <div class="search-results" id="searchResults">
-        <p class="search-empty">Start typing to search...</p>
-      </div>
-    </div>
-  </div>
-
-  <noscript>
-    <div style="padding:1rem;background:var(--color-card,#111);border:1px solid var(--color-accent,#C89B3C);border-radius:8px;text-align:center;margin:1rem;color:var(--color-text,#eee);font-size:0.875rem;font-family:system-ui,sans-serif;">
-      LX Obsidian Labs requires JavaScript for the best experience. Please enable JavaScript in your browser settings.
-    </div>
-  </noscript>
-
-  <!-- ==========================================
-       SCRIPTS
-       ========================================== -->
-  <script src="js/navigation.js"></script>
-  <script src="js/scroll.js"></script>
-  <script src="js/animations.js"></script>
-  <script src="js/app.js"></script>
-  <script src="js/features.js"></script>
-  <script src="js/seo.js"></script>
-  <script src="js/ux.js"></script>
-  <script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js');}</script>
+  // Portfolio filters
+  document.querySelectorAll('.work-filter').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.work-filter').forEach(function(b) { b.classList.remove('work-filter--active'); });
+      btn.classList.add('work-filter--active');
+      var f = btn.getAttribute('data-filter');
+      document.querySelectorAll('.work-category').forEach(function(c) {
+        c.classList.toggle('show', f === 'all' || c.getAttribute('data-cat') === f);
+      });
+      document.querySelectorAll('.work-card').forEach(function(card) {
+        var cats = card.getAttribute('data-categories');
+        card.style.display = (f === 'all' || cats === f) ? '' : 'none';
+      });
+    });
+  });
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));}</script>
 </body>
 </html>

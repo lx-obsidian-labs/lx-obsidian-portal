@@ -10,3 +10,13 @@ compatibility_flags = ["nodejs_compat"]
 # binding = "DB"
 # database_name = "lx-portal"
 # database_id = "your-database-id-here"
+
+# ─── Environment Variables ───
+# Set these via: npx wrangler pages secret put <KEY> --project-name lxobsidianmainsite
+# Or use: npx wrangler pages secret bulk .env.wrangler --project-name lxobsidianmainsite
+#
+# Required secrets:
+#   NVIDIA_API_KEY       — https://build.nvidia.com
+#   OPENROUTER_API_KEY   — https://openrouter.ai
+#   JWT_SECRET           — node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+#   CONTACT_EMAIL        — hello@lxobsidian.com

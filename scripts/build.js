@@ -5,22 +5,16 @@ const ROOT = path.resolve(__dirname, '..');
 const DIST = path.join(ROOT, 'dist');
 
 const INCLUDE = [
-  'index.html', '404.html', 'about.html', 'blog.html', 'contact.html',
+  'index.html', '404.html', 'about.html', 'ai.html', 'blog.html', 'contact.html',
   'faq.html', 'marketplace.html', 'portfolio.html', 'services.html',
-  'synapse.html', 'industries.html', 'partners.html', 'advertise.html',
-  'vista.html',
-  'js', 'assets', 'dashboard', 'deploy',
-  'functions',
+  'synapse.html', 'vista.html',
+  'js', 'assets', 'functions',
   '_headers', '_redirects',
-  'sw.js', 'manifest.json', 'robots.txt', 'sitemap.xml', 'ads.txt',
+  'sw.js', 'manifest.json', 'robots.txt', 'sitemap.xml',
   'package.json'
 ];
 
-const CSS_ORDER = [
-  'variables.css','reset.css','layout.css','components.css','animations.css',
-  'responsive.css','features.css','investor-ui.css','polish.css','refinement.css',
-  'advanced-theme.css','unified-theme.css'
-];
+const CSS_ORDER = ['lx.css', 'saas.css'];
 
 if (fs.existsSync(DIST)) fs.rmSync(DIST, { recursive: true });
 
@@ -44,17 +38,15 @@ for (const file of CSS_ORDER) {
   const filePath = path.join(cssDir, file);
   if (fs.existsSync(filePath)) combinedCss += `/* ${file} */\n` + fs.readFileSync(filePath, 'utf8') + '\n\n';
 }
-fs.writeFileSync(path.join(distCssDir, 'style.css'), combinedCss);
-console.log(`CSS concatenated: ${CSS_ORDER.length} files -> dist/css/style.css (${Math.round(combinedCss.length / 1024)} KB)`);
+fs.writeFileSync(path.join(distCssDir, 'lx.css'), combinedCss);
+console.log(`CSS concatenated: ${CSS_ORDER.length} files -> dist/css/lx.css (${Math.round(combinedCss.length / 1024)} KB)`);
 
 for (const file of fs.readdirSync(cssDir)) {
-  if (!CSS_ORDER.includes(file) && file !== 'style.css') {
+  if (!CSS_ORDER.includes(file) && file !== 'style.css' && file !== 'lx.css') {
     fs.copyFileSync(path.join(cssDir, file), path.join(distCssDir, file));
   }
 }
 
-// Production homepage artwork: use the genuine generated raster images committed
-// under assets/generated. Do not substitute SVG/vector approximations.
 const homePath = path.join(DIST, 'index.html');
 if (fs.existsSync(homePath)) {
   let home = fs.readFileSync(homePath, 'utf8');
@@ -71,17 +63,6 @@ if (fs.existsSync(homePath)) {
   }
   fs.writeFileSync(homePath, home);
   console.log('Homepage wired to genuine LX raster artwork');
-}
-
-// Inject the shared advanced experience layer into every public HTML document.
-for (const file of fs.readdirSync(DIST)) {
-  if (!file.endsWith('.html')) continue;
-  const filePath = path.join(DIST, file);
-  let html = fs.readFileSync(filePath, 'utf8');
-  if (!html.includes('js/experience.js')) {
-    html = html.replace(/<\/body>/i, '  <script src="js/experience.js" defer></script>\n</body>');
-    fs.writeFileSync(filePath, html);
-  }
 }
 
 const total = countFiles(DIST);
