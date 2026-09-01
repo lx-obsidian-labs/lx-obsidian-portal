@@ -74,6 +74,9 @@ input:focus,textarea:focus,select:focus{border-color:var(--accent)}
 .chat-welcome{text-align:center;padding:60px 20px;color:var(--muted)}
 .chat-welcome h2{font-family:var(--font-display);font-size:24px;font-weight:600;color:var(--text);margin-bottom:8px}
 .chat-welcome p{font-size:14px;max-width:400px;margin:0 auto;line-height:1.6}
+.quick-actions{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:24px}
+.quick-actions button{padding:8px 16px;border-radius:20px;font-size:12px;font-weight:500;color:var(--muted);background:var(--card);border:1px solid var(--border);transition:all .15s;cursor:pointer}
+.quick-actions button:hover{color:var(--text);border-color:var(--accent);background:rgba(124,92,255,0.08)}
 
 .message{max-width:85%;animation:fadeIn .2s ease}
 .message.user{align-self:flex-end}
@@ -269,6 +272,13 @@ input:focus,textarea:focus,select:focus{border-color:var(--accent)}
       <div class="chat-welcome">
         <h2>LX AI Coding Platform</h2>
         <p>Describe what you want to build. Generate code, debug, refactor, and preview live — all in one place.</p>
+        <div class="quick-actions">
+          <button onclick="quickPrompt('Build a modern landing page with hero, features, and pricing sections')">Landing Page</button>
+          <button onclick="quickPrompt('Create a responsive dashboard with sidebar navigation and data cards')">Dashboard</button>
+          <button onclick="quickPrompt('Build a todo app with add, delete, and mark complete features')">Todo App</button>
+          <button onclick="quickPrompt('Create an animated portfolio with project grid')">Portfolio</button>
+          <button onclick="quickPrompt('Build a contact form with validation and submit handling')">Contact Form</button>
+        </div>
       </div>
     </div>
     <div class="chat-input-area">
@@ -687,7 +697,16 @@ async function sendMessage() {
   const text = input.value.trim();
   if (!text && pendingImages.length === 0) return;
 
-  const userMsg = { role: 'user', content: text, images: [...pendingImages] };
+  // Build user message with file context
+  let userContent = text;
+  if (files.length > 0 && activeFile) {
+    const active = files.find(f => f.path === activeFile);
+    if (active && text.length < 500) {
+      // Include current file context for short messages
+    }
+  }
+
+  const userMsg = { role: 'user', content: userContent, images: [...pendingImages] };
   chatHistory.push(userMsg);
   renderMessage(userMsg);
   input.value = '';
@@ -703,13 +722,19 @@ async function sendMessage() {
     const modelVal = document.getElementById('modelSelect').value;
     const [provider, model] = modelVal.split(':');
 
+    // Strip markdown from history for cleaner AI context
+    const cleanHistory = chatHistory.slice(-30).map(m => ({
+      role: m.role,
+      content: m.content.replace(/```[\s\S]*?```/g, '[code block]').replace(/\*\*/g, '').replace(/`([^`]+)`/g, '$1').substring(0, 2000)
+    }));
+
     const body = {
-      message: text,
+      message: userContent,
       provider,
       model,
       stream: true,
       images: userMsg.images,
-      history: chatHistory.slice(-20).map(m => ({ role: m.role, content: m.content }))
+      history: cleanHistory
     };
 
     const resp = await fetch('/api/chat', {
@@ -745,35 +770,18 @@ async function sendMessage() {
           try {
             const data = JSON.parse(raw);
 
-            // Handle tool events
-            if (data.toolEvents) {
-              if (firstChunk) {
-                firstChunk = false;
-                progressEl.remove();
-              }
-              for (const evt of data.toolEvents) {
-                if (evt.type === 'tool_call') {
-                  showToolEvent(msgEl, 'call', evt.name, evt.args);
-                } else if (evt.type === 'tool_result') {
-                  showToolEvent(msgEl, 'result', evt.name, evt.result);
-                }
-              }
-            }
-
-            // Handle content
             if (data.content) {
               if (firstChunk) {
                 firstChunk = false;
                 progressEl.remove();
-                showProgress('Generating...');
               }
               fullText += data.content;
               assistantMsg.content = fullText;
               renderAssistantContent(msgEl, fullText);
             }
 
-            // Handle errors
             if (data.error) {
+              if (firstChunk) { firstChunk = false; progressEl.remove(); }
               fullText += '\n\n**Error:** ' + data.error;
               assistantMsg.content = fullText;
               renderAssistantContent(msgEl, fullText);
@@ -786,23 +794,15 @@ async function sendMessage() {
     chatHistory.push(assistantMsg);
     removeProgress();
 
-    // Update meta with word count and elapsed time
+    // Update meta
     const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
     const words = fullText.split(/\s+/).filter(Boolean).length;
     const metaEl = msgEl.querySelector('.message-meta');
     if (metaEl && fullText) metaEl.innerHTML = `<span>${words} words</span><span>${elapsed}s</span>`;
 
-    // Auto-extract code for canvas
-    const codeMatch = fullText.match(/```(?:html|css|javascript|js)\n([\s\S]*?)```/g);
-    if (codeMatch) {
-      const lastBlock = codeMatch[codeMatch.length - 1];
-      const code = lastBlock.replace(/```\w*\n?/, '').replace(/```$/, '').trim();
-      if (code) {
-        const activeCodeEditor = document.getElementById('codeEditor');
-        activeCodeEditor.value = code;
-        updatePreview(code);
-      }
-    }
+    // Auto-extract and save code blocks to files
+    extractAndSaveCode(fullText);
+
   } catch (err) {
     removeProgress();
     renderMessage({ role: 'assistant', content: 'Error: ' + err.message });
@@ -810,6 +810,56 @@ async function sendMessage() {
 
   isGenerating = false;
   document.getElementById('sendBtn').disabled = false;
+}
+
+function extractAndSaveCode(text) {
+  const codeBlocks = [];
+  const regex = /```(\w*)\n([\s\S]*?)```/g;
+  let match;
+  while ((match = regex.exec(text)) !== null) {
+    const lang = match[1] || 'code';
+    const code = match[2].trim();
+    if (code.length > 20) {
+      codeBlocks.push({ lang, code });
+    }
+  }
+
+  if (codeBlocks.length === 0) return;
+
+  // Find the most substantial code block (likely the main output)
+  let bestBlock = codeBlocks[0];
+  for (const block of codeBlocks) {
+    if (block.code.length > bestBlock.code.length) bestBlock = block;
+  }
+
+  const ext = { html: 'html', css: 'css', javascript: 'js', js: 'js' }[bestBlock.lang] || 'txt';
+
+  // If it's HTML, auto-update the active file and preview
+  if (ext === 'html') {
+    const targetFile = files.find(f => f.path === activeFile && f.path.endsWith('.html'));
+    if (targetFile) {
+      targetFile.content = bestBlock.code;
+      document.getElementById('codeEditor').value = bestBlock.code;
+      updatePreview(bestBlock.code);
+    } else {
+      // Create or update index.html
+      const indexFile = files.find(f => f.path === 'index.html');
+      if (indexFile) {
+        indexFile.content = bestBlock.code;
+      } else {
+        files.push({ path: 'index.html', content: bestBlock.code, isDir: false });
+      }
+      activeFile = 'index.html';
+      document.getElementById('codeEditor').value = bestBlock.code;
+      updatePreview(bestBlock.code);
+      renderFileTree();
+    }
+  } else {
+    // For CSS/JS, auto-save to a generated file
+    const filename = 'generated-' + Date.now() + '.' + ext;
+    files.push({ path: filename, content: bestBlock.code, isDir: false });
+    renderFileTree();
+  }
 }
 
 function renderMessage(msg) {
@@ -1040,7 +1090,15 @@ function scrollBottom() {
 function clearChat() {
   chatHistory = [];
   const container = document.getElementById('chatMessages');
-  container.innerHTML = `<div class="chat-welcome"><h2>LX AI Coding Platform</h2><p>Describe what you want to build. Generate code, debug, refactor, and preview live — all in one place.</p></div>`;
+  container.innerHTML = `<div class="chat-welcome"><h2>LX AI Coding Platform</h2><p>Describe what you want to build. Generate code, debug, refactor, and preview live — all in one place.</p><div class="quick-actions"><button onclick="quickPrompt('Build a modern landing page with hero, features, and pricing sections')">Landing Page</button><button onclick="quickPrompt('Create a responsive dashboard with sidebar navigation and data cards')">Dashboard</button><button onclick="quickPrompt('Build a todo app with add, delete, and mark complete features')">Todo App</button><button onclick="quickPrompt('Create an animated portfolio with project grid')">Portfolio</button><button onclick="quickPrompt('Build a contact form with validation and submit handling')">Contact Form</button></div></div>`;
+}
+
+function quickPrompt(text) {
+  const input = document.getElementById('chatInput');
+  input.value = text;
+  input.focus();
+  autoResize(input);
+  sendMessage();
 }
 
 // ===================== CANVAS =====================
@@ -1086,6 +1144,16 @@ function onCodeEdit() {
     updatePreview(code);
   }
 }
+
+// Auto-preview on code edit for HTML files
+document.getElementById('codeEditor').addEventListener('input', function() {
+  const f = files.find(x => x.path === activeFile);
+  if (f) f.content = this.value;
+  if (activeFile && activeFile.endsWith('.html')) {
+    clearTimeout(window._previewTimer);
+    window._previewTimer = setTimeout(() => updatePreview(this.value), 300);
+  }
+});
 
 function exportCanvas() {
   const code = document.getElementById('codeEditor').value;
@@ -1255,6 +1323,33 @@ if (initialFile) {
   updatePreview(initialFile.content);
   document.getElementById('codeEditor').value = initialFile.content;
 }
+
+// Keyboard shortcuts
+document.addEventListener('keydown', e => {
+  // Ctrl/Cmd + Enter to send
+  if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+    e.preventDefault();
+    sendMessage();
+  }
+  // Ctrl/Cmd + S to download ZIP
+  if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+    e.preventDefault();
+    downloadZip();
+  }
+  // Ctrl/Cmd + Shift + F to toggle file panel
+  if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'F') {
+    e.preventDefault();
+    toggleFilePanel();
+  }
+  // Escape to close modals
+  if (e.key === 'Escape') {
+    modalCancel();
+    hideContext();
+  }
+});
+
+// Focus input on load
+document.getElementById('chatInput').focus();
 </script>
 </body>
 </html>
