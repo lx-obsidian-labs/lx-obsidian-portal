@@ -2,8 +2,40 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LX Obsidian Labs — AI Coding Platform</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#000000">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<meta name="description" content="AI Coding Platform by LX Obsidian Labs — generate, debug, and preview code with free NVIDIA and OpenRouter AI models. Build web apps in your browser.">
+<meta property="og:title" content="AI Coding Platform — LX Obsidian Labs">
+<meta property="og:description" content="Generate, debug, and preview code with free NVIDIA and OpenRouter AI models. Build web apps directly in your browser.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.lxobsidianportal.co.za/ai">
+<meta property="og:image" content="https://www.lxobsidianportal.co.za/assets/og-default.svg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://www.lxobsidianportal.co.za/ai">
+<meta name="robots" content="noindex, noarchive, nosnippet">
+<title>AI Coding Platform — LX Obsidian Labs</title>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "LX AI Coding Platform",
+  "description": "AI Coding Platform — generate, debug, and preview code with free NVIDIA and OpenRouter AI models. Build web apps in your browser.",
+  "url": "https://www.lxobsidianportal.co.za/ai",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Web",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "ZAR"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "LX Obsidian Labs",
+    "url": "https://www.lxobsidianportal.co.za"
+  }
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -329,7 +361,7 @@ input:focus,textarea:focus,select:focus{border-color:var(--accent)}
     </div>
     <div class="canvas-content">
       <div class="canvas-pane active" id="panePreview">
-        <iframe id="previewFrame" class="preview-frame" sandbox="allow-scripts allow-modals allow-same-origin"></iframe>
+        <iframe id="previewFrame" class="preview-frame" sandbox="allow-scripts allow-modals"></iframe>
       </div>
       <div class="canvas-pane" id="paneCode">
         <textarea id="codeEditor" class="code-editor" spellcheck="false" oninput="onCodeEdit()"></textarea>
@@ -482,7 +514,7 @@ const TEMPLATES = {
     name: 'Dashboard',
     desc: 'Admin dashboard with sidebar, charts, and data tables',
     files: [
-      { path: 'index.html', content: `<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>Dashboard</title>\n<style>\n*{margin:0;padding:0;box-sizing:border-box}\n:root{--bg:#0a0a0f;--sidebar:#0d0d14;--card:#111118;--accent:#7c5cff;--green:#34d399;--text:#e4e4e7;--muted:#6e6e7c;--border:rgba(255,255,255,0.06)}\nbody{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);display:flex;height:100vh}\n.sidebar{width:240px;background:var(--sidebar);border-right:1px solid var(--border);padding:20px}\n.sidebar .logo{font-size:18px;font-weight:700;color:var(--accent);margin-bottom:32px}\n.sidebar nav a{display:block;padding:10px 16px;color:var(--muted);text-decoration:none;border-radius:8px;margin-bottom:4px;font-size:14px}\n.sidebar nav a:hover,.sidebar nav a.active{background:rgba(124,92,255,0.1);color:var(--text)}\n.main{flex:1;padding:32px;overflow-y:auto}\n.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px}\n.stat{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px}\n.stat .label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}\n.stat .value{font-size:28px;font-weight:700;margin-top:4px}\n.stat .change{font-size:12px;color:var(--green);margin-top:4px}\n.chart{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;height:300px;display:flex;align-items:flex-end;gap:8px;padding-top:40px}\n.chart .bar{flex:1;background:var(--accent);border-radius:4px 4px 0 0;transition:height .3s}\n</style>\n</head>\n<body>\n<aside class="sidebar">\n  <div class="logo">Dashboard</div>\n  <nav>\n    <a href="#" class="active">Overview</a>\n    <a href="#">Analytics</a>\n    <a href="#">Users</a>\n    <a href="#">Settings</a>\n  </nav>\n</aside>\n<main class="main">\n  <div class="stats">\n    <div class="stat"><div class="label">Revenue</div><div class="value">$48.2K</div><div class="change">+12.5%</div></div>\n    <div class="stat"><div class="label">Users</div><div class="value">2,847</div><div class="change">+8.2%</div></div>\n    <div class="stat"><div class="label">Orders</div><div class="value">1,203</div><div class="change">+5.7%</div></div>\n    <div class="stat"><div class="label">Conversion</div><div class="value">3.2%</div><div class="change">+0.4%</div></div>\n  </div>\n  <div class="chart" id="chart"></div>\n</main>\n<script>\nconst chart=document.getElementById('chart');\nconst values=[40,65,45,80,55,90,70,85,60,95,75,88];\nvalues.forEach(v=>{const bar=document.createElement('div');bar.className='bar';bar.style.height=v+'%';chart.appendChild(bar)});\n</script>\n</body>\n</html>` }
+      { path: 'index.html', content: `<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>Dashboard</title>\n<style>\n*{margin:0;padding:0;box-sizing:border-box}\n:root{--bg:#0a0a0f;--sidebar:#0d0d14;--card:#111118;--accent:#7c5cff;--green:#34d399;--text:#e4e4e7;--muted:#6e6e7c;--border:rgba(255,255,255,0.06)}\nbody{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);display:flex;height:100vh}\n.sidebar{width:240px;background:var(--sidebar);border-right:1px solid var(--border);padding:20px}\n.sidebar .logo{font-size:18px;font-weight:700;color:var(--accent);margin-bottom:32px}\n.sidebar nav a{display:block;padding:10px 16px;color:var(--muted);text-decoration:none;border-radius:8px;margin-bottom:4px;font-size:14px}\n.sidebar nav a:hover,.sidebar nav a.active{background:rgba(124,92,255,0.1);color:var(--text)}\n.main{flex:1;padding:32px;overflow-y:auto}\n.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px}\n.stat{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px}\n.stat .label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}\n.stat .value{font-size:28px;font-weight:700;margin-top:4px}\n.stat .change{font-size:12px;color:var(--green);margin-top:4px}\n.chart{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;height:300px;display:flex;align-items:flex-end;gap:8px;padding-top:40px}\n.chart .bar{flex:1;background:var(--accent);border-radius:4px 4px 0 0;transition:height .3s}\n</style>\n</head>\n<body>\n<aside class="sidebar">\n  <div class="logo">Dashboard</div>\n  <nav>\n    <a href="#" class="active">Overview</a>\n    <a href="#">Analytics</a>\n    <a href="#">Users</a>\n    <a href="#">Settings</a>\n  </nav>\n</aside>\n<main class="main">\n  <div class="stats">\n    <div class="stat"><div class="label">Revenue</div><div class="value">$48.2K</div><div class="change">+12.5%</div></div>\n    <div class="stat"><div class="label">Users</div><div class="value">2,847</div><div class="change">+8.2%</div></div>\n    <div class="stat"><div class="label">Orders</div><div class="value">1,203</div><div class="change">+5.7%</div></div>\n    <div class="stat"><div class="label">Conversion</div><div class="value">3.2%</div><div class="change">+0.4%</div></div>\n  </div>\n  <div class="chart" id="chart"></div>\n</main>\n<script>\nconst chart=document.getElementById('chart');\nconst values=[40,65,45,80,55,90,70,85,60,95,75,88];\nvalues.forEach(v=>{const bar=document.createElement('div');bar.className='bar';bar.style.height=v+'%';chart.appendChild(bar)});\\n<\/script>\\n<\/body>\\n<\/html>` }
     ]
   },
   portfolio: {
@@ -671,18 +703,18 @@ function applySkill() {
   const val = sel.value;
   if (!val) return;
   const prompts = {
-    generate: 'Create a complete, production-ready web application with modern design, responsive layout, and clean code. Include HTML, CSS, and JavaScript in a single file.',
-    debug: 'Analyze this code, identify all bugs and issues, then provide the corrected version with explanations for each fix.',
-    explain: 'Explain this code step by step, covering what each section does, the patterns used, and how data flows through it.',
-    refactor: 'Refactor this code for better performance, readability, and maintainability. Apply modern best practices and design patterns.',
-    feature: 'Add this feature to the existing codebase, ensuring it integrates cleanly with the current architecture.',
-    tests: 'Write comprehensive tests covering edge cases, error handling, and expected behavior for this code.',
-    design: 'Design a modern, responsive UI with clean visual hierarchy, consistent spacing, and professional aesthetic.',
-    optimize: 'Optimize this code for speed and efficiency. Reduce complexity, minimize DOM operations, and improve rendering performance.',
-    deploy: 'Prepare this project for deployment. Add proper error handling, minification ready code, and production best practices.',
-    api: 'Build a RESTful API endpoint with proper request validation, error handling, and response formatting.',
-    database: 'Design and implement a database schema with proper relationships, indexes, and query optimization.',
-    security: 'Review this code for security vulnerabilities and apply fixes for XSS, CSRF, injection attacks, and data exposure.'
+    generate: 'Build a complete, fully working web application with HTML, CSS, and JS. No placeholders, no stubs. Include all responsive breakpoints, all interactive states, all event handlers. Output a single self-contained HTML file.',
+    debug: 'Analyze this code, find every bug, and output the COMPLETE corrected version with all fixes applied.',
+    explain: 'Explain this code step by step — what each section does, the patterns used, and how data flows.',
+    refactor: 'Refactor this code completely. Output the FULL refactored version — every function, every CSS rule, every HTML element.',
+    feature: 'Add this feature to the existing code. Output the COMPLETE updated file with the feature fully integrated.',
+    tests: 'Write comprehensive tests covering edge cases, error handling, and expected behavior.',
+    design: 'Design a complete, responsive UI. Output the FULL HTML and CSS — every component, every breakpoint, every state.',
+    optimize: 'Optimize this code completely. Output the FULL optimized version — every function, every selector, every line.',
+    deploy: 'Prepare this project for deployment. Output COMPLETE production-ready code with error handling and performance optimizations.',
+    api: 'Build a complete RESTful API with request validation, error handling, and response formatting.',
+    database: 'Design and implement a complete database schema with relationships, indexes, queries, and migrations.',
+    security: 'Review this code for security vulnerabilities and output the COMPLETE fixed version.'
   };
   const input = document.getElementById('chatInput');
   input.value = prompts[val] || '';
@@ -697,15 +729,7 @@ async function sendMessage() {
   const text = input.value.trim();
   if (!text && pendingImages.length === 0) return;
 
-  // Build user message with file context
-  let userContent = text;
-  if (files.length > 0 && activeFile) {
-    const active = files.find(f => f.path === activeFile);
-    if (active && text.length < 500) {
-      // Include current file context for short messages
-    }
-  }
-
+  const userContent = text;
   const userMsg = { role: 'user', content: userContent, images: [...pendingImages] };
   chatHistory.push(userMsg);
   renderMessage(userMsg);
@@ -716,155 +740,229 @@ async function sendMessage() {
 
   isGenerating = true;
   document.getElementById('sendBtn').disabled = true;
-  const progressEl = showProgress('Thinking...');
+
+  const modelVal = document.getElementById('modelSelect').value;
+  const [provider, model] = modelVal.split(':');
+  const isGenerateRequest = /build|create|make|generate|design|landing|page|app|site|store|dashboard|portfolio/i.test(userContent);
+  const isCodeRefine = files.length > 0 && /fix|debug|refactor|improve|add|change|update|optimize/i.test(userContent) && !isGenerateRequest;
+  const isExplain = /explain|how|what|why|describe/i.test(userContent) && !isGenerateRequest;
 
   try {
-    const modelVal = document.getElementById('modelSelect').value;
-    const [provider, model] = modelVal.split(':');
+    if (isGenerateRequest) {
+      // ── Single-phase generation (bolt.diy style) ──
+      const progress = showProgress('Building...');
+      const resp = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: userContent,
+          mode: 'generate',
+          provider,
+          model,
+          history: chatHistory.slice(-8).map(m => ({ role: m.role, content: m.content.substring(0, 2000) }))
+        })
+      });
 
-    // Strip markdown from history for cleaner AI context
-    const cleanHistory = chatHistory.slice(-30).map(m => ({
-      role: m.role,
-      content: m.content.replace(/```[\s\S]*?```/g, '[code block]').replace(/\*\*/g, '').replace(/`([^`]+)`/g, '$1').substring(0, 2000)
-    }));
+      if (!resp.ok) throw new Error('Generation failed: ' + resp.status);
+      const data = await resp.json();
+      progress.remove();
 
-    const body = {
-      message: userContent,
-      provider,
-      model,
-      stream: true,
-      images: userMsg.images,
-      history: cleanHistory
-    };
+      const rawReply = data.reply || '';
+      const artifact = data.artifact;
 
-    const resp = await fetch('/api/chat', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body)
-    });
+      // Display the intro text (outside artifact tags) if any
+      if (artifact && artifact.introText) {
+        renderMessage({ role: 'assistant', content: artifact.introText });
+      }
 
-    if (!resp.ok) throw new Error('API error: ' + resp.status);
+      // Display the full response (artifact-wrapped) for code rendering
+      const codeMsg = { role: 'assistant', content: rawReply };
+      const codeMsgEl = createMessageEl(codeMsg);
+      renderAssistantContent(codeMsgEl, rawReply);
 
-    const reader = resp.body.getReader();
-    const decoder = new TextDecoder();
-    let fullText = '';
-    let buffer = '';
-    const startTime = Date.now();
-    let firstChunk = true;
+      // Provider info
+      const provInfo = data.provider ? ` (${data.provider}/${data.model})` : '';
+      const metaEl = codeMsgEl.querySelector('.message-meta');
+      if (metaEl) metaEl.innerHTML = `<span>${provInfo}</span>`;
 
-    const assistantMsg = { role: 'assistant', content: '' };
-    const msgEl = createMessageEl(assistantMsg);
+      chatHistory.push(codeMsg);
 
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
-
-      buffer += decoder.decode(value, { stream: true });
-      const lines = buffer.split('\n');
-      buffer = lines.pop();
-
-      for (const line of lines) {
-        if (line.startsWith('data: ')) {
-          const raw = line.slice(6).trim();
-          if (raw === '[DONE]') continue;
-          try {
-            const data = JSON.parse(raw);
-
-            if (data.content) {
-              if (firstChunk) {
-                firstChunk = false;
-                progressEl.remove();
-              }
-              fullText += data.content;
-              assistantMsg.content = fullText;
-              renderAssistantContent(msgEl, fullText);
-            }
-
-            if (data.error) {
-              if (firstChunk) { firstChunk = false; progressEl.remove(); }
-              fullText += '\n\n**Error:** ' + data.error;
-              assistantMsg.content = fullText;
-              renderAssistantContent(msgEl, fullText);
-            }
-          } catch (e) {}
+      // Extract code from artifact and update files/preview
+      if (artifact && artifact.actions && artifact.actions.length > 0) {
+        const htmlAction = artifact.actions.find(a => a.filePath.endsWith('.html'));
+        if (htmlAction) {
+          const editor = document.getElementById('codeEditor');
+          if (editor) editor.value = htmlAction.content;
+          updatePreview(htmlAction.content);
+          // Save to files panel
+          for (const action of artifact.actions) {
+            addFile(action.filePath, action.content);
+          }
+          if (window.innerWidth < 768) {
+            document.getElementById('panelCanvas').classList.add('show-mobile');
+          }
         }
+      } else {
+        // Fallback: try code fence extraction
+        extractAndSaveCode(rawReply);
+      }
+
+    } else if (isCodeRefine) {
+      // ── Refine existing code ──
+      const active = files.find(f => f.path === activeFile);
+      if (!active) throw new Error('No file open to refine');
+
+      const progress = showProgress('Refining...');
+      const resp = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: userContent,
+          mode: 'refine',
+          provider,
+          model,
+          code: active.content
+        })
+      });
+
+      if (!resp.ok) throw new Error('Refine failed: ' + resp.status);
+      const data = await resp.json();
+      progress.remove();
+
+      const rawReply = data.reply || 'No changes made.';
+      const artifact = data.artifact;
+
+      const msg = { role: 'assistant', content: rawReply };
+      const msgEl = createMessageEl(msg);
+      renderAssistantContent(msgEl, rawReply);
+      chatHistory.push(msg);
+
+      // Update file from artifact
+      if (artifact && artifact.actions && artifact.actions.length > 0) {
+        const htmlAction = artifact.actions.find(a => a.filePath.endsWith('.html'));
+        if (htmlAction) {
+          const editor = document.getElementById('codeEditor');
+          if (editor) editor.value = htmlAction.content;
+          updatePreview(htmlAction.content);
+          addFile(htmlAction.filePath, htmlAction.content);
+        }
+      } else {
+        extractAndSaveCode(rawReply);
+      }
+
+    } else if (isExplain) {
+      // ── Explain code ──
+      const active = files.find(f => f.path === activeFile);
+      const progress = showProgress('Explaining...');
+      const resp = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: userContent,
+          mode: 'explain',
+          provider,
+          model,
+          code: active ? active.content : userContent
+        })
+      });
+
+      if (!resp.ok) throw new Error('Explain failed: ' + resp.status);
+      const data = await resp.json();
+      progress.remove();
+
+      const msg = { role: 'assistant', content: data.reply || 'No explanation available.' };
+      renderMessage(msg);
+      chatHistory.push(msg);
+
+    } else {
+      // ── General chat ──
+      const progress = showProgress('Thinking...');
+      const resp = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: userContent,
+          mode: 'chat',
+          provider,
+          model,
+          history: chatHistory.slice(-16).map(m => ({ role: m.role, content: m.content.substring(0, 3000) }))
+        })
+      });
+
+      if (!resp.ok) throw new Error('API error: ' + resp.status);
+      const data = await resp.json();
+      progress.remove();
+
+      const rawReply = data.reply || 'No response.';
+      const artifact = data.artifact;
+
+      // If the chat response contains an artifact (user asked to build something in chat mode)
+      if (artifact && artifact.actions && artifact.actions.length > 0) {
+        const codeMsg = { role: 'assistant', content: rawReply };
+        const codeMsgEl = createMessageEl(codeMsg);
+        renderAssistantContent(codeMsgEl, rawReply);
+        chatHistory.push(codeMsg);
+
+        const htmlAction = artifact.actions.find(a => a.filePath.endsWith('.html'));
+        if (htmlAction) {
+          const editor = document.getElementById('codeEditor');
+          if (editor) editor.value = htmlAction.content;
+          updatePreview(htmlAction.content);
+          for (const action of artifact.actions) {
+            addFile(action.filePath, action.content);
+          }
+        }
+      } else {
+        const msg = { role: 'assistant', content: rawReply };
+        const msgEl = createMessageEl(msg);
+        renderAssistantContent(msgEl, rawReply);
+        chatHistory.push(msg);
+        // Still try to extract code fences if any
+        extractAndSaveCode(rawReply);
       }
     }
-
-    chatHistory.push(assistantMsg);
-    removeProgress();
-
-    // Update meta
-    const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
-    const words = fullText.split(/\s+/).filter(Boolean).length;
-    const metaEl = msgEl.querySelector('.message-meta');
-    if (metaEl && fullText) metaEl.innerHTML = `<span>${words} words</span><span>${elapsed}s</span>`;
-
-    // Auto-extract and save code blocks to files
-    extractAndSaveCode(fullText);
 
   } catch (err) {
     removeProgress();
-    renderMessage({ role: 'assistant', content: 'Error: ' + err.message });
+    let errMsg = err.message;
+    if (errMsg.includes('Failed to fetch') || errMsg.includes('NetworkError') || errMsg.includes('Network request failed')) {
+      errMsg = 'Network error — check your connection and try again.';
+    } else if (errMsg.includes('502') || errMsg.includes('504')) {
+      errMsg = 'AI service is temporarily unavailable. Try again in a moment.';
+    } else if (errMsg.includes('JSON')) {
+      errMsg = 'Received an invalid response from the server. Try again.';
+    }
+    renderMessage({ role: 'assistant', content: '**Error:** ' + errMsg + '\n\n*Try rephrasing your request or switch to a different model.*' });
+  } finally {
+    isGenerating = false;
+    document.getElementById('sendBtn').disabled = false;
   }
-
-  isGenerating = false;
-  document.getElementById('sendBtn').disabled = false;
 }
 
 function extractAndSaveCode(text) {
+  const cleaned = cleanAIOutput(text);
   const codeBlocks = [];
   const regex = /```(\w*)\n([\s\S]*?)```/g;
   let match;
-  while ((match = regex.exec(text)) !== null) {
+  while ((match = regex.exec(cleaned)) !== null) {
     const lang = match[1] || 'code';
     const code = match[2].trim();
-    if (code.length > 20) {
-      codeBlocks.push({ lang, code });
-    }
+    if (code.length > 10) codeBlocks.push({ lang, code });
   }
-
   if (codeBlocks.length === 0) return;
-
-  // Find the most substantial code block (likely the main output)
+  saveCodeBlocksToFiles(codeBlocks);
+  // Make sure preview shows the best block
   let bestBlock = codeBlocks[0];
-  for (const block of codeBlocks) {
-    if (block.code.length > bestBlock.code.length) bestBlock = block;
-  }
-
-  const ext = { html: 'html', css: 'css', javascript: 'js', js: 'js' }[bestBlock.lang] || 'txt';
-
-  // If it's HTML, auto-update the active file and preview
-  if (ext === 'html') {
-    const targetFile = files.find(f => f.path === activeFile && f.path.endsWith('.html'));
-    if (targetFile) {
-      targetFile.content = bestBlock.code;
-      document.getElementById('codeEditor').value = bestBlock.code;
-      updatePreview(bestBlock.code);
-    } else {
-      // Create or update index.html
-      const indexFile = files.find(f => f.path === 'index.html');
-      if (indexFile) {
-        indexFile.content = bestBlock.code;
-      } else {
-        files.push({ path: 'index.html', content: bestBlock.code, isDir: false });
-      }
-      activeFile = 'index.html';
-      document.getElementById('codeEditor').value = bestBlock.code;
-      updatePreview(bestBlock.code);
-      renderFileTree();
-    }
-  } else {
-    // For CSS/JS, auto-save to a generated file
-    const filename = 'generated-' + Date.now() + '.' + ext;
-    files.push({ path: filename, content: bestBlock.code, isDir: false });
-    renderFileTree();
+  for (const block of codeBlocks) { if (block.code.length > bestBlock.code.length) bestBlock = block; }
+  if (bestBlock.lang === 'html' || bestBlock.code.includes('<html') || bestBlock.code.includes('<body')) {
+    const editor = document.getElementById('codeEditor');
+    if (editor) editor.value = bestBlock.code;
+    updatePreview(bestBlock.code);
   }
 }
 
 function renderMessage(msg) {
   const container = document.getElementById('chatMessages');
-  // Remove welcome if present
   const welcome = container.querySelector('.chat-welcome');
   if (welcome) welcome.remove();
 
@@ -882,6 +980,8 @@ function renderMessage(msg) {
       });
     }
     contentHtml += `<p>${escapeHtml(msg.content)}</p></div>`;
+  } else if (msg.isHtml) {
+    contentHtml = `<div class="message-role">${roleLabel}</div><div class="message-content">${msg.content}</div><div class="message-meta"></div>`;
   } else {
     contentHtml = `<div class="message-role">${roleLabel}</div><div class="message-content"></div><div class="message-meta"></div>`;
   }
@@ -945,7 +1045,8 @@ function renderAssistantContent(el, text) {
 
 function splitSegments(text) {
   const segments = [];
-  const regex = /```(\w*)\n([\s\S]*?)```|<think>([\s\S]*?)<\/think>/g;
+  // Match: code fences, think blocks, AND lxArtifact blocks
+  const regex = /```(\w*)\n([\s\S]*?)```|<think>([\s\S]*?)<\/think>|<lxArtifact[\s\S]*?<\/lxArtifact>/g;
   let lastIndex = 0;
   let match;
 
@@ -954,8 +1055,18 @@ function splitSegments(text) {
       segments.push({ type: 'text', content: text.slice(lastIndex, match.index) });
     }
     if (match[3] !== undefined) {
+      // Think block
       segments.push({ type: 'thinking', content: match[3] });
+    } else if (match[0].startsWith('<lxArtifact')) {
+      // Artifact block — extract code from actions
+      const artifact = parseLxArtifact(match[0]);
+      if (artifact && artifact.actions.length > 0) {
+        for (const action of artifact.actions) {
+          segments.push({ type: 'code', lang: action.filePath.endsWith('.html') ? 'html' : 'code', content: action.content });
+        }
+      }
     } else {
+      // Code fence
       segments.push({ type: 'code', lang: match[1], content: match[2] });
     }
     lastIndex = match.index + match[0].length;
@@ -983,6 +1094,94 @@ function renderMarkdown(text) {
     return '<p>' + m + '</p>';
   });
   return html;
+}
+
+function cleanAIOutput(text) {
+  let out = text;
+  // Strip syntax highlighting span tags and nested artifacts
+  out = out.replace(/<span\s+class="(?:kw|str|num|cm|tag|fn|op|px|atn|atv|alc|reb|kc|sc|vc|vi|sr)"[^>]*>/gi, '');
+  out = out.replace(/<span\s+style="[^"]*">/gi, '');
+  out = out.replace(/<\/span>/gi, '');
+  out = out.replace(/<code[^>]*>/gi, '');
+  out = out.replace(/<\/code>/gi, '');
+  out = out.replace(/<pre[^>]*>/gi, '');
+  out = out.replace(/<\/pre>/gi, '');
+  // Fix nested class artifacts like class=class="str">"tag">
+  out = out.replace(/class=class="[^"]*">/g, '');
+  out = out.replace(/class=class="[^"]*">/g, '');
+  // Fix remaining span artifacts
+  out = out.replace(/<\/?span[^>]*>/gi, '');
+  // Fix HTML entity artifacts
+  out = out.replace(/&amp;/g, '&');
+  out = out.replace(/&lt;/g, '<');
+  out = out.replace(/&gt;/g, '>');
+  out = out.replace(/&quot;/g, '"');
+  out = out.replace(/&#39;/g, "'");
+  return out;
+}
+
+// ── Parse <lxArtifact> structured output (bolt.diy style) ────────
+function parseLxArtifact(raw) {
+  // Remove any stray syntax tokens first
+  let text = raw;
+  text = text.replace(/<span\s+[^>]*>/gi, '');
+  text = text.replace(/<\/span>/gi, '');
+  text = text.replace(/<\/?code[^>]*>/gi, '');
+  text = text.replace(/<\/?pre[^>]*>/gi, '');
+  text = text.replace(/class=class="[^"]*">/g, '');
+  text = text.replace(/<\/?span[^>]*>/gi, '');
+
+  // Auto-close truncated tags
+  const openActions = (text.match(/<lxAction\b/gi) || []).length;
+  const closeActions = (text.match(/<\/lxAction>/gi) || []).length;
+  if (openActions > closeActions) {
+    for (let i = 0; i < openActions - closeActions; i++) text += '\n</lxAction>';
+  }
+  const openArtifacts = (text.match(/<lxArtifact\b/gi) || []).length;
+  const closeArtifacts = (text.match(/<\/lxArtifact>/gi) || []).length;
+  if (openArtifacts > closeArtifacts) {
+    for (let i = 0; i < openArtifacts - closeArtifacts; i++) text += '\n</lxArtifact>';
+  }
+
+  // Extract artifact metadata
+  const artifactMatch = text.match(/<lxArtifact\s+([^>]*)>/i);
+  if (!artifactMatch) return null;
+
+  const attrs = artifactMatch[1];
+  const id = (attrs.match(/id="([^"]*)"/i) || [, ''])[1];
+  const title = (attrs.match(/title="([^"]*)"/i) || [, ''])[1];
+
+  // Extract all actions
+  const actions = [];
+  const actionRegex = /<lxAction\s+([^>]*)>([\s\S]*?)<\/lxAction>/gi;
+  let actionMatch;
+  while ((actionMatch = actionRegex.exec(text)) !== null) {
+    const actionAttrs = actionMatch[1];
+    const content = actionMatch[2].trim();
+    const type = (actionAttrs.match(/type="([^"]*)"/i) || [, 'file'])[1];
+    const filePath = (actionAttrs.match(/filePath="([^"]*)"/i) || [, 'index.html'])[1];
+    actions.push({ type, filePath, content });
+  }
+
+  // Fallback: greedy match if no closing tags found
+  if (actions.length === 0) {
+    const greedyMatch = text.match(/<lxAction\s+([^>]*)>([\s\S]*)/i);
+    if (greedyMatch) {
+      const actionAttrs = greedyMatch[1];
+      const content = greedyMatch[2]
+        .replace(/<\/lxAction>/gi, '')
+        .replace(/<\/lxArtifact>/gi, '')
+        .trim();
+      const type = (actionAttrs.match(/type="([^"]*)"/i) || [, 'file'])[1];
+      const filePath = (actionAttrs.match(/filePath="([^"]*)"/i) || [, 'index.html'])[1];
+      if (content.length > 50) actions.push({ type, filePath, content });
+    }
+  }
+
+  // Extract intro text (before artifact)
+  const beforeArtifact = text.substring(0, text.indexOf('<lxArtifact')).trim();
+
+  return { id, title, actions, introText: beforeArtifact };
 }
 
 function escapeHtml(text) {
@@ -1134,6 +1333,78 @@ function updatePreview(html) {
     finalHtml = injectScript + html;
   }
   frame.srcdoc = finalHtml;
+}
+
+let _livePreviewTimer = null;
+let _lastPreviewText = '';
+function liveUpdatePreview(text) {
+  if (text === _lastPreviewText) return;
+  _lastPreviewText = text;
+  clearTimeout(_livePreviewTimer);
+  _livePreviewTimer = setTimeout(() => {
+    const cleaned = cleanAIOutput(text);
+    const codeBlocks = [];
+    const regex = /```(\w*)\n([\s\S]*?)```/g;
+    let match;
+    while ((match = regex.exec(cleaned)) !== null) {
+      const lang = match[1] || 'code';
+      const code = match[2].trim();
+      if (code.length > 10) codeBlocks.push({ lang, code });
+    }
+    if (codeBlocks.length === 0) {
+      // No code block yet — if the text itself looks like HTML, preview it
+      if (text.includes('<html') || text.includes('<body') || text.includes('<div')) {
+        const editor = document.getElementById('codeEditor');
+        if (editor) editor.value = text;
+        const f = files.find(x => x.path === activeFile);
+        if (f) f.content = text;
+        updatePreview(text);
+      }
+      return;
+    }
+    let best = codeBlocks[0];
+    for (const b of codeBlocks) { if (b.code.length > best.code.length) best = b; }
+    if (best.lang === 'html' || best.lang === 'css' || best.lang === 'js' || best.lang === 'javascript' || best.code.includes('<html') || best.code.includes('<body') || best.code.includes('<!DOCTYPE')) {
+      const editor = document.getElementById('codeEditor');
+      if (editor) editor.value = best.code;
+      const f = files.find(x => x.path === activeFile);
+      if (f) f.content = best.code;
+      // Save all code blocks to files simultaneously
+      saveCodeBlocksToFiles(codeBlocks);
+      updatePreview(best.code);
+    }
+  }, 200);
+}
+
+function addFile(path, content) {
+  const existing = files.find(f => f.path === path);
+  if (existing) {
+    existing.content = content;
+  } else {
+    files.push({ path, content, isDir: false });
+    if (path.endsWith('.html')) {
+      activeFile = path;
+    }
+  }
+  renderFileTree();
+}
+
+function saveCodeBlocksToFiles(blocks) {
+  for (const block of blocks) {
+    const ext = { html: 'html', css: 'css', javascript: 'js', js: 'js' }[block.lang] || 'txt';
+    const existing = files.find(f => f.path.endsWith('.' + ext) && !f.isDir);
+    if (existing) {
+      existing.content = block.code;
+    } else {
+      const name = ext === 'html' ? 'index.html' : ext === 'css' ? 'style.css' : 'script.' + ext;
+      files.push({ path: name, content: block.code, isDir: false });
+      if (ext === 'html') {
+        activeFile = name;
+        document.getElementById('codeEditor').value = block.code;
+      }
+    }
+  }
+  renderFileTree();
 }
 
 function onCodeEdit() {

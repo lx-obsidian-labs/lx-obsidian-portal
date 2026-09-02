@@ -4,9 +4,14 @@ void (function () {
   var container = document.getElementById('heroCanvas');
   if (!container) return;
 
+  if (typeof THREE === 'undefined') {
+    console.warn('Three.js not loaded — hero scene disabled');
+    return;
+  }
+
   var isMobile = window.innerWidth < 700;
-  var PARTICLE_COUNT = isMobile ? 120 : 350;
-  var LINE_DISTANCE = isMobile ? 120 : 180;
+  var PARTICLE_COUNT = isMobile ? 100 : 280;
+  var LINE_DISTANCE = isMobile ? 100 : 160;
   var MOUSE_INFLUENCE = 0.15;
 
   var scene = new THREE.Scene();
@@ -76,10 +81,11 @@ void (function () {
   var particles = new THREE.Points(geometry, material);
   scene.add(particles);
 
-  // Lines
+  // Lines — allocate once, reuse buffer
+  var MAX_LINES = PARTICLE_COUNT * (PARTICLE_COUNT - 1) / 2;
   var lineGeometry = new THREE.BufferGeometry();
-  var linePositions = new Float32Array(PARTICLE_COUNT * PARTICLE_COUNT * 6);
-  var lineColors = new Float32Array(PARTICLE_COUNT * PARTICLE_COUNT * 6);
+  var linePositions = new Float32Array(MAX_LINES * 6);
+  var lineColors = new Float32Array(MAX_LINES * 6);
   lineGeometry.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
   lineGeometry.setAttribute('color', new THREE.BufferAttribute(lineColors, 3));
 
@@ -130,11 +136,21 @@ void (function () {
     mouse.ty = (e.clientY / window.innerHeight - 0.5) * 2;
   });
 
-  // Resize
+  // Debounced resize
+  var resizeTimer;
   window.addEventListener('resize', function () {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function () {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    }, 150);
+  });
+
+  // Visibility — pause when tab hidden
+  var isPaused = false;
+  document.addEventListener('visibilitychange', function () {
+    isPaused = document.hidden;
   });
 
   // Animate
@@ -143,6 +159,7 @@ void (function () {
 
   function animate() {
     requestAnimationFrame(animate);
+    if (isPaused) return;
     frameCount++;
 
     mouse.x += (mouse.tx - mouse.x) * 0.03;

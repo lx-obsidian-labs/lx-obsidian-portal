@@ -4,6 +4,7 @@ void (function () {
   var nav = document.getElementById('nav');
   var navToggle = document.getElementById('navToggle');
   var navLinks = document.getElementById('navLinks');
+  if (!nav) return;
   var announcement = document.getElementById('announcement');
   var announcementClose = document.getElementById('announcementClose');
   var searchToggle = document.getElementById('searchToggle');
@@ -58,6 +59,9 @@ void (function () {
     else if (body.classList.contains('page-contact')) pageClass = 'contact.html';
     else if (body.classList.contains('page-faq')) pageClass = 'faq.html';
     else if (body.classList.contains('page-synapse')) pageClass = 'synapse.html';
+    else if (body.classList.contains('page-vista')) pageClass = 'vista.html';
+    else if (body.classList.contains('page-ai')) pageClass = 'ai.html';
+    else if (body.classList.contains('page-advertise')) pageClass = 'advertise.html';
     else if (body.classList.contains('page-industries')) pageClass = 'industries.html';
     else if (body.classList.contains('page-partners')) pageClass = 'partners.html';
 
@@ -85,6 +89,7 @@ void (function () {
      ========================================== */
 
   function updateNav() {
+    if (!nav) return;
     var hasNavSolid = document.body.classList.contains('page-home') === false;
     if (hasNavSolid) {
       nav.classList.remove('nav--transparent');

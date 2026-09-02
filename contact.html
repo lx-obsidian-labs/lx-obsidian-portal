@@ -1,13 +1,16 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#030305">
+  <meta name="theme-color" content="#030305">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
 <meta name="description" content="Tell us about your project. Select what you're building, share your details, and book a discovery call with LX Obsidian Labs.">
-<meta property="og:title" content="Start a Project — LX Obsidian Labs">
+<meta property="og:title" content="Start a Project � LX Obsidian Labs">
 <meta property="og:description" content="Tell us about your project. Select what you're building, share your details, and book a discovery call.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://www.lxobsidianportal.co.za/contact">
+<meta property="og:image" content="https://www.lxobsidianportal.co.za/assets/og-default.svg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://www.lxobsidianportal.co.za/contact">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,7 +18,21 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="manifest" href="manifest.json">
 <link rel="stylesheet" href="css/lx.css">
-<title>Start a Project — LX Obsidian Labs</title>
+<title>Start a Project � LX Obsidian Labs</title>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  "name": "Contact LX Obsidian Labs",
+  "url": "https://www.lxobsidianportal.co.za/contact",
+  "mainEntity": {
+    "@type": "Organization",
+    "name": "LX Obsidian Labs",
+    "email": "hello@lxobsidian.com",
+    "url": "https://www.lxobsidianportal.co.za"
+  }
+}
+</script>
 <style>
   .ptype-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}
   .ptype-card{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;padding:24px 16px;background:var(--saas-card);border:2px solid var(--saas-border);border-radius:12px;cursor:pointer;transition:border-color .2s,box-shadow .2s,transform .2s;user-select:none}
@@ -44,11 +61,12 @@
 </style>
 </head>
 <body>
+<a href="#main" class="skip-link" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;z-index:9999;padding:12px 20px;background:var(--saas-accent);color:#fff;font-weight:600;border-radius:0 0 8px 0;text-decoration:none" onfocus="this.style.left='0'" onblur="this.style.left='-9999px'">Skip to content</a>
 
 <nav class="saas-nav"><div class="saas-nav__inner">
   <a class="saas-nav__brand" href="index.html"><span class="saas-nav__mark">LX</span><span class="saas-nav__label">Obsidian Labs</span></a>
   <div class="saas-nav__links" id="navLinks">
-    <a href="ai.html">AI Platform</a>
+    <a href="ai.html?v=3">AI Platform</a>
     <a href="services.html">Solutions</a>
     <a href="marketplace.html">Marketplace</a>
     <a href="portfolio.html">Work</a>
@@ -57,11 +75,11 @@
   <div class="saas-nav__actions">
     <a class="saas-btn saas-btn--ghost" href="contact.html">Login</a>
     <a class="saas-btn saas-btn--primary" href="contact.html">Start Free</a>
-    <button class="saas-nav__menu" id="saasMenu" aria-label="Open menu">☰</button>
+    <button class="saas-nav__menu" id="saasMenu" aria-label="Open menu">?</button>
   </div>
 </div></nav>
 
-<main style="padding-top:64px">
+<main id="main" style="padding-top:64px">
 
   <section class="saas-section" style="border-top:none;padding:80px 0 60px">
     <div class="saas-wrap" style="text-align:center">
@@ -133,7 +151,7 @@
             <div class="cform__group"><label class="cform__label" for="contactEmail">Email *</label><input type="email" class="cform__input" id="contactEmail" placeholder="you@example.com" required><span class="cform__error" id="contactEmailError">Please enter a valid email</span></div>
             <div class="cform__group"><label class="cform__label" for="contactWhatsApp">WhatsApp</label><input type="tel" class="cform__input" id="contactWhatsApp" placeholder="+27 00 000 0000"></div>
           </div>
-          <div style="display:flex;justify-content:flex-end;margin-top:24px"><button type="button" onclick="showFormStep(2)" class="saas-btn saas-btn--primary">Continue →</button></div>
+          <div style="display:flex;justify-content:flex-end;margin-top:24px"><button type="button" onclick="showFormStep(2)" class="saas-btn saas-btn--primary">Continue ?</button></div>
         </div>
 
         <div id="form-step-2" class="cform__step">
@@ -144,7 +162,7 @@
             <div class="cform__group"><label class="cform__label" for="contactBudget">Budget Range</label><select class="cform__select cform__input" id="contactBudget"><option value="">Select a range</option><option>Under R5,000</option><option>R5,000 - R15,000</option><option>R15,000 - R50,000</option><option>R50,000 - R150,000</option><option>R150,000+</option><option>Not sure yet</option></select></div>
             <div class="cform__group"><label class="cform__label" for="contactLaunch">Desired Timeline</label><select class="cform__select cform__input" id="contactLaunch"><option value="">Select a timeframe</option><option>As soon as possible</option><option>Within 1-3 months</option><option>Within 3-6 months</option><option>Within 6-12 months</option><option>Exploring options</option></select></div>
           </div>
-          <div style="display:flex;justify-content:space-between;margin-top:24px"><button type="button" onclick="showFormStep(1)" class="saas-btn">← Back</button><button type="button" onclick="showFormStep(3)" class="saas-btn saas-btn--primary">Continue →</button></div>
+          <div style="display:flex;justify-content:space-between;margin-top:24px"><button type="button" onclick="showFormStep(1)" class="saas-btn">? Back</button><button type="button" onclick="showFormStep(3)" class="saas-btn saas-btn--primary">Continue ?</button></div>
         </div>
 
         <div id="form-step-3" class="cform__step">
@@ -153,11 +171,11 @@
           <div class="cform__group" style="margin-bottom:12px"><label class="cform__label" for="contactSubjectInput">Subject *</label><input type="text" class="cform__input" id="contactSubjectInput" placeholder="e.g. Need a booking platform for my restaurant" required><span class="cform__error" id="contactSubjectError">Please enter a subject</span></div>
           <div class="cform__group"><label class="cform__label" for="contactMessage">Message *</label><textarea class="cform__textarea cform__input" id="contactMessage" rows="5" placeholder="Describe your project, requirements, and any specific goals..." required></textarea><span class="cform__error" id="contactMessageError">Please describe your project</span></div>
           <div style="margin-top:12px"><label style="display:flex;align-items:flex-start;gap:8px;cursor:pointer"><input type="checkbox" id="contactNda" name="nda" style="margin-top:3px"><span style="font-size:.82rem;color:var(--saas-muted)">I'd like to discuss an NDA before sharing project details</span></label></div>
-          <div style="display:flex;justify-content:space-between;margin-top:24px"><button type="button" onclick="showFormStep(2)" class="saas-btn">← Back</button><button type="submit" class="saas-btn saas-btn--primary">Send Project Brief →</button></div>
+          <div style="display:flex;justify-content:space-between;margin-top:24px"><button type="button" onclick="showFormStep(2)" class="saas-btn">? Back</button><button type="submit" class="saas-btn saas-btn--primary">Send Project Brief ?</button></div>
         </div>
 
         <div id="contactSuccess" role="status" aria-live="polite" style="display:none;text-align:center;padding:32px">
-          <div style="width:48px;height:48px;border-radius:50%;background:var(--saas-green);color:#000;display:grid;place-items:center;margin:0 auto 16px;font-size:1.2rem;font-weight:700">✓</div>
+          <div style="width:48px;height:48px;border-radius:50%;background:var(--saas-green);color:#000;display:grid;place-items:center;margin:0 auto 16px;font-size:1.2rem;font-weight:700">?</div>
           <h3 style="font-weight:600;font-size:1.1rem;margin:0 0 8px">Request Received!</h3>
           <p style="color:var(--saas-muted);font-size:.88rem">Thank you! We'll review your project details and get back to you within 24 hours.</p>
         </div>
@@ -185,13 +203,13 @@
 
 <footer class="saas-footer"><div class="saas-footer__grid">
   <div><a class="saas-nav__brand" href="index.html"><span class="saas-nav__mark">LX</span><span class="saas-nav__label">OBSIDIAN LABS</span></a><p>South African AI and software engineering company building intelligent platforms, automation systems and digital infrastructure.</p></div>
-  <div><h4>Platform</h4><a href="ai.html">AI Platform</a><a href="services.html">Solutions</a><a href="marketplace.html">Marketplace</a></div>
+  <div><h4>Platform</h4><a href="ai.html?v=3">AI Platform</a><a href="services.html">Solutions</a><a href="marketplace.html">Marketplace</a></div>
   <div><h4>Products</h4><a href="synapse.html">Synapse AI</a><a href="vista.html">Vista Cinema</a><a href="portfolio.html">Work</a></div>
   <div><h4>Company</h4><a href="about.html">About</a><a href="blog.html">Insights</a><a href="contact.html">Contact</a></div>
-  <div><h4>Developers</h4><a href="ai.html">AI Platform</a><a href="https://github.com/lx-obsidian-labs" target="_blank" rel="noopener">GitHub</a></div>
-</div><div class="saas-footer__bottom"><span>&copy; 2026 LX Obsidian Labs. All rights reserved.</span><span>AI · Automation · Intelligence</span></div></footer>
+  <div><h4>Developers</h4><a href="ai.html?v=3">AI Platform</a><a href="https://github.com/lx-obsidian-labs" target="_blank" rel="noopener">GitHub</a></div>
+</div><div class="saas-footer__bottom"><span>&copy; 2026 LX Obsidian Labs. All rights reserved.</span><span>AI � Automation � Intelligence</span></div></footer>
 
-<script src="js/chat-widget.js"></script>
+<script src="js/chat-widget.js?v=2"></script>
 <script>
   document.getElementById('saasMenu')?.addEventListener('click', function () {
     var links = document.getElementById('navLinks');

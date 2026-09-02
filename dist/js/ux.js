@@ -300,14 +300,15 @@ void (function () {
   }
 
   var COMMANDS = [
-    { label: 'Home', href: '/', icon: 'home' },
-    { label: 'Services', href: '/services', icon: 'services' },
-    { label: 'App Store', href: '/marketplace', icon: 'store' },
-    { label: 'Portfolio', href: '/portfolio', icon: 'portfolio' },
-    { label: 'About', href: '/about', icon: 'about' },
-    { label: 'Blog', href: '/blog', icon: 'blog' },
-    { label: 'Contact', href: '/contact', icon: 'contact' },
-    { label: 'FAQ', href: '/faq', icon: 'faq' },
+    { label: 'Home', href: '/index.html', icon: 'home' },
+    { label: 'Services', href: '/services.html', icon: 'services' },
+    { label: 'App Store', href: '/marketplace.html', icon: 'store' },
+    { label: 'Portfolio', href: '/portfolio.html', icon: 'portfolio' },
+    { label: 'About', href: '/about.html', icon: 'about' },
+    { label: 'Blog', href: '/blog.html', icon: 'blog' },
+    { label: 'Contact', href: '/contact.html', icon: 'contact' },
+    { label: 'FAQ', href: '/faq.html', icon: 'faq' },
+    { label: 'AI Platform', href: '/ai.html', icon: 'services' },
     { label: 'Toggle Theme', action: 'theme', icon: 'theme', shortcut: 'T' }
   ];
 

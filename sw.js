@@ -1,20 +1,7 @@
-// Bump this whenever HTML/CSS behavior changes so production clients discard
-// stale preview-era assets after the next deployment.
-const CACHE = 'lx-obsidian-v16';
+const CACHE = 'lx-obsidian-v19';
 const ASSETS = [
   '/',
-  '/index.html',
-  '/about.html',
-  '/services.html',
-  '/portfolio.html',
-  '/contact.html',
-  '/blog.html',
-  '/faq.html',
-  '/marketplace.html',
-  '/synapse.html',
-  '/industries.html',
-  '/partners.html',
-  '/css/style.css',
+  '/css/lx.css',
   '/assets/generated/lx-hero-cluster-v3.webp',
   '/assets/generated/lx-step-discover-v3.webp',
   '/assets/generated/lx-step-engineer-v3.webp',
@@ -35,6 +22,8 @@ const ASSETS = [
   '/js/seo.js',
   '/js/ux.js',
   '/js/experience.js',
+  '/js/chat-widget.js',
+  '/js/hero-scene.js',
   '/robots.txt',
   '/sitemap.xml'
 ];
@@ -54,19 +43,45 @@ self.addEventListener('activate', function (e) {
 self.addEventListener('fetch', function (e) {
   if (e.request.method !== 'GET') return;
   var requestUrl = new URL(e.request.url);
-  var isFreshCritical = e.request.mode === 'navigate' || requestUrl.pathname.endsWith('.html') || requestUrl.pathname.endsWith('/css/style.css') || requestUrl.pathname.endsWith('/js/experience.js') || requestUrl.pathname.includes('/assets/generated/lx-');
-  if (isFreshCritical) {
-    e.respondWith(fetch(e.request).then(function (response) {
-      if (response && response.status === 200 && response.type === 'basic') caches.open(CACHE).then(function (cache) { cache.put(e.request, response.clone()); });
-      return response;
-    }).catch(function () { return caches.match(e.request).then(function (cached) { return cached || caches.match('/index.html'); }); }));
+  var isCritical = e.request.mode === 'navigate' || requestUrl.pathname.endsWith('.html') || requestUrl.pathname === '/css/lx.css' || requestUrl.pathname.includes('/assets/generated/lx-');
+
+  if (isCritical) {
+    e.respondWith(
+      fetch(e.request).then(function (response) {
+        if (response && response.status === 200 && response.type === 'basic') {
+          // Don't cache HTML pages — they carry CSP headers that must stay fresh
+          var isHtml = requestUrl.pathname.endsWith('.html') || requestUrl.pathname === '/';
+          if (!isHtml) {
+            var clone = response.clone();
+            caches.open(CACHE).then(function (cache) { cache.put(e.request, clone); });
+          }
+        }
+        return response;
+      }).catch(function () {
+        return caches.match(e.request).then(function (cached) {
+          return cached || caches.match('/index.html');
+        });
+      })
+    );
     return;
   }
-  e.respondWith(caches.match(e.request).then(function (cached) {
-    if (cached) return cached;
-    return fetch(e.request).then(function (response) {
-      if (response && response.status === 200 && response.type === 'basic') caches.open(CACHE).then(function (cache) { cache.put(e.request, response.clone()); });
-      return response;
-    }).catch(function () { return caches.match('/index.html'); });
-  }));
+
+  e.respondWith(
+    caches.match(e.request).then(function (cached) {
+      if (cached) return cached;
+      return fetch(e.request).then(function (response) {
+        if (response && response.status === 200 && response.type === 'basic') {
+          // Don't cache HTML pages
+          var isHtml = requestUrl.pathname.endsWith('.html');
+          if (!isHtml) {
+            var clone = response.clone();
+            caches.open(CACHE).then(function (cache) { cache.put(e.request, clone); });
+          }
+        }
+        return response;
+      }).catch(function () {
+        return caches.match('/index.html');
+      });
+    })
+  );
 });

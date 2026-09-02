@@ -1,13 +1,16 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#030305">
+  <meta name="theme-color" content="#030305">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
 <meta name="description" content="Read articles on software development, AI, cloud computing, mobile apps, and digital transformation from the LX Obsidian team.">
-<meta property="og:title" content="Insights — LX Obsidian Labs">
+<meta property="og:title" content="Insights � LX Obsidian Labs">
 <meta property="og:description" content="Guides, case studies, and deep dives into modern software engineering, AI, design, and digital transformation.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://www.lxobsidianportal.co.za/blog">
+<meta property="og:image" content="https://www.lxobsidianportal.co.za/assets/og-default.svg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://www.lxobsidianportal.co.za/blog">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,7 +18,63 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="manifest" href="manifest.json">
 <link rel="stylesheet" href="css/lx.css">
-<title>Insights — LX Obsidian Labs</title>
+<title>Insights � LX Obsidian Labs</title>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "LX Obsidian Labs Insights",
+  "url": "https://www.lxobsidianportal.co.za/blog",
+  "description": "Guides, case studies, and deep dives into modern software engineering, AI, design, and digital transformation.",
+  "publisher": {
+    "@type": "Organization",
+    "name": "LX Obsidian Labs",
+    "url": "https://www.lxobsidianportal.co.za",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.lxobsidianportal.co.za/assets/og-default.svg"
+    }
+  },
+  "blogPost": [
+    {
+      "@type": "BlogPosting",
+      "headline": "How Much Does Software Cost?",
+      "description": "A breakdown of the factors that influence software development pricing � from scope and complexity to team location and technology stack.",
+      "articleSection": "Business"
+    },
+    {
+      "@type": "BlogPosting",
+      "headline": "Choosing Between Website and Mobile App",
+      "description": "Not every idea needs a native app. We explore the trade-offs between responsive web and mobile applications to help you pick the right platform.",
+      "articleSection": "Development"
+    },
+    {
+      "@type": "BlogPosting",
+      "headline": "Artificial Intelligence for Business",
+      "description": "Discover how AI is transforming operations, customer experience, and decision-making across industries. Practical insights for leaders in 2026.",
+      "articleSection": "AI"
+    },
+    {
+      "@type": "BlogPosting",
+      "headline": "Digital Transformation Guide",
+      "description": "A step-by-step framework for organisations undertaking digital transformation. Align technology, people, and processes to drive lasting change.",
+      "articleSection": "Strategy"
+    },
+    {
+      "@type": "BlogPosting",
+      "headline": "Cloud Computing Explained",
+      "description": "From IaaS to serverless, understand the cloud computing models that power modern applications. A plain-English guide for business owners.",
+      "articleSection": "Cloud"
+    },
+    {
+      "@type": "BlogPosting",
+      "headline": "SEO Basics",
+      "description": "Master the fundamentals of search engine optimisation. Learn how on-page structure, content strategy, and technical health improve visibility.",
+      "articleSection": "Marketing"
+    }
+  ]
+}
+</script>
 <style>
   .blog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}
   .blog-card{background:var(--saas-card);border:1px solid var(--saas-border);border-radius:14px;padding:28px;display:flex;flex-direction:column;gap:10px;transition:transform .2s,border-color .2s}
@@ -23,16 +82,15 @@
   .blog-card__tag{font-size:.68rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--saas-accent-light);background:rgba(255,255,255,.04);padding:3px 8px;border-radius:6px;width:fit-content}
   .blog-card__title{font-size:1.05rem;font-weight:600;margin:0}
   .blog-card__desc{color:var(--saas-muted);font-size:.88rem;line-height:1.6;margin:0;flex:1}
-  .blog-card__link{font-size:.82rem;font-weight:500;color:var(--saas-accent-light);text-decoration:none;display:flex;align-items:center;gap:4px}
-  .blog-card__link:hover{color:#fff}
 </style>
 </head>
 <body>
+<a href="#main" class="skip-link" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;z-index:9999;padding:12px 20px;background:var(--saas-accent);color:#fff;font-weight:600;border-radius:0 0 8px 0;text-decoration:none" onfocus="this.style.left='0'" onblur="this.style.left='-9999px'">Skip to content</a>
 
 <nav class="saas-nav"><div class="saas-nav__inner">
   <a class="saas-nav__brand" href="index.html"><span class="saas-nav__mark">LX</span><span class="saas-nav__label">Obsidian Labs</span></a>
   <div class="saas-nav__links" id="navLinks">
-    <a href="ai.html">AI Platform</a>
+    <a href="ai.html?v=3">AI Platform</a>
     <a href="services.html">Solutions</a>
     <a href="marketplace.html">Marketplace</a>
     <a href="portfolio.html">Work</a>
@@ -41,11 +99,11 @@
   <div class="saas-nav__actions">
     <a class="saas-btn saas-btn--ghost" href="contact.html">Login</a>
     <a class="saas-btn saas-btn--primary" href="contact.html">Start Free</a>
-    <button class="saas-nav__menu" id="saasMenu" aria-label="Open menu">☰</button>
+    <button class="saas-nav__menu" id="saasMenu" aria-label="Open menu">?</button>
   </div>
 </div></nav>
 
-<main style="padding-top:64px">
+<main id="main" style="padding-top:64px">
 
   <section class="saas-section" style="border-top:none;padding:80px 0 60px">
     <div class="saas-wrap" style="text-align:center">
@@ -61,44 +119,38 @@
 
         <article class="blog-card">
           <span class="blog-card__tag">Business</span>
-          <h3 class="blog-card__title">How Much Does Software Cost?</h3>
-          <p class="blog-card__desc">A breakdown of the factors that influence software development pricing — from scope and complexity to team location and technology stack.</p>
-          <a href="blog.html" class="blog-card__link">Read more →</a>
+          <h2 class="blog-card__title">How Much Does Software Cost?</h2>
+          <p class="blog-card__desc">A breakdown of the factors that influence software development pricing � from scope and complexity to team location and technology stack.</p>
         </article>
 
         <article class="blog-card">
           <span class="blog-card__tag">Development</span>
-          <h3 class="blog-card__title">Choosing Between Website and Mobile App</h3>
+          <h2 class="blog-card__title">Choosing Between Website and Mobile App</h2>
           <p class="blog-card__desc">Not every idea needs a native app. We explore the trade-offs between responsive web and mobile applications to help you pick the right platform.</p>
-          <a href="blog.html" class="blog-card__link">Read more →</a>
         </article>
 
         <article class="blog-card">
           <span class="blog-card__tag">AI</span>
-          <h3 class="blog-card__title">Artificial Intelligence for Business</h3>
+          <h2 class="blog-card__title">Artificial Intelligence for Business</h2>
           <p class="blog-card__desc">Discover how AI is transforming operations, customer experience, and decision-making across industries. Practical insights for leaders in 2026.</p>
-          <a href="blog.html" class="blog-card__link">Read more →</a>
         </article>
 
         <article class="blog-card">
           <span class="blog-card__tag">Strategy</span>
-          <h3 class="blog-card__title">Digital Transformation Guide</h3>
+          <h2 class="blog-card__title">Digital Transformation Guide</h2>
           <p class="blog-card__desc">A step-by-step framework for organisations undertaking digital transformation. Align technology, people, and processes to drive lasting change.</p>
-          <a href="blog.html" class="blog-card__link">Read more →</a>
         </article>
 
         <article class="blog-card">
           <span class="blog-card__tag">Cloud</span>
-          <h3 class="blog-card__title">Cloud Computing Explained</h3>
+          <h2 class="blog-card__title">Cloud Computing Explained</h2>
           <p class="blog-card__desc">From IaaS to serverless, understand the cloud computing models that power modern applications. A plain-English guide for business owners.</p>
-          <a href="blog.html" class="blog-card__link">Read more →</a>
         </article>
 
         <article class="blog-card">
           <span class="blog-card__tag">Marketing</span>
-          <h3 class="blog-card__title">SEO Basics</h3>
+          <h2 class="blog-card__title">SEO Basics</h2>
           <p class="blog-card__desc">Master the fundamentals of search engine optimisation. Learn how on-page structure, content strategy, and technical health improve visibility.</p>
-          <a href="blog.html" class="blog-card__link">Read more →</a>
         </article>
 
       </div>
@@ -117,13 +169,13 @@
 
 <footer class="saas-footer"><div class="saas-footer__grid">
   <div><a class="saas-nav__brand" href="index.html"><span class="saas-nav__mark">LX</span><span class="saas-nav__label">OBSIDIAN LABS</span></a><p>South African AI and software engineering company building intelligent platforms, automation systems and digital infrastructure.</p></div>
-  <div><h4>Platform</h4><a href="ai.html">AI Platform</a><a href="services.html">Solutions</a><a href="marketplace.html">Marketplace</a></div>
+  <div><h4>Platform</h4><a href="ai.html?v=3">AI Platform</a><a href="services.html">Solutions</a><a href="marketplace.html">Marketplace</a></div>
   <div><h4>Products</h4><a href="synapse.html">Synapse AI</a><a href="vista.html">Vista Cinema</a><a href="portfolio.html">Work</a></div>
   <div><h4>Company</h4><a href="about.html">About</a><a href="blog.html">Insights</a><a href="contact.html">Contact</a></div>
-  <div><h4>Developers</h4><a href="ai.html">AI Platform</a><a href="https://github.com/lx-obsidian-labs" target="_blank" rel="noopener">GitHub</a></div>
-</div><div class="saas-footer__bottom"><span>&copy; 2026 LX Obsidian Labs. All rights reserved.</span><span>AI · Automation · Intelligence</span></div></footer>
+  <div><h4>Developers</h4><a href="ai.html?v=3">AI Platform</a><a href="https://github.com/lx-obsidian-labs" target="_blank" rel="noopener">GitHub</a></div>
+</div><div class="saas-footer__bottom"><span>&copy; 2026 LX Obsidian Labs. All rights reserved.</span><span>AI � Automation � Intelligence</span></div></footer>
 
-<script src="js/chat-widget.js"></script>
+<script src="js/chat-widget.js?v=2"></script>
 <script>
   document.getElementById('saasMenu')?.addEventListener('click', function () {
     var links = document.getElementById('navLinks');

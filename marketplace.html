@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#030305">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <meta name="color-scheme" content="dark">
   <meta name="description" content="LX Marketplace — a curated catalogue of real LX Obsidian Labs products with working product and download destinations.">
   <meta property="og:title" content="LX Marketplace — Products by LX Obsidian Labs">
@@ -18,6 +19,40 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/lx.css">
   <title>LX Marketplace — Real Software Products</title>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "LX Obsidian Labs Products",
+    "url": "https://www.lxobsidianportal.co.za/marketplace",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@type": "SoftwareApplication",
+          "name": "Vista Cinema",
+          "description": "AI-powered video production suite with Hollywood-grade editing, multi-language AI dubbing, AI actors and direct publishing.",
+          "url": "https://www.lxobsidianportal.co.za/vista",
+          "applicationCategory": "MultimediaApplication",
+          "operatingSystem": "Android"
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "item": {
+          "@type": "SoftwareApplication",
+          "name": "Synapse AI",
+          "description": "AI-powered browser automation extension. Control any page, extract data, fill forms and automate tasks.",
+          "url": "https://www.lxobsidianportal.co.za/synapse",
+          "applicationCategory": "BrowserApplication",
+          "operatingSystem": "Chrome, Edge, Brave"
+        }
+      }
+    ]
+  }
+  </script>
   <style>
     *{box-sizing:border-box}html{background:#030305;scroll-behavior:smooth}body{margin:0;background:#030305!important;color:#f4f4f7!important;font-family:Inter,ui-sans-serif,system-ui,sans-serif;overflow-x:hidden}
     .store-shell{padding-top:calc(64px + 78px)}
@@ -138,8 +173,8 @@
     <div><h4>Developers</h4><a href="contact.html">API Docs</a><a href="https://github.com/lx-obsidian-labs" target="_blank" rel="noopener">GitHub</a><a href="contact.html">Status</a></div>
   </div><div class="saas-footer__bottom"><span>&copy; 2026 LX Obsidian Labs. All rights reserved.</span><span>AI · Automation · Intelligence</span></div></footer>
 
-  <script src="js/chat-widget.js"></script>
-  <script src="js/navigation.js"></script>
+  <script src="js/chat-widget.js?v=2"></script>
+  <script src="js/navigation.js?v=5"></script>
   <script>
     // Mobile menu
     document.getElementById('saasMenu')?.addEventListener('click', function () {

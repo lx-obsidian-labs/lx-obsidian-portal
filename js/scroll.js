@@ -34,12 +34,14 @@ void (function () {
   }
 
   /* ==========================================
-     PARALLAX
+     PARALLAX (throttled via rAF)
      ========================================== */
 
   function initParallax() {
     var elements = document.querySelectorAll('.parallax');
     if (!elements.length || !window.requestAnimationFrame) return;
+
+    var ticking = false;
 
     function updateParallax() {
       elements.forEach(function (el) {
@@ -50,10 +52,14 @@ void (function () {
         var offset = (centerY - windowCenter) * speed * -1;
         el.style.transform = 'translateY(' + offset + 'px)';
       });
+      ticking = false;
     }
 
     window.addEventListener('scroll', function () {
-      requestAnimationFrame(updateParallax);
+      if (!ticking) {
+        requestAnimationFrame(updateParallax);
+        ticking = true;
+      }
     }, { passive: true });
 
     updateParallax();

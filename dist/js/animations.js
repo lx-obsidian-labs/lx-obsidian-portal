@@ -280,14 +280,29 @@ void (function () {
     track.addEventListener('mouseenter', function () { isHovering = true; });
     track.addEventListener('mouseleave', function () { isHovering = false; });
 
-    setInterval(function () {
-      if (!isHovering) {
+    var autoAdvance = setInterval(function () {
+      if (!isHovering && !document.hidden) {
         goTo(currentIndex + 1);
         if (currentIndex >= maxIndex) {
           currentIndex = -1;
         }
       }
     }, 5000);
+
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) {
+        clearInterval(autoAdvance);
+      } else {
+        autoAdvance = setInterval(function () {
+          if (!isHovering && !document.hidden) {
+            goTo(currentIndex + 1);
+            if (currentIndex >= maxIndex) {
+              currentIndex = -1;
+            }
+          }
+        }, 5000);
+      }
+    });
   }
 
   /* ==========================================

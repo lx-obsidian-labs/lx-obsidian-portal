@@ -10,7 +10,7 @@ void (function () {
     open: false,
     sending: false,
     provider: 'nvidia',
-    model: 'meta/llama3-70b-instruct',
+    model: 'nvidia/nemotron-3.5-lightning-30b-a3b',
     messages: []
   };
 
@@ -107,22 +107,42 @@ void (function () {
       body: JSON.stringify({
         message: text,
         provider: state.provider,
-        model: state.model
+        model: state.model,
+        stream: false
       })
     })
-      .then(function (res) { return res.json(); })
+      .then(function (res) {
+        if (!res.ok) {
+          return res.json().catch(function () { return { error: 'Server error ' + res.status }; }).then(function (data) { throw new Error(data.error || data.detail || 'Server error ' + res.status); });
+        }
+        return res.json();
+      })
       .then(function (data) {
         removeTyping();
-        var reply = data.reply || 'Sorry, I encountered an error.';
-        state.messages.push({ role: 'assistant', content: reply });
+        if (data.error) {
+          state.messages.push({ role: 'assistant', content: 'Error: ' + data.error + (data.detail ? '\n' + data.detail : '') });
+        } else {
+          var reply = data.reply || 'No response received.';
+          state.messages.push({ role: 'assistant', content: reply });
+        }
         if (data.provider) state.provider = data.provider;
         if (data.model) state.model = data.model;
         renderMessages();
         saveHistory();
       })
-      .catch(function () {
+      .catch(function (err) {
         removeTyping();
-        state.messages.push({ role: 'assistant', content: 'Connection error. Please try again.' });
+        var msg = 'Connection error. Please try again.';
+        if (err && err.message) {
+          if (err.message.includes('API key not configured')) {
+            msg = 'AI service not configured yet. The site owner needs to set the API keys on Cloudflare.';
+          } else if (err.message.includes('Provider error')) {
+            msg = 'AI provider error: ' + err.message;
+          } else {
+            msg = 'Error: ' + err.message;
+          }
+        }
+        state.messages.push({ role: 'assistant', content: msg });
         renderMessages();
       })
       .finally(function () {

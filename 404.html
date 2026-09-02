@@ -4,7 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#030305">
+<meta name="description" content="The page you're looking for doesn't exist or has been moved. Visit LX Obsidian Labs to explore our AI platform, solutions, and products.">
 <meta name="robots" content="noindex, follow">
+<meta property="og:title" content="404 — Page Not Found | LX Obsidian Labs">
+<meta property="og:description" content="The page you're looking for doesn't exist or has been moved.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.lxobsidianportal.co.za/404">
+<meta property="og:image" content="https://www.lxobsidianportal.co.za/assets/og-default.svg">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://www.lxobsidianportal.co.za/404">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,9 +20,11 @@
 <title>404 — Page Not Found | LX Obsidian Labs</title>
 </head>
 <body>
-  <div style="min-height:100vh;display:grid;place-items:center;padding:24px;text-align:center">
+  <a href="#main" class="skip-link" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;z-index:9999;padding:12px 20px;background:var(--saas-accent);color:#fff;font-weight:600;border-radius:0 0 8px 0;text-decoration:none" onfocus="this.style.left='0'" onblur="this.style.left='-9999px'">Skip to content</a>
+
+  <main id="main" style="min-height:100vh;display:grid;place-items:center;padding:24px;text-align:center">
     <div>
-      <div style="font-size:clamp(4rem,12vw,8rem);font-weight:700;color:var(--saas-accent);line-height:1;opacity:.3">404</div>
+      <div style="font-size:clamp(4rem,12vw,8rem);font-weight:700;color:var(--saas-accent);line-height:1;opacity:.3" aria-hidden="true">404</div>
       <h1 style="font-size:1.5rem;font-weight:600;margin:16px 0 8px">Lost in the code</h1>
       <p style="color:var(--saas-muted);margin:0 0 32px;max-width:400px">The page you're looking for doesn't exist or has been moved.</p>
       <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
@@ -25,7 +34,9 @@
         <a href="contact.html" class="saas-btn">Contact</a>
       </div>
     </div>
-  </div>
+  </main>
+
+  <script src="js/chat-widget.js?v=2"></script>
   <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));}</script>
 </body>
 </html>

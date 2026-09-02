@@ -30,13 +30,13 @@
 .btn--gold:hover {
   background: var(--color-accent-light);
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(229, 9, 20, 0.3);
+  box-shadow: 0 8px 25px var(--color-accent-glow-strong);
 }
 
 .btn--primary:active,
 .btn--gold:active {
   transform: translateY(0);
-  box-shadow: 0 2px 8px rgba(229, 9, 20, 0.2);
+  box-shadow: 0 2px 8px var(--color-accent-glow);
 }
 
 .btn--secondary {
@@ -144,7 +144,6 @@
   border-radius: var(--radius-xl);
   padding: var(--space-8);
   transition: all var(--transition-base);
-  will-change: transform;
 }
 
 .card:hover {

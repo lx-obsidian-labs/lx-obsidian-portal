@@ -1,13 +1,16 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#030305">
-<meta name="description" content="Synapse AI — an AI-powered browser automation extension by LX Obsidian Labs. Control any page, extract data, fill forms and automate tasks. Download free.">
-<meta property="og:title" content="Synapse AI — AI Browser Automation Extension | LX Obsidian Labs">
-<meta property="og:description" content="Download Synapse AI, the AI-powered browser automation extension. Automate any web page with an observe → plan → execute → verify agent loop.">
+  <meta name="theme-color" content="#030305">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<meta name="description" content="Synapse AI � an AI-powered browser automation extension by LX Obsidian Labs. Control any page, extract data, fill forms and automate tasks. Download free.">
+<meta property="og:title" content="Synapse AI � AI Browser Automation Extension | LX Obsidian Labs">
+<meta property="og:description" content="Download Synapse AI, the AI-powered browser automation extension. Automate any web page with an observe ? plan ? execute ? verify agent loop.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://www.lxobsidianportal.co.za/synapse">
+<meta property="og:image" content="https://www.lxobsidianportal.co.za/assets/synapse-screenshot-1.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://www.lxobsidianportal.co.za/synapse">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,7 +18,28 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="manifest" href="manifest.json">
 <link rel="stylesheet" href="css/lx.css">
-<title>Synapse AI — AI Browser Automation Extension | LX Obsidian Labs</title>
+<title>Synapse AI � AI Browser Automation Extension | LX Obsidian Labs</title>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Synapse AI",
+  "description": "AI-powered browser automation extension. Control any page, extract data, fill forms and automate tasks with an observe-plan-execute-verify agent loop.",
+  "url": "https://www.lxobsidianportal.co.za/synapse",
+  "applicationCategory": "BrowserApplication",
+  "operatingSystem": "Chrome, Edge, Brave",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "ZAR"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "LX Obsidian Labs",
+    "url": "https://www.lxobsidianportal.co.za"
+  }
+}
+</script>
 <style>
   .syn-hero{position:relative;padding:7rem 0 4rem;overflow:hidden;background:var(--gradient-hero)}
   .syn-hero__inner{max-width:760px}
@@ -53,11 +77,12 @@
 </style>
 </head>
 <body>
+<a href="#main" class="skip-link" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;z-index:9999;padding:12px 20px;background:var(--saas-accent);color:#fff;font-weight:600;border-radius:0 0 8px 0;text-decoration:none" onfocus="this.style.left='0'" onblur="this.style.left='-9999px'">Skip to content</a>
 
 <nav class="saas-nav"><div class="saas-nav__inner">
   <a class="saas-nav__brand" href="index.html"><span class="saas-nav__mark">LX</span><span class="saas-nav__label">Obsidian Labs</span></a>
   <div class="saas-nav__links" id="navLinks">
-    <a href="ai.html">AI Platform</a>
+    <a href="ai.html?v=3">AI Platform</a>
     <a href="services.html">Solutions</a>
     <a href="marketplace.html">Marketplace</a>
     <a href="portfolio.html">Work</a>
@@ -66,20 +91,20 @@
   <div class="saas-nav__actions">
     <a class="saas-btn saas-btn--ghost" href="contact.html">Login</a>
     <a class="saas-btn saas-btn--primary" href="contact.html">Start Free</a>
-    <button class="saas-nav__menu" id="saasMenu" aria-label="Open menu">☰</button>
+    <button class="saas-nav__menu" id="saasMenu" aria-label="Open menu">?</button>
   </div>
 </div></nav>
 
-<main class="syn-hero" aria-label="Synapse AI">
+<main id="main" class="syn-hero" aria-label="Synapse AI">
   <div class="container">
     <div class="syn-hero__inner">
       <span class="syn-hero__badge">By LX Obsidian Labs</span>
-      <h1 class="syn-hero__title">Synapse AI — your <span>AI browser agent</span></h1>
-      <p class="syn-hero__text">An AI-powered Chrome / Edge / Brave extension that turns any web page into an autonomous, controllable workspace. It runs an <strong>observe → plan → execute → verify</strong> loop: it reads the live page, an AI model picks one action, the extension performs it, checks the result, and repeats until your objective is done. Works out of the box — no API key required.</p>
+      <h1 class="syn-hero__title">Synapse AI � your <span>AI browser agent</span></h1>
+      <p class="syn-hero__text">An AI-powered Chrome / Edge / Brave extension that turns any web page into an autonomous, controllable workspace. It runs an <strong>observe ? plan ? execute ? verify</strong> loop: it reads the live page, an AI model picks one action, the extension performs it, checks the result, and repeats until your objective is done. Works out of the box � no API key required.</p>
       <div class="syn-hero__actions">
         <a href="https://chromewebstore.google.com/detail/synapse-ai" id="synapseDownloadBtn" class="syn-dl" target="_blank" rel="noopener noreferrer">
           <svg class="syn-dl__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          <span><span class="syn-dl__label">Download for Chrome</span><span class="syn-dl__meta" id="synapseVersion">v1.1.1 · free</span></span>
+          <span><span class="syn-dl__label">Download for Chrome</span><span class="syn-dl__meta" id="synapseVersion">v1.1.1 � free</span></span>
         </a>
         <a href="https://github.com/lx-obsidian-labs/synapse-social" class="saas-btn saas-btn--large" target="_blank" rel="noopener">View Source on GitHub</a>
       </div>
@@ -97,7 +122,7 @@
       <div class="syn-card"><div class="syn-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div><h3 class="syn-card__title">AI content generation</h3><p class="syn-card__text">Generate posts, replies, and copy in your brand voice. Built for Facebook page management and social operating workflows.</p></div>
       <div class="syn-card"><div class="syn-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div><h3 class="syn-card__title">Vision fallback</h3><p class="syn-card__text">When the DOM is empty or unclear, Synapse understands a screenshot of the page so automation never gets stuck.</p></div>
       <div class="syn-card"><div class="syn-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 6 6 .9-4.5 4.3L17.5 20 12 16.8 6.5 20l1-6.8L3 8.9 9 8z"/></svg></div><h3 class="syn-card__title">Self-learning memory</h3><p class="syn-card__text">Model rotation, failover, and a technical HUD keep tasks reliable. Outcomes feed a memory that improves future runs.</p></div>
-      <div class="syn-card"><div class="syn-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div><h3 class="syn-card__title">No key required</h3><p class="syn-card__text">AI routing goes through a secure hosted proxy, so the extension works immediately — no API key to configure.</p></div>
+      <div class="syn-card"><div class="syn-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div><h3 class="syn-card__title">No key required</h3><p class="syn-card__text">AI routing goes through a secure hosted proxy, so the extension works immediately � no API key to configure.</p></div>
       <div class="syn-card"><div class="syn-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M4 9h16M9 20V9"/></svg></div><h3 class="syn-card__title">Site-specific playbooks</h3><p class="syn-card__text">Ready-made workflows for ChatGPT, Gmail, YouTube, Facebook, Google, LinkedIn, GitHub, Canva and more.</p></div>
     </div>
   </div>
@@ -107,11 +132,11 @@
   <div class="saas-wrap">
     <div class="saas-eyebrow">HOW IT WORKS</div>
     <h2 class="saas-heading" style="font-size:clamp(1.8rem,3vw,2.4rem)">An agent loop you can steer</h2>
-    <p style="color:var(--saas-muted);max-width:560px;margin:8px 0 0">Type an objective and Synapse does the work — step by step, transparently.</p>
+    <p style="color:var(--saas-muted);max-width:560px;margin:8px 0 0">Type an objective and Synapse does the work � step by step, transparently.</p>
     <div class="syn-steps">
-      <div class="syn-step"><div class="syn-step__num">1</div><h3 class="syn-step__title">Observe</h3><p class="syn-step__text">The extension reads the live page — its DOM, forms, and visible content — to understand the current state.</p></div>
+      <div class="syn-step"><div class="syn-step__num">1</div><h3 class="syn-step__title">Observe</h3><p class="syn-step__text">The extension reads the live page � its DOM, forms, and visible content � to understand the current state.</p></div>
       <div class="syn-step"><div class="syn-step__num">2</div><h3 class="syn-step__title">Plan</h3><p class="syn-step__text">An AI model (NVIDIA NIM Nemotron / Llama / VILA) picks the single best next action toward your goal.</p></div>
-      <div class="syn-step"><div class="syn-step__num">3</div><h3 class="syn-step__title">Execute</h3><p class="syn-step__text">Synapse performs the action — click, type, extract, fill — directly on the page.</p></div>
+      <div class="syn-step"><div class="syn-step__num">3</div><h3 class="syn-step__title">Execute</h3><p class="syn-step__text">Synapse performs the action � click, type, extract, fill � directly on the page.</p></div>
       <div class="syn-step"><div class="syn-step__num">4</div><h3 class="syn-step__title">Verify</h3><p class="syn-step__text">It checks the result and loops until the objective is complete. Use Pause / Stop in the HUD to stay in control.</p></div>
     </div>
   </div>
@@ -129,17 +154,17 @@
         <li>Open your browser's extensions page: <code>chrome://extensions</code>, <code>edge://extensions</code>, or <code>brave://extensions</code>.</li>
         <li>Turn on <strong>Developer mode</strong> (top-right toggle).</li>
         <li>Click <strong>Load unpacked</strong> and select the unzipped folder (the one with <code>manifest.json</code>).</li>
-        <li>Pin <strong>Synapse AI</strong> to your toolbar and click it to open the side panel. That's it — the AI works out of the box.</li>
+        <li>Pin <strong>Synapse AI</strong> to your toolbar and click it to open the side panel. That's it � the AI works out of the box.</li>
       </ol>
       <div class="syn-meta">
         <span>Version: <strong id="synapseVersionMeta">v1.1.1</strong></span>
         <span>Manifest: <strong>MV3</strong></span>
-        <span>Browsers: <strong>Chrome · Edge · Brave</strong></span>
+        <span>Browsers: <strong>Chrome � Edge � Brave</strong></span>
         <span>Requires: <strong>Chromium v100+</strong></span>
       </div>
       <a href="https://chromewebstore.google.com/detail/synapse-ai" id="synapseDownloadBtnBottom" class="syn-dl" target="_blank" rel="noopener noreferrer">
         <svg class="syn-dl__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        <span><span class="syn-dl__label">Download Synapse AI</span><span class="syn-dl__meta" id="synapseVersionBottom">v1.1.1 · free</span></span>
+        <span><span class="syn-dl__label">Download Synapse AI</span><span class="syn-dl__meta" id="synapseVersionBottom">v1.1.1 � free</span></span>
       </a>
       <a href="https://github.com/lx-obsidian-labs/synapse-social/releases" class="syn-github" target="_blank" rel="noopener">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
@@ -151,7 +176,7 @@
 
 <section class="saas-cta"><div class="saas-wrap saas-cta__inner"><div>
   <h2>Ready to automate the web?</h2>
-  <p>Download Synapse AI today, or explore Vista Cinema — our streaming and AI video production suite.</p>
+  <p>Download Synapse AI today, or explore Vista Cinema � our streaming and AI video production suite.</p>
 </div><div style="display:flex;gap:10px;flex-wrap:wrap">
   <a class="saas-btn saas-btn--primary saas-btn--large" href="#download">Download Free</a>
   <a class="saas-btn saas-btn--large" href="marketplace.html">Browse Marketplace</a>
@@ -159,13 +184,13 @@
 
 <footer class="saas-footer"><div class="saas-footer__grid">
   <div><a class="saas-nav__brand" href="index.html"><span class="saas-nav__mark">LX</span><span class="saas-nav__label">OBSIDIAN LABS</span></a><p>South African AI and software engineering company building intelligent platforms, automation systems and digital infrastructure.</p></div>
-  <div><h4>Platform</h4><a href="ai.html">AI Platform</a><a href="services.html">Solutions</a><a href="marketplace.html">Marketplace</a></div>
+  <div><h4>Platform</h4><a href="ai.html?v=3">AI Platform</a><a href="services.html">Solutions</a><a href="marketplace.html">Marketplace</a></div>
   <div><h4>Products</h4><a href="synapse.html">Synapse AI</a><a href="vista.html">Vista Cinema</a><a href="portfolio.html">Work</a></div>
   <div><h4>Company</h4><a href="about.html">About</a><a href="blog.html">Insights</a><a href="contact.html">Contact</a></div>
-  <div><h4>Developers</h4><a href="ai.html">AI Platform</a><a href="https://github.com/lx-obsidian-labs" target="_blank" rel="noopener">GitHub</a></div>
-</div><div class="saas-footer__bottom"><span>&copy; 2026 LX Obsidian Labs. All rights reserved.</span><span>AI · Automation · Intelligence</span></div></footer>
+  <div><h4>Developers</h4><a href="ai.html?v=3">AI Platform</a><a href="https://github.com/lx-obsidian-labs" target="_blank" rel="noopener">GitHub</a></div>
+</div><div class="saas-footer__bottom"><span>&copy; 2026 LX Obsidian Labs. All rights reserved.</span><span>AI � Automation � Intelligence</span></div></footer>
 
-<script src="js/chat-widget.js"></script>
+<script src="js/chat-widget.js?v=2"></script>
 <script>
   document.getElementById('saasMenu')?.addEventListener('click', function () {
     var links = document.getElementById('navLinks');
@@ -179,7 +204,7 @@
     var labels = [document.getElementById('synapseVersion'), document.getElementById('synapseVersionBottom'), document.getElementById('synapseVersionMeta')];
     function apply(v, url) {
       btns.forEach(function (b) { if (b) b.href = url; });
-      labels.forEach(function (l) { if (!l) return; l.textContent = l.id === 'synapseVersionMeta' ? 'v' + v : 'v' + v + ' · free'; });
+      labels.forEach(function (l) { if (!l) return; l.textContent = l.id === 'synapseVersionMeta' ? 'v' + v : 'v' + v + ' � free'; });
       btns.forEach(function (b) { if (!b) return; var lbl = b.querySelector('.syn-dl__label'); if (lbl) lbl.textContent = (b.id === 'synapseDownloadBtnBottom') ? ('Download Synapse AI v' + v) : ('Download v' + v); });
     }
     apply(FALLBACK.version, FALLBACK.url);

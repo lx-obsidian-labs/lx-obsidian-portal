@@ -96,7 +96,11 @@ export async function comparePassword(password, stored) {
 /* ---- Helpers ---- */
 
 function getSecret(context) {
-  return (context && context.env && context.env.JWT_SECRET) || 'lx-obsidian-dev-secret-key-2024';
+  const secret = context && context.env && context.env.JWT_SECRET;
+  if (!secret) {
+    throw new Error('JWT_SECRET environment variable is not set. Deploy with: npx wrangler pages secret put JWT_SECRET --project-name lxobsidianmainsite');
+  }
+  return secret;
 }
 
 export function getSecretFrom(context) {
@@ -113,25 +117,37 @@ export function uuid() {
   return crypto.randomUUID();
 }
 
-export function json(data, status = 200) {
+const ALLOWED_ORIGINS = [
+  'https://www.lxobsidianportal.co.za',
+  'https://lxobsidianportal.co.za',
+  'http://localhost:8788',
+  'http://localhost:8789'
+];
+
+function getCorsOrigin(request) {
+  const origin = request?.headers?.get('Origin') || '';
+  return ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+}
+
+export function json(data, status = 200, request) {
   return new Response(JSON.stringify(data), {
     status,
     headers: {
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Origin': getCorsOrigin(request),
       'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type, Authorization'
     }
   });
 }
 
-export function error(msg, status = 400) {
-  return json({ error: msg }, status);
+export function error(msg, status = 400, request) {
+  return json({ error: msg }, status, request);
 }
 
-export function corsHeaders(method = 'GET, POST, PUT, DELETE, OPTIONS') {
+export function corsHeaders(method = 'GET, POST, PUT, DELETE, OPTIONS', request) {
   return {
-    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Origin': getCorsOrigin(request),
     'Access-Control-Allow-Methods': method,
     'Access-Control-Allow-Headers': 'Content-Type, Authorization'
   };
@@ -139,7 +155,7 @@ export function corsHeaders(method = 'GET, POST, PUT, DELETE, OPTIONS') {
 
 export function handleOptions(request) {
   if (request.method === 'OPTIONS') {
-    return new Response(null, { status: 204, headers: corsHeaders() });
+    return new Response(null, { status: 204, headers: corsHeaders('GET, POST, PUT, DELETE, OPTIONS', request) });
   }
   return null;
 }
