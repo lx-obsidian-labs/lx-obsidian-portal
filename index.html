@@ -223,6 +223,9 @@
             <div><h4>Usage Analytics</h4><p>Real-time dashboards showing model performance, token usage and agent activity.</p></div>
           </div>
         </div>
+        <div style="margin-top:24px;text-align:center">
+          <button class="saas-btn saas-btn--ghost" id="demoClear" style="padding:8px 16px;font-size:.85rem">Clear Chat</button>
+        </div>
       </div>
     </div></section>
 
@@ -432,5 +435,101 @@
   <script src="js/app.js" defer></script>
   <script src="js/seo.js" defer></script>
   <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));}</script>
+  <script>
+    // Demo chat
+    (function () {
+      var input = document.getElementById('demoInput');
+      var sendBtn = document.getElementById('demoSend');
+      var messages = document.getElementById('demoMessages');
+      var modelSelect = document.getElementById('demoModelSelect');
+      var sending = false;
+      var chatHistory = [];
+
+      function addMsg(text, role) {
+        var div = document.createElement('div');
+        div.className = 'saas-demo__msg saas-demo__msg--' + role;
+        div.textContent = text;
+        messages.appendChild(div);
+        messages.scrollTop = messages.scrollHeight;
+      }
+
+      function showTyping() {
+        var t = document.createElement('div');
+        t.className = 'saas-demo__msg saas-demo__msg--bot';
+        t.id = 'demoTyping';
+        t.innerHTML = '<span style="opacity:0.5">Thinking...</span>';
+        messages.appendChild(t);
+        messages.scrollTop = messages.scrollHeight;
+      }
+
+      function removeTyping() {
+        var el = document.getElementById('demoTyping');
+        if (el) el.remove();
+      }
+
+      function send() {
+        var text = input.value.trim();
+        if (!text || sending) return;
+        sending = true;
+        sendBtn.disabled = true;
+        input.value = '';
+        addMsg(text, 'user');
+        showTyping();
+
+        var val = modelSelect.value.split(':');
+        var provider = val[0];
+        var model = val.slice(1).join(':');
+
+        fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: text, provider: provider, model: model })
+        })
+          .then(function (r) { return r.json(); })
+          .then(function (data) {
+            removeTyping();
+            addMsg(data.reply || 'Error occurred.', 'bot');
+            // Save to chat history
+            chatHistory.push({ role: 'user', content: text });
+            chatHistory.push({ role: 'bot', content: data.reply || 'Error occurred.' });
+            localStorage.setItem('demoChatHistory', JSON.stringify(chatHistory));
+          })
+          .catch(function () {
+            removeTyping();
+            addMsg('Connection error. Please try again.', 'bot');
+          })
+          .finally(function () {
+            sending = false;
+            sendBtn.disabled = false;
+            input.focus();
+          });
+      }
+
+      if (sendBtn) sendBtn.addEventListener('click', send);
+      if (input) input.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
+      });
+
+      // Clear chat button
+      var clearBtn = document.getElementById('demoClear');
+      if (clearBtn) {
+        clearBtn.addEventListener('click', function() {
+          chatHistory = [];
+          localStorage.removeItem('demoChatHistory');
+          messages.innerHTML = '<div class="saas-demo__msg saas-demo__msg--bot">Hello! I'm LX Assistant. Ask me anything about software development, AI, cloud computing, or our products.</div>';
+          input.focus();
+        });
+      }
+
+      // Restore chat history from localStorage
+      var savedHistory = localStorage.getItem('demoChatHistory');
+      if (savedHistory) {
+        chatHistory = JSON.parse(savedHistory);
+        chatHistory.forEach(function(msg) {
+          addMsg(msg.content, msg.role);
+        });
+      }
+    })();
+  </script>
 </body>
 </html>
