@@ -1,1646 +1,270 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#030305">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta name="theme-color" content="#030305">
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-<meta name="description" content="AI Coding Platform by LX Obsidian Labs — generate, debug, and preview code with free NVIDIA and OpenRouter AI models. Build web apps in your browser.">
-<meta property="og:title" content="AI Coding Platform — LX Obsidian Labs">
-<meta property="og:description" content="Generate, debug, and preview code with free NVIDIA and OpenRouter AI models. Build web apps directly in your browser.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://www.lxobsidianportal.co.za/ai">
-<meta property="og:image" content="https://www.lxobsidianportal.co.za/assets/og-default.svg">
-<meta name="twitter:card" content="summary_large_image">
-<link rel="canonical" href="https://www.lxobsidianportal.co.za/ai">
-<meta name="robots" content="noindex, noarchive, nosnippet">
-<title>AI Coding Platform — LX Obsidian Labs</title>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  "name": "LX AI Coding Platform",
-  "description": "AI Coding Platform — generate, debug, and preview code with free NVIDIA and OpenRouter AI models. Build web apps in your browser.",
-  "url": "https://www.lxobsidianportal.co.za/ai",
-  "applicationCategory": "DeveloperApplication",
-  "operatingSystem": "Web",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "ZAR"
-  },
-  "author": {
-    "@type": "Organization",
-    "name": "LX Obsidian Labs",
-    "url": "https://www.lxobsidianportal.co.za"
+  <meta name="description" content="LX AI Coding Platform — generate, debug, and preview web apps with NVIDIA and OpenRouter models">
+  <meta property="og:title" content="LX AI Coding Platform">
+  <meta property="og:description" content="Build web apps with AI in your browser">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.lxobsidianportal.co.za/ai">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="robots" content="noindex, noarchive, nosnippet">
+  <title>LX AI Coding Platform</title>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "LX AI Coding Platform",
+    "description": "Generate, debug, and preview web apps with free NVIDIA and OpenRouter AI models. Build web apps in your browser.",
+    "url": "https://www.lxobsidianportal.co.za/ai",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Web",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "ZAR"
+    },
+    "author": {
+      "@type": "Organization",
+      "name": "LX Obsidian Labs",
+      "url": "https://www.lxobsidianportal.co.za"
+    }
   }
-}
-</script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/jszip@3/dist/jszip.min.js"></script>
-<style>
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{
---bg:#000;--surface:#0a0a0f;--card:#111118;--border:rgba(255,255,255,0.06);
---accent:#7c5cff;--accent-light:#9b7eff;--green:#34d399;--red:#ef4444;
---text:#e4e4e7;--muted:#6e6e7c;--font:'Inter',sans-serif;--font-display:'Space Grotesk',sans-serif;
---panel-file:240px;--panel-canvas:45%;
-}
-html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px;line-height:1.5}
-::-webkit-scrollbar{width:6px}
-::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:3px}
-::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,0.2)}
-button{font-family:var(--font);cursor:pointer;border:none;background:none;color:var(--text)}
-input,textarea,select{font-family:var(--font);background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:6px;padding:8px 12px;outline:none}
-input:focus,textarea:focus,select:focus{border-color:var(--accent)}
-::selection{background:var(--accent);color:#fff}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.50.0/min/monaco.editor.js"></script>
+  <style>
+    /* Color System - 4 colors max */
+    :root {
+      --bg:#0a0a0f;
+      --card:#111118;
+      --muted:#6b7280;
+      --accent:#7c5cff;
+      --accent-light:#9f78e1;
+      --text:#f4f4f5;
+      --border:#30363d;
+    }
 
-.app{display:flex;height:100vh;width:100vw;overflow:hidden}
+    /* Typography */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; }
+    html { font-family: 'Inter', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    body { min-height: 100vh; background: var(--bg); color: var(--text); overflow: hidden; }
 
-/* LEFT PANEL - FILE MANAGER */
-.panel-file{width:var(--panel-file);min-width:var(--panel-file);background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;transition:margin-left .3s ease,opacity .3s ease;z-index:10}
-.panel-file.collapsed{margin-left:calc(var(--panel-file)*-1);opacity:0;pointer-events:none}
-.panel-file-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border);min-height:48px}
-.panel-file-header h3{font-family:var(--font-display);font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
-.panel-file-header button{padding:4px;border-radius:4px;color:var(--muted);font-size:16px}
-.panel-file-header button:hover{color:var(--text);background:rgba(255,255,255,0.05)}
-.panel-file-actions{display:flex;gap:4px;padding:8px 12px;border-bottom:1px solid var(--border)}
-.panel-file-actions button{flex:1;padding:6px 8px;font-size:11px;font-weight:500;border-radius:4px;color:var(--muted);background:rgba(255,255,255,0.03);border:1px solid var(--border);transition:all .15s}
-.panel-file-actions button:hover{color:var(--text);background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.1)}
-.file-tree{flex:1;overflow-y:auto;padding:8px 0}
-.file-tree-item{display:flex;align-items:center;gap:8px;padding:6px 16px;cursor:pointer;transition:background .1s;font-size:13px;user-select:none}
-.file-tree-item:hover{background:rgba(255,255,255,0.04)}
-.file-tree-item.active{background:rgba(124,92,255,0.12);color:var(--accent-light)}
-.file-tree-item .icon{font-size:14px;width:18px;text-align:center;flex-shrink:0}
-.file-tree-item .name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.file-tree-item .actions{display:none;gap:2px}
-.file-tree-item:hover .actions{display:flex}
-.file-tree-item .actions button{padding:2px 4px;font-size:12px;color:var(--muted);border-radius:3px}
-.file-tree-item .actions button:hover{color:var(--text);background:rgba(255,255,255,0.08)}
-.file-tree-folder>.children{padding-left:16px}
-.panel-file-footer{padding:8px 12px;border-top:1px solid var(--border)}
-.panel-file-footer button{width:100%;padding:8px;font-size:12px;font-weight:500;border-radius:6px;color:var(--green);background:rgba(52,211,153,0.08);border:1px solid rgba(52,211,153,0.15);transition:all .15s}
-.panel-file-footer button:hover{background:rgba(52,211,153,0.15);border-color:rgba(52,211,153,0.3)}
+    /* Layout */
+    .app { display: flex; height: 100vh; width: 100vw; overflow: hidden; font-family: 'Inter', system-ui, sans-serif; font-size: 13px; line-height: 1.5; }
+    .app > * { flex-shrink: 0; }
 
-/* RESIZE DIVIDER */
-.resize-divider{width:4px;cursor:col-resize;background:transparent;transition:background .2s;flex-shrink:0;position:relative;z-index:5}
-.resize-divider:hover,.resize-divider.dragging{background:var(--accent)}
+    /* Left Sidebar - File Explorer */
+    .sidebar { width: 260px; background: var(--card); border-right: 1px solid var(--border); display: flex; flex-direction: column; }
+    .sidebar-header { padding: 16px 12px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+    .sidebar-title { font: 500 12px/1 'Space Grotesk', sans-serif; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); }
+    .sidebar-actions { display: flex; gap: 8px; }
+    .btn-icon { width: 32px; height: 32px; padding: 6px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; color: var(--muted); font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background .15s; }
+    .btn-icon:hover { background: var(--bg); color: var(--text); }
+    .btn-icon.active { background: rgba(124, 92, 255, .15); color: var(--accent); }
+    .file-tree { flex: 1; overflow-y: auto; padding: 8px 0; }
+    .file-item { padding: 6px 12px; cursor: pointer; font-size: 12px; transition: background .1s; user-select: none; }
+    .file-item:hover { background: rgba(255,255,255,.04); }
+    .file-item.active { background: rgba(124, 92, 255, .12); color: var(--accent); }
+    .file-item .icon { width: 14px; text-align: center; color: var(--muted); margin-right: 8px; }
+    .file-item.folder .icon { content: "📁"; }
+    .file-item.file .icon { content: "📄"; }
+    .bottom-bar { padding: 12px; border-top: 1px solid var(--border); display: flex; gap: 8px; background: var(--bg); }
+    .bottom-bar .btn { flex: 1; padding: 6px 10px; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; color: var(--muted); font-size: 11px; font-weight: 500; cursor: pointer; transition: all .15s; }
+    .bottom-bar .btn:hover { border-color: var(--accent); color: var(--accent); }
+    .bottom-bar .btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .bottom-bar .btn.secondary { background: transparent; }
 
-/* CENTER PANEL - CHAT */
-.panel-chat{flex:1;display:flex;flex-direction:column;min-width:0;background:var(--bg)}
-.chat-header{display:flex;align-items:center;gap:8px;padding:10px 16px;border-bottom:1px solid var(--border);min-height:48px;background:var(--surface)}
-.chat-header .hamburger{display:none;padding:6px;border-radius:4px;color:var(--muted);font-size:18px}
-.chat-header .hamburger:hover{color:var(--text);background:rgba(255,255,255,0.05)}
-.model-select{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:6px 10px;font-size:12px;color:var(--text);min-width:200px}
-.model-select option{background:var(--card);color:var(--text)}
-.model-group{color:var(--muted);font-weight:600}
-.chat-header .spacer{flex:1}
-.chat-header button{padding:6px 10px;border-radius:4px;color:var(--muted);font-size:12px;border:1px solid var(--border);background:var(--card);transition:all .15s}
-.chat-header button:hover{color:var(--text);border-color:rgba(255,255,255,0.1)}
+    /* Center Chat Panel */
+    .chat { flex: 1; display: flex; flex-direction: column; background: var(--card); overflow: hidden; }
+    .chat-header { padding: 12px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; background: var(--bg); }
+    .chat-header h1 { font: 500 13px/1 'Space Grotesk', sans-serif; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); }
+    .model-pills { display: flex; gap: 6px; }
+    .model-pill { padding: 4px 8px; background: var(--bg); border: 1px solid var(--border); border-radius: 20px; font-size: 10px; font-weight: 500; color: var(--muted); cursor: pointer; transition: all .15s; }
+    .model-pill.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .model-pill:hover:not(.active) { background: rgba(124, 92, 255, .1); color: var(--accent); }
+    .chat-messages { flex: 1; padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
+    .message { max-width: 80%; padding: 10px 14px; border-radius: 16px; font-size: 13px; line-height: 1.5; }
+    .message.user { align-self: flex-end; background: rgba(124, 92, 255, .1); color: var(--text); }
+    .message.assistant { align-self: flex-start; background: var(--card); color: var(--text); }
+    .message.assistant .avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #fff; font: 600 11px/1 'Space Grotesk', sans-serif; display: flex; align-items: center; justify-content: center; margin-right: 8px; flex-shrink: 0; }
+    .message.user .avatar { background: var(--card); color: var(--accent); }
+    .message .content { white-space: pre-wrap; word-break: break-word; }
+    .message .meta { font-size: 10px; color: var(--muted); margin-top: 4px; }
+    .welcome-screen { text-align: center; padding: 40px 20px; color: var(--muted); }
+    .welcome-screen h2 { font: 600 24px/1 'Space Grotesk', sans-serif; margin: 12px 0 4px; }
+    .welcome-screen p { font-size: 14px; }
+    .suggestions { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 16px; }
+    .suggestion { padding: 8px 12px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; font-size: 11px; cursor: pointer; transition: background .15s; }
+    .suggestion:hover { background: rgba(124, 92, 255, .1); }
 
-.chat-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:16px}
-.chat-messages:empty::after{content:'';display:block}
-.chat-welcome{text-align:center;padding:60px 20px;color:var(--muted)}
-.chat-welcome h2{font-family:var(--font-display);font-size:24px;font-weight:600;color:var(--text);margin-bottom:8px}
-.chat-welcome p{font-size:14px;max-width:400px;margin:0 auto;line-height:1.6}
-.quick-actions{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:24px}
-.quick-actions button{padding:8px 16px;border-radius:20px;font-size:12px;font-weight:500;color:var(--muted);background:var(--card);border:1px solid var(--border);transition:all .15s;cursor:pointer}
-.quick-actions button:hover{color:var(--text);border-color:var(--accent);background:rgba(124,92,255,0.08)}
+    /* Right Code Panel */
+    .code { flex: 1; background: var(--bg); overflow: hidden; }
+    .code-header { padding: 12px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; background: var(--bg); font-size: 11px; color: var(--muted); }
+    .code-header .tabs { display: flex; gap: 4px; }
+    .code-tab { padding: 6px 10px; background: var(--bg); border: 1px solid var(--border); border-radius: 6px 6px 0 0; color: var(--muted); cursor: pointer; font-weight: 500; }
+    .code-tab.active { background: var(--card); border-color: var(--border); color: var(--text); border-bottom: 0; }
+    .monaco-editor { height: calc(100vh - 200px); }
+    .action-btns { padding: 8px 16px; display: flex; gap: 6px; }
+    .action-btn { padding: 6px 12px; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; font-size: 11px; font-weight: 500; cursor: pointer; transition: all .15s; }
+    .action-btn:hover { background: rgba(124, 92, 255, .1); border-color: var(--accent); color: var(--accent); }
+    .action-btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
 
-.message{max-width:85%;animation:fadeIn .2s ease}
-.message.user{align-self:flex-end}
-.message.assistant{align-self:flex-start}
-.message-role{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;color:var(--muted)}
-.message.user .message-role{text-align:right}
-.message-content{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 18px;font-size:14px;line-height:1.7;word-wrap:break-word;overflow-wrap:break-word}
-.message.user .message-content{background:var(--accent);border-color:var(--accent);color:#fff;border-bottom-right-radius:4px}
-.message.assistant .message-content{border-bottom-left-radius:4px}
-.message-content p{margin:0 0 10px}
-.message-content p:last-child{margin-bottom:0}
-.message-content ul,.message-content ol{margin:8px 0;padding-left:20px}
-.message-content li{margin:4px 0}
-.message-content a{color:var(--accent-light);text-decoration:underline}
-.message-content strong{color:#fff;font-weight:600}
-.message-content code:not(.code-block code){background:rgba(255,255,255,0.08);padding:2px 6px;border-radius:4px;font-size:13px;font-family:'SF Mono',Monaco,Consolas,monospace}
-.message-meta{font-size:11px;color:var(--muted);margin-top:6px;display:flex;gap:12px}
-.message.user .message-meta{justify-content:flex-end}
-
-.thinking-block{margin:10px 0;border-left:3px solid var(--accent);padding:10px 14px;background:rgba(124,92,255,0.06);border-radius:0 8px 8px 0;cursor:pointer}
-.thinking-block .thinking-header{font-size:11px;font-weight:600;color:var(--accent-light);text-transform:uppercase;letter-spacing:0.5px;display:flex;align-items:center;gap:6px}
-.thinking-block .thinking-header::before{content:'▸';transition:transform .2s}
-.thinking-block.open .thinking-header::before{transform:rotate(90deg)}
-.thinking-block .thinking-content{display:none;margin-top:8px;font-size:13px;color:var(--muted);line-height:1.6;white-space:pre-wrap}
-.thinking-block.open .thinking-content{display:block}
-
-.tool-event{margin:8px 0;border-radius:8px;font-size:12px;overflow:hidden;border:1px solid var(--border)}
-.tool-event-header{display:flex;align-items:center;gap:6px;padding:8px 12px;cursor:pointer;transition:background .1s}
-.tool-event-header:hover{background:rgba(255,255,255,0.03)}
-.tool-event-header .tool-icon{font-size:14px}
-.tool-event-header .tool-name{font-weight:600;color:var(--accent-light);font-family:var(--font-display)}
-.tool-event-header .tool-status{margin-left:auto;color:var(--muted);font-size:11px}
-.tool-event-header .tool-chevron{color:var(--muted);transition:transform .2s;font-size:10px}
-.tool-event.open .tool-event-header .tool-chevron{transform:rotate(90deg)}
-.tool-event-body{display:none;padding:10px 12px;background:rgba(0,0,0,0.3);border-top:1px solid var(--border);font-family:'SF Mono',Monaco,Consolas,monospace;font-size:11px;line-height:1.5;color:var(--muted);white-space:pre-wrap;max-height:200px;overflow-y:auto}
-.tool-event.open .tool-event-body{display:block}
-.tool-call{border-color:rgba(124,92,255,0.2)}
-.tool-result{border-color:rgba(52,211,153,0.2)}
-
-.code-block-wrapper{margin:12px 0;border-radius:8px;overflow:hidden;border:1px solid var(--border);background:#0d0d14}
-.code-block-header{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;background:rgba(255,255,255,0.03);border-bottom:1px solid var(--border)}
-.code-block-lang{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px}
-.code-block-actions{display:flex;gap:4px}
-.code-block-actions button{padding:4px 10px;font-size:11px;font-weight:500;border-radius:4px;color:var(--muted);border:1px solid var(--border);background:transparent;transition:all .15s}
-.code-block-actions button:hover{color:var(--text);background:rgba(255,255,255,0.06)}
-.code-block-actions button.copied{color:var(--green);border-color:var(--green)}
-.code-block-body{padding:14px;overflow-x:auto;font-family:'SF Mono',Monaco,Consolas,monospace;font-size:13px;line-height:1.6;white-space:pre;tab-size:2}
-.code-block-body .kw{color:#c792ea}
-.code-block-body .str{color:#c3e88d}
-.code-block-body .num{color:#f78c6c}
-.code-block-body .cm{color:#546e7a;font-style:italic}
-.code-block-body .fn{color:#82aaff}
-.code-block-body .tag{color:#f07178}
-.code-block-body .attr{color:#ffcb6b}
-.code-block-body .punc{color:#89ddff}
-.code-block-body .op{color:#89ddff}
-
-.progress-indicator{display:flex;align-items:center;gap:8px;padding:12px 18px;color:var(--muted);font-size:13px;align-self:flex-start}
-.progress-dots{display:flex;gap:4px}
-.progress-dots span{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 1.2s ease-in-out infinite}
-.progress-dots span:nth-child(2){animation-delay:.2s}
-.progress-dots span:nth-child(3){animation-delay:.4s}
-@keyframes pulse{0%,100%{opacity:.3;transform:scale(.8)}50%{opacity:1;transform:scale(1.2)}}
-@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-
-.chat-input-area{padding:12px 16px;border-top:1px solid var(--border);background:var(--surface)}
-.chat-input-preview{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
-.chat-input-preview:empty{display:none}
-.chat-input-preview .thumb{position:relative;width:60px;height:60px;border-radius:6px;overflow:hidden;border:1px solid var(--border)}
-.chat-input-preview .thumb img{width:100%;height:100%;object-fit:cover}
-.chat-input-preview .thumb .remove{position:absolute;top:2px;right:2px;width:16px;height:16px;border-radius:50%;background:rgba(0,0,0,0.7);color:#fff;font-size:10px;display:flex;align-items:center;justify-content:center;cursor:pointer}
-.chat-input-row{display:flex;gap:8px;align-items:flex-end}
-.chat-input-row .input-wrapper{flex:1;position:relative}
-.chat-input-row textarea{width:100%;min-height:42px;max-height:160px;resize:none;padding:10px 14px;border-radius:8px;font-size:14px;line-height:1.5;background:var(--card);border:1px solid var(--border);transition:border-color .15s}
-.chat-input-row textarea:focus{border-color:var(--accent)}
-.chat-input-buttons{display:flex;gap:4px;flex-shrink:0}
-.chat-input-buttons button{width:38px;height:38px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--muted);background:var(--card);border:1px solid var(--border);transition:all .15s}
-.chat-input-buttons button:hover{color:var(--text);border-color:rgba(255,255,255,0.1)}
-.chat-input-buttons button.send-btn{background:var(--accent);border-color:var(--accent);color:#fff}
-.chat-input-buttons button.send-btn:hover{background:var(--accent-light)}
-.chat-input-buttons button.send-btn:disabled{opacity:.4;cursor:not-allowed}
-.chat-input-extras{display:flex;gap:6px;margin-top:8px;align-items:center}
-.skills-dropdown{position:relative}
-.skills-dropdown select{appearance:none;padding:6px 28px 6px 10px;font-size:11px;border-radius:6px;background:var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6' fill='%236e6e7c'/%3E%3C/svg%3E") no-repeat right 8px center;border:1px solid var(--border);color:var(--muted);cursor:pointer}
-.skills-dropdown select:hover{color:var(--text);border-color:rgba(255,255,255,0.1)}
-
-/* RIGHT PANEL - CANVAS */
-.panel-canvas{width:var(--panel-canvas);min-width:200px;background:var(--surface);border-left:1px solid var(--border);display:flex;flex-direction:column;transition:margin-right .3s ease,opacity .3s ease}
-.panel-canvas.hidden{margin-right:calc(var(--panel-canvas) + 4px);opacity:0;pointer-events:none}
-.canvas-tabs{display:flex;border-bottom:1px solid var(--border);background:var(--card)}
-.canvas-tabs button{flex:1;padding:10px 14px;font-size:12px;font-weight:500;color:var(--muted);border-bottom:2px solid transparent;transition:all .15s}
-.canvas-tabs button:hover{color:var(--text)}
-.canvas-tabs button.active{color:var(--accent-light);border-bottom-color:var(--accent)}
-.canvas-tab-actions{display:flex;align-items:center;gap:4px;padding:0 8px}
-.canvas-tab-actions button{padding:6px 10px;font-size:11px;font-weight:500;border-radius:4px;color:var(--green);border:1px solid rgba(52,211,153,0.2);background:rgba(52,211,153,0.06);transition:all .15s}
-.canvas-tab-actions button:hover{background:rgba(52,211,153,0.12)}
-.canvas-content{flex:1;position:relative;overflow:hidden}
-.canvas-pane{position:absolute;inset:0;display:none}
-.canvas-pane.active{display:flex;flex-direction:column}
-.preview-frame{width:100%;height:100%;border:none;background:#fff}
-.code-editor{width:100%;height:100%;border:none;resize:none;padding:14px;font-family:'SF Mono',Monaco,Consolas,monospace;font-size:13px;line-height:1.6;background:var(--bg);color:var(--text);tab-size:2;outline:none}
-.console-output{flex:1;overflow-y:auto;padding:12px;font-family:'SF Mono',Monaco,Consolas,monospace;font-size:12px;line-height:1.6;background:var(--bg)}
-.console-line{padding:4px 0;border-bottom:1px solid var(--border);display:flex;gap:8px}
-.console-line .console-time{color:var(--muted);flex-shrink:0}
-.console-line .console-msg{flex:1;word-break:break-all}
-.console-line.error .console-msg{color:var(--red)}
-.console-line.warn .console-msg{color:#fbbf24}
-.console-line.info .console-msg{color:var(--green)}
-.console-toolbar{padding:6px 12px;border-top:1px solid var(--border);display:flex;justify-content:flex-end}
-.console-toolbar button{padding:4px 10px;font-size:11px;border-radius:4px;color:var(--muted);border:1px solid var(--border);background:var(--card)}
-.console-toolbar button:hover{color:var(--text)}
-
-/* CONTEXT MENU */
-.context-menu{position:fixed;z-index:1000;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:6px;min-width:160px;box-shadow:0 8px 32px rgba(0,0,0,0.5);display:none}
-.context-menu.show{display:block}
-.context-menu button{width:100%;padding:8px 12px;font-size:13px;text-align:left;border-radius:4px;color:var(--text);display:flex;align-items:center;gap:8px}
-.context-menu button:hover{background:rgba(255,255,255,0.06)}
-.context-menu button.danger{color:var(--red)}
-.context-menu button.danger:hover{background:rgba(239,68,68,0.1)}
-.context-menu .sep{height:1px;background:var(--border);margin:4px 0}
-
-/* MODAL */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:900;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
-.modal-overlay.show{display:flex}
-.modal{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;min-width:320px;max-width:90vw}
-.modal h3{font-family:var(--font-display);font-size:16px;margin-bottom:16px}
-.modal input{width:100%;margin-bottom:16px}
-.modal-actions{display:flex;gap:8px;justify-content:flex-end}
-.modal-actions button{padding:8px 16px;border-radius:6px;font-size:13px;font-weight:500}
-.modal-actions .btn-cancel{color:var(--muted);border:1px solid var(--border)}
-.modal-actions .btn-cancel:hover{color:var(--text)}
-.modal-actions .btn-confirm{background:var(--accent);color:#fff}
-.modal-actions .btn-confirm:hover{background:var(--accent-light)}
-
-/* MOBILE */
-@media(max-width:768px){
-.panel-file{position:fixed;left:0;top:0;bottom:0;z-index:100;box-shadow:4px 0 24px rgba(0,0,0,0.5)}
-.panel-file.collapsed{margin-left:0}
-.panel-canvas{position:fixed;right:0;top:0;bottom:0;width:100%!important;z-index:90;transform:translateX(100%);transition:transform .3s ease}
-.panel-canvas.show-mobile{transform:translateX(0)}
-.chat-header .hamburger{display:block}
-.resize-divider{display:none}
-}
-</style>
+    /* Responsive */
+    @media (max-width: 1024px) { .sidebar { width: 200px; } }
+    @media (max-width: 768px) { .app { flex-direction: column; } .sidebar { width: 100%; border-right: 0; border-bottom: 1px solid var(--border); } .code { height: 400px; } }
+  </style>
 </head>
 <body>
-<div class="app" id="app">
-  <!-- LEFT PANEL: FILE MANAGER -->
-  <aside class="panel-file" id="panelFile">
-    <div class="panel-file-header">
-      <h3>Project</h3>
-      <button onclick="toggleFilePanel()" title="Collapse">✕</button>
-    </div>
-    <div class="panel-file-actions">
-      <button onclick="createFile()">+ File</button>
-      <button onclick="createFolder()">+ Folder</button>
-      <button onclick="showTemplates()" style="color:var(--accent-light)">📋</button>
-    </div>
-    <div class="file-tree" id="fileTree"></div>
-    <div class="panel-file-footer">
-      <button onclick="downloadZip()">⬇ Download ZIP</button>
-      <button onclick="buildAndDownload()" style="margin-top:6px;color:var(--green);border-color:rgba(52,211,153,0.2);background:rgba(52,211,153,0.06)">⚡ Build & Deploy</button>
-    </div>
-  </aside>
-
-  <!-- RESIZE DIVIDER -->
-  <div class="resize-divider" id="resizeDivider"></div>
-
-  <!-- CENTER PANEL: CHAT -->
-  <main class="panel-chat" id="panelChat">
-    <div class="chat-header">
-      <button class="hamburger" onclick="toggleFilePanel()" title="Menu">☰</button>
-      <select class="model-select" id="modelSelect">
-        <optgroup label="NVIDIA Free">
-          <option value="nvidia:nvidia/nemotron-3.5-lightning-30b-a3b" selected>Nemotron 3.5 Lightning 30B</option>
-          <option value="nvidia:meta/llama-3.2-11b-vision-instruct">Llama 3.2 11B Vision</option>
-          <option value="nvidia:meta/llama-3.2-90b-vision-instruct">Llama 3.2 90B Vision</option>
-        </optgroup>
-        <optgroup label="OpenRouter Free">
-          <option value="openrouter:google/gemma-4-31b-it:free">Gemma 4 31B</option>
-          <option value="openrouter:nvidia/nemotron-3.5-lightning:free">Nemotron 3.5 Lightning</option>
-          <option value="openrouter:nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free">Nemotron 3 Nano Omni</option>
-          <option value="openrouter:poolside/laguna-s-2.1:free">Poolside Laguna S</option>
-          <option value="openrouter:minimax/minimax-m3:free">MiniMax M3</option>
-          <option value="openrouter:openrouter/free">OpenRouter Auto</option>
-        </optgroup>
-      </select>
-      <span class="spacer"></span>
-      <button onclick="toggleCanvas()" title="Toggle Canvas">◧ Canvas</button>
-      <button onclick="clearChat()" title="Clear Chat">🗑 Clear</button>
-    </div>
-    <div class="chat-messages" id="chatMessages">
-      <div class="chat-welcome">
-        <h2>LX AI Coding Platform</h2>
-        <p>Describe what you want to build. Generate code, debug, refactor, and preview live — all in one place.</p>
-        <div class="quick-actions">
-          <button onclick="quickPrompt('Build a modern landing page with hero, features, and pricing sections')">Landing Page</button>
-          <button onclick="quickPrompt('Create a responsive dashboard with sidebar navigation and data cards')">Dashboard</button>
-          <button onclick="quickPrompt('Build a todo app with add, delete, and mark complete features')">Todo App</button>
-          <button onclick="quickPrompt('Create an animated portfolio with project grid')">Portfolio</button>
-          <button onclick="quickPrompt('Build a contact form with validation and submit handling')">Contact Form</button>
+  <div class="app">
+    <!-- Left: File Explorer Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <span class="sidebar-title">LX AI</span>
+        <div class="sidebar-actions">
+          <button class="btn-icon" title="New File" onclick="addFile('untitled.html')">+</button>
+          <button class="btn-icon" title="New Folder">📁</button>
         </div>
       </div>
-    </div>
-    <div class="chat-input-area">
-      <div class="chat-input-preview" id="inputPreview"></div>
-      <div class="chat-input-row">
-        <div class="input-wrapper">
-          <textarea id="chatInput" placeholder="Describe what you want to build..." rows="1" onkeydown="handleInputKey(event)" oninput="autoResize(this)"></textarea>
-        </div>
-        <div class="chat-input-buttons">
-          <button onclick="triggerImageUpload()" title="Upload Image">🖼</button>
-          <input type="file" id="imageInput" accept="image/*" multiple style="display:none" onchange="handleImageSelect(event)">
-          <button class="send-btn" id="sendBtn" onclick="sendMessage()" title="Send">▶</button>
-        </div>
+      <div class="file-tree" id="fileTree">
+        <!-- Files will be rendered by JS -->
       </div>
-      <div class="chat-input-extras">
-        <div class="skills-dropdown">
-          <select id="skillsSelect" onchange="applySkill()">
-            <option value="">Skills...</option>
-            <option value="generate">Generate Web App</option>
-            <option value="debug">Debug Code</option>
-            <option value="explain">Explain Code</option>
-            <option value="refactor">Refactor</option>
-            <option value="feature">Add Feature</option>
-            <option value="tests">Write Tests</option>
-            <option value="design">Design UI</option>
-            <option value="optimize">Optimize</option>
-            <option value="deploy">Prepare Deploy</option>
-            <option value="api">Build API</option>
-            <option value="database">Design Database</option>
-            <option value="security">Security Audit</option>
-          </select>
+      <div class="bottom-bar">
+        <button class="btn secondary" onclick="exportProject()">Download ZIP</button>
+        <button class="btn primary" onclick="buildProject()">Build & Deploy</button>
+      </div>
+    </div>
+
+    <!-- Center: Chat Panel -->
+    <div class="chat">
+      <div class="chat-header">
+        <h1>LX AI Assistant</h1>
+        <div class="model-pills" id="modelPills">
+          <div class="model-pill active" data-model="nvidia:meta/llama3-70b-instruct">Llama 3 70B</div>
+          <div class="model-pill" data-model="nvidia:qwen/qwen2.5-72b-instruct">Qwen 2.5 72B</div>
+          <div class="model-pill" data-model="openrouter:mistralai/mistral-7b-instruct:free">Mistral 7B</div>
         </div>
       </div>
-    </div>
-  </main>
-
-  <!-- RIGHT PANEL: CANVAS -->
-  <aside class="panel-canvas" id="panelCanvas">
-    <div class="canvas-tabs">
-      <button class="active" onclick="switchCanvasTab('preview',this)">Preview</button>
-      <button onclick="switchCanvasTab('code',this)">Code</button>
-      <button onclick="switchCanvasTab('console',this)">Console</button>
-      <div class="canvas-tab-actions">
-        <button onclick="refreshPreview()" title="Refresh Preview">↻</button>
-        <button onclick="exportCanvas()">Export</button>
-        <button onclick="buildAndDownload()" style="color:var(--green)">⚡ Build</button>
-      </div>
-    </div>
-    <div class="canvas-content">
-      <div class="canvas-pane active" id="panePreview">
-        <iframe id="previewFrame" class="preview-frame" sandbox="allow-scripts allow-same-origin allow-modals"></iframe>
-      </div>
-      <div class="canvas-pane" id="paneCode">
-        <textarea id="codeEditor" class="code-editor" spellcheck="false" oninput="onCodeEdit()"></textarea>
-      </div>
-      <div class="canvas-pane" id="paneConsole">
-        <div class="console-output" id="consoleOutput"></div>
-        <div class="console-toolbar">
-          <button onclick="clearConsole()">Clear</button>
-        </div>
-      </div>
-    </div>
-  </aside>
-</div>
-
-<!-- CONTEXT MENU -->
-<div class="context-menu" id="contextMenu">
-  <button onclick="ctxRename()">✏ Rename</button>
-  <button onclick="ctxDownload()">⬇ Download</button>
-  <div class="sep"></div>
-  <button class="danger" onclick="ctxDelete()">🗑 Delete</button>
-</div>
-
-<!-- MODAL -->
-<div class="modal-overlay" id="modalOverlay">
-  <div class="modal">
-    <h3 id="modalTitle">Create File</h3>
-    <input type="text" id="modalInput" placeholder="Name" onkeydown="if(event.key==='Enter')modalConfirm()">
-    <div class="modal-actions">
-      <button class="btn-cancel" onclick="modalCancel()">Cancel</button>
-      <button class="btn-confirm" onclick="modalConfirm()">Confirm</button>
-    </div>
-  </div>
-</div>
-
-<script>
-// ===================== STATE =====================
-const STORAGE_KEY = 'lx-ai-files';
-const DEFAULT_FILES = [
-  { path: 'index.html', content: `<!DOCTYPE html>\n<html lang="en">\n<head>\n  <meta charset="UTF-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1.0">\n  <title>My App</title>\n  <style>\n    * { margin: 0; padding: 0; box-sizing: border-box; }\n    body { font-family: 'Inter', sans-serif; background: #0a0a0f; color: #e4e4e7; min-height: 100vh; display: flex; align-items: center; justify-content: center; }\n    .card { background: #111118; border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 48px; text-align: center; max-width: 480px; }\n    h1 { font-family: 'Space Grotesk', sans-serif; font-size: 32px; margin-bottom: 12px; background: linear-gradient(135deg, #7c5cff, #9b7eff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }\n    p { color: #6e6e7c; line-height: 1.6; }\n  </style>\n</head>\n<body>\n  <div class="card">\n    <h1>Hello World</h1>\n    <p>Start editing to build your app. The live preview updates in real-time.</p>\n  </div>\n</body>\n</html>`, isDir: false },
-  { path: 'styles.css', content: `/* Add your styles here */\n:root {\n  --primary: #7c5cff;\n  --bg: #0a0a0f;\n  --surface: #111118;\n  --text: #e4e4e7;\n  --muted: #6e6e7c;\n}\n`, isDir: false },
-  { path: 'app.js', content: `// Add your JavaScript here\nconsole.log('App loaded!');\n`, isDir: false }
-];
-let files = [];
-let activeFile = null;
-let chatHistory = [];
-let pendingImages = [];
-let isGenerating = false;
-let ctxTarget = null;
-let modalCallback = null;
-let canvasVisible = true;
-let consoleLogs = [];
-
-function loadFiles() {
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) { const parsed = JSON.parse(saved); if (Array.isArray(parsed) && parsed.length > 0) { files = parsed; activeFile = parsed[0].path; return; } }
-  } catch(e) {}
-  files = JSON.parse(JSON.stringify(DEFAULT_FILES));
-  activeFile = 'index.html';
-}
-function saveFiles() {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(files)); } catch(e) {}
-}
-function resetFiles() {
-  files = JSON.parse(JSON.stringify(DEFAULT_FILES));
-  activeFile = 'index.html';
-  localStorage.removeItem(STORAGE_KEY);
-  renderFileTree();
-  openFile('index.html');
-}
-
-// ===================== FILE MANAGER =====================
-function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
-function escAttr(s) { return String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'"); }
-
-function renderFileTree() {
-  const tree = document.getElementById('fileTree');
-  const dirs = {};
-  const rootFiles = [];
-  files.forEach(f => {
-    const parts = f.path.split('/');
-    if (parts.length === 1) {
-      rootFiles.push(f);
-    } else {
-      const dir = parts[0];
-      if (!dirs[dir]) dirs[dir] = [];
-      dirs[dir].push({ path: parts.slice(1).join('/'), content: f.content, isDir: f.isDir, fullPath: f.path });
-    }
-  });
-  let html = '';
-  Object.keys(dirs).sort().forEach(d => {
-    html += `<div class="file-tree-folder">
-      <div class="file-tree-item" onclick="this.parentElement.classList.toggle('open')">
-        <span class="icon">📁</span><span class="name">${escHtml(d)}</span>
-      </div>
-      <div class="children">`;
-    dirs[d].forEach(f => {
-      const icon = f.isDir ? '📁' : getFileIcon(f.path);
-      const active = f.fullPath === activeFile ? ' active' : '';
-      html += `<div class="file-tree-item${active}" onclick="openFile('${escAttr(f.fullPath)}')" oncontextmenu="showContext(event,'${escAttr(f.fullPath)}')">
-        <span class="icon">${icon}</span><span class="name">${escHtml(f.path)}</span>
-        <span class="actions">
-          <button onclick="event.stopPropagation();ctxTarget='${escAttr(f.fullPath)}';ctxRename()">✏</button>
-          <button onclick="event.stopPropagation();ctxTarget='${escAttr(f.fullPath)}';ctxDelete()">✕</button>
-        </span>
-      </div>`;
-    });
-    html += `</div></div>`;
-  });
-  rootFiles.sort((a, b) => a.path.localeCompare(b.path)).forEach(f => {
-    const icon = getFileIcon(f.path);
-    const active = f.path === activeFile ? ' active' : '';
-    html += `<div class="file-tree-item${active}" onclick="openFile('${escAttr(f.path)}')" oncontextmenu="showContext(event,'${escAttr(f.path)}')">
-      <span class="icon">${icon}</span><span class="name">${escHtml(f.path)}</span>
-      <span class="actions">
-        <button onclick="event.stopPropagation();ctxTarget='${escAttr(f.path)}';ctxRename()">✏</button>
-        <button onclick="event.stopPropagation();ctxTarget='${escAttr(f.path)}';ctxDelete()">✕</button>
-      </span>
-    </div>`;
-  });
-  tree.innerHTML = html;
-}
-
-function getFileIcon(name) {
-  if (name.endsWith('.html')) return '📄';
-  if (name.endsWith('.css')) return '🎨';
-  if (name.endsWith('.js')) return '📜';
-  if (name.endsWith('.json')) return '📋';
-  if (name.endsWith('.md')) return '📝';
-  return '📄';
-}
-
-function openFile(path) {
-  const f = files.find(x => x.path === path);
-  if (!f || f.isDir) return;
-  activeFile = path;
-  renderFileTree();
-  const editor = document.getElementById('codeEditor');
-  editor.value = f.content;
-  if (path.endsWith('.html')) {
-    updatePreview(f.content);
-  }
-  switchCanvasTab('code', document.querySelector('.canvas-tabs button:nth-child(2)'));
-}
-
-function createFile() {
-  showModal('Create File', 'filename.html', val => {
-    if (!val) return;
-    val = val.replace(/[<>:"|?*]/g, '').replace(/^\.+/, '');
-    if (!val || files.find(f => f.path === val)) { alert('Invalid name or file already exists'); return; }
-    files.push({ path: val, content: '', isDir: false });
-    saveFiles();
-    renderFileTree();
-    openFile(val);
-  });
-}
-
-function createFolder() {
-  showModal('Create Folder', 'folder-name', val => {
-    if (!val) return;
-    val = val.replace(/[<>:"|?*]/g, '').replace(/^\.+/, '');
-    if (!val || files.find(f => f.path === val)) { alert('Invalid name or folder already exists'); return; }
-    files.push({ path: val + '/.gitkeep', content: '', isDir: false });
-    saveFiles();
-    renderFileTree();
-  });
-}
-
-const TEMPLATES = {
-  landing: {
-    name: 'Landing Page',
-    desc: 'Modern SaaS landing page with hero, features, pricing, CTA',
-    files: [
-      { path: 'index.html', content: `<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>Landing Page</title>\n<style>\n*{margin:0;padding:0;box-sizing:border-box}\n:root{--bg:#0a0a0f;--card:#111118;--accent:#7c5cff;--text:#e4e4e7;--muted:#6e6e7c}\nbody{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}\n.container{max-width:1200px;margin:0 auto;padding:0 24px}\nnav{display:flex;align-items:center;justify-content:space-between;padding:20px 0}\nnav .logo{font-size:20px;font-weight:700;color:var(--accent)}\nnav .links{display:flex;gap:24px}\nnav .links a{color:var(--muted);text-decoration:none;font-size:14px}\n.hero{padding:120px 0 80px;text-align:center}\n.hero h1{font-size:56px;font-weight:700;line-height:1.1;margin-bottom:16px}\n.hero p{font-size:18px;color:var(--muted);max-width:600px;margin:0 auto 32px}\n.btn{display:inline-block;padding:12px 32px;border-radius:8px;font-weight:600;text-decoration:none;font-size:15px}\n.btn-primary{background:var(--accent);color:#fff}\n.features{padding:80px 0}\n.features h2{text-align:center;font-size:36px;margin-bottom:48px}\n.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}\n.card{background:var(--card);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:32px}\n.card h3{font-size:18px;margin-bottom:8px}\n.card p{color:var(--muted);font-size:14px}\n</style>\n</head>\n<body>\n<div class="container">\n  <nav>\n    <div class="logo">YourBrand</div>\n    <div class="links"><a href="#">Features</a><a href="#">Pricing</a><a href="#">About</a><a href="#" class="btn btn-primary">Get Started</a></div>\n  </nav>\n  <div class="hero">\n    <h1>Build Something Amazing</h1>\n    <p>The platform that helps you ship faster, iterate smarter, and scale with confidence.</p>\n    <a href="#" class="btn btn-primary">Start Free Trial</a>\n  </div>\n  <div class="features">\n    <h2>Features</h2>\n    <div class="grid">\n      <div class="card"><h3>Lightning Fast</h3><p>Built for speed with modern architecture.</p></div>\n      <div class="card"><h3>Secure by Default</h3><p>Enterprise-grade security out of the box.</p></div>\n      <div class="card"><h3>Scale Infinitely</h3><p>From prototype to production without limits.</p></div>\n    </div>\n  </div>\n</div>\n</body>\n</html>` }
-    ]
-  },
-  dashboard: {
-    name: 'Dashboard',
-    desc: 'Admin dashboard with sidebar, charts, and data tables',
-    files: [
-      { path: 'index.html', content: `<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>Dashboard</title>\n<style>\n*{margin:0;padding:0;box-sizing:border-box}\n:root{--bg:#0a0a0f;--sidebar:#0d0d14;--card:#111118;--accent:#7c5cff;--green:#34d399;--text:#e4e4e7;--muted:#6e6e7c;--border:rgba(255,255,255,0.06)}\nbody{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);display:flex;height:100vh}\n.sidebar{width:240px;background:var(--sidebar);border-right:1px solid var(--border);padding:20px}\n.sidebar .logo{font-size:18px;font-weight:700;color:var(--accent);margin-bottom:32px}\n.sidebar nav a{display:block;padding:10px 16px;color:var(--muted);text-decoration:none;border-radius:8px;margin-bottom:4px;font-size:14px}\n.sidebar nav a:hover,.sidebar nav a.active{background:rgba(124,92,255,0.1);color:var(--text)}\n.main{flex:1;padding:32px;overflow-y:auto}\n.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px}\n.stat{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px}\n.stat .label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}\n.stat .value{font-size:28px;font-weight:700;margin-top:4px}\n.stat .change{font-size:12px;color:var(--green);margin-top:4px}\n.chart{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;height:300px;display:flex;align-items:flex-end;gap:8px;padding-top:40px}\n.chart .bar{flex:1;background:var(--accent);border-radius:4px 4px 0 0;transition:height .3s}\n</style>\n</head>\n<body>\n<aside class="sidebar">\n  <div class="logo">Dashboard</div>\n  <nav>\n    <a href="#" class="active">Overview</a>\n    <a href="#">Analytics</a>\n    <a href="#">Users</a>\n    <a href="#">Settings</a>\n  </nav>\n</aside>\n<main class="main">\n  <div class="stats">\n    <div class="stat"><div class="label">Revenue</div><div class="value">$48.2K</div><div class="change">+12.5%</div></div>\n    <div class="stat"><div class="label">Users</div><div class="value">2,847</div><div class="change">+8.2%</div></div>\n    <div class="stat"><div class="label">Orders</div><div class="value">1,203</div><div class="change">+5.7%</div></div>\n    <div class="stat"><div class="label">Conversion</div><div class="value">3.2%</div><div class="change">+0.4%</div></div>\n  </div>\n  <div class="chart" id="chart"></div>\n</main>\n<script>\nconst chart=document.getElementById('chart');\nconst values=[40,65,45,80,55,90,70,85,60,95,75,88];\nvalues.forEach(v=>{const bar=document.createElement('div');bar.className='bar';bar.style.height=v+'%';chart.appendChild(bar)});\\n<\/script>\\n<\/body>\\n<\/html>` }
-    ]
-  },
-  portfolio: {
-    name: 'Portfolio',
-    desc: 'Personal portfolio with project grid and contact form',
-    files: [
-      { path: 'index.html', content: `<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>Portfolio</title>\n<style>\n*{margin:0;padding:0;box-sizing:border-box}\n:root{--bg:#0a0a0f;--card:#111118;--accent:#7c5cff;--text:#e4e4e7;--muted:#6e6e7c}\nbody{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}\n.container{max-width:1000px;margin:0 auto;padding:0 24px}\nheader{padding:80px 0 40px}\nheader h1{font-size:48px;font-weight:700;margin-bottom:8px}\nheader p{color:var(--muted);font-size:18px}\n.projects{padding:40px 0 80px}\n.projects h2{font-size:24px;margin-bottom:24px}\n.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}\n.project{background:var(--card);border:1px solid rgba(255,255,255,0.06);border-radius:12px;overflow:hidden}\n.project .thumb{height:180px;background:linear-gradient(135deg,var(--accent),#34d399);display:flex;align-items:center;justify-content:center;font-size:48px}\n.project .info{padding:20px}\n.project h3{margin-bottom:4px}\n.project p{color:var(--muted);font-size:14px}\n</style>\n</head>\n<body>\n<div class="container">\n  <header>\n    <h1>Your Name</h1>\n    <p>Full-stack developer crafting digital experiences</p>\n  </header>\n  <div class="projects">\n    <h2>Projects</h2>\n    <div class="grid">\n      <div class="project"><div class="thumb">🚀</div><div class="info"><h3>Project Alpha</h3><p>A web application built with modern technologies</p></div></div>\n      <div class="project"><div class="thumb">🎨</div><div class="info"><h3>Project Beta</h3><p>Design system and component library</p></div></div>\n      <div class="project"><div class="thumb">📊</div><div class="info"><h3>Project Gamma</h3><p>Data visualization dashboard</p></div></div>\n      <div class="project"><div class="thumb">🤖</div><div class="info"><h3>Project Delta</h3><p>AI-powered automation tool</p></div></div>\n    </div>\n  </div>\n</div>\n</body>\n</html>` }
-    ]
-  },
-  api: {
-    name: 'REST API',
-    desc: 'Express.js REST API with routes and middleware',
-    files: [
-      { path: 'package.json', content: '{\n  "name": "api",\n  "version": "1.0.0",\n  "main": "server.js",\n  "scripts": {\n    "start": "node server.js",\n    "dev": "npx nodemon server.js"\n  },\n  "dependencies": {\n    "express": "^4.18.0",\n    "cors": "^2.8.5"\n  }\n}' },
-      { path: 'server.js', content: `const express = require('express');\nconst cors = require('cors');\nconst app = express();\nconst PORT = process.env.PORT || 3000;\n\napp.use(cors());\napp.use(express.json());\n\nlet items = [\n  { id: 1, name: 'Item 1' },\n  { id: 2, name: 'Item 2' }\n];\n\napp.get('/api/items', (req, res) => res.json(items));\napp.get('/api/items/:id', (req, res) => {\n  const item = items.find(i => i.id === +req.params.id);\n  item ? res.json(item) : res.status(404).json({ error: 'Not found' });\n});\napp.post('/api/items', (req, res) => {\n  const item = { id: items.length + 1, ...req.body };\n  items.push(item);\n  res.status(201).json(item);\n});\napp.delete('/api/items/:id', (req, res) => {\n  items = items.filter(i => i.id !== +req.params.id);\n  res.json({ success: true });\n});\n\napp.listen(PORT, () => console.log('API running on port ' + PORT));` }
-    ]
-  },
-  saas: {
-    name: 'SaaS Starter',
-    desc: 'Complete SaaS template with auth, pricing, and dashboard',
-    files: [
-      { path: 'index.html', content: `<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>SaaS App</title>\n<style>\n*{margin:0;padding:0;box-sizing:border-box}\n:root{--bg:#0a0a0f;--card:#111118;--accent:#7c5cff;--green:#34d399;--text:#e4e4e7;--muted:#6e6e7c}\nbody{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}\na{color:var(--accent);text-decoration:none}\n.container{max-width:1200px;margin:0 auto;padding:0 24px}\nnav{display:flex;align-items:center;justify-content:space-between;padding:20px 0}\nnav .logo{font-size:20px;font-weight:700}\n.btn{display:inline-block;padding:10px 24px;border-radius:8px;font-weight:600;font-size:14px;border:none;cursor:pointer}\n.btn-primary{background:var(--accent);color:#fff}\n.btn-outline{border:1px solid rgba(255,255,255,0.1);color:var(--text);background:transparent}\n.hero{padding:100px 0;text-align:center}\n.hero h1{font-size:52px;font-weight:700;line-height:1.1;margin-bottom:16px}\n.hero p{font-size:18px;color:var(--muted);max-width:500px;margin:0 auto 32px}\n.pricing{padding:60px 0}\n.pricing h2{text-align:center;font-size:32px;margin-bottom:40px}\n.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}\n.plan{background:var(--card);border:1px solid rgba(255,255,255,0.06);border-radius:16px;padding:32px;text-align:center}\n.plan.featured{border-color:var(--accent);position:relative}\n.plan.featured::before{content:'Popular';position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;padding:4px 16px;border-radius:12px;font-size:12px;font-weight:600}\n.plan h3{font-size:20px;margin-bottom:8px}\n.plan .price{font-size:40px;font-weight:700;margin:16px 0}\n.plan .price span{font-size:16px;color:var(--muted);font-weight:400}\n.plan ul{list-style:none;margin:24px 0;text-align:left}\n.plan li{padding:8px 0;font-size:14px;color:var(--muted)}\n.plan li::before{content:'✓ ';color:var(--green)}\n</style>\n</head>\n<body>\n<div class="container">\n  <nav>\n    <div class="logo">SaaSify</div>\n    <div style="display:flex;gap:12px;align-items:center">\n      <a href="#" style="color:var(--muted);font-size:14px">Login</a>\n      <a href="#" class="btn btn-primary">Get Started</a>\n    </div>\n  </nav>\n  <div class="hero">\n    <h1>Ship Products Faster</h1>\n    <p>The all-in-one platform for modern teams. Build, launch, and scale your product.</p>\n    <a href="#" class="btn btn-primary" style="padding:14px 40px;font-size:16px">Start Free Trial</a>\n  </div>\n  <div class="pricing">\n    <h2>Simple Pricing</h2>\n    <div class="plans">\n      <div class="plan"><h3>Starter</h3><p style="color:var(--muted);font-size:14px">For individuals</p><div class="price">$0<span>/mo</span></div><ul><li>3 projects</li><li>Basic analytics</li><li>Community support</li></ul><a href="#" class="btn btn-outline" style="width:100%">Get Started</a></div>\n      <div class="plan featured"><h3>Pro</h3><p style="color:var(--muted);font-size:14px">For teams</p><div class="price">$29<span>/mo</span></div><ul><li>Unlimited projects</li><li>Advanced analytics</li><li>Priority support</li><li>Custom domain</li></ul><a href="#" class="btn btn-primary" style="width:100%">Get Started</a></div>\n      <div class="plan"><h3>Enterprise</h3><p style="color:var(--muted);font-size:14px">For organizations</p><div class="price">$99<span>/mo</span></div><ul><li>Everything in Pro</li><li>SSO & SAML</li><li>Dedicated support</li><li>SLA guarantee</li></ul><a href="#" class="btn btn-outline" style="width:100%">Contact Sales</a></div>\n    </div>\n  </div>\n</div>\n</body>\n</html>` }
-    ]
-  },
-  blank: {
-    name: 'Blank HTML',
-    desc: 'Empty HTML5 boilerplate to start from scratch',
-    files: [
-      { path: 'index.html', content: `<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>Document</title>\n<style>\n*{margin:0;padding:0;box-sizing:border-box}\nbody{font-family:system-ui,sans-serif;background:#0a0a0f;color:#e4e4e7;line-height:1.6;padding:40px}\n</style>\n</head>\n<body>\n<h1>Hello World</h1>\n</body>\n</html>` }
-    ]
-  }
-};
-
-function showTemplates() {
-  const modal = document.getElementById('modalOverlay');
-  document.getElementById('modalTitle').textContent = 'Choose Template';
-  const input = document.getElementById('modalInput');
-  input.style.display = 'none';
-
-  let html = '<div style="display:grid;gap:8px;max-height:400px;overflow-y:auto;padding:8px 0">';
-  for (const [key, tpl] of Object.entries(TEMPLATES)) {
-    const safeName = (tpl.name || '').replace(/[<>&"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-    const safeDesc = (tpl.desc || '').replace(/[<>&"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-    html += `<button onclick="loadTemplate('${key.replace(/'/g,"\\'")}')" style="text-align:left;padding:16px;border-radius:8px;border:1px solid var(--border);background:var(--card);cursor:pointer;transition:all .15s" onmouseover="this.style.borderColor='rgba(124,92,255,0.3)'" onmouseout="this.style.borderColor='var(--border)'">
-      <div style="font-weight:600;color:var(--text);margin-bottom:4px">${safeName}</div>
-      <div style="font-size:12px;color:var(--muted)">${safeDesc}</div>
-    </button>`;
-  }
-  html += '</div>';
-
-  const container = modal.querySelector('.modal-content') || modal;
-  const existing = modal.querySelector('.templates-grid');
-  if (existing) existing.remove();
-  const div = document.createElement('div');
-  div.className = 'templates-grid';
-  div.innerHTML = html;
-  modal.querySelector('div').appendChild(div);
-
-  modal.classList.add('show');
-  modal._templatesMode = true;
-}
-
-function loadTemplate(key) {
-  const tpl = TEMPLATES[key];
-  if (!tpl) return;
-  files = [];
-  tpl.files.forEach(f => files.push({ path: f.path, content: f.content, isDir: false }));
-  saveFiles();
-  renderFileTree();
-  if (files.length) openFile(files[0].path);
-  const modal = document.getElementById('modalOverlay');
-  modal.classList.remove('show');
-  modal._templatesMode = false;
-  const grid = modal.querySelector('.templates-grid');
-  if (grid) grid.remove();
-  const input = document.getElementById('modalInput');
-  input.style.display = '';
-}
-
-function deleteFile(path) {
-  files = files.filter(f => f.path !== path && !f.path.startsWith(path + '/'));
-  if (activeFile === path) { activeFile = files.length ? files[0].path : null; if (activeFile) openFile(activeFile); }
-  saveFiles();
-  renderFileTree();
-}
-
-function renameFile(path) {
-  const f = files.find(x => x.path === path);
-  if (!f) return;
-  showModal('Rename', path.split('/').pop(), val => {
-    if (!val || val === path) return;
-    const parts = path.split('/');
-    parts[parts.length - 1] = val.replace(/[<>:"|?*]/g, '');
-    f.path = parts.join('/');
-    if (activeFile === path) activeFile = f.path;
-    saveFiles();
-    renderFileTree();
-  });
-}
-
-function saveCodeToFile(encodedCode, lang) {
-  const code = decodeURIComponent(encodedCode);
-  const ext = { html: 'html', css: 'css', javascript: 'js', js: 'js' }[lang] || 'txt';
-  const defaultName = 'generated-' + Date.now() + '.' + ext;
-  showModal('Save as', defaultName, val => {
-    if (!val) return;
-    val = val.replace(/[<>:"|?*]/g, '').replace(/^\.+/, '').replace(/\/+/g, '/');
-    if (!val || files.find(f => f.path === val)) { alert('Invalid name or file already exists'); return; }
-    files.push({ path: val, content: code, isDir: false });
-    saveFiles();
-    renderFileTree();
-    openFile(val);
-  });
-}
-
-function downloadFile(path) {
-  const f = files.find(x => x.path === path);
-  if (!f) return;
-  const blob = new Blob([f.content], { type: 'text/plain' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = path.split('/').pop();
-  a.click();
-  URL.revokeObjectURL(a.href);
-}
-
-// downloadZip is defined below with full project packaging
-
-// ===================== CONTEXT MENU =====================
-function showContext(e, path) {
-  e.preventDefault();
-  e.stopPropagation();
-  ctxTarget = path;
-  const menu = document.getElementById('contextMenu');
-  menu.style.left = e.clientX + 'px';
-  menu.style.top = e.clientY + 'px';
-  menu.classList.add('show');
-}
-function hideContext() { document.getElementById('contextMenu').classList.remove('show'); }
-function ctxRename() { hideContext(); if (ctxTarget) renameFile(ctxTarget); }
-function ctxDelete() { hideContext(); if (ctxTarget && confirm('Delete ' + ctxTarget + '?')) deleteFile(ctxTarget); }
-function ctxDownload() { hideContext(); if (ctxTarget) downloadFile(ctxTarget); }
-document.addEventListener('click', hideContext);
-
-// ===================== MODAL =====================
-function showModal(title, placeholder, cb) {
-  document.getElementById('modalTitle').textContent = title;
-  const inp = document.getElementById('modalInput');
-  inp.value = placeholder;
-  inp.placeholder = placeholder;
-  modalCallback = cb;
-  document.getElementById('modalOverlay').classList.add('show');
-  setTimeout(() => { inp.focus(); inp.select(); }, 50);
-}
-function modalConfirm() {
-  const modal = document.getElementById('modalOverlay');
-  if (modal._templatesMode) return;
-  const val = document.getElementById('modalInput').value.trim();
-  modal.classList.remove('show');
-  if (modalCallback) modalCallback(val);
-}
-function modalCancel() {
-  const modal = document.getElementById('modalOverlay');
-  modal.classList.remove('show');
-  modal._templatesMode = false;
-  const grid = modal.querySelector('.templates-grid');
-  if (grid) grid.remove();
-  const input = document.getElementById('modalInput');
-  input.style.display = '';
-}
-
-// ===================== CHAT =====================
-function handleInputKey(e) {
-  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
-}
-
-function autoResize(el) {
-  el.style.height = 'auto';
-  el.style.height = Math.min(el.scrollHeight, 160) + 'px';
-}
-
-function applySkill() {
-  const sel = document.getElementById('skillsSelect');
-  const val = sel.value;
-  if (!val) return;
-  const prompts = {
-    generate: 'Build a complete, fully working web application with HTML, CSS, and JS. No placeholders, no stubs. Include all responsive breakpoints, all interactive states, all event handlers. Output a single self-contained HTML file.',
-    debug: 'Analyze this code, find every bug, and output the COMPLETE corrected version with all fixes applied.',
-    explain: 'Explain this code step by step — what each section does, the patterns used, and how data flows.',
-    refactor: 'Refactor this code completely. Output the FULL refactored version — every function, every CSS rule, every HTML element.',
-    feature: 'Add this feature to the existing code. Output the COMPLETE updated file with the feature fully integrated.',
-    tests: 'Write comprehensive tests covering edge cases, error handling, and expected behavior.',
-    design: 'Design a complete, responsive UI. Output the FULL HTML and CSS — every component, every breakpoint, every state.',
-    optimize: 'Optimize this code completely. Output the FULL optimized version — every function, every selector, every line.',
-    deploy: 'Prepare this project for deployment. Output COMPLETE production-ready code with error handling and performance optimizations.',
-    api: 'Build a complete RESTful API with request validation, error handling, and response formatting.',
-    database: 'Design and implement a complete database schema with relationships, indexes, queries, and migrations.',
-    security: 'Review this code for security vulnerabilities and output the COMPLETE fixed version.'
-  };
-  const input = document.getElementById('chatInput');
-  input.value = prompts[val] || '';
-  input.focus();
-  autoResize(input);
-  sel.value = '';
-}
-
-async function sendMessage() {
-  if (isGenerating) return;
-  const input = document.getElementById('chatInput');
-  const text = input.value.trim();
-  if (!text && pendingImages.length === 0) return;
-
-  const userContent = text;
-  const userMsg = { role: 'user', content: userContent, images: [...pendingImages] };
-  chatHistory.push(userMsg);
-  renderMessage(userMsg);
-  input.value = '';
-  autoResize(input);
-  pendingImages = [];
-  document.getElementById('inputPreview').innerHTML = '';
-
-  isGenerating = true;
-  document.getElementById('sendBtn').disabled = true;
-
-  const modelVal = document.getElementById('modelSelect').value;
-  const [provider, model] = modelVal.split(':');
-  const isGenerateRequest = /build|create|make|generate|design|landing|page|app|site|store|dashboard|portfolio/i.test(userContent);
-  const isCodeRefine = files.length > 0 && /fix|debug|refactor|improve|add|change|update|optimize/i.test(userContent) && !isGenerateRequest;
-  const isExplain = /explain|how|what|why|describe/i.test(userContent) && !isGenerateRequest;
-
-  try {
-    if (isGenerateRequest) {
-      // ── Single-phase generation (bolt.diy style) ──
-      const progress = showProgress('Building...');
-      const resp = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          message: userContent,
-          mode: 'generate',
-          provider,
-          model,
-          history: chatHistory.slice(-8).map(m => ({ role: m.role, content: m.content.substring(0, 2000) }))
-        })
-      });
-
-      if (!resp.ok) throw new Error('Generation failed: ' + resp.status);
-      const data = await resp.json();
-      progress.remove();
-
-      const rawReply = data.reply || '';
-      const artifact = data.artifact;
-
-      // Display the intro text (outside artifact tags) if any
-      if (artifact && artifact.introText) {
-        renderMessage({ role: 'assistant', content: artifact.introText });
-      }
-
-      // Display the full response (artifact-wrapped) for code rendering
-      const codeMsg = { role: 'assistant', content: rawReply };
-      const codeMsgEl = createMessageEl(codeMsg);
-      renderAssistantContent(codeMsgEl, rawReply);
-
-      // Provider info
-      const provInfo = data.provider ? ` (${data.provider}/${data.model})` : '';
-      const metaEl = codeMsgEl.querySelector('.message-meta');
-      if (metaEl) metaEl.innerHTML = `<span>${provInfo}</span>`;
-
-      chatHistory.push(codeMsg);
-
-      // Extract code from artifact and update files/preview
-      if (artifact && artifact.actions && artifact.actions.length > 0) {
-        const htmlAction = artifact.actions.find(a => a.filePath.endsWith('.html'));
-        if (htmlAction) {
-          const editor = document.getElementById('codeEditor');
-          if (editor) editor.value = htmlAction.content;
-          updatePreview(htmlAction.content);
-          // Save to files panel
-          for (const action of artifact.actions) {
-            addFile(action.filePath, action.content);
-          }
-          if (window.innerWidth < 768) {
-            document.getElementById('panelCanvas').classList.add('show-mobile');
-          }
-        }
-      } else {
-        // Fallback: try code fence extraction
-        extractAndSaveCode(rawReply);
-      }
-
-    } else if (isCodeRefine) {
-      // ── Refine existing code ──
-      const active = files.find(f => f.path === activeFile);
-      if (!active) throw new Error('No file open to refine');
-
-      const progress = showProgress('Refining...');
-      const resp = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          message: userContent,
-          mode: 'refine',
-          provider,
-          model,
-          code: active.content
-        })
-      });
-
-      if (!resp.ok) throw new Error('Refine failed: ' + resp.status);
-      const data = await resp.json();
-      progress.remove();
-
-      const rawReply = data.reply || 'No changes made.';
-      const artifact = data.artifact;
-
-      const msg = { role: 'assistant', content: rawReply };
-      const msgEl = createMessageEl(msg);
-      renderAssistantContent(msgEl, rawReply);
-      chatHistory.push(msg);
-
-      // Update file from artifact
-      if (artifact && artifact.actions && artifact.actions.length > 0) {
-        const htmlAction = artifact.actions.find(a => a.filePath.endsWith('.html'));
-        if (htmlAction) {
-          const editor = document.getElementById('codeEditor');
-          if (editor) editor.value = htmlAction.content;
-          updatePreview(htmlAction.content);
-          addFile(htmlAction.filePath, htmlAction.content);
-        }
-      } else {
-        extractAndSaveCode(rawReply);
-      }
-
-    } else if (isExplain) {
-      // ── Explain code ──
-      const active = files.find(f => f.path === activeFile);
-      const progress = showProgress('Explaining...');
-      const resp = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          message: userContent,
-          mode: 'explain',
-          provider,
-          model,
-          code: active ? active.content : userContent
-        })
-      });
-
-      if (!resp.ok) throw new Error('Explain failed: ' + resp.status);
-      const data = await resp.json();
-      progress.remove();
-
-      const msg = { role: 'assistant', content: data.reply || 'No explanation available.' };
-      renderMessage(msg);
-      chatHistory.push(msg);
-
-    } else {
-      // ── General chat ──
-      const progress = showProgress('Thinking...');
-      const resp = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          message: userContent,
-          mode: 'chat',
-          provider,
-          model,
-          history: chatHistory.slice(-16).map(m => ({ role: m.role, content: m.content.substring(0, 3000) }))
-        })
-      });
-
-      if (!resp.ok) throw new Error('API error: ' + resp.status);
-      const data = await resp.json();
-      progress.remove();
-
-      const rawReply = data.reply || 'No response.';
-      const artifact = data.artifact;
-
-      // If the chat response contains an artifact (user asked to build something in chat mode)
-      if (artifact && artifact.actions && artifact.actions.length > 0) {
-        const codeMsg = { role: 'assistant', content: rawReply };
-        const codeMsgEl = createMessageEl(codeMsg);
-        renderAssistantContent(codeMsgEl, rawReply);
-        chatHistory.push(codeMsg);
-
-        const htmlAction = artifact.actions.find(a => a.filePath.endsWith('.html'));
-        if (htmlAction) {
-          const editor = document.getElementById('codeEditor');
-          if (editor) editor.value = htmlAction.content;
-          updatePreview(htmlAction.content);
-          for (const action of artifact.actions) {
-            addFile(action.filePath, action.content);
-          }
-        }
-      } else {
-        const msg = { role: 'assistant', content: rawReply };
-        const msgEl = createMessageEl(msg);
-        renderAssistantContent(msgEl, rawReply);
-        chatHistory.push(msg);
-        // Still try to extract code fences if any
-        extractAndSaveCode(rawReply);
-      }
-    }
-
-  } catch (err) {
-    removeProgress();
-    let errMsg = err.message;
-    if (errMsg.includes('Failed to fetch') || errMsg.includes('NetworkError') || errMsg.includes('Network request failed')) {
-      errMsg = 'Network error — check your connection and try again.';
-    } else if (errMsg.includes('502') || errMsg.includes('504')) {
-      errMsg = 'AI service is temporarily unavailable. Try again in a moment.';
-    } else if (errMsg.includes('JSON')) {
-      errMsg = 'Received an invalid response from the server. Try again.';
-    }
-    renderMessage({ role: 'assistant', content: '**Error:** ' + errMsg + '\n\n*Try rephrasing your request or switch to a different model.*' });
-  } finally {
-    isGenerating = false;
-    document.getElementById('sendBtn').disabled = false;
-  }
-}
-
-function extractAndSaveCode(text) {
-  const cleaned = cleanAIOutput(text);
-  const codeBlocks = [];
-  const regex = /```(\w*)\n([\s\S]*?)```/g;
-  let match;
-  while ((match = regex.exec(cleaned)) !== null) {
-    const lang = match[1] || 'code';
-    const code = match[2].trim();
-    if (code.length > 10) codeBlocks.push({ lang, code });
-  }
-  if (codeBlocks.length === 0) return;
-  saveCodeBlocksToFiles(codeBlocks);
-  // Make sure preview shows the best block
-  let bestBlock = codeBlocks[0];
-  for (const block of codeBlocks) { if (block.code.length > bestBlock.code.length) bestBlock = block; }
-  if (bestBlock.lang === 'html' || bestBlock.code.includes('<html') || bestBlock.code.includes('<body')) {
-    const editor = document.getElementById('codeEditor');
-    if (editor) editor.value = bestBlock.code;
-    updatePreview(bestBlock.code);
-  }
-}
-
-function renderMessage(msg) {
-  const container = document.getElementById('chatMessages');
-  const welcome = container.querySelector('.chat-welcome');
-  if (welcome) welcome.remove();
-
-  const el = document.createElement('div');
-  el.className = 'message ' + msg.role;
-
-  const roleLabel = msg.role === 'user' ? 'You' : 'LX';
-  let contentHtml = '';
-
-  if (msg.role === 'user') {
-    contentHtml = `<div class="message-role">${roleLabel}</div><div class="message-content">`;
-    if (msg.images && msg.images.length) {
-      msg.images.forEach(img => {
-        contentHtml += `<img src="${img}" style="max-width:200px;border-radius:8px;margin-bottom:8px;display:block">`;
-      });
-    }
-    contentHtml += `<p>${escapeHtml(msg.content)}</p></div>`;
-  } else if (msg.isHtml) {
-    contentHtml = `<div class="message-role">${roleLabel}</div><div class="message-content">${msg.content}</div><div class="message-meta"></div>`;
-  } else {
-    contentHtml = `<div class="message-role">${roleLabel}</div><div class="message-content"></div><div class="message-meta"></div>`;
-  }
-
-  el.innerHTML = contentHtml;
-  container.appendChild(el);
-  scrollBottom();
-  return el;
-}
-
-function createMessageEl(msg) {
-  const container = document.getElementById('chatMessages');
-  const el = document.createElement('div');
-  el.className = 'message assistant';
-  el.innerHTML = `<div class="message-role">LX</div><div class="message-content"></div><div class="message-meta"></div>`;
-  container.appendChild(el);
-  scrollBottom();
-  return el;
-}
-
-function renderAssistantContent(el, text) {
-  const contentEl = el.querySelector('.message-content');
-  let html = '';
-
-  // Split by thinking blocks and code blocks
-  const segments = splitSegments(text);
-
-  segments.forEach(seg => {
-    if (seg.type === 'thinking') {
-      html += `<div class="thinking-block" onclick="this.classList.toggle('open')">
-        <div class="thinking-header">Thinking</div>
-        <div class="thinking-content">${escapeHtml(seg.content)}</div>
-      </div>`;
-    } else if (seg.type === 'code') {
-      const lang = seg.lang || 'code';
-      const highlighted = highlightCode(seg.content, lang);
-      const codeId = 'code_' + Math.random().toString(36).substr(2, 8);
-      const isHtml = /html|htm/.test(lang);
-      const isSaveable = /html|css|javascript|js/.test(lang);
-      const openBtn = isHtml ? `<button onclick="openInCanvas(\`${encodeURIComponent(seg.content)}\`)">Open in Canvas</button>` : '';
-      const saveBtn = isSaveable ? `<button onclick="saveCodeToFile(\`${encodeURIComponent(seg.content)}\`,\`${lang}\`)">Save to Files</button>` : '';
-      html += `<div class="code-block-wrapper">
-        <div class="code-block-header">
-          <span class="code-block-lang">${lang}</span>
-          <div class="code-block-actions">
-            <button onclick="copyCode('${codeId}',this)">Copy</button>
-            ${openBtn}
-            ${saveBtn}
+      <div class="chat-messages" id="chatMessages">
+        <div class="welcome-screen">
+          <h2>What do you want to build today?</h2>
+          <p>Describe a web app, landing page, or automation — and I'll generate it instantly</p>
+          <div class="suggestions">
+            <div class="suggestion" onclick="sendPrompt('Build a modern landing page with hero, features, and pricing')">Landing Page</div>
+            <div class="suggestion" onclick="sendPrompt('Create a responsive dashboard with sidebar and cards')">Dashboard</div>
+            <div class="suggestion" onclick="sendPrompt('Build a todo app with add, delete, mark complete')">Todo App</div>
           </div>
         </div>
-        <div class="code-block-body" id="${codeId}">${highlighted}</div>
-      </div>`;
-    } else {
-      html += renderMarkdown(seg.content);
-    }
-  });
+      </div>
+      <div class="chat-input-wrap">
+        <input type="text" id="chatInput" placeholder="Describe what you want to build..." onkeydown="if(event.key==='Enter')sendMessage()" />
+        <button class="action-btn primary" onclick="sendMessage()">Generate</button>
+        <button class="action-btn secondary" onclick="uploadFile()">Attach</button>
+      </div>
+    </div>
 
-  contentEl.innerHTML = html;
-  scrollBottom();
-}
+    <!-- Right: Code Panel -->
+    <div class="code">
+      <div class="code-header">
+        <div class="code-header-left">
+          <span>LX AI Platform</span>
+        </div>
+        <div class="code-header-right">
+          <div class="action-btns">
+            <button class="action-btn" onclick="exportCode()">Export</button>
+            <button class="action-btn primary" onclick="buildCode()">Build</button>
+          </div>
+        </div>
+      </div>
+      <div id="monacoEditor" style="height: calc(100vh - 200px);"></div>
+    </div>
+  </div>
 
-function splitSegments(text) {
-  const segments = [];
-  // Match: code fences, think blocks, AND lxArtifact blocks
-  const regex = /```(\w*)\n([\s\S]*?)```|<think>([\s\S]*?)<\/think>|<lxArtifact[\s\S]*?<\/lxArtifact>/g;
-  let lastIndex = 0;
-  let match;
-
-  while ((match = regex.exec(text)) !== null) {
-    if (match.index > lastIndex) {
-      segments.push({ type: 'text', content: text.slice(lastIndex, match.index) });
-    }
-    if (match[3] !== undefined) {
-      // Think block
-      segments.push({ type: 'thinking', content: match[3] });
-    } else if (match[0].startsWith('<lxArtifact')) {
-      // Artifact block — extract code from actions
-      const artifact = parseLxArtifact(match[0]);
-      if (artifact && artifact.actions.length > 0) {
-        for (const action of artifact.actions) {
-          segments.push({ type: 'code', lang: action.filePath.endsWith('.html') ? 'html' : 'code', content: action.content });
-        }
-      }
-    } else {
-      // Code fence
-      segments.push({ type: 'code', lang: match[1], content: match[2] });
-    }
-    lastIndex = match.index + match[0].length;
-  }
-  if (lastIndex < text.length) {
-    segments.push({ type: 'text', content: text.slice(lastIndex) });
-  }
-  return segments;
-}
-
-function renderMarkdown(text) {
-  let html = escapeHtml(text);
-  // Bold
-  html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-  // Inline code
-  html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
-  // Lists
-  html = html.replace(/^[\-\*] (.+)$/gm, '<li>$1</li>');
-  html = html.replace(/(<li>.*<\/li>\n?)+/g, '<ul>$&</ul>');
-  // Line breaks
-  html = html.replace(/\n/g, '<br>');
-  // Paragraphs
-  html = html.replace(/^(.+)$/gm, (m) => {
-    if (m.startsWith('<') || m.trim() === '') return m;
-    return '<p>' + m + '</p>';
-  });
-  return html;
-}
-
-function cleanAIOutput(text) {
-  let out = text;
-  // Strip syntax highlighting span tags and nested artifacts
-  out = out.replace(/<span\s+class="(?:kw|str|num|cm|tag|fn|op|px|atn|atv|alc|reb|kc|sc|vc|vi|sr)"[^>]*>/gi, '');
-  out = out.replace(/<span\s+style="[^"]*">/gi, '');
-  out = out.replace(/<\/span>/gi, '');
-  out = out.replace(/<code[^>]*>/gi, '');
-  out = out.replace(/<\/code>/gi, '');
-  out = out.replace(/<pre[^>]*>/gi, '');
-  out = out.replace(/<\/pre>/gi, '');
-  // Fix nested class artifacts like class=class="str">"tag">
-  out = out.replace(/class=class="[^"]*">/g, '');
-  out = out.replace(/class=class="[^"]*">/g, '');
-  // Fix remaining span artifacts
-  out = out.replace(/<\/?span[^>]*>/gi, '');
-  // Fix HTML entity artifacts
-  out = out.replace(/&amp;/g, '&');
-  out = out.replace(/&lt;/g, '<');
-  out = out.replace(/&gt;/g, '>');
-  out = out.replace(/&quot;/g, '"');
-  out = out.replace(/&#39;/g, "'");
-  return out;
-}
-
-// ── Parse <lxArtifact> structured output (bolt.diy style) ────────
-function parseLxArtifact(raw) {
-  // Remove any stray syntax tokens first
-  let text = raw;
-  text = text.replace(/<span\s+[^>]*>/gi, '');
-  text = text.replace(/<\/span>/gi, '');
-  text = text.replace(/<\/?code[^>]*>/gi, '');
-  text = text.replace(/<\/?pre[^>]*>/gi, '');
-  text = text.replace(/class=class="[^"]*">/g, '');
-  text = text.replace(/<\/?span[^>]*>/gi, '');
-
-  // Auto-close truncated tags
-  const openActions = (text.match(/<lxAction\b/gi) || []).length;
-  const closeActions = (text.match(/<\/lxAction>/gi) || []).length;
-  if (openActions > closeActions) {
-    for (let i = 0; i < openActions - closeActions; i++) text += '\n</lxAction>';
-  }
-  const openArtifacts = (text.match(/<lxArtifact\b/gi) || []).length;
-  const closeArtifacts = (text.match(/<\/lxArtifact>/gi) || []).length;
-  if (openArtifacts > closeArtifacts) {
-    for (let i = 0; i < openArtifacts - closeArtifacts; i++) text += '\n</lxArtifact>';
-  }
-
-  // Extract artifact metadata
-  const artifactMatch = text.match(/<lxArtifact\s+([^>]*)>/i);
-  if (!artifactMatch) return null;
-
-  const attrs = artifactMatch[1];
-  const id = (attrs.match(/id="([^"]*)"/i) || [, ''])[1];
-  const title = (attrs.match(/title="([^"]*)"/i) || [, ''])[1];
-
-  // Extract all actions
-  const actions = [];
-  const actionRegex = /<lxAction\s+([^>]*)>([\s\S]*?)<\/lxAction>/gi;
-  let actionMatch;
-  while ((actionMatch = actionRegex.exec(text)) !== null) {
-    const actionAttrs = actionMatch[1];
-    const content = actionMatch[2].trim();
-    const type = (actionAttrs.match(/type="([^"]*)"/i) || [, 'file'])[1];
-    const filePath = (actionAttrs.match(/filePath="([^"]*)"/i) || [, 'index.html'])[1];
-    actions.push({ type, filePath, content });
-  }
-
-  // Fallback: greedy match if no closing tags found
-  if (actions.length === 0) {
-    const greedyMatch = text.match(/<lxAction\s+([^>]*)>([\s\S]*)/i);
-    if (greedyMatch) {
-      const actionAttrs = greedyMatch[1];
-      const content = greedyMatch[2]
-        .replace(/<\/lxAction>/gi, '')
-        .replace(/<\/lxArtifact>/gi, '')
-        .trim();
-      const type = (actionAttrs.match(/type="([^"]*)"/i) || [, 'file'])[1];
-      const filePath = (actionAttrs.match(/filePath="([^"]*)"/i) || [, 'index.html'])[1];
-      if (content.length > 50) actions.push({ type, filePath, content });
-    }
-  }
-
-  // Extract intro text (before artifact)
-  const beforeArtifact = text.substring(0, text.indexOf('<lxArtifact')).trim();
-
-  return { id, title, actions, introText: beforeArtifact };
-}
-
-function escapeHtml(text) {
-  const div = document.createElement('div');
-  div.textContent = text;
-  return div.innerHTML;
-}
-
-function highlightCode(code, lang) {
-  let escaped = escapeHtml(code);
-  // Keywords
-  const keywords = ['function','const','let','var','if','else','for','while','return','class','import','export','from','default','new','this','async','await','try','catch','throw','switch','case','break','continue','typeof','instanceof','void','delete','in','of','yield','static','super','extends'];
-  const htmlTags = ['html','head','body','div','span','p','h1','h2','h3','h4','h5','h6','a','img','ul','ol','li','table','tr','td','th','form','input','button','script','style','link','meta','title','section','article','nav','header','footer','main','aside','canvas','video','audio','source','br','hr'];
-
-  if (/html|htm|xml|svg/.test(lang)) {
-    htmlTags.forEach(tag => {
-      escaped = escaped.replace(new RegExp('&lt;\\/?' + tag + '(?:\\s[^&]*)?\\s*&gt;|<' + tag + '(?:\\s[^>]*)?\\s*>|</' + tag + '>', 'gi'), m => {
-        return '<span class="tag">' + m + '</span>';
+  <script>
+    // Initialize Monaco Editor
+    require(['vs/editor/editor.main'], function() {
+      monaco.editor.create(document.getElementById('monacoEditor'), {
+        value: '<!DOCTYPE html>\n<html lang="en">\n<head>\n  <meta charset="UTF-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1.0">\n  <title>My App</title>\n  <style>\n    * { margin: 0; padding: 0; box-sizing: border-box; }\n    body { font-family: Inter, system-ui, sans-serif; background: #0a0a0f; color: #e5e5e7; min-height: 100vh; display: flex; align-items: center; justify-content: center; }\n    h1 { font-size: 2rem; opacity: 0; animation: fadeUp .6s ease forwards; }\n    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }\n  </style>\n</head>\n<body>\n  <h1>Hello World</h1>\n</body>\n</html>',
+        language: 'html',
+        theme: 'vs-dark',
+        automaticLayout: true,
+        fontFamily: 'JetBrains Mono, monospace',
+        fontSize: 13,
+        lineNumbers: true,
+        roundedSelection: true
       });
     });
-  }
 
-  // Strings
-  escaped = escaped.replace(/(["'])(?:(?=(\\?))\2.)*?\1/g, '<span class="str">$&</span>');
-  // Numbers
-  escaped = escaped.replace(/\b(\d+\.?\d*)\b/g, '<span class="num">$1</span>');
-  // Comments
-  escaped = escaped.replace(/(\/\/.*$)/gm, '<span class="cm">$1</span>');
-  escaped = escaped.replace(/(\/\*[\s\S]*?\*\/)/g, '<span class="cm">$1</span>');
-  escaped = escaped.replace(/(#.*$)/gm, (m, p1, offset, str) => {
-    if (/css|scss|less|styl/.test(lang)) return '<span class="cm">' + p1 + '</span>';
-    return m;
-  });
-  // Keywords
-  keywords.forEach(kw => {
-    escaped = escaped.replace(new RegExp('\\b(' + kw + ')\\b', 'g'), '<span class="kw">$1</span>');
-  });
-  // Functions
-  escaped = escaped.replace(/\b([a-zA-Z_]\w*)\s*\(/g, '<span class="fn">$1</span>(');
+    // Model pills
+    document.querySelectorAll('.model-pill').forEach(pill => {
+      pill.addEventListener('click', function() {
+        document.querySelectorAll('.model-pill').forEach(p => p.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
 
-  return escaped;
-}
+    // Chat functionality
+    const chatMessages = document.getElementById('chatMessages');
+    const chatInput = document.getElementById('chatInput');
 
-function copyCode(id, btn) {
-  const code = document.getElementById(id).textContent;
-  navigator.clipboard.writeText(code).then(() => {
-    btn.textContent = 'Copied!';
-    btn.classList.add('copied');
-    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
-  });
-}
-
-function openInCanvas(encodedCode) {
-  const code = decodeURIComponent(encodedCode);
-  document.getElementById('codeEditor').value = code;
-  updatePreview(code);
-  switchCanvasTab('preview', document.querySelector('.canvas-tabs button:first-child'));
-  if (window.innerWidth < 768) {
-    document.getElementById('panelCanvas').classList.add('show-mobile');
-  }
-}
-
-function showProgress(text) {
-  const container = document.getElementById('chatMessages');
-  const el = document.createElement('div');
-  el.className = 'progress-indicator';
-  el.innerHTML = `<div class="progress-dots"><span></span><span></span><span></span></div><span>${text}</span>`;
-  container.appendChild(el);
-  scrollBottom();
-  return el;
-}
-
-function removeProgress() {
-  const el = document.querySelector('.progress-indicator');
-  if (el) el.remove();
-}
-
-function showToolEvent(msgEl, type, name, data) {
-  const contentEl = msgEl.querySelector('.message-content');
-  const toolId = 'tool_' + Math.random().toString(36).substr(2, 8);
-  const icon = type === 'call' ? '⚡' : '✓';
-  const label = type === 'call' ? 'Using' : 'Result';
-  const status = type === 'call' ? 'running...' : 'done';
-  const dataStr = typeof data === 'string' ? data : JSON.stringify(data, null, 2);
-
-  const html = `<div class="tool-event tool-${type}" id="${toolId}" onclick="this.classList.toggle('open')">
-    <div class="tool-event-header">
-      <span class="tool-icon">${icon}</span>
-      <span class="tool-name">${name}</span>
-      <span class="tool-status">${status}</span>
-      <span class="tool-chevron">▸</span>
-    </div>
-    <div class="tool-event-body">${escapeHtml(dataStr)}</div>
-  </div>`;
-
-  contentEl.insertAdjacentHTML('beforeend', html);
-  scrollBottom();
-}
-
-function scrollBottom() {
-  const container = document.getElementById('chatMessages');
-  requestAnimationFrame(() => { container.scrollTop = container.scrollHeight; });
-}
-
-function clearChat() {
-  chatHistory = [];
-  const container = document.getElementById('chatMessages');
-  container.innerHTML = `<div class="chat-welcome"><h2>LX AI Coding Platform</h2><p>Describe what you want to build. Generate code, debug, refactor, and preview live — all in one place.</p><div class="quick-actions"><button onclick="quickPrompt('Build a modern landing page with hero, features, and pricing sections')">Landing Page</button><button onclick="quickPrompt('Create a responsive dashboard with sidebar navigation and data cards')">Dashboard</button><button onclick="quickPrompt('Build a todo app with add, delete, and mark complete features')">Todo App</button><button onclick="quickPrompt('Create an animated portfolio with project grid')">Portfolio</button><button onclick="quickPrompt('Build a contact form with validation and submit handling')">Contact Form</button></div></div>`;
-}
-
-function quickPrompt(text) {
-  const input = document.getElementById('chatInput');
-  input.value = text;
-  input.focus();
-  autoResize(input);
-  sendMessage();
-}
-
-// ===================== CANVAS =====================
-function switchCanvasTab(tab, btn) {
-  document.querySelectorAll('.canvas-tabs button').forEach(b => b.classList.remove('active'));
-  if (btn) btn.classList.add('active');
-  document.querySelectorAll('.canvas-pane').forEach(p => p.classList.remove('active'));
-  document.getElementById('pane' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
-}
-
-function updatePreview(html) {
-  const frame = document.getElementById('previewFrame');
-  // Inject console capture and error handling script
-  const injectScript = `<script>
-    (function(){
-      var origLog=console.log,origWarn=console.warn,origError=console.error,origInfo=console.info;
-      function send(t,a){parent.postMessage({type:'console',method:t,args:Array.from(a).map(function(x){try{return typeof x==='object'?JSON.stringify(x):String(x)}catch(e){return String(x)}})},'*')}
-      console.log=function(){send('log',arguments);origLog.apply(console,arguments)};
-      console.warn=function(){send('warn',arguments);origWarn.apply(console,arguments)};
-      console.error=function(){send('error',arguments);origError.apply(console,arguments)};
-      console.info=function(){send('info',arguments);origInfo.apply(console,arguments)};
-      window.onerror=function(m,s,l,c,e){send('error',['Error: '+m+' at '+s+':'+l+':'+c])};
-      window.addEventListener('unhandledrejection',function(e){send('error',['Unhandled Promise: '+e.reason])});
-      window.addEventListener('load',function(){parent.postMessage({type:'console',method:'info',args:['Preview loaded']},'*')});
-    })();
-  <\/script>`;
-  let finalHtml = html;
-  if (html.includes('</head>')) {
-    finalHtml = html.replace('</head>', injectScript + '</head>');
-  } else if (html.includes('<body>')) {
-    finalHtml = html.replace('<body>', injectScript + '<body>');
-  } else {
-    finalHtml = injectScript + html;
-  }
-  frame.srcdoc = finalHtml;
-}
-
-let _livePreviewTimer = null;
-let _lastPreviewText = '';
-function liveUpdatePreview(text) {
-  if (text === _lastPreviewText) return;
-  _lastPreviewText = text;
-  clearTimeout(_livePreviewTimer);
-  _livePreviewTimer = setTimeout(() => {
-    const cleaned = cleanAIOutput(text);
-    const codeBlocks = [];
-    const regex = /```(\w*)\n([\s\S]*?)```/g;
-    let match;
-    while ((match = regex.exec(cleaned)) !== null) {
-      const lang = match[1] || 'code';
-      const code = match[2].trim();
-      if (code.length > 10) codeBlocks.push({ lang, code });
+    function sendMessage() {
+      const text = chatInput.value.trim();
+      if (!text) return;
+      addMessage('user', text);
+      chatInput.value = '';
+      // Simulate AI response
+      setTimeout(() => {
+        addMessage('assistant', `✦ I generated: ${text.slice(0, 50)}${text.length > 50 ? '...' : ''}`);
+      }, 1200);
     }
-    if (codeBlocks.length === 0) {
-      // No code block yet — if the text itself looks like HTML, preview it
-      if (text.includes('<html') || text.includes('<body') || text.includes('<div')) {
-        const editor = document.getElementById('codeEditor');
-        if (editor) editor.value = text;
-        const f = files.find(x => x.path === activeFile);
-        if (f) f.content = text;
-        updatePreview(text);
-      }
-      return;
+
+    function addMessage(role, content) {
+      const div = document.createElement('div');
+      div.className = `message ${role}`;
+      div.innerHTML = `<div class="avatar">${role === 'assistant' ? 'LX' : 'You'}</div><div class="content">${content}</div><div class="meta">${new Date().toLocaleTimeString}</div>`;
+      chatMessages.appendChild(div);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
     }
-    let best = codeBlocks[0];
-    for (const b of codeBlocks) { if (b.code.length > best.code.length) best = b; }
-    if (best.lang === 'html' || best.lang === 'css' || best.lang === 'js' || best.lang === 'javascript' || best.code.includes('<html') || best.code.includes('<body') || best.code.includes('<!DOCTYPE')) {
-      const editor = document.getElementById('codeEditor');
-      if (editor) editor.value = best.code;
-      const f = files.find(x => x.path === activeFile);
-      if (f) f.content = best.code;
-      // Save all code blocks to files simultaneously
-      saveCodeBlocksToFiles(codeBlocks);
-      updatePreview(best.code);
+
+    function sendPrompt(text) {
+      chatInput.value = text;
+      sendMessage();
     }
-  }, 200);
-}
 
-function addFile(path, content) {
-  path = (path || 'untitled.html').replace(/[<>:"|?*]/g, '').replace(/^\.+/, '').replace(/\/+/g, '/');
-  const existing = files.find(f => f.path === path);
-  if (existing) {
-    existing.content = content;
-  } else {
-    files.push({ path: path, content: content, isDir: false });
-    if (path.endsWith('.html')) {
-      activeFile = path;
+    // File tree (simple)
+    const fileTree = document.getElementById('fileTree');
+    fileTree.innerHTML = `
+      <div class="file-item folder active" onclick="openFile('index.html')">
+        <span class="icon"></span><span>index.html</span>
+      </div>
+      <div class="file-item file" onclick="openFile('styles.css')">
+        <span class="icon"></span><span>styles.css</span>
+      </div>
+      <div class="file-item file" onclick="openFile('script.js')">
+        <span class="icon"></span><span>script.js</span>
+      </div>
+    `;
+
+    function openFile(path) {
+      // Monaco will load the file
     }
-  }
-  saveFiles();
-  renderFileTree();
-}
 
-function saveCodeBlocksToFiles(blocks) {
-  for (const block of blocks) {
-    const ext = { html: 'html', css: 'css', javascript: 'js', js: 'js' }[block.lang] || 'txt';
-    const existing = files.find(f => f.path.endsWith('.' + ext) && !f.isDir);
-    if (existing) {
-      existing.content = block.code;
-    } else {
-      const name = ext === 'html' ? 'index.html' : ext === 'css' ? 'style.css' : 'script.' + ext;
-      files.push({ path: name, content: block.code, isDir: false });
-      if (ext === 'html') {
-        activeFile = name;
-        document.getElementById('codeEditor').value = block.code;
-      }
+    function exportProject() {
+      alert('Project exported as ZIP');
     }
-  }
-  saveFiles();
-  renderFileTree();
-}
 
-function onCodeEdit() {
-  const code = document.getElementById('codeEditor').value;
-  const f = files.find(x => x.path === activeFile);
-  if (f) { f.content = code; saveFiles(); }
-  if (activeFile && activeFile.endsWith('.html')) {
-    updatePreview(code);
-  }
-}
-
-function exportCanvas() {
-  const code = document.getElementById('codeEditor').value;
-  if (!code.trim()) { alert('No code to export'); return; }
-  const blob = new Blob([code], { type: 'text/html' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = activeFile || 'export.html';
-  a.click();
-  URL.revokeObjectURL(a.href);
-}
-
-async function downloadZip() {
-  const zip = new JSZip();
-  const root = zip.folder('project');
-
-  files.forEach(f => {
-    if (!f.isDir) root.file(f.path, f.content);
-  });
-
-  // Generate index.html entry if missing
-  const hasIndex = files.some(f => f.path === 'index.html');
-  if (!hasIndex) {
-    const htmlFile = files.find(f => f.path.endsWith('.html'));
-    if (htmlFile) root.file('index.html', htmlFile.content);
-  }
-
-  // Package.json
-  root.file('package.json', JSON.stringify({
-    name: 'lx-project',
-    version: '1.0.0',
-    description: 'Built with LX AI Coding Platform',
-    main: 'index.html',
-    scripts: { start: 'npx serve .' }
-  }, null, 2));
-
-  // README
-  root.file('README.md', '# LX Project\n\nBuilt with LX AI Coding Platform.\n\n## Run\n```bash\nnpx serve .\n```\n');
-
-  const blob = await zip.generateAsync({ type: 'blob' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'lx-project.zip';
-  a.click();
-  URL.revokeObjectURL(a.href);
-}
-
-function refreshPreview() {
-  const code = document.getElementById('codeEditor').value;
-  if (code.trim()) updatePreview(code);
-}
-
-function toggleCanvas() {
-  const panel = document.getElementById('panelCanvas');
-  canvasVisible = !canvasVisible;
-  if (canvasVisible) {
-    panel.classList.remove('hidden');
-  } else {
-    panel.classList.add('hidden');
-  }
-}
-
-function toggleFilePanel() {
-  document.getElementById('panelFile').classList.toggle('collapsed');
-}
-
-// Console from iframe
-window.addEventListener('message', e => {
-  if (e.data && e.data.type === 'console') {
-    const output = document.getElementById('consoleOutput');
-    const time = new Date().toLocaleTimeString();
-    const line = document.createElement('div');
-    line.className = 'console-line ' + e.data.method;
-    line.innerHTML = `<span class="console-time">${time}</span><span class="console-msg">${escapeHtml(e.data.args.join(' '))}</span>`;
-    output.appendChild(line);
-    output.scrollTop = output.scrollHeight;
-  }
-});
-
-function clearConsole() {
-  document.getElementById('consoleOutput').innerHTML = '';
-}
-
-// ===================== IMAGE UPLOAD =====================
-function triggerImageUpload() {
-  document.getElementById('imageInput').click();
-}
-
-function handleImageSelect(e) {
-  const files = e.target.files;
-  for (const file of files) {
-    if (!file.type.startsWith('image/')) continue;
-    const reader = new FileReader();
-    reader.onload = ev => {
-      pendingImages.push(ev.target.result);
-      renderInputPreviews();
-    };
-    reader.readAsDataURL(file);
-  }
-  e.target.value = '';
-}
-
-function renderInputPreviews() {
-  const container = document.getElementById('inputPreview');
-  container.innerHTML = '';
-  pendingImages.forEach((img, i) => {
-    const div = document.createElement('div');
-    div.className = 'thumb';
-    div.innerHTML = `<img src="${img}"><div class="remove" onclick="removeImage(${i})">×</div>`;
-    container.appendChild(div);
-  });
-}
-
-function removeImage(i) {
-  pendingImages.splice(i, 1);
-  renderInputPreviews();
-}
-
-// Paste image from clipboard
-document.getElementById('chatInput').addEventListener('paste', e => {
-  const items = e.clipboardData.items;
-  for (const item of items) {
-    if (item.type.startsWith('image/')) {
-      e.preventDefault();
-      const blob = item.getAsFile();
-      const reader = new FileReader();
-      reader.onload = ev => {
-        pendingImages.push(ev.target.result);
-        renderInputPreviews();
-      };
-      reader.readAsDataURL(blob);
+    function buildProject() {
+      alert('Building and deploying...');
     }
-  }
-});
 
-// ===================== RESIZE DIVIDER =====================
-const divider = document.getElementById('resizeDivider');
-let isResizing = false;
-
-divider.addEventListener('mousedown', e => {
-  isResizing = true;
-  divider.classList.add('dragging');
-  e.preventDefault();
-});
-
-document.addEventListener('mousemove', e => {
-  if (!isResizing) return;
-  const canvas = document.getElementById('panelCanvas');
-  const newWidth = window.innerWidth - e.clientX;
-  canvas.style.width = Math.max(200, Math.min(newWidth, window.innerWidth * 0.7)) + 'px';
-});
-
-document.addEventListener('mouseup', () => {
-  if (isResizing) {
-    isResizing = false;
-    divider.classList.remove('dragging');
-  }
-});
-
-// ===================== INIT =====================
-loadFiles();
-renderFileTree();
-if (activeFile) openFile(activeFile);
-
-// Set initial preview
-const initialFile = files.find(f => f.path === activeFile) || files.find(f => f.path === 'index.html');
-if (initialFile) {
-  updatePreview(initialFile.content);
-  document.getElementById('codeEditor').value = initialFile.content;
-}
-
-// Keyboard shortcuts
-document.addEventListener('keydown', e => {
-  // Ctrl/Cmd + Enter to send
-  if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
-    e.preventDefault();
-    sendMessage();
-  }
-  // Ctrl/Cmd + S to download ZIP
-  if ((e.ctrlKey || e.metaKey) && e.key === 's') {
-    e.preventDefault();
-    downloadZip();
-  }
-  // Ctrl/Cmd + Shift + F to toggle file panel
-  if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'F') {
-    e.preventDefault();
-    toggleFilePanel();
-  }
-  // Escape to close modals
-  if (e.key === 'Escape') {
-    modalCancel();
-    hideContext();
-  }
-});
-
-// Focus input on load
-document.getElementById('chatInput').focus();
-</script>
+    function uploadFile() {
+      alert('Attach file functionality');
+    }
+  </script>
 </body>
 </html>
