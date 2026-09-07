@@ -361,7 +361,7 @@ input:focus,textarea:focus,select:focus{border-color:var(--accent)}
     </div>
     <div class="canvas-content">
       <div class="canvas-pane active" id="panePreview">
-        <iframe id="previewFrame" class="preview-frame" sandbox="allow-scripts allow-modals"></iframe>
+        <iframe id="previewFrame" class="preview-frame" sandbox="allow-scripts allow-same-origin allow-modals"></iframe>
       </div>
       <div class="canvas-pane" id="paneCode">
         <textarea id="codeEditor" class="code-editor" spellcheck="false" oninput="onCodeEdit()"></textarea>
@@ -398,12 +398,14 @@ input:focus,textarea:focus,select:focus{border-color:var(--accent)}
 
 <script>
 // ===================== STATE =====================
-let files = [
+const STORAGE_KEY = 'lx-ai-files';
+const DEFAULT_FILES = [
   { path: 'index.html', content: `<!DOCTYPE html>\n<html lang="en">\n<head>\n  <meta charset="UTF-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1.0">\n  <title>My App</title>\n  <style>\n    * { margin: 0; padding: 0; box-sizing: border-box; }\n    body { font-family: 'Inter', sans-serif; background: #0a0a0f; color: #e4e4e7; min-height: 100vh; display: flex; align-items: center; justify-content: center; }\n    .card { background: #111118; border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 48px; text-align: center; max-width: 480px; }\n    h1 { font-family: 'Space Grotesk', sans-serif; font-size: 32px; margin-bottom: 12px; background: linear-gradient(135deg, #7c5cff, #9b7eff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }\n    p { color: #6e6e7c; line-height: 1.6; }\n  </style>\n</head>\n<body>\n  <div class="card">\n    <h1>Hello World</h1>\n    <p>Start editing to build your app. The live preview updates in real-time.</p>\n  </div>\n</body>\n</html>`, isDir: false },
   { path: 'styles.css', content: `/* Add your styles here */\n:root {\n  --primary: #7c5cff;\n  --bg: #0a0a0f;\n  --surface: #111118;\n  --text: #e4e4e7;\n  --muted: #6e6e7c;\n}\n`, isDir: false },
   { path: 'app.js', content: `// Add your JavaScript here\nconsole.log('App loaded!');\n`, isDir: false }
 ];
-let activeFile = 'index.html';
+let files = [];
+let activeFile = null;
 let chatHistory = [];
 let pendingImages = [];
 let isGenerating = false;
@@ -412,7 +414,29 @@ let modalCallback = null;
 let canvasVisible = true;
 let consoleLogs = [];
 
+function loadFiles() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) { const parsed = JSON.parse(saved); if (Array.isArray(parsed) && parsed.length > 0) { files = parsed; activeFile = parsed[0].path; return; } }
+  } catch(e) {}
+  files = JSON.parse(JSON.stringify(DEFAULT_FILES));
+  activeFile = 'index.html';
+}
+function saveFiles() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(files)); } catch(e) {}
+}
+function resetFiles() {
+  files = JSON.parse(JSON.stringify(DEFAULT_FILES));
+  activeFile = 'index.html';
+  localStorage.removeItem(STORAGE_KEY);
+  renderFileTree();
+  openFile('index.html');
+}
+
 // ===================== FILE MANAGER =====================
+function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+function escAttr(s) { return String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'"); }
+
 function renderFileTree() {
   const tree = document.getElementById('fileTree');
   const dirs = {};
@@ -431,17 +455,17 @@ function renderFileTree() {
   Object.keys(dirs).sort().forEach(d => {
     html += `<div class="file-tree-folder">
       <div class="file-tree-item" onclick="this.parentElement.classList.toggle('open')">
-        <span class="icon">📁</span><span class="name">${d}</span>
+        <span class="icon">📁</span><span class="name">${escHtml(d)}</span>
       </div>
       <div class="children">`;
     dirs[d].forEach(f => {
       const icon = f.isDir ? '📁' : getFileIcon(f.path);
       const active = f.fullPath === activeFile ? ' active' : '';
-      html += `<div class="file-tree-item${active}" onclick="openFile('${f.fullPath}')" oncontextmenu="showContext(event,'${f.fullPath}')">
-        <span class="icon">${icon}</span><span class="name">${f.path}</span>
+      html += `<div class="file-tree-item${active}" onclick="openFile('${escAttr(f.fullPath)}')" oncontextmenu="showContext(event,'${escAttr(f.fullPath)}')">
+        <span class="icon">${icon}</span><span class="name">${escHtml(f.path)}</span>
         <span class="actions">
-          <button onclick="event.stopPropagation();ctxTarget='${f.fullPath}';ctxRename()">✏</button>
-          <button onclick="event.stopPropagation();ctxTarget='${f.fullPath}';ctxDelete()">✕</button>
+          <button onclick="event.stopPropagation();ctxTarget='${escAttr(f.fullPath)}';ctxRename()">✏</button>
+          <button onclick="event.stopPropagation();ctxTarget='${escAttr(f.fullPath)}';ctxDelete()">✕</button>
         </span>
       </div>`;
     });
@@ -450,11 +474,11 @@ function renderFileTree() {
   rootFiles.sort((a, b) => a.path.localeCompare(b.path)).forEach(f => {
     const icon = getFileIcon(f.path);
     const active = f.path === activeFile ? ' active' : '';
-    html += `<div class="file-tree-item${active}" onclick="openFile('${f.path}')" oncontextmenu="showContext(event,'${f.path}')">
-      <span class="icon">${icon}</span><span class="name">${f.path}</span>
+    html += `<div class="file-tree-item${active}" onclick="openFile('${escAttr(f.path)}')" oncontextmenu="showContext(event,'${escAttr(f.path)}')">
+      <span class="icon">${icon}</span><span class="name">${escHtml(f.path)}</span>
       <span class="actions">
-        <button onclick="event.stopPropagation();ctxTarget='${f.path}';ctxRename()">✏</button>
-        <button onclick="event.stopPropagation();ctxTarget='${f.path}';ctxDelete()">✕</button>
+        <button onclick="event.stopPropagation();ctxTarget='${escAttr(f.path)}';ctxRename()">✏</button>
+        <button onclick="event.stopPropagation();ctxTarget='${escAttr(f.path)}';ctxDelete()">✕</button>
       </span>
     </div>`;
   });
@@ -486,8 +510,10 @@ function openFile(path) {
 function createFile() {
   showModal('Create File', 'filename.html', val => {
     if (!val) return;
-    if (files.find(f => f.path === val)) { alert('File already exists'); return; }
+    val = val.replace(/[<>:"|?*]/g, '').replace(/^\.+/, '');
+    if (!val || files.find(f => f.path === val)) { alert('Invalid name or file already exists'); return; }
     files.push({ path: val, content: '', isDir: false });
+    saveFiles();
     renderFileTree();
     openFile(val);
   });
@@ -496,8 +522,10 @@ function createFile() {
 function createFolder() {
   showModal('Create Folder', 'folder-name', val => {
     if (!val) return;
-    if (files.find(f => f.path === val)) { alert('Folder already exists'); return; }
+    val = val.replace(/[<>:"|?*]/g, '').replace(/^\.+/, '');
+    if (!val || files.find(f => f.path === val)) { alert('Invalid name or folder already exists'); return; }
     files.push({ path: val + '/.gitkeep', content: '', isDir: false });
+    saveFiles();
     renderFileTree();
   });
 }
@@ -556,9 +584,11 @@ function showTemplates() {
 
   let html = '<div style="display:grid;gap:8px;max-height:400px;overflow-y:auto;padding:8px 0">';
   for (const [key, tpl] of Object.entries(TEMPLATES)) {
-    html += `<button onclick="loadTemplate('${key}')" style="text-align:left;padding:16px;border-radius:8px;border:1px solid var(--border);background:var(--card);cursor:pointer;transition:all .15s" onmouseover="this.style.borderColor='rgba(124,92,255,0.3)'" onmouseout="this.style.borderColor='var(--border)'">
-      <div style="font-weight:600;color:var(--text);margin-bottom:4px">${tpl.name}</div>
-      <div style="font-size:12px;color:var(--muted)">${tpl.desc}</div>
+    const safeName = (tpl.name || '').replace(/[<>&"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const safeDesc = (tpl.desc || '').replace(/[<>&"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    html += `<button onclick="loadTemplate('${key.replace(/'/g,"\\'")}')" style="text-align:left;padding:16px;border-radius:8px;border:1px solid var(--border);background:var(--card);cursor:pointer;transition:all .15s" onmouseover="this.style.borderColor='rgba(124,92,255,0.3)'" onmouseout="this.style.borderColor='var(--border)'">
+      <div style="font-weight:600;color:var(--text);margin-bottom:4px">${safeName}</div>
+      <div style="font-size:12px;color:var(--muted)">${safeDesc}</div>
     </button>`;
   }
   html += '</div>';
@@ -580,6 +610,7 @@ function loadTemplate(key) {
   if (!tpl) return;
   files = [];
   tpl.files.forEach(f => files.push({ path: f.path, content: f.content, isDir: false }));
+  saveFiles();
   renderFileTree();
   if (files.length) openFile(files[0].path);
   const modal = document.getElementById('modalOverlay');
@@ -594,6 +625,7 @@ function loadTemplate(key) {
 function deleteFile(path) {
   files = files.filter(f => f.path !== path && !f.path.startsWith(path + '/'));
   if (activeFile === path) { activeFile = files.length ? files[0].path : null; if (activeFile) openFile(activeFile); }
+  saveFiles();
   renderFileTree();
 }
 
@@ -603,9 +635,10 @@ function renameFile(path) {
   showModal('Rename', path.split('/').pop(), val => {
     if (!val || val === path) return;
     const parts = path.split('/');
-    parts[parts.length - 1] = val;
+    parts[parts.length - 1] = val.replace(/[<>:"|?*]/g, '');
     f.path = parts.join('/');
     if (activeFile === path) activeFile = f.path;
+    saveFiles();
     renderFileTree();
   });
 }
@@ -616,8 +649,10 @@ function saveCodeToFile(encodedCode, lang) {
   const defaultName = 'generated-' + Date.now() + '.' + ext;
   showModal('Save as', defaultName, val => {
     if (!val) return;
-    if (files.find(f => f.path === val)) { alert('File already exists'); return; }
+    val = val.replace(/[<>:"|?*]/g, '').replace(/^\.+/, '').replace(/\/+/g, '/');
+    if (!val || files.find(f => f.path === val)) { alert('Invalid name or file already exists'); return; }
     files.push({ path: val, content: code, isDir: false });
+    saveFiles();
     renderFileTree();
     openFile(val);
   });
@@ -634,16 +669,7 @@ function downloadFile(path) {
   URL.revokeObjectURL(a.href);
 }
 
-async function downloadZip() {
-  const zip = new JSZip();
-  files.forEach(f => { if (!f.isDir) zip.file(f.path, f.content); });
-  const blob = await zip.generateAsync({ type: 'blob' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'project.zip';
-  a.click();
-  URL.revokeObjectURL(a.href);
-}
+// downloadZip is defined below with full project packaging
 
 // ===================== CONTEXT MENU =====================
 function showContext(e, path) {
@@ -1377,15 +1403,17 @@ function liveUpdatePreview(text) {
 }
 
 function addFile(path, content) {
+  path = (path || 'untitled.html').replace(/[<>:"|?*]/g, '').replace(/^\.+/, '').replace(/\/+/g, '/');
   const existing = files.find(f => f.path === path);
   if (existing) {
     existing.content = content;
   } else {
-    files.push({ path, content, isDir: false });
+    files.push({ path: path, content: content, isDir: false });
     if (path.endsWith('.html')) {
       activeFile = path;
     }
   }
+  saveFiles();
   renderFileTree();
 }
 
@@ -1404,27 +1432,18 @@ function saveCodeBlocksToFiles(blocks) {
       }
     }
   }
+  saveFiles();
   renderFileTree();
 }
 
 function onCodeEdit() {
   const code = document.getElementById('codeEditor').value;
   const f = files.find(x => x.path === activeFile);
-  if (f) f.content = code;
+  if (f) { f.content = code; saveFiles(); }
   if (activeFile && activeFile.endsWith('.html')) {
     updatePreview(code);
   }
 }
-
-// Auto-preview on code edit for HTML files
-document.getElementById('codeEditor').addEventListener('input', function() {
-  const f = files.find(x => x.path === activeFile);
-  if (f) f.content = this.value;
-  if (activeFile && activeFile.endsWith('.html')) {
-    clearTimeout(window._previewTimer);
-    window._previewTimer = setTimeout(() => updatePreview(this.value), 300);
-  }
-});
 
 function exportCanvas() {
   const code = document.getElementById('codeEditor').value;
@@ -1437,7 +1456,7 @@ function exportCanvas() {
   URL.revokeObjectURL(a.href);
 }
 
-async function buildAndDownload() {
+async function downloadZip() {
   const zip = new JSZip();
   const root = zip.folder('project');
 
@@ -1585,11 +1604,12 @@ document.addEventListener('mouseup', () => {
 });
 
 // ===================== INIT =====================
+loadFiles();
 renderFileTree();
-openFile('index.html');
+if (activeFile) openFile(activeFile);
 
 // Set initial preview
-const initialFile = files.find(f => f.path === 'index.html');
+const initialFile = files.find(f => f.path === activeFile) || files.find(f => f.path === 'index.html');
 if (initialFile) {
   updatePreview(initialFile.content);
   document.getElementById('codeEditor').value = initialFile.content;

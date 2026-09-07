@@ -213,6 +213,42 @@ h1,h2,h3,h4,h5,h6{font-weight:inherit;font-size:inherit}
 .saas-demo__messages::-webkit-scrollbar-track,.chat-widget__messages::-webkit-scrollbar-track{background:transparent}
 .saas-demo__messages::-webkit-scrollbar-thumb,.chat-widget__messages::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:4px}
 
+/* ── Clients / Companies We've Helped ── */
+.clients-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:40px}
+.client-logo-card{display:flex;flex-direction:column;align-items:center;gap:10px;padding:24px 16px;border:1px solid var(--saas-border);border-radius:12px;background:var(--saas-card);transition:border-color .2s,box-shadow .2s}
+.client-logo-card:hover{border-color:rgba(124,92,255,.2);box-shadow:var(--saas-glow)}
+.client-logo-card__icon{width:52px;height:52px;border-radius:12px;background:linear-gradient(135deg,rgba(124,92,255,.15),rgba(79,140,255,.1));border:1px solid rgba(124,92,255,.2);display:grid;place-items:center;font:600 .9rem/1 'Space Grotesk',sans-serif;color:var(--saas-accent-light);letter-spacing:.02em;overflow:hidden}
+.client-logo-card__icon img{width:100%;height:100%;object-fit:contain;padding:6px}
+.client-logo-card span{font-size:.78rem;color:var(--saas-muted);text-align:center;line-height:1.4}
+@media(max-width:900px){.clients-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:500px){.clients-grid{grid-template-columns:1fr}}
+
+/* ── Help Us Grow Page ── */
+.fund-option{display:flex;flex-direction:column;align-items:center;gap:4px;padding:14px 12px;border:1px solid var(--saas-border);border-radius:10px;background:var(--saas-surface);color:var(--saas-muted);font-size:.78rem;font-family:inherit;cursor:pointer;transition:all .2s}
+.fund-option:hover{border-color:rgba(255,255,255,.15);color:#fff}
+.fund-option.active{border-color:var(--saas-accent);background:rgba(124,92,255,.08);color:#fff}
+.amount-btn{padding:10px;border:1px solid var(--saas-border);border-radius:8px;background:var(--saas-surface);color:var(--saas-muted);font-size:.85rem;font-weight:500;font-family:inherit;cursor:pointer;transition:all .2s}
+.amount-btn:hover{border-color:rgba(255,255,255,.15);color:#fff}
+.amount-btn.active{border-color:var(--saas-accent);background:rgba(124,92,255,.08);color:#fff}
+.hack-input{background:var(--saas-surface);border:1px solid var(--saas-border-light);border-radius:10px;padding:10px 14px;color:#fff;font-size:.85rem;font-family:inherit;outline:none;transition:border-color .2s}
+.hack-input:focus{border-color:var(--saas-accent)}
+.hack-input::placeholder{color:var(--saas-dim)}
+select.hack-input{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%239a9aa8' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+select.hack-input option{background:#111;color:#e4e4e7}
+
+/* ── Integrations Page ── */
+.integrations-filter{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:16px 0}
+.integrations-filter__btn{padding:8px 16px;border:1px solid var(--saas-border);border-radius:999px;background:transparent;color:var(--saas-muted);font-size:.8125rem;font-weight:500;font-family:inherit;cursor:pointer;transition:all .2s}
+.integrations-filter__btn:hover{border-color:rgba(255,255,255,.2);color:#fff}
+.integrations-filter__btn.active{background:var(--saas-accent);border-color:var(--saas-accent);color:#fff}
+.integrations-category__title{font:500 1.4rem 'Space Grotesk','Inter',sans-serif;letter-spacing:-.04em;color:#fff;margin:0 0 24px;padding-bottom:16px;border-bottom:1px solid var(--saas-border)}
+.integrations-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.integration-card{display:flex;align-items:start;gap:16px;padding:20px;border:1px solid var(--saas-border);border-radius:12px;background:var(--saas-card);text-decoration:none;color:inherit;transition:border-color .2s,box-shadow .2s}
+.integration-card:hover{border-color:rgba(124,92,255,.2);box-shadow:var(--saas-glow)}
+.integration-card__icon{width:44px;height:44px;border-radius:10px;background:rgba(124,92,255,.1);border:1px solid rgba(124,92,255,.15);display:grid;place-items:center;color:var(--saas-accent-light);flex-shrink:0}
+.integration-card__content h3{margin:0 0 4px;font-size:.9rem;font-weight:600;color:#fff}
+.integration-card__content p{margin:0;color:var(--saas-muted);font-size:.8rem;line-height:1.5}
+
 /* ── Responsive ── */
 @media(max-width:1100px){
   .saas-nav__links{display:none}
