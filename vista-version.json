@@ -1,0 +1,7 @@
+{
+  "versionCode": 3,
+  "versionName": "1.0.2",
+  "downloadUrl": "https://www.lxobsidianportal.co.za/VistaCinema-v1.0.2.apk",
+  "changelog": "• Fixed startup crash on Smart TV devices\n• Resolved update installation failure issue\n• Improved search performance and UI\n• General stability improvements",
+  "mandatory": true
+}
