@@ -32,14 +32,14 @@ void (function () {
       category: 'mobile', categoryLabel: 'Mobile Apps',
       platform: 'mobile', platformLabel: 'Android',
       price: 0, rating: 5.0, reviews: 45, downloads: 1200,
-      version: '1.0.0', size: '~35 MB', color: 'purple', icon: 'film',
-      isExtension: false, apkUrl: 'deploy/VistaCinema-v1.0.0.apk',
+      version: '1.0.2', size: '~30 MB', color: 'purple', icon: 'film',
+      isExtension: false, apkUrl: 'https://github.com/lx-obsidian-labs/lx-obsidian-portal/raw/master/VistaCinema-v1.0.2.apk',
       features: ['AI-Powered Editing Suite', 'Multi-Language AI Dubbing', 'AI Actor & Voice Selection', 'Hollywood-Grade Effects', 'Direct YouTube/TikTok Publishing', '4K Export Quality'],
-      requirements: ['Android 7.0 (API 24) or higher', '~35 MB free storage', 'Internet connection for AI features'],
+      requirements: ['Android 7.0 (API 24) or higher', '~30 MB free storage', 'Internet connection for AI features'],
       installSteps: ['Tap Download APK below', 'If prompted, allow install from unknown sources', 'Open the downloaded APK file', 'Tap Install and wait for completion', 'Open Vista Cinema from your app drawer'],
-      changelog: ['v1.0.0 — Initial release with AI editing, dubbing and publishing'],
+      changelog: ['v1.0.2 — Fixed Smart TV startup crash, update install failure, improved search & UI', 'v1.0.1 — Stability and performance fixes', 'v1.0.0 — Initial release with AI editing, dubbing and publishing'],
       tags: ['ai', 'video', 'cinema', 'editing', 'production', 'mobile', 'android'],
-      author: 'LX Obsidian Labs', released: 'August 2026', updated: 'August 2026', license: 'Free'
+      author: 'LX Obsidian Labs', released: 'August 2026', updated: 'September 2026', license: 'Free'
     }
   ];
 

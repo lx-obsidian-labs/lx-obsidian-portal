@@ -12,6 +12,7 @@ const INCLUDE = [
   'js', 'assets', 'functions',
   '_headers', '_redirects',
   'sw.js', 'manifest.json', 'robots.txt', 'sitemap.xml',
+  'vista-version.json',
   'package.json'
 ];
 
