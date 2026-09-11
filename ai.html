@@ -57,8 +57,19 @@
     html { font-family: 'Inter', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
     body { min-height: 100vh; background: var(--bg); color: var(--text); overflow: hidden; font-size: 13px; line-height: 1.5; }
 
-    /* ==== LAYOUT: 3-COL WIDGET ==== */
-    .app { display: flex; height: 100vh; width: 100vw; overflow: hidden; }
+    /* ==== TOP BAR ==== */
+    .top-bar { width: 100%; display: flex; padding: 8px 14px; background: var(--bg); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
+    .top-bar-left { display: flex; align-items: center; }
+    .logo-badge { width: 24px; height: 24px; background: var(--accent); border-radius: 6px; display: flex; align-items: center; justify-content: center; font: 600 10px/1 'Space Grotesk', sans-serif; color: #fff; margin-right: 8px; }
+    .logo-title { font: 500 11px/1 'Space Grotesk', sans-serif; text-transform: uppercase; letter-spacing: .15em; color: var(--muted); margin-left: 4px; }
+    .top-bar-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+    .top-bar .model-pill { padding: 2px 6px; font-size: 8px; }
+    .top-bar .tabs { display: flex; gap: 2px; background: var(--card); padding: 2px; border-radius: 6px; }
+    .top-bar .code-tab { padding: 4px 8px; font-size: 10px; font-weight: 500; }
+    .top-bar .code-tab.active { background: var(--accent); color: #fff; }
+
+    /* ==== LAYOUT: 3-COL WIDGET (account for top bar) ==== */
+    .app { display: flex; height: calc(100vh - 52px); width: 100vw; overflow: hidden; margin-top: 52px; }
     .app > * { flex-shrink: 0; }
 
     /* ==== LEFT: FILE EXPLORER SIDEBAR ==== */
@@ -131,8 +142,28 @@
   </style>
 </head>
 <body>
+  <!-- Top Header Bar -->
+  <header class="top-bar" style="position: sticky; top: 0; background: var(--bg); z-index: 100; border-bottom: 1px solid var(--border);">
+    <div class="top-bar-left">
+      <div class="logo-badge">LX</div>
+      <h1 class="logo-title" style="font: 600 11px/1 'Space Grotesk', sans-serif; text-transform: uppercase; letter-spacing: .15em; color: var(--muted);">LX AI Platform</h1>
+    </div>
+    <div class="top-bar-right">
+      <div class="model-pills" style="display: flex; gap: 4px; margin-top: 4px;">
+        <div class="model-pill active" data-model="nvidia:meta/llama3-70b-instruct">Llama 3 70B</div>
+        <div class="model-pill" data-model="nvidia:qwen/qwen2.5-72b-instruct">Qwen 2.5 72B</div>
+        <div class="model-pill" data-model="openrouter:mistralai/mistral-7b-instruct:free">Mistral 7B</div>
+      </div>
+      <div class="tabs" style="display: flex; gap: 2px; margin-top: 8px;">
+        <div class="code-tab active">Preview</div>
+        <div class="code-tab">Code</div>
+        <div class="code-tab">Console</div>
+      </div>
+    </div>
+  </header>
+
   <div class="app">
-    <!-- ==== LEFT: FILE EXPLORER SIDEBAR ==== -->
+    <!-- Left: File Explorer Sidebar -->
     <div class="sidebar">
       <div class="sidebar-header">
         <span class="sidebar-title">LX AI</span>
@@ -158,8 +189,43 @@
       </div>
     </div>
 
-    <!-- ==== CENTER: CHAT PANEL ==== -->
-    <div class="chat">
+    <!-- Center: Tab Content Areas -->
+    <div class="tab-content" style="flex: 1; display: flex; flex-direction: column; background: var(--card); overflow: hidden; position: relative;">
+      <!-- Preview Tab -->
+      <div class="tab-preview" style="display: none; flex: 1; padding: 20px; background: var(--bg);">
+        <div class="welcome-screen" style="text-align: center; padding: 40px 20px 20px; color: var(--muted);">
+          <h2 style="font: 600 18px/1 'Space Grotesk', sans-serif; margin: 8px 0 4px;">Preview will appear here</h2>
+          <p style="font-size: 13px;">Live preview of your AI-generated app</p>
+        </div>
+        <div style="border: 1px solid var(--border); border-radius: 12px; height: 200px; background: var(--card); margin: 16px auto; display: flex; align-items: center; justify-content: center; color: var(--muted);">
+          <span style="opacity: .5;">🖼️ App Preview</span>
+        </div>
+      </div>
+      <!-- Code Tab (Monaco Editor) -->
+      <div class="tab-code" style="display: none; flex: 1;">
+        <div class="code-header" style="padding: 10px 14px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; background: var(--bg); font-size: 11px; color: var(--muted);">
+          <span>LX AI Platform</span>
+          <div style="display: flex; gap: 4px;">
+            <button class="action-btn secondary" onclick="exportCode()">Export</button>
+            <button class="action-btn primary" onclick="buildCode()">Build</button>
+          </div>
+        </div>
+        <div id="monacoEditor" style="height: calc(100vh - 260px); width: 100%;"></div>
+      </div>
+      <!-- Console Tab -->
+      <div class="tab-console" style="display: none; flex: 1; background: var(--bg);">
+        <div style="padding: 16px; color: var(--muted);">
+          <div style="margin-bottom: 12px;">$ lx build --preview</div>
+          <div style="margin-bottom: 12px; color: var(--accent);">✓ Bundling 3 modules...</div>
+          <div style="margin-bottom: 12px; color: var(--success);">✓ Build complete in 342ms</div>
+          <div style="margin-bottom: 12px; color: var(--muted);">› Preview at https://obsidian-portal.lx.run</div>
+          <div>—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Code Panel (hidden when tabs active, shown when Code tab selected) -->
+    <div class="code">
       <div class="chat-header">
         <h1>LX AI Assistant</h1>
         <div class="model-pills" id="modelPills">

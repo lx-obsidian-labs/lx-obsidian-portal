@@ -319,7 +319,7 @@ void (function () {
       { title: 'Home', desc: 'LX Obsidian Labs homepage', url: 'index.html' },
       { title: 'Services', desc: 'AI, web, mobile, business systems', url: 'services.html' },
       { title: 'Synapse AI', desc: 'AI browser automation extension', url: 'synapse.html' },
-      { title: 'Vista Cinema', desc: 'AI video production suite', url: 'vista.html' },
+      { title: 'Vista Cinema', desc: 'Free movie and TV streaming app', url: 'vista.html' },
       { title: 'Marketplace', desc: 'Browse and download software', url: 'marketplace.html' },
       { title: 'Portfolio', desc: 'Case studies and selected work', url: 'portfolio.html' },
       { title: 'About', desc: 'About LX Obsidian Labs', url: 'about.html' },

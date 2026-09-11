@@ -27,19 +27,19 @@ void (function () {
       id: 'vista-cinema',
       slug: 'vista-cinema',
       name: 'Vista Cinema',
-      tagline: 'AI Video Production Suite',
-      desc: 'AI-powered video production suite with Hollywood-grade editing, multi-language AI dubbing, AI actors and direct YouTube/TikTok publishing. Download free on Android.',
+      tagline: 'Free Movie & TV Streaming App',
+      desc: 'Free movie and TV streaming companion app for Android. Browse trending movies and series, search any title, watch trailers, build a watchlist, and explore cast & crew details. Works on phones, tablets and Smart TV.',
       category: 'mobile', categoryLabel: 'Mobile Apps',
       platform: 'mobile', platformLabel: 'Android',
       price: 0, rating: 5.0, reviews: 45, downloads: 1200,
-      version: '1.0.0', size: '~35 MB', color: 'purple', icon: 'film',
-      isExtension: false, apkUrl: 'deploy/VistaCinema-v1.0.0.apk',
-      features: ['AI-Powered Editing Suite', 'Multi-Language AI Dubbing', 'AI Actor & Voice Selection', 'Hollywood-Grade Effects', 'Direct YouTube/TikTok Publishing', '4K Export Quality'],
-      requirements: ['Android 7.0 (API 24) or higher', '~35 MB free storage', 'Internet connection for AI features'],
+      version: '1.0.2', size: '~29 MB', color: 'purple', icon: 'film',
+      isExtension: false, apkUrl: 'https://github.com/lx-obsidian-labs/lx-obsidian-portal/raw/master/VistaCinema-v1.0.2.apk',
+      features: ['Browse & Discover', 'Powerful Search', 'Watch Trailers', 'Save Favourites', 'Cast & Crew Details', 'Smart TV Optimized'],
+      requirements: ['Android 7.0 (API 24) or higher', '~29 MB free storage', 'Internet connection for streaming'],
       installSteps: ['Tap Download APK below', 'If prompted, allow install from unknown sources', 'Open the downloaded APK file', 'Tap Install and wait for completion', 'Open Vista Cinema from your app drawer'],
-      changelog: ['v1.0.0 — Initial release with AI editing, dubbing and publishing'],
-      tags: ['ai', 'video', 'cinema', 'editing', 'production', 'mobile', 'android'],
-      author: 'LX Obsidian Labs', released: 'August 2026', updated: 'August 2026', license: 'Free'
+      changelog: ['v1.0.2 — Faster startup, smaller app size, bug fixes & stability', 'v1.0.1 — Fixed Smart TV startup crash, update install failure, improved search & UI', 'v1.0.0 — Initial release with browsing, search, trailers and watchlist'],
+      tags: ['video', 'cinema', 'streaming', 'movies', 'tv', 'mobile', 'android'],
+      author: 'LX Obsidian Labs', released: 'August 2026', updated: 'September 2026', license: 'Free'
     }
   ];
 

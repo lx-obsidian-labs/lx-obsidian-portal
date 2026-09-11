@@ -1,7 +1,7 @@
 {
-  "versionCode": 3,
+  "versionCode": 4,
   "versionName": "1.0.2",
   "downloadUrl": "https://github.com/lx-obsidian-labs/lx-obsidian-portal/raw/master/VistaCinema-v1.0.2.apk",
-  "changelog": "• Fixed startup crash on Smart TV devices\n• Resolved update installation failure issue\n• Improved search performance and UI\n• General stability improvements",
-  "mandatory": true
+  "changelog": "Faster startup, smaller app size, bug fixes and stability improvements.",
+  "mandatory": false
 }
