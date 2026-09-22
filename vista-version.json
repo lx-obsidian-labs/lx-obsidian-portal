@@ -1,7 +1,7 @@
 {
-  "versionCode": 4,
-  "versionName": "1.0.2",
-  "downloadUrl": "https://github.com/lx-obsidian-labs/lx-obsidian-portal/raw/master/VistaCinema-v1.0.2.apk",
-  "changelog": "Faster startup, smaller app size, bug fixes and stability improvements.",
+  "versionCode": 11,
+  "versionName": "1.0.4",
+  "downloadUrl": "https://github.com/lx-obsidian-labs/lx-obsidian-portal/raw/master/VistaCinema-v1.0.4.apk",
+  "changelog": "• FIXED: Series now reliably open and play the correct show\n• FIXED: \"See All\" pages and load-more now populate on every row\n• FIXED: Player back navigation returns to the right screen\n• FIXED: Playback progress is tracked, so Continue Watching and Watch History resume correctly\n• FIXED: More reliable streaming sources with faster source switching\n• NEW: \"Because You Watched\" recommendations on Home\n• NEW: \"More Like This\" suggestions on series details\n• NEW: Double-tap any poster to instantly save or remove it from your watchlist\n• NEW: Double-tap left/right inside the player to skip forward or back\n• NEW: \"Play Something\" shuffle button on Home\n• NEW: Search and filter your Watch History\n• IMPROVED: Faster loading thanks to smarter caching",
   "mandatory": false
 }

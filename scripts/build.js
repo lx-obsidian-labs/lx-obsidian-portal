@@ -45,7 +45,16 @@ console.log(`CSS concatenated: ${CSS_ORDER.length} files -> dist/css/lx.css (${M
 
 for (const file of fs.readdirSync(cssDir)) {
   if (!CSS_ORDER.includes(file) && file !== 'style.css' && file !== 'lx.css') {
-    fs.copyFileSync(path.join(cssDir, file), path.join(distCssDir, file));
+    copyRecursive(path.join(cssDir, file), path.join(distCssDir, file));
+  }
+}
+
+function copyRecursive(src, dest) {
+  const stat = fs.statSync(src);
+  if (stat.isDirectory()) fs.cpSync(src, dest, { recursive: true });
+  else {
+    fs.mkdirSync(path.dirname(dest), { recursive: true });
+    fs.copyFileSync(src, dest);
   }
 }
 
