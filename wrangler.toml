@@ -5,12 +5,22 @@ compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
 
 # D1 Database
-# First create: npx wrangler d1 create lx-portal
-# Then paste the database_id below
+# Vista Cinema analytics uses its own dedicated D1 database ("vista-analytics") so the app's
+# first-party telemetry never shares a database with the (unmigrated) portal schema.
+#
+# To provision:
+#   1. npx wrangler d1 create vista-analytics
+#   2. Paste the returned database_id below.
+#   3. npx wrangler d1 execute vista-analytics --remote --file=migrations/0001_analytics.sql
+#   4. npx wrangler pages secret put VISTA_ANALYTICS_KEY --project-name lxobsidianmainsite   (persona: non-empty)
+#   5. npx wrangler pages secret put VISTA_STATS_KEY      --project-name lxobsidianmainsite   (a second, read-only key)
+#
+# Until uncommented, /api/collect and /api/vista-stats return 503 "not provisioned yet" -
+# which is the correct behaviour until the database exists.
 # [[d1_databases]]
 # binding = "DB"
-# database_name = "lx-portal"
-# database_id = "your-database-id-here"
+# database_name = "vista-analytics"
+# database_id = "PASTE_DATABASE_ID_HERE"
 
 # ─── Environment Variables ───
 # Set these via: npx wrangler pages secret put <KEY> --project-name lxobsidianmainsite
@@ -21,3 +31,5 @@ compatibility_flags = ["nodejs_compat"]
 #   OPENROUTER_API_KEY   — https://openrouter.ai
 #   JWT_SECRET           — node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 #   CONTACT_EMAIL        — hello@lxobsidian.com
+#   VISTA_ANALYTICS_KEY  — shared ingest key sent by the app as X-Vista-Analytics-Key
+#   VISTA_STATS_KEY      — read key for /api/vista-stats (X-Vista-Stats-Key)

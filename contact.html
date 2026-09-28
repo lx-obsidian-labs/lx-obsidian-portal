@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#030305">
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
 <meta name="description" content="Tell us about your project. Select what you're building, share your details, and book a discovery call with LX Obsidian Labs.">
-<meta property="og:title" content="Start a Project � LX Obsidian Labs">
+<meta property="og:title" content="Start a Project — LX Obsidian Labs">
 <meta property="og:description" content="Tell us about your project. Select what you're building, share your details, and book a discovery call.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.lxobsidianportal.co.za/contact">
@@ -18,7 +18,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="manifest" href="manifest.json">
 <link rel="stylesheet" href="css/lx.css">
-<title>Start a Project � LX Obsidian Labs</title>
+<title>Start a Project — LX Obsidian Labs</title>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -210,15 +210,11 @@
   <div><h4>Products</h4><a href="synapse.html">Synapse AI</a><a href="vista.html">Vista Cinema</a><a href="portfolio.html">Work</a></div>
   <div><h4>Company</h4><a href="about.html">About</a><a href="blog.html">Insights</a><a href="contact.html">Contact</a></div>
   <div><h4>Developers</h4><a href="ai.html?v=3">AI Platform</a><a href="https://github.com/lx-obsidian-labs" target="_blank" rel="noopener">GitHub</a></div>
-</div><div class="saas-footer__bottom"><span>&copy; 2026 LX Obsidian Labs. All rights reserved.</span><span>AI � Automation � Intelligence</span></div></footer>
+</div><div class="saas-footer__bottom"><span>&copy; 2026 LX Obsidian Labs. All rights reserved.</span><span>AI · Automation · Intelligence</span></div></footer>
 
-<script src="js/chat-widget.js?v=2"></script>
+<script src="js/components/chat-widget.js?v=2"></script>
+  <script src="js/ui/mobile-nav.js"></script>
 <script>
-  document.getElementById('saasMenu')?.addEventListener('click', function () {
-    var links = document.getElementById('navLinks');
-    var open = links.classList.toggle('open');
-    this.setAttribute('aria-expanded', open ? 'true' : 'false');
-  });
   function showFormStep(step) {
     document.querySelectorAll('.cform__step').forEach(function(el){ el.classList.remove('active'); });
     document.getElementById('form-step-' + step).classList.add('active');

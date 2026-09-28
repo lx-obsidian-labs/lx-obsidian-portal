@@ -273,13 +273,9 @@
   <div><h4>Developers</h4><a href="ai.html?v=3">AI Platform</a><a href="https://github.com/lx-obsidian-labs" target="_blank" rel="noopener">GitHub</a></div>
 </div><div class="saas-footer__bottom"><span>&copy; 2026 LX Obsidian Labs. All rights reserved.</span><span>AI &bull; Automation &bull; Intelligence</span></div></footer>
 
-<script src="js/chat-widget.js?v=2"></script>
+<script src="js/components/chat-widget.js?v=2"></script>
+  <script src="js/ui/mobile-nav.js"></script>
 <script>
-  document.getElementById('saasMenu')?.addEventListener('click', function () {
-    var links = document.getElementById('navLinks');
-    var open = links.classList.toggle('open');
-    this.setAttribute('aria-expanded', open ? 'true' : 'false');
-  });
 </script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));}</script>
 </body>

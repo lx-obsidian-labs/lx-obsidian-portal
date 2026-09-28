@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#030305">
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
 <meta name="description" content="Find answers to frequently asked questions about our services, pricing, process, and technology stack.">
-<meta property="og:title" content="FAQ � LX Obsidian Labs">
+<meta property="og:title" content="FAQ — LX Obsidian Labs">
 <meta property="og:description" content="Find answers to frequently asked questions about our services, pricing, process, and technology stack.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.lxobsidianportal.co.za/faq">
@@ -18,7 +18,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="manifest" href="manifest.json">
 <link rel="stylesheet" href="css/lx.css">
-<title>FAQ � LX Obsidian Labs</title>
+<title>FAQ — LX Obsidian Labs</title>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -37,7 +37,7 @@
       "name": "How long does development take?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Typical project timelines range from 4�12 weeks depending on complexity. A standard website can be delivered in 4�6 weeks, while larger enterprise systems may take 3�6 months. We provide a realistic timeline during the proposal phase."
+        "text": "Typical project timelines range from 4–12 weeks depending on complexity. A standard website can be delivered in 4–6 weeks, while larger enterprise systems may take 3–6 months. We provide a realistic timeline during the proposal phase."
       }
     },
     {
@@ -159,7 +159,7 @@
         </div>
         <div class="faq-item">
           <button class="faq-item__trigger" aria-expanded="false"><span>How long does development take?</span><span class="faq-item__icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
-          <div class="faq-item__content"><p class="faq-item__text">Typical project timelines range from 4�12 weeks depending on complexity. A standard website can be delivered in 4�6 weeks, while larger enterprise systems may take 3�6 months. We provide a realistic timeline during the proposal phase.</p></div>
+          <div class="faq-item__content"><p class="faq-item__text">Typical project timelines range from 4–12 weeks depending on complexity. A standard website can be delivered in 4–6 weeks, while larger enterprise systems may take 3–6 months. We provide a realistic timeline during the proposal phase.</p></div>
         </div>
         <div class="faq-item">
           <button class="faq-item__trigger" aria-expanded="false"><span>Can you redesign existing software?</span><span class="faq-item__icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
@@ -213,15 +213,11 @@
   <div><h4>Products</h4><a href="synapse.html">Synapse AI</a><a href="vista.html">Vista Cinema</a><a href="portfolio.html">Work</a></div>
   <div><h4>Company</h4><a href="about.html">About</a><a href="blog.html">Insights</a><a href="contact.html">Contact</a></div>
   <div><h4>Developers</h4><a href="ai.html?v=3">AI Platform</a><a href="https://github.com/lx-obsidian-labs" target="_blank" rel="noopener">GitHub</a></div>
-</div><div class="saas-footer__bottom"><span>&copy; 2026 LX Obsidian Labs. All rights reserved.</span><span>AI � Automation � Intelligence</span></div></footer>
+</div><div class="saas-footer__bottom"><span>&copy; 2026 LX Obsidian Labs. All rights reserved.</span><span>AI · Automation · Intelligence</span></div></footer>
 
-<script src="js/chat-widget.js?v=2"></script>
+<script src="js/components/chat-widget.js?v=2"></script>
+  <script src="js/ui/mobile-nav.js"></script>
 <script>
-  document.getElementById('saasMenu')?.addEventListener('click', function () {
-    var links = document.getElementById('navLinks');
-    var open = links.classList.toggle('open');
-    this.setAttribute('aria-expanded', open ? 'true' : 'false');
-  });
   document.querySelectorAll('.faq-item__trigger').forEach(function(btn) {
     btn.addEventListener('click', function() {
       var expanded = btn.getAttribute('aria-expanded') === 'true';

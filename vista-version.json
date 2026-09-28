@@ -1,7 +1,7 @@
 {
-  "versionCode": 12,
-  "versionName": "1.0.5",
-  "downloadUrl": "https://github.com/lx-obsidian-labs/lx-obsidian-portal/raw/master/VistaCinema-v1.0.5.apk",
-  "changelog": "• NEW: In-app notification bell with the Vista team's announcements (get them even if you miss a push)\n• NEW: On-device release notifications via Firebase Cloud Messaging - Vista Cinema can finally reach you\n• REDESIGNED: Settings - professional layout, honest toggles, real storage & cache sizes, subtitle size/colour controls\n• NEW: Cinematic first-run onboarding with a personal name; returning viewers get a welcome-back screen\n• NEW: Premium is coming - early 2027 launch announcement with a live countdown (R20/month)\n• NEW: 3-day free guest trial for new viewers\n• NEW: TV search - voice-first search on the big screen\n• FIXED: TV mandatory updates can no longer be dismissed with the BACK key",
+  "versionCode": 13,
+  "versionName": "1.0.6",
+  "downloadUrl": "https://github.com/lx-obsidian-labs/lx-obsidian-portal/raw/master/VistaCinema-v1.0.6.apk",
+  "changelog": "• NEW: Movie of the Day - a free film picked for you every day, matched to the season (Heritage Day, Freedom Day, Easter, Christmas and more)\n• NEW: Share straight to WhatsApp, X or Facebook - or the native share sheet for everything else\n• NEW: Announcements can be targeted by country - so South African viewers hear about South African things first\n• NEW: Private usage analytics - Vista learns how the app is used from its own site, with no personal data\n• FIXED: Sharing a movie or TV show now points to the real Vista Cinema link\n• IMPROVED: The TV build now scrolls properly with a remote - rows snap, the page follows focus, and posters stay in frame",
   "mandatory": true
 }

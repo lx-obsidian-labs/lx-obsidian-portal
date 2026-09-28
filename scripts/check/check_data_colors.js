@@ -1,0 +1,12 @@
+const fs = require('fs');
+const h = fs.readFileSync('dist/index.html', 'utf8');
+console.log('data-color=cyan in index:', (h.match(/data-color="cyan"/g) || []).length);
+console.log('data-color=red in index:', (h.match(/data-color="red"/g) || []).length);
+const re1 = /app-card__icon\[data-color="cyan"\]/;
+const re2 = /app-card__icon\[data-color="red"\]/;
+const re3 = /app-modal__icon\[data-color="cyan"\]/;
+const re4 = /app-modal__icon\[data-color="red"\]/;
+console.log('Found app-card__icon[data-color=cyan]:', re1.test(h));
+console.log('Found app-card__icon[data-color=red]:', re2.test(h));
+console.log('Found app-modal__icon[data-color=cyan]:', re3.test(h));
+console.log('Found app-modal__icon[data-color=red]:', re4.test(h));
