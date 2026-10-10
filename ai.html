@@ -48,8 +48,11 @@
     "featureList": [
       "Describe an idea and generate a complete web app",
       "Refine generated code with follow-up prompts",
+      "Edit generated code inline with instant re-preview",
       "Explain and debug code inline",
       "Live preview with code, chat and console views",
+      "Test responsive layouts with desktop, tablet and mobile preview",
+      "Download your project as a ZIP or open it in a new tab",
       "Choose NVIDIA NIM or OpenRouter free models",
       "No sign-up required to start building"
     ],
@@ -135,7 +138,21 @@
     .view{flex:1;min-height:0;display:none;flex-direction:column}
     .view.is-active{display:flex}
     .view iframe{flex:1;width:100%;border:none;background:#07070a;min-height:520px}
-    .code{margin:0;flex:1;overflow:auto;background:rgba(10,10,13,.75);color:#c7c7d1;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;line-height:1.6;padding:14px;white-space:pre-wrap;word-break:break-word}
+    .preview-bar{display:flex;align-items:center;gap:6px;padding:6px 8px;border-bottom:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.02);flex:none}
+    .preview-bar__spacer{flex:1}
+    .dev{border:1px solid rgba(255,255,255,.12);background:transparent;color:var(--saas-muted);font-size:.72rem;font-weight:600;padding:4px 9px;border-radius:7px;cursor:pointer;transition:.15s}
+    .dev:hover{color:var(--saas-text)}
+    .dev.is-active{background:var(--saas-accent);color:#000;border-color:transparent}
+    #preview{margin:0 auto;transition:max-width .25s ease}
+    #view-preview:fullscreen{background:#07070a;padding:0}
+    #view-preview:fullscreen iframe{height:100%;min-height:0}
+    #view-preview:fullscreen #emptyState{color:#9A9A9A}
+    .code{margin:0;flex:1;width:100%;display:block;overflow:auto;background:rgba(10,10,13,.75);color:#c7c7d1;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;line-height:1.6;padding:14px;white-space:pre-wrap;word-break:break-word;border:none;resize:none;outline:none;tab-size:2}
+    .hist{display:flex;flex-direction:column;gap:4px;max-height:168px;overflow:auto}
+    .hist button{text-align:left;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.02);color:var(--saas-muted);font-size:.76rem;padding:6px 9px;border-radius:9px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .hist button:hover{color:var(--saas-text);border-color:rgba(255,255,255,.24)}
+    .retry{margin-top:2px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.04);color:var(--saas-text);font-size:.76rem;font-weight:600;padding:6px 12px;border-radius:9px;cursor:pointer}
+    .retry:hover{border-color:rgba(255,255,255,.32)}
     .chat{flex:1;overflow:auto;padding:16px}
     .msg{max-width:88%;margin-bottom:14px}
     .msg__who{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--saas-muted);margin-bottom:5px}
@@ -246,6 +263,11 @@
 
       <p class="status" id="status" role="status" aria-live="polite"><span class="dot" aria-hidden="true"></span><span id="statusText">Ready</span></p>
       <p id="errorText" class="err" hidden></p>
+      <button type="button" id="retryBtn" class="retry" hidden>Retry</button>
+      <div id="histWrap" hidden>
+        <span class="side__label">Recent builds</span>
+        <div class="hist" id="histList"></div>
+      </div>
       <p class="note">Free to use. Powered by NVIDIA NIM + OpenRouter. Need more capacity or private models? <a href="index.html#pricing">See Pro plans</a> or <a href="contact.html">talk to us</a>.</p>
     </aside>
 
@@ -257,14 +279,23 @@
           <button type="button" data-view="console" role="tab">Console<span id="consoleBadge" hidden></span></button>
         </div>
         <div class="actions">
+          <button type="button" id="applyBtn" hidden>Apply</button>
           <button type="button" id="copyBtn" hidden>Copy</button>
           <button type="button" id="dlBtn" hidden>Download</button>
+          <button type="button" id="zipBtn" hidden>ZIP</button>
           <button type="button" id="openBtn" hidden>Open</button>
           <button type="button" id="clearBtn">Clear</button>
         </div>
       </div>
 
       <div class="view is-active" id="view-preview" role="tabpanel">
+        <div class="preview-bar" id="previewBar" hidden>
+          <button type="button" class="dev is-active" data-size="desktop">Desktop</button>
+          <button type="button" class="dev" data-size="tablet">Tablet</button>
+          <button type="button" class="dev" data-size="mobile">Mobile</button>
+          <span class="preview-bar__spacer"></span>
+          <button type="button" class="dev" id="fsBtn" title="Fullscreen preview">Fullscreen</button>
+        </div>
         <div id="emptyState" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;padding:2rem">
           <span class="empty__mark">LX</span>
           <span class="empty__t">Nothing built yet</span>
@@ -281,7 +312,7 @@
         <div class="console" id="consoleLog"><p class="log log--info"><span class="log__lvl">info</span><span>Runtime messages from your generated app appear here.</span></p></div>
       </div>
 
-      <pre class="code" id="codeView" hidden></pre>
+      <textarea class="code" id="codeView" hidden spellcheck="false" aria-label="Code editor" wrap="off"></textarea>
     </section>
   </div>
 </main>
@@ -297,9 +328,15 @@
   var copyBtn = $('copyBtn'), dlBtn = $('dlBtn'), openBtn = $('openBtn'), clearBtn = $('clearBtn'), quickWrap = $('quickWrap');
   var modeBtns = Array.prototype.slice.call(document.querySelectorAll('.modes button'));
 
-  var state = { mode: 'generate', engine: 'nvidia', model: '', files: {}, currentFile: null, messages: [], history: [], busy: false, controller: null, startedAt: 0, timer: null, logs: [] };
+  var copyBtn = $('copyBtn'), dlBtn = $('dlBtn'), openBtn = $('openBtn'), clearBtn = $('clearBtn'), quickWrap = $('quickWrap');
+  var applyBtn = $('applyBtn'), zipBtn = $('zipBtn'), retryBtn = $('retryBtn'), previewBar = $('previewBar');
+  var histWrap = $('histWrap'), histList = $('histList'), fsBtn = $('fsBtn');
+  var modeBtns = Array.prototype.slice.call(document.querySelectorAll('.modes button'));
+  var devBtns = Array.prototype.slice.call(document.querySelectorAll('.dev[data-size]'));
+
+  var state = { mode: 'generate', engine: 'nvidia', model: '', files: {}, currentFile: null, messages: [], history: [], busy: false, controller: null, startedAt: 0, timer: null, logs: [], lastPayload: null, dirty: false };
   var LABELS = { generate: 'Generate app', refine: 'Apply changes', explain: 'Explain code', chat: 'Send' };
-  var MODELS = null;
+  var MODELS = null, PROJECTS = [], activeProject = null;
 
   try {
     var saved = JSON.parse(localStorage.getItem('lx-studio') || 'null');
@@ -310,6 +347,7 @@
       if (saved.engine) { state.engine = saved.engine; engineEl.value = saved.engine; }
     }
   } catch (e) {}
+  try { PROJECTS = JSON.parse(localStorage.getItem('lx-projects') || '[]') || []; } catch (e) { PROJECTS = []; }
 
   function persist() {
     try { localStorage.setItem('lx-studio', JSON.stringify({ files: state.files, currentFile: state.currentFile, messages: state.messages.slice(-40), engine: state.engine })); } catch (e) {}
@@ -317,7 +355,7 @@
   function hasFiles() { return Object.keys(state.files).length > 0; }
   function labelFor(m) { return LABELS[m] || 'Run'; }
   function setStatus(text, cls) { statusText.textContent = text; statusEl.className = 'status' + (cls ? ' is-' + cls : ''); }
-  function showError(msg) { errorText.textContent = msg || ''; errorText.hidden = !msg; if (msg) setStatus('Error', 'err'); }
+  function showError(msg) { errorText.textContent = msg || ''; errorText.hidden = !msg; retryBtn.hidden = !msg; if (msg) setStatus('Error', 'err'); }
 
   function startTimer() {
     state.startedAt = Date.now();
@@ -396,19 +434,22 @@
   }
   function addMessage(role, text) { state.messages.push({ role: role, text: text }); renderChat(); persist(); }
 
+  function hideAllActions() { applyBtn.hidden = copyBtn.hidden = dlBtn.hidden = zipBtn.hidden = openBtn.hidden = true; }
   function showView(view) {
     Array.prototype.forEach.call(tabsEl.querySelectorAll('button'), function (b) { b.classList.toggle('is-active', b.getAttribute('data-view') === view); });
     $('view-preview').classList.toggle('is-active', view === 'preview');
     $('view-chat').classList.toggle('is-active', view === 'chat');
     $('view-console').classList.toggle('is-active', view === 'console');
     codeView.hidden = true;
-    copyBtn.hidden = dlBtn.hidden = openBtn.hidden = true;
+    hideAllActions();
+    previewBar.hidden = true;
     if (view === 'preview') {
-      copyBtn.hidden = dlBtn.hidden = openBtn.hidden = !hasFiles();
-      if (state.currentFile) { emptyState.style.display = 'none'; previewEl.hidden = false; previewEl.srcdoc = buildDoc(); renderConsole(); }
+      var f = hasFiles();
+      previewBar.hidden = !f;
+      copyBtn.hidden = dlBtn.hidden = zipBtn.hidden = openBtn.hidden = !f;
+      if (state.currentFile && f) { emptyState.style.display = 'none'; previewEl.hidden = false; previewEl.srcdoc = buildDoc(); renderConsole(); }
       else { previewEl.hidden = true; emptyState.style.display = 'flex'; }
     } else if (view === 'console') {
-      copyBtn.hidden = dlBtn.hidden = openBtn.hidden = true;
       renderConsole();
     }
   }
@@ -427,8 +468,10 @@
     var act = state.currentFile ? tabsEl.querySelector('button[data-file="' + cssEsc(state.currentFile) + '"]') : null;
     if (act) act.classList.add('is-active');
     emptyState.style.display = 'none'; previewEl.hidden = true; consoleEl.parentElement.classList.remove('is-active');
-    codeView.hidden = false; codeView.textContent = state.files[state.currentFile] || '';
-    copyBtn.hidden = dlBtn.hidden = false; openBtn.hidden = true;
+    previewBar.hidden = true; hideAllActions();
+    codeView.hidden = false; codeView.value = state.files[state.currentFile] || '';
+    applyBtn.hidden = copyBtn.hidden = dlBtn.hidden = zipBtn.hidden = false; openBtn.hidden = true;
+    state.dirty = false;
   }
   function cssEsc(s) { return String(s).replace(/"/g, '\\"'); }
 
@@ -470,10 +513,84 @@
   }
 
   function download(name, content, type) {
-    var blob = new Blob([content], { type: type || 'text/plain' });
+    var blob = content instanceof Blob ? content : new Blob([content], { type: type || 'text/plain' });
     var url = URL.createObjectURL(blob);
     var a = document.createElement('a'); a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove();
     setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
+  }
+
+  /* ── Minimal ZIP (store, no compression) for multi-file download ── */
+  function crc32(data) {
+    var c, crc = 0xFFFFFFFF;
+    for (var i = 0; i < data.length; i++) {
+      c = (crc ^ data[i]) & 0xFF;
+      for (var k = 0; k < 8; k++) c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1);
+      crc = (crc >>> 8) ^ c;
+    }
+    return (crc ^ 0xFFFFFFFF) >>> 0;
+  }
+  function makeZip(files) {
+    var enc = new TextEncoder(), parts = [], central = [], offset = 0, names = Object.keys(files), count = names.length;
+    names.forEach(function (name) {
+      var data = enc.encode(files[name]), nb = enc.encode(name), crc = crc32(data);
+      var lh = new Uint8Array(30 + nb.length), dv = new DataView(lh.buffer);
+      dv.setUint32(0, 0x04034b50, true); dv.setUint16(4, 20, true); dv.setUint16(6, 0, true); dv.setUint16(8, 0, true);
+      dv.setUint16(10, 0, true); dv.setUint16(12, 0, true); dv.setUint32(14, crc, true);
+      dv.setUint32(18, data.length, true); dv.setUint32(22, data.length, true);
+      dv.setUint16(26, nb.length, true); dv.setUint16(28, 0, true); lh.set(nb, 30);
+      parts.push(lh, data);
+      var ch = new Uint8Array(46 + nb.length), cv = new DataView(ch.buffer);
+      cv.setUint32(0, 0x02014b50, true); cv.setUint16(4, 20, true); cv.setUint16(6, 20, true); cv.setUint16(8, 0, true);
+      cv.setUint16(10, 0, true); cv.setUint16(12, 0, true); cv.setUint16(14, 0, true); cv.setUint32(16, crc, true);
+      cv.setUint32(20, data.length, true); cv.setUint32(24, data.length, true); cv.setUint16(28, nb.length, true);
+      cv.setUint16(30, 0, true); cv.setUint16(32, 0, true); cv.setUint16(34, 0, true); cv.setUint16(36, 0, true);
+      cv.setUint32(38, 0, true); cv.setUint32(42, offset, true); ch.set(nb, 46);
+      central.push(ch);
+      offset += lh.length + data.length;
+    });
+    var cdSize = central.reduce(function (a, b) { return a + b.length; }, 0);
+    var eocd = new Uint8Array(22), ev = new DataView(eocd.buffer);
+    ev.setUint32(0, 0x06054b50, true); ev.setUint16(4, 0, true); ev.setUint16(6, 0, true);
+    ev.setUint16(8, count, true); ev.setUint16(10, count, true); ev.setUint32(12, cdSize, true); ev.setUint32(16, offset, true); ev.setUint16(20, 0, true);
+    return new Blob(parts.concat(central, [eocd]), { type: 'application/zip' });
+  }
+
+  /* ── Code editor ── */
+  var persistTimer = null;
+  function persistSoon() { clearTimeout(persistTimer); persistTimer = setTimeout(persist, 400); }
+  function applyCode() {
+    if (state.currentFile) state.files[state.currentFile] = codeView.value;
+    persist(); state.dirty = false; showView('preview'); setStatus('Code applied', 'ok');
+  }
+
+  /* ── Project history ── */
+  function projectName(msg) { var s = (msg || '').trim().replace(/\s+/g, ' '); if (!s) return 'Untitled app'; return s.length > 44 ? s.slice(0, 44) + '…' : s; }
+  function pushProject(name) {
+    if (!hasFiles()) return;
+    var snap = { name: name, files: JSON.parse(JSON.stringify(state.files)), at: Date.now() };
+    PROJECTS = PROJECTS.filter(function (p) { return p.name !== name; });
+    PROJECTS.unshift(snap); PROJECTS = PROJECTS.slice(0, 8);
+    try { localStorage.setItem('lx-projects', JSON.stringify(PROJECTS)); } catch (e) {}
+    renderHistory();
+  }
+  function renderHistory() {
+    histWrap.hidden = !PROJECTS.length;
+    histList.innerHTML = '';
+    PROJECTS.forEach(function (p) {
+      var b = document.createElement('button'); b.type = 'button'; b.textContent = p.name; b.title = 'Restore: ' + p.name;
+      b.addEventListener('click', function () {
+        state.files = JSON.parse(JSON.stringify(p.files)); state.currentFile = Object.keys(state.files)[0] || null;
+        state.messages = []; state.history = []; persist(); renderTabs(); renderChat(); quickWrap.hidden = !hasFiles(); showView('preview'); setStatus('Restored · ' + p.name, 'ok');
+      });
+      histList.appendChild(b);
+    });
+  }
+
+  /* ── Preview device sizes + fullscreen ── */
+  var SIZES = { desktop: '100%', tablet: '820px', mobile: '390px' };
+  function setSize(s) {
+    devBtns.forEach(function (b) { b.classList.toggle('is-active', b.getAttribute('data-size') === s); });
+    previewEl.style.maxWidth = SIZES[s] || '100%';
   }
 
   modeBtns.forEach(function (b) { b.addEventListener('click', function () { setMode(b.getAttribute('data-mode')); }); });
@@ -497,15 +614,30 @@
     var name = state.currentFile || 'index.html';
     download(name, state.files[state.currentFile] || buildDoc(), /\.html$/i.test(name) ? 'text/html' : 'text/plain');
   });
+  zipBtn.addEventListener('click', function () { if (hasFiles()) download('lx-app.zip', makeZip(state.files)); });
+  applyBtn.addEventListener('click', applyCode);
   openBtn.addEventListener('click', function () {
     var url = URL.createObjectURL(new Blob([buildDoc()], { type: 'text/html' }));
     window.open(url, '_blank', 'noopener'); setTimeout(function () { URL.revokeObjectURL(url); }, 8000);
   });
   clearBtn.addEventListener('click', function () {
     state.files = {}; state.currentFile = null; state.messages = []; state.history = []; state.logs = []; state.model = ''; modelEl.value = '';
-    persist(); renderTabs(); renderChat(); renderConsole(); quickWrap.hidden = true; showView('preview'); setStatus('Cleared', 'ok');
+    persist(); renderTabs(); renderChat(); renderConsole(); quickWrap.hidden = true; showView('preview'); setStatus('Cleared', 'ok'); showError('');
   });
   stopBtn.addEventListener('click', function () { if (state.controller) state.controller.abort(); });
+  retryBtn.addEventListener('click', function () { if (state.lastPayload) send(state.lastPayload); });
+  devBtns.forEach(function (b) { b.addEventListener('click', function () { setSize(b.getAttribute('data-size')); }); });
+  fsBtn.addEventListener('click', function () {
+    var vp = $('view-preview');
+    if (!document.fullscreenElement) { if (vp.requestFullscreen) vp.requestFullscreen(); }
+    else if (document.exitFullscreen) document.exitFullscreen();
+  });
+  document.addEventListener('fullscreenchange', function () { fsBtn.textContent = document.fullscreenElement ? 'Exit' : 'Fullscreen'; });
+  codeView.addEventListener('input', function () {
+    if (!state.currentFile) return;
+    state.files[state.currentFile] = codeView.value; state.dirty = true; persistSoon();
+  });
+  codeView.addEventListener('keydown', function (e) { if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); applyCode(); } });
 
   async function run() {
     if (state.busy) return;
@@ -518,26 +650,44 @@
     if (state.model) payload.model = state.model;
     if (state.mode === 'refine' || state.mode === 'explain') payload.code = state.files[state.currentFile] || state.files['index.html'] || '';
     if (state.mode === 'chat') payload.history = state.history.slice(-12);
-    if (state.mode === 'chat' || state.mode === 'explain') addMessage('user', message);
+    send(payload);
+  }
 
+  function addUserOnce(text) {
+    var last = state.messages[state.messages.length - 1];
+    if (last && last.role === 'user' && last.text === text) return;
+    addMessage('user', text);
+  }
+
+  async function send(payload) {
+    if (state.busy) return;
+    showError('');
+    var mode = payload.mode, message = payload.message;
+    if (mode === 'chat' || mode === 'explain') {
+      var shown = (message && message !== '(no prompt)') ? message : 'Explain the current code';
+      addUserOnce(shown);
+    }
+    state.lastPayload = payload;
     state.controller = new AbortController();
     setBusy(true);
     try {
       var res = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload), signal: state.controller.signal });
       var data = await res.json();
       if (!res.ok) throw new Error(data.error || ('Request failed (' + res.status + ')'));
-      if (state.mode === 'generate' || state.mode === 'refine') {
+      if (mode === 'generate' || mode === 'refine') {
         if (applyArtifact(data.artifact)) { renderTabs(); state.currentFile = Object.keys(state.files)[0]; showView('preview'); }
         else { addMessage('assistant', (data.artifact && data.artifact.introText) || data.reply || 'Done.'); showView('chat'); }
       } else {
         addMessage('assistant', data.reply || '(no response)'); showView('chat');
       }
-      if (state.mode === 'chat') state.history.push({ role: 'user', content: message }, { role: 'assistant', content: data.reply || '' });
-      var info = state.engine === 'openrouter' ? 'OpenRouter' : 'NVIDIA';
+      if (mode === 'chat') state.history.push({ role: 'user', content: message }, { role: 'assistant', content: data.reply || '' });
+      if (mode === 'generate') pushProject(projectName(message));
+      var info = payload.provider === 'openrouter' ? 'OpenRouter' : 'NVIDIA';
       var secs = Math.round((Date.now() - state.startedAt) / 1000);
       setStatus('Done · ' + info + (data.model ? ' · ' + data.model : '') + ' · ' + secs + 's', 'ok');
-      if (state.mode === 'generate' || state.mode === 'refine') promptEl.value = '';
-      quickWrap.hidden = false;
+      if (mode === 'generate' || mode === 'refine') promptEl.value = '';
+      quickWrap.hidden = !hasFiles();
+      retryBtn.hidden = true;
     } catch (err) {
       if (err && err.name === 'AbortError') setStatus('Stopped', 'err');
       else showError(err && err.message ? err.message : 'Something went wrong.');
@@ -550,6 +700,7 @@
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && state.busy && state.controller) state.controller.abort(); });
 
   renderConsole();
+  renderHistory();
   loadModels();
   if (hasFiles()) { quickWrap.hidden = false; renderTabs(); renderChat(); state.currentFile = state.currentFile || Object.keys(state.files)[0]; showView('preview'); }
   else { renderChat(); }
