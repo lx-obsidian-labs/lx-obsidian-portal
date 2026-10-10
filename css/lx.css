@@ -6,7 +6,7 @@
 /* ── Reset ── */
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;overflow-x:clip;background:#000000;-webkit-text-size-adjust:100%;text-size-adjust:100%}
-body{margin:0;font-family:'Inter',ui-sans-serif,system-ui,sans-serif;font-size:16px;line-height:1.6;color:#FDFDFD;background:#000000;min-height:100vh;overflow-x:clip}
+body{margin:0;font-family:'Inter',ui-sans-serif,system-ui,sans-serif;font-size:16px;line-height:1.6;color:#FDFDFD;background:transparent;min-height:100vh;overflow-x:clip}
 img,picture,video,canvas,svg{display:block;max-width:100%;height:auto}
 input,button,textarea,select{font:inherit;color:inherit}
 button{cursor:pointer;background:none;border:none;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
@@ -72,8 +72,8 @@ h1,h2,h3,h4,h5,h6{font-weight:inherit;font-size:inherit}
 
   /* ── Dot grid background (read by js/ui/dot-grid.js) ── */
   --dot-color: #C0C0C0;
-  --dot-opacity: 0.3;
-  --dot-size: 2.5px;
+  --dot-opacity: 0.4;
+  --dot-size: 3px;
   --dot-spacing: 22px;
   --dot-impact: 110px;
   --dot-scale: 1.9;
