@@ -1,7 +1,7 @@
 {
-  "versionCode": 13,
-  "versionName": "1.0.6",
-  "downloadUrl": "https://github.com/lx-obsidian-labs/lx-obsidian-portal/raw/master/VistaCinema-v1.0.6.apk",
-  "changelog": "• NEW: Movie of the Day - a free film picked for you every day, matched to the season (Heritage Day, Freedom Day, Easter, Christmas and more)\n• NEW: Share straight to WhatsApp, X or Facebook - or the native share sheet for everything else\n• NEW: Announcements can be targeted by country - so South African viewers hear about South African things first\n• NEW: Private usage analytics - Vista learns how the app is used from its own site, with no personal data\n• FIXED: Sharing a movie or TV show now points to the real Vista Cinema link\n• IMPROVED: The TV build now scrolls properly with a remote - rows snap, the page follows focus, and posters stay in frame",
-  "mandatory": true
+  "versionCode": 14,
+  "versionName": "1.0.7",
+  "downloadUrl": "https://github.com/lx-obsidian-labs/lx-obsidian-portal/raw/master/VistaCinema-v1.0.7.apk",
+  "changelog": "• NEW: Your Stats — lifetime figures from your watch history: time reached, titles finished, current streak and more\n• NEW: Milestone sharing — after a real achievement, share an editable message with a friend; notification taps open it directly\n• NEW: Redesigned bottom navigation — Home, Discover, Search, Library and Settings\n• NEW: Library resume button — continue a title in one tap\n• FIXED: Library no longer shows duplicate entries or crashes on the grid\n• FIXED: Settings back arrow now only appears on sub-pages",
+  "mandatory": false
 }
