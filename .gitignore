@@ -27,3 +27,11 @@ server_backup.js
 CLAUDE.md
 .git
 dist
+dist/
+
+# Local artifacts: build/dev output & one-off tooling scratch files
+wrangler-whoami*.txt
+chrome-*.txt
+verify-out*.txt
+*-out.txt
+scripts/tmp-*.js
