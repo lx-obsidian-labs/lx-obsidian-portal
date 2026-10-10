@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#000000">
+<meta name="color-scheme" content="dark">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<meta name="description" content="Use the LX AI Builder — generate, refine, explain and chat with real NVIDIA and OpenRouter models. Describe an idea and get a previewable web app in seconds.">
+<meta property="og:title" content="LX AI Builder — Generate Web Apps with Real AI | LX Obsidian Labs">
+<meta property="og:description" content="Generate, refine, debug and preview real web apps using the LX Obsidian Labs AI engine — free NVIDIA and OpenRouter models.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LX Obsidian Labs">
+<meta property="og:locale" content="en_ZA">
+<meta property="og:url" content="https://www.lxobsidianportal.co.za/build">
+<meta property="og:image" content="https://www.lxobsidianportal.co.za/assets/og-default.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="LX Obsidian Labs — South African AI and software engineering company">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="LX AI Builder — Generate Web Apps with Real AI | LX Obsidian Labs">
+<meta name="twitter:description" content="Generate, refine, debug and preview real web apps using the LX Obsidian Labs AI engine — free NVIDIA and OpenRouter models.">
+<meta name="twitter:image" content="https://www.lxobsidianportal.co.za/assets/og-default.png">
+<link rel="canonical" href="https://www.lxobsidianportal.co.za/build">
+<link rel="alternate" hreflang="en-ZA" href="https://www.lxobsidianportal.co.za/build">
+<link rel="alternate" hreflang="x-default" href="https://www.lxobsidianportal.co.za/build">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="css/lx.css">
+<title>LX AI Builder — Generate Web Apps with Real AI | LX Obsidian Labs</title>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "LX AI Builder",
+  "description": "Bespoke AI web-app builder by LX Obsidian Labs. Generate, refine, explain and preview real single-file web applications using free NVIDIA and OpenRouter models.",
+  "url": "https://www.lxobsidianportal.co.za/build",
+  "applicationCategory": "DeveloperApplication",
+  "applicationSubCategory": "AI App Builder",
+  "operatingSystem": "Web",
+  "isAccessibleForFree": true,
+  "keywords": "AI app builder, web app generator, AI code generation, live preview, LX Obsidian Labs",
+  "featureList": [
+    "Generate complete web apps from a prompt",
+    "Refine existing generated code",
+    "Explain and debug code inline",
+    "Live preview with code view",
+    "Free NVIDIA and OpenRouter models",
+    "No account or API key required"
+  ],
+  "screenshot": "https://www.lxobsidianportal.co.za/assets/og-default.png",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "ZAR",
+    "description": "Free to use. Pro plans available for teams and businesses."
+  },
+  "publisher": { "@id": "https://www.lxobsidianportal.co.za/#organization" },
+  "author": { "@type": "Organization", "name": "LX Obsidian Labs", "url": "https://www.lxobsidianportal.co.za" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": "https://www.lxobsidianportal.co.za/#organization",
+  "name": "LX Obsidian Labs",
+  "alternateName": ["LX Obsidian", "Obsidian Labs"],
+  "url": "https://www.lxobsidianportal.co.za",
+  "logo": "https://www.lxobsidianportal.co.za/assets/og-default.png",
+  "foundingDate": "2016",
+  "description": "South African AI and software engineering company building intelligent platforms, automation systems and digital infrastructure.",
+  "areaServed": { "@type": "Country", "name": "South Africa" },
+  "knowsAbout": ["Artificial intelligence", "Software engineering", "Web development", "Automation"],
+  "sameAs": ["https://github.com/lx-obsidian-labs"]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.lxobsidianportal.co.za/" },
+    { "@type": "ListItem", "position": 2, "name": "LX AI Builder", "item": "https://www.lxobsidianportal.co.za/build" }
+  ]
+}
+</script>
+<style>
+  .tpl-app{display:flex;flex-direction:column;height:calc(100dvh - 64px)}
+  .tpl-main{display:flex;flex:1;min-height:0}
+  .tpl-side{width:min(420px,100%);flex:none;border-right:1px solid rgba(255,255,255,.08);background:rgba(15,15,18,.6);display:flex;flex-direction:column;padding:1rem;gap:.9rem;overflow-y:auto}
+  .tpl-panel{flex:1;min-width:0;display:flex;flex-direction:column}
+  .tpl-field{display:flex;flex-direction:column;gap:.4rem}
+  .tpl-field textarea{width:100%;min-height:88px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:12px;color:var(--saas-text);padding:.8rem;font-family:'Space Grotesk',monospace;font-size:.9rem;resize:vertical;line-height:1.5}
+  .tpl-field textarea:focus-visible{outline:2px solid var(--saas-accent-light);outline-offset:2px}
+  .tpl-mode{display:flex;gap:.35rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:999px;padding:.3rem}
+  .tpl-mode button{flex:1;border:none;background:transparent;color:var(--saas-muted);font-size:.78rem;font-weight:600;padding:.45rem .5rem;border-radius:999px;cursor:pointer;transition:background .15s,color .15s}
+  .tpl-mode button:hover{color:var(--saas-text)}
+  .tpl-mode button.is-active{background:var(--gradient-accent);color:#fff}
+  .tpl-status{min-height:1.4em;font-size:.8rem;color:var(--saas-muted);display:flex;align-items:center;gap:.5rem}
+  .tpl-err{color:#f87171;white-space:pre-line;font-size:.82rem}
+  .tpl-info{font-size:.72rem;color:var(--saas-muted)}
+  .tpl-cta{display:flex;gap:.6rem;margin-top:.2rem}
+  .tpl-build{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.8rem 1.2rem;border:none;border-radius:12px;background:var(--gradient-accent);color:#fff;font-weight:700;font-size:.95rem;cursor:pointer;transition:transform .15s,box-shadow .15s}
+  .tpl-build:hover:not(:disabled){transform:translateY(-1px)}
+  .tpl-build:disabled{opacity:.55;cursor:not-allowed}
+  .tpl-empty{flex:1;display:grid;place-items:center;color:var(--saas-muted);font-size:.95rem;text-align:center;padding:2rem}
+  .tpl-empty strong{color:var(--saas-text);display:block;margin-bottom:.4rem}
+  .tpl-view{flex:1;display:flex;flex-direction:column;min-height:0}
+  .tpl-tabs{display:flex;gap:.35rem;padding:.6rem .9rem;border-bottom:1px solid rgba(255,255,255,.08);overflow-x:auto}
+  .tpl-tab{border:1px solid transparent;background:transparent;color:var(--saas-muted);font-size:.75rem;font-weight:600;padding:.3rem .7rem;border-radius:999px;cursor:pointer;white-space:nowrap}
+  .tpl-tab.is-active{color:var(--saas-text);background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.1)}
+  .tpl-frame{flex:1;border:none;background:#07070a;width:100%}
+  .tpl-code{flex:1;margin:0;overflow:auto;background:rgba(10,10,13,.8);color:#c7c7d1;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;line-height:1.6;padding:1rem;white-space:pre-wrap;word-break:break-word}
+  .tpl-reply{flex:1;overflow:auto;padding:1.2rem;color:var(--saas-text);font-size:.92rem;line-height:1.7;white-space:pre-wrap}
+  @media(max-width:820px){
+    .tpl-app{height:auto;min-height:calc(100dvh - 64px)}
+    .tpl-main{flex-direction:column}
+    .tpl-side{width:100%;border-right:none;border-bottom:1px solid rgba(255,255,255,.08)}
+    .tpl-panel{min-height:52vh}
+  }
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+
+<!-- ------- SITE HEADER ------- -->
+<header class="app-bar">
+  <div class="app-bar__inner">
+    <a class="app-bar__brand" href="index.html">
+      <span class="velora-brand__mark" aria-hidden="true">LX</span>
+      <h1 class="app-bar__label">LX AI Builder</h1>
+    </a>
+    <nav class="app-bar__actions" aria-label="Site">
+      <a class="app-bar__link" href="ai.html">Classic Studio</a>
+      <a class="app-bar__link" href="index.html#pricing">Pricing</a>
+      <a class="app-bar__link" href="contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="tpl-app" aria-label="LX AI Builder">
+  <section class="tpl-main">
+    <aside class="tpl-side" aria-label="Builder controls">
+      <div class="tpl-field">
+        <span class="tpl-info" style="color:var(--saas-text);font-weight:600;font-size:.8rem;text-transform:uppercase;letter-spacing:.08em">Describe what to build</span>
+        <textarea id="prompt" placeholder="Example: a sleek analytics dashboard with revenue stats and a bar chart" aria-label="Prompt"></textarea>
+      </div>
+      <div class="tpl-mode" role="group" aria-label="Mode">
+        <button type="button" data-mode="generate" class="is-active">Generate</button>
+        <button type="button" data-mode="refine">Refine</button>
+        <button type="button" data-mode="explain">Explain</button>
+        <button type="button" data-mode="chat">Chat</button>
+      </div>
+      <div class="tpl-cta">
+        <button type="button" id="buildBtn" class="tpl-build" style="flex:1">Build with LX AI</button>
+      </div>
+      <div class="tpl-status" role="status" aria-live="polite"><span id="statusText"></span><span id="infoText" class="tpl-info"></span></div>
+      <p id="errorText" class="tpl-err" hidden></p>
+      <p class="tpl-info">Powered by NVIDIA and OpenRouter models. No sign-up or API key needed to build. <a href="contact.html" style="color:var(--saas-accent-light)">Need more? Talk to us.</a></p>
+    </aside>
+
+    <section class="tpl-panel">
+      <div id="emptyState" class="tpl-empty">
+        <div><strong>Your preview appears here</strong>Describe an app and hit Build — generated files are live-editable in the Code tab.</div>
+      </div>
+      <div id="viewArea" class="tpl-view" hidden>
+        <div class="tpl-tabs" id="fileTabs" role="tablist" aria-label="Generated files"></div>
+        <div id="previewWrap" style="flex:1;display:flex;flex-direction:column;min-height:0">
+          <iframe id="preview" class="tpl-frame" title="Live preview" sandbox="allow-scripts allow-forms allow-modals allow-popups" loading="lazy"></iframe>
+        </div>
+        <pre id="codeView" class="tpl-code" hidden></pre>
+      </div>
+    </section>
+  </section>
+</main>
+
+<script>
+(function () {
+  var promptEl = document.getElementById('prompt');
+  var buildBtn = document.getElementById('buildBtn');
+  var modeBtns = Array.prototype.slice.call(document.querySelectorAll('.tpl-mode button'));
+  var statusText = document.getElementById('statusText');
+  var infoText = document.getElementById('infoText');
+  var errorText = document.getElementById('errorText');
+  var emptyState = document.getElementById('emptyState');
+  var viewArea = document.getElementById('viewArea');
+  var preview = document.getElementById('preview');
+  var codeView = document.getElementById('codeView');
+  var fileTabs = document.getElementById('fileTabs');
+
+  var mode = 'generate';
+  var files = {};
+  var currentFile = null;
+  var busy = false;
+
+  modeBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      mode = b.getAttribute('data-mode');
+      modeBtns.forEach(function (x) { x.classList.remove('is-active'); });
+      b.classList.add('is-active');
+      if (mode === 'refine' || mode === 'explain') {
+        promptEl.placeholder = mode === 'refine'
+          ? 'What should I change about the current app?'
+          : 'What should I explain about the current code?';
+        var first = Object.keys(files)[0];
+        if (first) { promptEl.placeholder += ' (code: ' + first + ')'; }
+      } else {
+        promptEl.placeholder = 'Example: a sleek analytics dashboard with revenue stats and a bar chart';
+      }
+    });
+  });
+
+  function setBusy(on) {
+    busy = on;
+    buildBtn.disabled = on;
+    buildBtn.textContent = on ? 'Thinking…' : 'Build with LX AI';
+  }
+
+  function setStatus(t, info) {
+    statusText.textContent = t || '';
+    infoText.textContent = info || '';
+  }
+
+  function showError(msg) {
+    errorText.textContent = msg;
+    errorText.hidden = !msg;
+  }
+
+  function renderTabs() {
+    fileTabs.innerHTML = '';
+    Object.keys(files).forEach(function (name) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'tpl-tab' + (name === currentFile ? ' is-active' : '');
+      b.textContent = name;
+      b.setAttribute('role', 'tab');
+      b.addEventListener('click', function () { showFile(name); });
+      fileTabs.appendChild(b);
+    });
+  }
+
+  function showFile(name) {
+    currentFile = name;
+    renderTabs();
+    codeView.hidden = true;
+    preview.hidden = false;
+    preview.srcdoc = buildDoc();
+  }
+
+  function buildDoc() {
+    var style = files['styles.css'] || '';
+    var html = files['index.html'] || '';
+    var script = files['app.js'] || '';
+    return '<!DOCTYPE html>\n<html>\n<head><style>' + style + '</style></head>\n<body>' + html + '<script>' + script + '</scr' + 'ipt></body>\n</html>';
+  }
+
+  function showReply(text) {
+    codeView.textContent = text || '';
+    codeView.hidden = false;
+    codeView.removeAttribute('hidden');
+    preview.hidden = true;
+    emptyState.hidden = true;
+    viewArea.hidden = false;
+    fileTabs.innerHTML = '';
+  }
+
+  function applyArtifact(artifact) {
+    if (!artifact || !artifact.actions || !artifact.actions.length) return false;
+    files = {};
+    artifact.actions.forEach(function (a) {
+      var p = a.filePath || 'index.html';
+      files[p] = a.content || '';
+    });
+    if (!files['index.html']) {
+      var first = Object.keys(files)[0];
+      if (first) files['index.html'] = files[first];
+    }
+    currentFile = 'index.html';
+    emptyState.hidden = true;
+    viewArea.hidden = false;
+    codeView.hidden = true;
+    preview.hidden = false;
+    preview.srcdoc = buildDoc();
+    renderTabs();
+    return true;
+  }
+
+  buildBtn.addEventListener('click', async function () {
+    var message = promptEl.value.trim();
+    if (!message && mode !== 'refine' && mode !== 'explain') {
+      showError('Describe what you want to build first.');
+      return;
+    }
+    if (busy) return;
+    showError('');
+    setBusy(true);
+    setStatus(mode === 'generate' ? 'Generating…' : mode === 'refine' ? 'Refining…' : mode === 'explain' ? 'Explaining…' : 'Thinking…');
+
+    var isFileMode = mode === 'generate' || mode === 'refine';
+    var code = isFileMode && mode === 'refine' ? (files[currentFile] || files['index.html'] || '') : undefined;
+
+    try {
+      var res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: message, mode: mode, code: code })
+      });
+      var data = await res.json();
+      if (!res.ok) {
+        throw new Error((data && data.error) || 'Request failed (' + res.status + ').');
+      }
+      var ok = applyArtifact(data.artifact);
+      if (mode === 'generate' || mode === 'refine') {
+        if (!ok) {
+          showReply(data.reply || 'Done. Response received from ' + (data.provider || 'AI') + '.');
+        }
+      } else {
+        showReply(data.reply || (data.artifact && data.artifact.actions && data.artifact.actions[0] && data.artifact.actions[0].content) || '');
+      }
+      setStatus('✔ ' + (data.provider === 'template' ? 'Rendered from template' : 'Model:' + (data.provider || '') + (data.model ? ' / ' + data.model : '')));
+      if (data.provider === 'template') {
+        infoText.textContent = 'Rendered from a local starter template — configure provider keys for full AI generation.';
+      }
+    } catch (e) {
+      showError(e.message);
+      setStatus('Prompt failed');
+    } finally {
+      setTimeout(function () { setBusy(false); }, 200);
+    }
+  });
+
+  promptEl.addEventListener('keydown', function (e) {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') buildBtn.click();
+  });
+  promptEl.focus();
+})();
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));}</script>
+<script src="js/ui/mobile-nav.js"></script>
+</body>
+</html>

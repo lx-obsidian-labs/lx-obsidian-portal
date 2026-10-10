@@ -7,6 +7,7 @@ Founded in South Africa in 2016, LX Obsidian Labs designs and engineers custom s
 ## Products
 
 - [AI Platform](/ai): Generate, debug and preview web apps in the browser using free NVIDIA and OpenRouter models.
+- [LX AI Builder](/build): Generate, refine, explain and preview real web apps live in your browser with the real AI engine.
 - [Synapse AI](/synapse): AI-powered browser automation extension for Chrome, Edge and Brave.
 - [Vista Cinema](/vista): Free movie and TV streaming companion app for Android.
 - [Marketplace](/marketplace): Verified catalogue of LX products with active destinations — no placeholder listings.
