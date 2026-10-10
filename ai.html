@@ -50,9 +50,14 @@
       "Refine generated code with follow-up prompts",
       "Edit generated code inline with instant re-preview",
       "Explain and debug code inline",
+      "Capture runtime console errors and auto-fix them with AI",
+      "Add, rename and delete files in your project",
+      "Share your project with a compressed link",
+      "Improve your prompt with one click",
       "Live preview with code, chat and console views",
       "Test responsive layouts with desktop, tablet and mobile preview",
       "Download your project as a ZIP or open it in a new tab",
+      "Keep a history of recent builds and restore any of them",
       "Choose NVIDIA NIM or OpenRouter free models",
       "No sign-up required to start building"
     ],
@@ -232,7 +237,10 @@
       </div>
 
       <div>
-        <label class="side__label" for="prompt">Prompt</label>
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <label class="side__label" for="prompt">Prompt</label>
+          <button type="button" id="improveBtn" class="dev" style="margin-bottom:7px" title="Rewrite your prompt into a better build spec">Improve</button>
+        </div>
         <textarea id="prompt" placeholder="e.g. a sleek analytics dashboard with revenue stats and a bar chart" aria-label="Prompt"></textarea>
       </div>
 
@@ -283,6 +291,7 @@
           <button type="button" id="copyBtn" hidden>Copy</button>
           <button type="button" id="dlBtn" hidden>Download</button>
           <button type="button" id="zipBtn" hidden>ZIP</button>
+          <button type="button" id="shareBtn" hidden>Share</button>
           <button type="button" id="openBtn" hidden>Open</button>
           <button type="button" id="clearBtn">Clear</button>
         </div>
@@ -309,9 +318,22 @@
       </div>
 
       <div class="view" id="view-console" role="tabpanel">
+        <div class="preview-bar">
+          <button type="button" class="dev" id="fixBtn" hidden>Fix errors with AI</button>
+          <span class="preview-bar__spacer"></span>
+          <button type="button" class="dev" id="consoleCopy">Copy</button>
+          <button type="button" class="dev" id="consoleClear">Clear</button>
+        </div>
         <div class="console" id="consoleLog"><p class="log log--info"><span class="log__lvl">info</span><span>Runtime messages from your generated app appear here.</span></p></div>
       </div>
 
+      <div class="preview-bar" id="codeBar" hidden>
+        <span class="dev" id="codeFileName" style="border:none;background:transparent;padding:0">file</span>
+        <span class="preview-bar__spacer"></span>
+        <button type="button" class="dev" id="newFileBtn">+ File</button>
+        <button type="button" class="dev" id="renameBtn">Rename</button>
+        <button type="button" class="dev" id="delFileBtn">Delete</button>
+      </div>
       <textarea class="code" id="codeView" hidden spellcheck="false" aria-label="Code editor" wrap="off"></textarea>
     </section>
   </div>
@@ -326,11 +348,10 @@
   var tabsEl = $('tabs'), previewEl = $('preview'), emptyState = $('emptyState');
   var chatLog = $('chatLog'), codeView = $('codeView'), consoleEl = $('consoleLog'), consoleBadge = $('consoleBadge');
   var copyBtn = $('copyBtn'), dlBtn = $('dlBtn'), openBtn = $('openBtn'), clearBtn = $('clearBtn'), quickWrap = $('quickWrap');
-  var modeBtns = Array.prototype.slice.call(document.querySelectorAll('.modes button'));
-
-  var copyBtn = $('copyBtn'), dlBtn = $('dlBtn'), openBtn = $('openBtn'), clearBtn = $('clearBtn'), quickWrap = $('quickWrap');
   var applyBtn = $('applyBtn'), zipBtn = $('zipBtn'), retryBtn = $('retryBtn'), previewBar = $('previewBar');
   var histWrap = $('histWrap'), histList = $('histList'), fsBtn = $('fsBtn');
+  var shareBtn = $('shareBtn'), improveBtn = $('improveBtn'), fixBtn = $('fixBtn'), consoleCopy = $('consoleCopy'), consoleClear = $('consoleClear');
+  var codeBar = $('codeBar'), codeFileName = $('codeFileName'), newFileBtn = $('newFileBtn'), renameBtn = $('renameBtn'), delFileBtn = $('delFileBtn');
   var modeBtns = Array.prototype.slice.call(document.querySelectorAll('.modes button'));
   var devBtns = Array.prototype.slice.call(document.querySelectorAll('.dev[data-size]'));
 
@@ -384,7 +405,7 @@
     state.logs.push({ level: lvl, msg: msg });
     if (state.logs.length > 300) state.logs.shift();
     renderConsoleBadge();
-    if ($('view-console').classList.contains('is-active')) renderConsole();
+    if ($('view-console').classList.contains('is-active')) { renderConsole(); if (lvl === 'error' && hasFiles()) fixBtn.hidden = false; }
   }
   function renderConsoleBadge() {
     var n = state.logs.filter(function (l) { return l.level === 'error'; }).length;
@@ -434,22 +455,23 @@
   }
   function addMessage(role, text) { state.messages.push({ role: role, text: text }); renderChat(); persist(); }
 
-  function hideAllActions() { applyBtn.hidden = copyBtn.hidden = dlBtn.hidden = zipBtn.hidden = openBtn.hidden = true; }
+  function hideAllActions() { applyBtn.hidden = copyBtn.hidden = dlBtn.hidden = zipBtn.hidden = shareBtn.hidden = openBtn.hidden = true; }
   function showView(view) {
     Array.prototype.forEach.call(tabsEl.querySelectorAll('button'), function (b) { b.classList.toggle('is-active', b.getAttribute('data-view') === view); });
     $('view-preview').classList.toggle('is-active', view === 'preview');
     $('view-chat').classList.toggle('is-active', view === 'chat');
     $('view-console').classList.toggle('is-active', view === 'console');
-    codeView.hidden = true;
+    codeView.hidden = true; codeBar.hidden = true; fixBtn.hidden = true;
     hideAllActions();
     previewBar.hidden = true;
     if (view === 'preview') {
       var f = hasFiles();
       previewBar.hidden = !f;
-      copyBtn.hidden = dlBtn.hidden = zipBtn.hidden = openBtn.hidden = !f;
+      copyBtn.hidden = dlBtn.hidden = zipBtn.hidden = shareBtn.hidden = openBtn.hidden = !f;
       if (state.currentFile && f) { emptyState.style.display = 'none'; previewEl.hidden = false; previewEl.srcdoc = buildDoc(); renderConsole(); }
       else { previewEl.hidden = true; emptyState.style.display = 'flex'; }
     } else if (view === 'console') {
+      fixBtn.hidden = !(hasFiles() && state.logs.some(function (l) { return l.level === 'error'; }));
       renderConsole();
     }
   }
@@ -468,8 +490,9 @@
     var act = state.currentFile ? tabsEl.querySelector('button[data-file="' + cssEsc(state.currentFile) + '"]') : null;
     if (act) act.classList.add('is-active');
     emptyState.style.display = 'none'; previewEl.hidden = true; consoleEl.parentElement.classList.remove('is-active');
-    previewBar.hidden = true; hideAllActions();
-    codeView.hidden = false; codeView.value = state.files[state.currentFile] || '';
+    previewBar.hidden = true; fixBtn.hidden = true; hideAllActions();
+    codeView.hidden = false; codeBar.hidden = false; codeFileName.textContent = state.currentFile || 'file';
+    codeView.value = state.files[state.currentFile] || '';
     applyBtn.hidden = copyBtn.hidden = dlBtn.hidden = zipBtn.hidden = false; openBtn.hidden = true;
     state.dirty = false;
   }
@@ -593,6 +616,87 @@
     previewEl.style.maxWidth = SIZES[s] || '100%';
   }
 
+  /* ── Share via compressed URL ── */
+  function b64url(bytes) { var s = ''; for (var i = 0; i < bytes.length; i++) s += String.fromCharCode(bytes[i]); return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); }
+  function unb64url(str) { var s = str.replace(/-/g, '+').replace(/_/g, '/'); while (s.length % 4) s += '='; var bin = atob(s), b = new Uint8Array(bin.length); for (var i = 0; i < bin.length; i++) b[i] = bin.charCodeAt(i); return b; }
+  async function encodeShare() {
+    var bytes = new TextEncoder().encode(JSON.stringify({ v: 1, files: state.files })), flag = 'r';
+    if (window.CompressionStream) { try { bytes = new Uint8Array(await new Response(new Blob([bytes]).stream().pipeThrough(new CompressionStream('gzip'))).arrayBuffer()); flag = 'g'; } catch (e) {} }
+    return flag + b64url(bytes);
+  }
+  async function decodeShare(str) {
+    var flag = str.charAt(0), bytes = unb64url(str.slice(1));
+    if (flag === 'g' && window.DecompressionStream) bytes = new Uint8Array(await new Response(new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer());
+    var obj = JSON.parse(new TextDecoder().decode(bytes));
+    return obj && obj.files ? obj.files : null;
+  }
+  async function shareLink() {
+    try {
+      var token = await encodeShare();
+      var url = location.origin + location.pathname + '#code=' + token;
+      if (url.length > 12000) { showError('This project is too large to share via a link — use Download or ZIP instead.'); return; }
+      try { await navigator.clipboard.writeText(url); setStatus('Share link copied to clipboard', 'ok'); }
+      catch (e) { location.hash = 'code=' + token; setStatus('Share link is in the address bar — copy it', 'ok'); }
+    } catch (e) { showError('Could not create a share link.'); }
+  }
+  async function loadFromHash() {
+    var m = /(?:^|[#&])code=([^&]+)/.exec(location.hash || '');
+    if (!m) return false;
+    try { var files = await decodeShare(m[1]); if (files && Object.keys(files).length) { state.files = files; state.currentFile = Object.keys(files)[0]; persist(); return true; } } catch (e) {}
+    return false;
+  }
+
+  /* ── Prompt improver ── */
+  async function improvePrompt() {
+    var text = promptEl.value.trim();
+    if (!text) { showError('Type a prompt first, then press Improve.'); return; }
+    improveBtn.disabled = true; setStatus('Improving prompt…', 'busy');
+    try {
+      var res = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ mode: 'chat', provider: state.engine, message: 'Rewrite the following into one detailed, high-quality prompt for generating a web app. Return ONLY the improved prompt text — no preamble, no quotes, no lists.\n\nPrompt: ' + text }) });
+      var raw = await res.text();
+      var data = null; try { data = JSON.parse(raw); } catch (e) { data = null; }
+      var out = ((data && data.reply) || '').trim().replace(/^["']|["']$/g, '');
+      if (res.ok && out) { promptEl.value = out; setStatus('Prompt improved', 'ok'); }
+      else showError((data && data.error) || 'Could not improve the prompt — please try again.');
+    } catch (e) { showError('Could not improve the prompt.'); }
+    finally { improveBtn.disabled = false; }
+  }
+
+  /* ── Fix runtime errors with AI ── */
+  function fixErrors() {
+    var errs = state.logs.filter(function (l) { return l.level === 'error'; }).map(function (l) { return l.msg; });
+    if (!errs.length) return;
+    setMode('refine');
+    state.currentFile = state.files['index.html'] ? 'index.html' : (state.currentFile || Object.keys(state.files)[0]);
+    promptEl.value = 'The app throws these runtime errors in the browser console. Fix them and make sure every button and link works:\n' + errs.slice(0, 8).join('\n');
+    run();
+  }
+
+  /* ── File management ── */
+  function newFile() {
+    var name = (prompt('New file name (e.g. app.js, style.css):') || '').trim();
+    if (!name) return;
+    if (!/\.[a-z0-9]+$/i.test(name)) name += '.js';
+    if (state.files[name] != null) { showError('A file named ' + name + ' already exists.'); return; }
+    state.files[name] = /\.js$/i.test(name) ? '// ' + name + '\n' : /\.css$/i.test(name) ? '/* ' + name + ' */\n'
+      : /\.html$/i.test(name) ? '<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width,initial-scale=1">\n<title>New page</title>\n</head>\n<body>\n\n</body>\n</html>\n' : '';
+    state.currentFile = name; persist(); renderTabs(); showFile(); setStatus('Added ' + name, 'ok');
+  }
+  function renameFile() {
+    if (!state.currentFile) return;
+    var nn = (prompt('Rename file to:', state.currentFile) || '').trim();
+    if (!nn || nn === state.currentFile) return;
+    if (state.files[nn] != null) { showError('A file named ' + nn + ' already exists.'); return; }
+    state.files[nn] = state.files[state.currentFile]; delete state.files[state.currentFile]; state.currentFile = nn; persist(); renderTabs(); showFile();
+  }
+  function deleteFile() {
+    if (!state.currentFile) return;
+    if (Object.keys(state.files).length <= 1) { showError('Cannot delete the only file.'); return; }
+    if (!window.confirm('Delete ' + state.currentFile + '?')) return;
+    delete state.files[state.currentFile]; state.currentFile = Object.keys(state.files)[0]; persist(); renderTabs();
+    if (state.currentFile) showFile(); else showView('preview');
+  }
+
   modeBtns.forEach(function (b) { b.addEventListener('click', function () { setMode(b.getAttribute('data-mode')); }); });
   Array.prototype.forEach.call(document.querySelectorAll('.chips:not(.chips--quick) button'), function (b) {
     b.addEventListener('click', function () { promptEl.value = b.getAttribute('data-fill'); if (state.mode !== 'generate') setMode('generate'); promptEl.focus(); });
@@ -626,6 +730,18 @@
   });
   stopBtn.addEventListener('click', function () { if (state.controller) state.controller.abort(); });
   retryBtn.addEventListener('click', function () { if (state.lastPayload) send(state.lastPayload); });
+  shareBtn.addEventListener('click', shareLink);
+  improveBtn.addEventListener('click', improvePrompt);
+  fixBtn.addEventListener('click', fixErrors);
+  newFileBtn.addEventListener('click', newFile);
+  renameBtn.addEventListener('click', renameFile);
+  delFileBtn.addEventListener('click', deleteFile);
+  consoleCopy.addEventListener('click', function () {
+    if (!state.logs.length) { setStatus('Nothing to copy', 'ok'); return; }
+    var text = state.logs.map(function (l) { return '[' + l.level + '] ' + l.msg; }).join('\n');
+    navigator.clipboard.writeText(text).then(function () { setStatus('Console copied', 'ok'); }, function () { showError('Could not copy the console.'); });
+  });
+  consoleClear.addEventListener('click', function () { state.logs = []; renderConsole(); renderConsoleBadge(); fixBtn.hidden = true; setStatus('Console cleared', 'ok'); });
   devBtns.forEach(function (b) { b.addEventListener('click', function () { setSize(b.getAttribute('data-size')); }); });
   fsBtn.addEventListener('click', function () {
     var vp = $('view-preview');
@@ -672,8 +788,13 @@
     setBusy(true);
     try {
       var res = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload), signal: state.controller.signal });
-      var data = await res.json();
-      if (!res.ok) throw new Error(data.error || ('Request failed (' + res.status + ')'));
+      var text = await res.text();
+      var data = null;
+      try { data = JSON.parse(text); } catch (e) { data = null; }
+      if (!res.ok || !data) {
+        var looksHtml = /^\s*</.test(text || '');
+        throw new Error((data && data.error) || (looksHtml || res.status >= 500 ? 'The model took too long or was interrupted — please retry.' : 'Request failed (' + res.status + ')'));
+      }
       if (mode === 'generate' || mode === 'refine') {
         if (applyArtifact(data.artifact)) { renderTabs(); state.currentFile = Object.keys(state.files)[0]; showView('preview'); }
         else { addMessage('assistant', (data.artifact && data.artifact.introText) || data.reply || 'Done.'); showView('chat'); }
@@ -702,8 +823,11 @@
   renderConsole();
   renderHistory();
   loadModels();
-  if (hasFiles()) { quickWrap.hidden = false; renderTabs(); renderChat(); state.currentFile = state.currentFile || Object.keys(state.files)[0]; showView('preview'); }
-  else { renderChat(); }
+  loadFromHash().then(function (fromHash) {
+    if (fromHash) { quickWrap.hidden = false; renderTabs(); renderChat(); showView('preview'); setStatus('Loaded shared project', 'ok'); return; }
+    if (hasFiles()) { quickWrap.hidden = false; renderTabs(); renderChat(); state.currentFile = state.currentFile || Object.keys(state.files)[0]; showView('preview'); }
+    else { renderChat(); }
+  });
 })();
 </script>
 <script src="js/ui/mobile-nav.js"></script>
