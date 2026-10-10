@@ -11,8 +11,13 @@
 /blog.html       /blog               301
 /faq.html        /faq                301
 /marketplace.html /marketplace       301
-/synapse.html    /synapse            301
-/vista.html      /vista              301
+/ai.html         /ai                301
+/synapse.html    /synapse           301
+/vista.html      /vista             301
+/help-us-grow.html /help-us-grow    301
+/integrations.html /integrations    301
+/local-visibility.html /local-visibility 301
+/mobile-apps.html /mobile-apps      301
 /industries.html /industries         301
 /partners.html   /partners           301
 /advertise.html  /advertise          301
@@ -31,6 +36,3 @@
 
 # Custom 404
 /404            /404.html       200
-
-# Dashboard SPA fallback
-/dashboard/*  /dashboard/index.html  200

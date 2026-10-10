@@ -11,12 +11,15 @@ const INCLUDE = [
   'integrations.html', 'help-us-grow.html',
   'js', 'assets', 'functions',
   '_headers', '_redirects',
-  'sw.js', 'manifest.json', 'robots.txt', 'sitemap.xml',
+  'sw.js', 'manifest.json', 'robots.txt', 'sitemap.xml', 'llms.txt',
   'vista-version.json',
   'package.json'
 ];
 
-const CSS_ORDER = ['lx.css', 'saas.css'];
+// lx.css is the complete unified theme (Velora monochrome). saas.css is legacy
+// purple-theme code kept for reference only — concatenating it after lx.css
+// overrode every :root token and reverted production to the old theme.
+const CSS_ORDER = ['lx.css'];
 
 if (fs.existsSync(DIST)) fs.rmSync(DIST, { recursive: true });
 

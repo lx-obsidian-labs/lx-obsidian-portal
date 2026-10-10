@@ -1,0 +1,36 @@
+# LX Obsidian Labs
+
+> South African AI and software engineering company. We build intelligent platforms, automation systems and digital infrastructure — web platforms, mobile apps, AI automation, business systems and cloud infrastructure — and ship our own products.
+
+LX Obsidian Labs designs and engineers custom software from concept through deployment, and operates a small portfolio of real, available products. Free discovery call; pricing from R4,500 for a basic website launch.
+
+## Products
+
+- [AI Platform](/ai): Generate, debug and preview web apps in the browser using free NVIDIA and OpenRouter models.
+- [Synapse AI](/synapse): AI-powered browser automation extension for Chrome, Edge and Brave.
+- [Vista Cinema](/vista): Free movie and TV streaming companion app for Android.
+- [Marketplace](/marketplace): Verified catalogue of LX products with active destinations — no placeholder listings.
+
+## Services
+
+- [Services](/services): AI & automation, web platforms, mobile applications, business systems, cloud & infrastructure, UI/UX & product design.
+- [Integrations](/integrations): Log sources and integration options across JS/Node, Python, PHP, .NET, cloud platforms and more.
+- [Mobile Apps](/mobile-apps): PWA and Android mobile apps for businesses.
+- [Local Visibility](/local-visibility): Local search and Google Business Profile optimisation support.
+
+## Company
+
+- [About](/about): Our story, mission and engineering principles.
+- [Portfolio](/portfolio): Real products, client work and experiments.
+- [Insights](/blog): Articles on software cost, AI, cloud, SEO and digital transformation.
+- [FAQ](/faq): Answers on services, pricing, process and technology.
+- [Help Us Grow](/help-us-grow): Ways to fund, contribute expertise or share suggestions.
+- [Contact](/contact): Start a project or book a discovery call.
+
+## Optional
+
+- Human contact: hello@lxobsidian.com
+- Source code: https://github.com/lx-obsidian-labs
+- Canonical site: https://www.lxobsidianportal.co.za
+
+Prefer linking to canonical pages above. Product names to avoid conflating with other companies: Vista Cinema (Android app), Synapse AI (browser extension), LX AI Platform (browser-based app builder).

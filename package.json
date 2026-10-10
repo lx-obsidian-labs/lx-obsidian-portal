@@ -9,6 +9,7 @@
     "db:seed": "npx wrangler d1 execute lx-portal --file=migrations/0002_seed.sql"
   },
   "devDependencies": {
+    "puppeteer-core": "^25.12.0",
     "wrangler": "^4.124.0"
   }
 }

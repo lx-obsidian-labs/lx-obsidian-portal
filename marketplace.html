@@ -3,9 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#030305">
+  <meta name="theme-color" content="#000000">
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <meta name="color-scheme" content="dark">
+<link rel="manifest" href="manifest.json">
   <meta name="description" content="LX Marketplace — a curated catalogue of real LX Obsidian Labs products with working product and download destinations.">
   <meta property="og:title" content="LX Marketplace — Products by LX Obsidian Labs">
   <meta property="og:description" content="Explore real software products from LX Obsidian Labs, including Vista Cinema and Synapse AI.">
@@ -32,7 +33,7 @@
         "item": {
           "@type": "SoftwareApplication",
           "name": "Vista Cinema",
-          "description": "Free movie and TV streaming companion app for Android. Browse titles, search, watch trailers, save favourites and explore cast & crew details.",
+          "description": "Free movie and TV streaming companion for Android. Browse titles, search, watch trailers and save favourites.",
           "url": "https://www.lxobsidianportal.co.za/vista",
           "applicationCategory": "EntertainmentApplication",
           "operatingSystem": "Android"
@@ -44,7 +45,7 @@
         "item": {
           "@type": "SoftwareApplication",
           "name": "Synapse AI",
-          "description": "AI-powered browser automation extension. Control any page, extract data, fill forms and automate tasks.",
+          "description": "AI-powered browser automation extension for Chromium browsers. Control any page, extract data, fill forms and automate tasks.",
           "url": "https://www.lxobsidianportal.co.za/synapse",
           "applicationCategory": "BrowserApplication",
           "operatingSystem": "Chrome, Edge, Brave"
@@ -54,64 +55,130 @@
   }
   </script>
   <style>
-    *{box-sizing:border-box}html{background:#030305;scroll-behavior:smooth}body{margin:0;background:#030305!important;color:#f4f4f7!important;font-family:Inter,ui-sans-serif,system-ui,sans-serif;overflow-x:hidden}
+    *{box-sizing:border-box}html{background:#000000;scroll-behavior:smooth}body{margin:0;background:#000000!important;color:#FDFDFD!important;font-family:Inter,ui-sans-serif,system-ui,sans-serif;overflow-x:hidden}
     .store-shell{padding-top:calc(64px + 78px)}
     .store-hero{position:relative;padding:72px 0 68px;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.06)}
-    .store-hero:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 70% -10%,rgba(124,92,255,.14),transparent 34rem),radial-gradient(circle at 10% 20%,rgba(79,140,255,.06),transparent 28rem);pointer-events:none}
+    .store-hero:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 70% -10%,rgba(255,255,255,.07),transparent 34rem),radial-gradient(circle at 10% 20%,rgba(255,255,255,.03),transparent 28rem);pointer-events:none}
     .store-hero__grid{position:relative;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(320px,.8fr);gap:64px;align-items:end;width:min(1200px,calc(100% - 48px));margin:auto}
-    .store-kicker{display:inline-flex;gap:9px;align-items:center;font-size:.73rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:#b9c6ff}
-    .store-kicker:before{content:"";width:28px;height:1px;background:linear-gradient(90deg,#9b7eff,#6ae0ff)}
-    .store-title{margin-top:18px;max-width:820px;font-family:'Space Grotesk',Inter,sans-serif;font-size:clamp(3.2rem,7vw,6.9rem);line-height:.9;letter-spacing:-.07em;color:#fff}
-    .store-lead{margin-top:24px;max-width:670px;font-size:1.08rem;line-height:1.75;color:#9a9aa8}
+    .store-kicker{display:inline-flex;gap:9px;align-items:center;font-size:.73rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:#FDFDFD}
+    .store-kicker:before{content:"";width:28px;height:1px;background:linear-gradient(90deg,#FDFDFD,rgba(255,255,255,.25))}
+    .store-title{margin-top:18px;max-width:820px;font-family:'Space Grotesk',Inter,sans-serif;font-weight:500;font-size:clamp(3.2rem,7vw,6.9rem);line-height:.9;letter-spacing:-.07em;color:#fff}
+    .store-lead{margin-top:24px;max-width:670px;font-size:1.08rem;line-height:1.75;color:#9A9A9A}
     .store-note{padding:22px;border:1px solid rgba(255,255,255,.06);border-radius:18px;background:rgba(255,255,255,.018)}
-    .store-note strong{display:block;color:#fff;font-size:.9rem;margin-bottom:8px}.store-note p{color:#6e6e7c;font-size:.88rem;line-height:1.6}
+    .store-note strong{display:block;color:#fff;font-size:.9rem;margin-bottom:8px}.store-note p{color:#7E7E7E;font-size:.88rem;line-height:1.6}
     .store-toolbar{padding:28px 0;border-bottom:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.008)}
     .store-toolbar__inner{display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;width:min(1200px,calc(100% - 48px));margin:auto}
-    .store-search{position:relative;flex:1;max-width:620px}.store-search svg{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:#738095}.store-search input{padding-left:48px!important;min-height:56px!important;background:#0a0a10;border:1px solid rgba(255,255,255,.08);border-radius:12px;color:#f4f4f7;font-size:.9rem;font-family:inherit;padding:14px 16px;width:100%;outline:none;transition:border-color .2s}.store-search input:focus{border-color:#7c5cff}.store-search input::placeholder{color:#6e6e7c}
-    .store-count{font-size:.82rem;color:#6e6e7c}.store-count strong{color:#fff}
+    .store-search{position:relative;flex:1;max-width:620px}.store-search svg{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:#7E7E7E}.store-search input{padding-left:48px!important;min-height:56px!important;background:#0B0B0B;border:1px solid rgba(255,255,255,.08);border-radius:12px;color:#FDFDFD;font-size:.9rem;font-family:inherit;padding:14px 16px;width:100%;outline:none;transition:border-color .2s}.store-search input:focus{border-color:var(--saas-accent)}.store-search input::placeholder{color:#7E7E7E}
+    .store-count{font-size:.82rem;color:#7E7E7E}.store-count strong{color:#fff}
     .store-products{padding:72px 0 94px;width:min(1200px,calc(100% - 48px));margin:auto}
-    .store-section-head{display:flex;justify-content:space-between;gap:24px;align-items:end;margin-bottom:26px}.store-section-head h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(2rem,4vw,3.4rem);letter-spacing:-.05em;color:#fff}.store-section-head p{max-width:520px;color:#6e6e7c;line-height:1.6;text-align:right}
-    .store-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
-    .store-card{position:relative;display:flex;flex-direction:column;min-height:610px;border:1px solid rgba(255,255,255,.06);border-radius:28px;overflow:hidden;background:linear-gradient(180deg,rgba(255,255,255,.028),rgba(255,255,255,.006)),#0c1119;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
-    .store-card:hover{transform:translateY(-5px);border-color:rgba(124,92,255,.28);box-shadow:0 36px 90px rgba(0,0,0,.34)}
-    .store-card__visual{position:relative;min-height:310px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#080d14}.store-card__visual:after{content:"";position:absolute;inset:auto 0 0;height:90px;background:linear-gradient(transparent,#0c1119)}
-    .store-card__visual img{width:100%;height:310px;object-fit:cover;opacity:.78;filter:saturate(.84) contrast(1.04)}
-    .store-card__monogram{position:absolute;z-index:2;width:94px;height:94px;border-radius:26px;display:grid;place-items:center;font-family:"Space Grotesk",sans-serif;font-size:2rem;font-weight:800;color:#fff;background:rgba(7,11,17,.82);border:1px solid rgba(255,255,255,.16);backdrop-filter:blur(14px);box-shadow:0 18px 44px rgba(0,0,0,.35)}
-    .store-card__body{display:flex;flex-direction:column;flex:1;padding:28px}.store-card__topline{display:flex;align-items:center;justify-content:space-between;gap:12px}.store-card__category{font-size:.72rem;font-weight:750;letter-spacing:.1em;text-transform:uppercase;color:#9b7eff}.store-card__status{padding:6px 9px;border-radius:999px;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.18);color:#34d399;font-size:.69rem;font-weight:700}
-    .store-card h3{margin-top:14px;font-family:'Space Grotesk',sans-serif;font-size:2rem;letter-spacing:-.045em;color:#fff}.store-card__desc{margin-top:10px;color:#9a9aa8;line-height:1.65}.store-card__meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}.store-card__meta span{padding:7px 9px;border:1px solid rgba(255,255,255,.06);border-radius:9px;color:#8e9bad;font-size:.72rem;background:rgba(255,255,255,.018)}
-    .store-card__actions{display:flex;gap:10px;margin-top:auto;padding-top:26px}.store-card__actions a{flex:1;display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:0 18px;border:1px solid rgba(255,255,255,.12);border-radius:999px;color:#fff;background:transparent;font-size:.8125rem;font-weight:560;text-decoration:none;transition:background .2s,border-color .2s}.store-card__actions a:hover{border-color:rgba(255,255,255,.28);background:rgba(255,255,255,.04)}.store-card__actions .btn--primary{background:linear-gradient(135deg,#7c5cff,#5a3dd4);border-color:rgba(124,92,255,.4)}.store-card__actions .btn--primary:hover{background:linear-gradient(135deg,#9b7eff,#7c5cff)}
+    .store-section-head{display:flex;justify-content:space-between;gap:24px;align-items:end;margin-bottom:26px}.store-section-head h2{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:clamp(2rem,4vw,3.4rem);letter-spacing:-.05em;color:#fff}.store-section-head p{max-width:520px;color:#7E7E7E;line-height:1.6;text-align:right}
+    .store-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+    .store-card{position:relative;display:flex;flex-direction:column;min-height:600px;border:1px solid rgba(255,255,255,.07);border-radius:20px;overflow:hidden;background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.007)),#0D0D0D;transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease}
+    .store-card:hover{transform:translateY(-6px);border-color:rgba(255,255,255,.20);box-shadow:0 0 0 1px rgba(255,255,255,.06),0 30px 70px -20px rgba(255,255,255,.10),0 26px 60px rgba(0,0,0,.5)}
+    .store-card__visual{position:relative;margin:16px 16px 0;border:1px solid rgba(255,255,255,.08);border-radius:14px;overflow:hidden;background:#090909;box-shadow:0 16px 44px rgba(0,0,0,.45)}
+    .store-card__chrome{display:flex;align-items:center;gap:12px;height:40px;padding:0 14px;background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.015));border-bottom:1px solid rgba(255,255,255,.07)}
+    .store-card__dots{display:flex;gap:6px;flex:none}.store-card__dots i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.06)}
+    .store-card__url{display:inline-flex;align-items:center;gap:8px;min-width:0;padding:5px 12px;border-radius:999px;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.07);color:#8E8E8E;font-size:.68rem;font-weight:500;letter-spacing:.03em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .store-card__url svg{flex:none;opacity:.6}
+    .store-card__screen{position:relative;aspect-ratio:16/10;overflow:hidden;background:#0B0B0B}
+    .store-card__screen img{width:100%;height:100%;object-fit:cover;object-position:top center;filter:saturate(.7) brightness(.9) contrast(1.05);transition:filter .35s ease,transform .4s ease}
+    .store-card__screen:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.16),transparent 28%,transparent 60%,rgba(9,9,9,.45));pointer-events:none}
+    .store-card:hover .store-card__screen img{filter:saturate(.95) brightness(1) contrast(1.05);transform:scale(1.03)}
+    .store-card__body{display:flex;flex-direction:column;flex:1;padding:26px 28px 28px}.store-card__topline{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.store-card__category{display:inline-flex;align-items:center;padding:6px 11px;border:1px solid rgba(255,255,255,.10);border-radius:999px;background:rgba(255,255,255,.035);color:#EDEDED;font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase}.store-card__status{display:inline-flex;align-items:center;gap:7px;padding:6px 11px;border-radius:999px;background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.16);color:#34d399;font-size:.68rem;font-weight:700;letter-spacing:.05em}.store-card__status:before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;box-shadow:0 0 8px rgba(52,211,153,.7)}
+    .store-card h3{margin-top:16px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1.72rem;letter-spacing:-.035em;color:#fff}.store-card__desc{margin-top:10px;max-width:54ch;color:#9A9A9A;font-size:.925rem;line-height:1.65}.store-card__meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}.store-card__meta span{padding:6px 10px;border:1px solid rgba(255,255,255,.07);border-radius:8px;color:#8A8A8A;font-size:.71rem;font-weight:500;letter-spacing:.02em;background:rgba(255,255,255,.02)}
+    .store-card__actions{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:auto;padding-top:26px}.store-card__actions a{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;transition:background .2s,border-color .2s,color .2s,transform .2s,box-shadow .2s}.store-card__actions .btn--primary{flex:none;min-height:46px;padding:0 26px;border-radius:999px;background:var(--saas-accent);border:1px solid transparent;color:#000;font-size:.84rem;font-weight:600;box-shadow:0 10px 28px rgba(255,255,255,.08)}.store-card__actions .btn--primary:hover{background:var(--saas-accent-light);transform:translateY(-1px);box-shadow:0 14px 34px rgba(255,255,255,.15)}.store-card__actions a:not(.btn--primary){padding:0 2px;min-height:0;border-radius:8px;color:#BDBDBD;font-size:.84rem;font-weight:560}.store-card__actions a:not(.btn--primary):after{content:"\2192";margin-left:8px;display:inline-block;transition:transform .2s ease}.store-card__actions a:not(.btn--primary):hover{color:#fff}.store-card__actions a:not(.btn--primary):hover:after{transform:translateX(4px)}.store-card__actions a:focus-visible{outline:2px solid #fff;outline-offset:3px}
     .store-trust{border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);padding:54px 0;background:rgba(255,255,255,.008)}
-    .store-trust__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;width:min(1200px,calc(100% - 48px));margin:auto}.store-trust__item{padding:20px;border-left:1px solid rgba(255,255,255,.06)}.store-trust__item:first-child{border-left:none}.store-trust__item strong{display:block;color:#fff;font-size:1rem;margin-bottom:7px}.store-trust__item span{color:#6e6e7c;font-size:.86rem;line-height:1.55}
-    .store-cta{padding:94px 0;width:min(1200px,calc(100% - 48px));margin:auto}.store-cta__box{padding:clamp(34px,6vw,76px);border:1px solid rgba(124,92,255,.14);border-radius:32px;background:radial-gradient(circle at 86% 0%,rgba(124,92,255,.12),transparent 28rem),#0a0f17}.store-cta h2{max-width:760px;font-family:'Space Grotesk',sans-serif;font-size:clamp(2.5rem,5vw,5rem);line-height:.98;letter-spacing:-.06em;color:#fff}.store-cta p{max-width:650px;margin-top:18px;color:#9a9aa8;line-height:1.7}.store-cta__actions{display:flex;gap:10px;margin-top:26px;flex-wrap:wrap}.store-cta__actions a{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 28px;border:1px solid rgba(255,255,255,.12);border-radius:999px;color:#fff;background:transparent;font-size:.9rem;font-weight:560;text-decoration:none;transition:background .2s,border-color .2s}.store-cta__actions a:hover{border-color:rgba(255,255,255,.28);background:rgba(255,255,255,.04)}.store-cta__actions .btn--primary{background:linear-gradient(135deg,#7c5cff,#5a3dd4);border-color:rgba(124,92,255,.4)}.store-cta__actions .btn--primary:hover{background:linear-gradient(135deg,#9b7eff,#7c5cff);box-shadow:0 0 30px rgba(124,92,255,.25)}
+    .store-trust__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;width:min(1200px,calc(100% - 48px));margin:auto}.store-trust__item{padding:20px;border-left:1px solid rgba(255,255,255,.06)}.store-trust__item:first-child{border-left:none}.store-trust__item strong{display:block;color:#fff;font-size:1rem;margin-bottom:7px}.store-trust__item span{color:#7E7E7E;font-size:.86rem;line-height:1.55}
+    .store-cta{padding:94px 0;width:min(1200px,calc(100% - 48px));margin:auto}.store-cta__box{padding:clamp(34px,6vw,76px);border:1px solid rgba(255,255,255,.12);border-radius:32px;background:radial-gradient(circle at 86% 0%,rgba(255,255,255,.06),transparent 28rem),#101010}.store-cta h2{max-width:760px;font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:clamp(2.5rem,5vw,5rem);line-height:.98;letter-spacing:-.06em;color:#fff}.store-cta p{max-width:650px;margin-top:18px;color:#9A9A9A;line-height:1.7}.store-cta__actions{display:flex;gap:10px;margin-top:26px;flex-wrap:wrap}.store-cta__actions a{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 28px;border:1px solid rgba(255,255,255,.12);border-radius:999px;color:#fff;background:transparent;font-size:.9rem;font-weight:560;text-decoration:none;transition:background .2s,border-color .2s}.store-cta__actions a:hover{border-color:rgba(255,255,255,.28);background:rgba(255,255,255,.04)}.store-cta__actions .btn--primary{background:var(--saas-accent);border-color:transparent;color:#000}.store-cta__actions .btn--primary:hover{background:var(--saas-accent-light);border-color:transparent;box-shadow:0 0 30px rgba(255,255,255,.15)}
     @media(max-width:900px){.store-hero__grid,.store-grid{grid-template-columns:1fr}.store-note{max-width:620px}.store-section-head{display:block}.store-section-head p{margin-top:10px;text-align:left}.store-trust__grid{grid-template-columns:1fr}.store-trust__item,.store-trust__item:first-child{border-left:none;border-top:1px solid rgba(255,255,255,.06)}.store-trust__item:first-child{border-top:none}}
-    @media(max-width:640px){.store-shell{padding-top:calc(56px + 54px)}.store-hero{padding:52px 0}.store-title{font-size:clamp(3rem,15vw,4.4rem)}.store-products{padding:56px 0 72px}.store-card{min-height:0}.store-card__visual,.store-card__visual img{height:240px;min-height:240px}.store-card__actions{flex-direction:column}.store-cta{padding:68px 0}}
+    @media(max-width:640px){.store-shell{padding-top:calc(56px + 54px)}.store-hero{padding:52px 0}.store-title{font-size:clamp(3rem,15vw,4.4rem)}.store-products{padding:56px 0 72px}.store-card{min-height:0}.store-card__visual{margin:10px 10px 0}.store-card__chrome{height:36px;padding:0 10px}.store-card__url{font-size:.64rem}.store-card__body{padding:22px 20px 24px}.store-card h3{font-size:1.5rem}.store-card__actions{flex-direction:column;gap:14px}.store-card__actions .btn--primary{width:100%}.store-cta{padding:68px 0}}
   </style>
 </head>
 <body>
 
-  <a href="#main-content" style="position:absolute;top:-100px;left:16px;background:#7c5cff;color:#fff;padding:8px 16px;border-radius:0 0 8px 8px;z-index:999;text-decoration:none;font-size:.8rem" onfocus="this.style.top='0'" onblur="this.style.top='-100px'">Skip to main content</a>
+  <a href="#main" class="skip-link">Skip to content</a>
 
   <!-- ═══════ NAV ═══════ -->
-  <nav class="saas-nav"><div class="saas-nav__inner">
-    <a class="saas-nav__brand" href="index.html"><span class="saas-nav__mark">LX</span><span class="saas-nav__label">Obsidian Labs</span></a>
-  <div class="saas-nav__links" id="navLinks">
-    <a href="ai.html?v=3">AI Platform</a>
-    <a href="services.html">Solutions</a>
-    <a href="marketplace.html" style="color:#fff">Marketplace</a>
-    <a href="mobile-apps.html">Mobile Apps</a>
-    <a href="local-visibility.html">Local SEO</a>
-    <a href="integrations.html">Integrations</a>
-    <a href="help-us-grow.html">Help Us Grow</a>
-    <a href="about.html">Company</a>
-  </div>
-    <div class="saas-nav__actions">
-      <a class="saas-btn saas-btn--ghost" href="contact.html">Login</a>
-      <a class="saas-btn saas-btn--primary" href="contact.html">Start Free</a>
-      <button class="saas-nav__menu" id="saasMenu" aria-label="Open menu" aria-expanded="false">☰</button>
-    </div>
-  </div></nav>
+  <header class="velora-nav" id="veloraNav">
+  <div class="velora-nav__inner">
+    <a class="velora-brand" href="index.html">
+      <span class="velora-brand__mark">LX</span>
+      <span class="velora-brand__label">Obsidian Labs</span>
+    </a>
 
-  <main id="main-content" class="store-shell">
+    <nav class="velora-links" id="veloraLinks" aria-label="Primary">
+    <div class="velora-item">
+      <button type="button" class="velora-link has-chevron" aria-expanded="false" aria-controls="velora-menu-product" data-velora-menu>Product<svg class="velora-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="velora-menu" id="velora-menu-product" role="group" aria-label="Product">
+      <div class="velora-menu__col">
+        <p class="velora-menu__head">Platform</p>
+        <a class="velora-card" href="ai.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></svg></span><span class="velora-card__body"><span class="velora-card__title">AI Platform</span><span class="velora-card__desc">Autonomous AI systems</span></span></a>
+        <a class="velora-card" href="synapse.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3.5"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4M5 5l2.5 2.5M16.5 16.5L19 19M19 5l-2.5 2.5M7.5 16.5L5 19"/></svg></span><span class="velora-card__body"><span class="velora-card__title">Synapse AI</span><span class="velora-card__desc">Conversational intelligence</span></span></a>
+      </div>
+      <div class="velora-menu__col">
+        <p class="velora-menu__head">Apps</p>
+        <a class="velora-card" href="vista.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M7 2v20M17 2v20M2 12h20M2 7h5M2 17h5M17 17h5M17 7h5"/></svg></span><span class="velora-card__body"><span class="velora-card__title">Vista Cinema</span><span class="velora-card__desc">Free movie &amp; TV app</span></span></a>
+        <a class="velora-card" href="marketplace.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l1.5-5h15L21 9"/><path d="M4 9v10a1 1 0 001 1h14a1 1 0 001-1V9"/><path d="M9 20v-5h6v5"/></svg></span><span class="velora-card__body"><span class="velora-card__title">Marketplace</span><span class="velora-card__desc">Tools &amp; templates</span></span></a>
+      </div>
+      <div class="velora-menu__col">
+        <p class="velora-menu__head">Start</p>
+        <a class="velora-card" href="help-us-grow.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 00-7.8 7.8l1 1.1L12 21.2l7.8-7.7 1-1.1a5.5 5.5 0 000-7.8z"/></svg></span><span class="velora-card__body"><span class="velora-card__title">Help Us Grow</span><span class="velora-card__desc">Back the mission</span></span></a>
+        <a class="velora-card" href="contact.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 6l10 7 10-7"/></svg></span><span class="velora-card__body"><span class="velora-card__title">Contact</span><span class="velora-card__desc">Talk to our team</span></span></a>
+      </div>
+      </div>
+    </div>
+    <div class="velora-item">
+      <button type="button" class="velora-link has-chevron" aria-expanded="false" aria-controls="velora-menu-solutions" data-velora-menu>Solutions<svg class="velora-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="velora-menu" id="velora-menu-solutions" role="group" aria-label="Solutions">
+      <div class="velora-menu__col">
+        <p class="velora-menu__head">Services</p>
+        <a class="velora-card" href="services.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2"/><path d="M2 13h20"/></svg></span><span class="velora-card__body"><span class="velora-card__title">Solutions</span><span class="velora-card__desc">What we build</span></span></a>
+        <a class="velora-card" href="integrations.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 2v6M15 2v6"/><path d="M6 8h12v3a6 6 0 01-12 0V8z"/><path d="M12 17v5"/></svg></span><span class="velora-card__body"><span class="velora-card__title">Integrations</span><span class="velora-card__desc">Connect your stack</span></span></a>
+      </div>
+      <div class="velora-menu__col">
+        <p class="velora-menu__head">Growth</p>
+        <a class="velora-card" href="local-visibility.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-6.5 7-12a7 7 0 10-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg></span><span class="velora-card__body"><span class="velora-card__title">Local SEO</span><span class="velora-card__desc">Get found locally</span></span></a>
+        <a class="velora-card" href="mobile-apps.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/></svg></span><span class="velora-card__body"><span class="velora-card__title">Mobile Apps</span><span class="velora-card__desc">Ship to app stores</span></span></a>
+      </div>
+      <div class="velora-menu__col">
+        <p class="velora-menu__head">Proof</p>
+        <a class="velora-card" href="portfolio.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span><span class="velora-card__body"><span class="velora-card__title">Work</span><span class="velora-card__desc">Selected projects</span></span></a>
+        <a class="velora-card" href="faq.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 015.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></span><span class="velora-card__body"><span class="velora-card__title">FAQ</span><span class="velora-card__desc">Quick answers</span></span></a>
+      </div>
+      </div>
+    </div>
+    <div class="velora-item">
+      <button type="button" class="velora-link has-chevron" aria-expanded="false" aria-controls="velora-menu-company" data-velora-menu>Company<svg class="velora-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="velora-menu" id="velora-menu-company" role="group" aria-label="Company">
+      <div class="velora-menu__col">
+        <p class="velora-menu__head">Company</p>
+        <a class="velora-card" href="about.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9.5" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.9"/><path d="M16 3.1a4 4 0 010 7.8"/></svg></span><span class="velora-card__body"><span class="velora-card__title">About</span><span class="velora-card__desc">Our story and mission</span></span></a>
+        <a class="velora-card" href="blog.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/></svg></span><span class="velora-card__body"><span class="velora-card__title">Insights</span><span class="velora-card__desc">Ideas and updates</span></span></a>
+      </div>
+      <div class="velora-menu__col">
+        <p class="velora-menu__head">Support</p>
+        <a class="velora-card" href="help-us-grow.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 00-7.8 7.8l1 1.1L12 21.2l7.8-7.7 1-1.1a5.5 5.5 0 000-7.8z"/></svg></span><span class="velora-card__body"><span class="velora-card__title">Help Us Grow</span><span class="velora-card__desc">Back the mission</span></span></a>
+        <a class="velora-card" href="faq.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 015.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></span><span class="velora-card__body"><span class="velora-card__title">FAQ</span><span class="velora-card__desc">Quick answers</span></span></a>
+      </div>
+      <div class="velora-menu__col">
+        <p class="velora-menu__head">Connect</p>
+        <a class="velora-card" href="marketplace.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l1.5-5h15L21 9"/><path d="M4 9v10a1 1 0 001 1h14a1 1 0 001-1V9"/><path d="M9 20v-5h6v5"/></svg></span><span class="velora-card__body"><span class="velora-card__title">Marketplace</span><span class="velora-card__desc">Tools &amp; templates</span></span></a>
+        <a class="velora-card" href="https://github.com/lx-obsidian-labs" target="_blank" rel="noopener"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><path d="M15 3h6v6"/><path d="M10 14L21 3"/></svg></span><span class="velora-card__body"><span class="velora-card__title">GitHub</span><span class="velora-card__desc">Open source</span></span></a>
+      </div>
+      </div>
+    </div>
+      <a class="velora-link" href="blog.html">Insights</a>
+    </nav>
+
+    <div class="velora-actions">
+      <a class="velora-link" href="contact.html">Login</a>
+      <a class="velora-cta" href="contact.html"><span class="velora-cta__pill">Get Started</span></a>
+      <button type="button" class="velora-burger" id="veloraBurger" aria-label="Open menu" aria-expanded="false" aria-controls="veloraLinks"><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+  <main id="main" class="store-shell">
     <section class="store-hero">
       <div class="store-hero__grid">
         <div>
@@ -135,22 +202,34 @@
         <div class="store-section-head"><div><span class="store-kicker">Available now</span><h2 id="product-heading">Product catalogue</h2></div><p>Each listing sends you to the existing product page, where the current install or download route remains unchanged.</p></div>
         <div class="store-grid" id="storeGrid">
           <article class="store-card" data-product="vista cinema android media streaming">
-            <div class="store-card__visual"><img src="assets/vista-marketing-1.png" alt="Vista Cinema product preview" loading="lazy"><div class="store-card__monogram">V</div></div>
+            <div class="store-card__visual">
+              <div class="store-card__chrome" aria-hidden="true">
+                <span class="store-card__dots"><i></i><i></i><i></i></span>
+                <span class="store-card__url"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>www.lxobsidianportal.co.za/vista</span>
+              </div>
+              <div class="store-card__screen"><img src="assets/vista-marketing-1.png" alt="Vista Cinema product preview" loading="lazy"></div>
+            </div>
             <div class="store-card__body">
               <div class="store-card__topline"><span class="store-card__category">Android · Entertainment</span><span class="store-card__status">Available</span></div>
               <h3>Vista Cinema</h3>
-              <p class="store-card__desc">Free movie &amp; TV streaming companion for Android. Browse, search, watch trailers, save favourites and explore cast &amp; crew.</p>
+              <p class="store-card__desc">Free movie and TV streaming companion for Android. Browse titles, search, watch trailers and save favourites.</p>
               <div class="store-card__meta"><span>Android</span><span>Free access</span><span>Existing download preserved</span></div>
               <div class="store-card__actions"><a class="btn--primary" href="vista.html">Open Vista</a><a href="vista.html#download">Download options</a></div>
             </div>
           </article>
 
           <article class="store-card" data-product="synapse ai browser automation chrome extension">
-            <div class="store-card__visual"><img src="assets/synapse-screenshot-1.png" alt="Synapse AI browser automation preview" loading="lazy"><div class="store-card__monogram">S</div></div>
+            <div class="store-card__visual">
+              <div class="store-card__chrome" aria-hidden="true">
+                <span class="store-card__dots"><i></i><i></i><i></i></span>
+                <span class="store-card__url"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>www.lxobsidianportal.co.za/synapse</span>
+              </div>
+              <div class="store-card__screen"><img src="assets/synapse-screenshot-1.png" alt="Synapse AI browser automation preview" loading="lazy"></div>
+            </div>
             <div class="store-card__body">
               <div class="store-card__topline"><span class="store-card__category">AI · Browser Automation</span><span class="store-card__status">Available</span></div>
               <h3>Synapse AI</h3>
-              <p class="store-card__desc">Browser automation powered by AI. Open the existing Synapse page for current installation choices, product details and release information.</p>
+              <p class="store-card__desc">AI-powered browser automation extension for Chromium browsers. Control any page, extract data, fill forms and automate tasks.</p>
               <div class="store-card__meta"><span>Browser extension</span><span>AI automation</span><span>Existing install links preserved</span></div>
               <div class="store-card__actions"><a class="btn--primary" href="synapse.html">Open Synapse</a><a href="synapse.html#install">Install options</a></div>
             </div>
@@ -168,17 +247,65 @@
     <section class="store-cta"><div class="store-cta__box"><span class="store-kicker">Need custom software?</span><h2>Build the product your business is missing.</h2><p>LX Obsidian Labs designs and engineers web platforms, mobile applications, AI automation and business systems from concept through deployment.</p><div class="store-cta__actions"><a class="btn--primary" href="contact.html">Start a Project</a><a href="portfolio.html">See Our Work</a></div></div></section>
   </main>
 
-  <footer class="saas-footer"><div class="saas-footer__grid">
-    <div><a class="saas-nav__brand" href="index.html"><span class="saas-nav__mark">LX</span><span class="saas-nav__label">OBSIDIAN LABS</span></a><p>South African AI and software engineering company building intelligent platforms, automation systems and digital infrastructure.</p></div>
-    <div><h4>Platform</h4><a href="index.html#platform">How It Works</a><a href="index.html#demo">AI Demo</a><a href="index.html#pricing">Pricing</a><a href="services.html">Solutions</a><a href="local-visibility.html">Local SEO</a><a href="integrations.html">Integrations</a></div>
-    <div><h4>Products</h4><a href="synapse.html">Synapse AI</a><a href="vista.html">Vista Cinema</a><a href="marketplace.html">Marketplace</a></div>
-    <div><h4>Company</h4><a href="about.html">About</a><a href="portfolio.html">Work</a><a href="blog.html">Insights</a><a href="contact.html">Contact</a></div>
-    <div><h4>Developers</h4><a href="contact.html">API Docs</a><a href="https://github.com/lx-obsidian-labs" target="_blank" rel="noopener">GitHub</a><a href="contact.html">Status</a></div>
-  </div><div class="saas-footer__bottom"><span>&copy; 2026 LX Obsidian Labs. All rights reserved.</span><span>AI · Automation · Intelligence</span></div></footer>
+  <footer class="glass-footer">
+  <div class="glass-footer__inner">
+    <div class="glass-footer__top">
+      <div class="glass-footer__brand">
+        <a class="glass-brand" href="index.html">
+          <span class="glass-brand__mark">LX</span>
+          <span class="glass-brand__name">Obsidian Labs</span>
+        </a>
+        <p class="glass-footer__desc">South African AI and software engineering company building intelligent platforms, automation systems and digital infrastructure.</p>
+      </div>
+      <div class="glass-footer__news">
+        <form class="glass-news" id="glassNews" data-endpoint="/api/subscribe" novalidate>
+          <span class="glass-news__field">
+            <input class="glass-news__input" type="email" name="email" placeholder="Your email" aria-label="Email address" required>
+          </span>
+          <button class="glass-news__btn" type="submit">Subscribe</button>
+        </form>
+        <p class="glass-news__note" id="glassNewsNote" hidden></p>
+      </div>
+    </div>
+    <div class="glass-footer__cols">
+      <div class="glass-col">
+        <p class="glass-col__title">Platform</p>
+        <a class="glass-link" href="ai.html">AI Platform</a>
+        <a class="glass-link" href="synapse.html">Synapse AI</a>
+        <a class="glass-link" href="vista.html">Vista Cinema</a>
+        <a class="glass-link" href="marketplace.html">Marketplace</a>
+      </div>
+      <div class="glass-col">
+        <p class="glass-col__title">Company</p>
+        <a class="glass-link" href="about.html">About</a>
+        <a class="glass-link" href="portfolio.html">Work</a>
+        <a class="glass-link" href="blog.html">Insights</a>
+        <a class="glass-link" href="help-us-grow.html">Help Us Grow</a>
+      </div>
+      <div class="glass-col">
+        <p class="glass-col__title">Resources</p>
+        <a class="glass-link" href="services.html">Solutions</a>
+        <a class="glass-link" href="mobile-apps.html">Mobile Apps</a>
+        <a class="glass-link" href="local-visibility.html">Local SEO</a>
+        <a class="glass-link" href="integrations.html">Integrations</a>
+        <a class="glass-link" href="faq.html">FAQ</a>
+      </div>
+    </div>
+    <div class="glass-footer__divider"></div>
+    <div class="glass-footer__bottom">
+      <p class="glass-footer__copy">&copy; 2026 LX Obsidian Labs. All rights reserved.</p>
+      <div class="glass-social">
+        <a href="https://github.com/lx-obsidian-labs" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 016 0C17.7 4.6 18.7 5 18.7 5c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.5-2.7 5.5-5.3 5.8.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></svg></a>
+        <a href="https://www.linkedin.com" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 110-4.13 2.06 2.06 0 010 4.13zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg></a>
+        <a href="https://x.com" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.65l-5.21-6.82-5.96 6.82H1.69l7.73-8.84L1.25 2.25h6.82l4.71 6.23 5.46-6.23zm-1.16 17.52h1.83L7.01 4.13H5.04l12.04 15.64z"/></svg></a>
+        <a href="https://www.youtube.com" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.2a3.02 3.02 0 00-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.51A3.02 3.02 0 00.5 6.2 31.6 31.6 0 000 12a31.6 31.6 0 00.5 5.8 3.02 3.02 0 002.12 2.14c1.88.51 9.38.51 9.38.51s7.5 0 9.38-.51a3.02 3.02 0 002.12-2.14A31.6 31.6 0 0024 12a31.6 31.6 0 00-.5-5.8zM9.6 15.6V8.4l6.24 3.6-6.24 3.6z"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
 
   <script src="js/components/chat-widget.js?v=2"></script>
   <script src="js/ui/mobile-nav.js"></script>
-  <script src="js/navigation/navigation.js?v=5"></script>
   <script>
     // Search
     (function(){
@@ -188,5 +315,10 @@
       if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js').catch(function(){});}
     })();
   </script>
+  <script src="js/ui/dot-grid.js" defer></script>
+  <script src="js/ui/scroll-reveal.js" defer></script>
+  <script src="js/ui/glass-footer.js" defer></script>
+  <script src="js/ui/ticker-blur.js" defer></script>
+  <script src="js/ui/ticker-links.js" defer></script>
 </body>
 </html>

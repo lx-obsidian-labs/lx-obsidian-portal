@@ -1,4 +1,4 @@
-const CACHE = 'lx-obsidian-v19';
+const CACHE = 'lx-obsidian-v20';
 const ASSETS = [
   '/',
   '/css/lx.css',
@@ -14,16 +14,14 @@ const ASSETS = [
   '/assets/generated/lx-product-ui.webp',
   '/assets/vista-marketing-1.png',
   '/assets/synapse-screenshot-1.png',
-  '/js/navigation.js',
-  '/js/scroll.js',
-  '/js/animations.js',
-  '/js/app.js',
-  '/js/features.js',
-  '/js/seo.js',
-  '/js/ux.js',
-  '/js/experience.js',
-  '/js/chat-widget.js',
-  '/js/hero-scene.js',
+  '/js/ui/mobile-nav.js',
+  '/js/ui/dot-grid.js',
+  '/js/ui/scroll-reveal.js',
+  '/js/ui/glass-footer.js',
+  '/js/ui/ticker-blur.js',
+  '/js/ui/ticker-links.js',
+  '/js/ui/hero-scene.js',
+  '/js/components/chat-widget.js',
   '/robots.txt',
   '/sitemap.xml'
 ];

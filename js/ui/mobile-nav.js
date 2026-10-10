@@ -1,62 +1,184 @@
+/**
+ * Velora navigation behaviour.
+ *
+ * Accessibility: disclosure pattern (not role="menu") — each trigger is a
+ * <button> with aria-expanded + aria-controls pointing at its panel.
+ *   - Desktop: hover or click/Enter/Space opens a panel; ArrowDown/ArrowUp open
+ *     and move focus into it; Escape closes and restores focus to the trigger;
+ *     Tab out or an outside click closes it.
+ *   - Mobile (<=1100px): burger toggles a full-screen panel + backdrop with body
+ *     scroll lock; panels become inline accordions.
+ * All Velora transitions are CSS-driven and untouched here.
+ */
 void (function () {
   'use strict';
 
-  var btn = document.getElementById('saasMenu');
-  var links = document.getElementById('navLinks');
-  if (!btn || !links) return;
+  var nav = document.getElementById('veloraNav');
+  var links = document.getElementById('veloraLinks');
+  var burger = document.getElementById('veloraBurger');
+  if (!nav || !links || !burger) return;
 
   var TOGGLE_BP = 1100;
+  var FOCUSABLE = 'a[href],button:not([disabled]),[tabindex]:not([tabindex="-1"])';
+  var items = Array.prototype.slice.call(nav.querySelectorAll('.velora-item'));
 
-  var backdrop = document.querySelector('.nav-backdrop');
+  function isDesktop() {
+    return window.matchMedia('(min-width: ' + (TOGGLE_BP + 1) + 'px)').matches;
+  }
+
+  function triggerOf(item) {
+    return item.querySelector('[data-velora-menu]');
+  }
+
+  function panelOf(item) {
+    return item.querySelector('.velora-menu');
+  }
+
+  var backdrop = document.querySelector('.velora-backdrop');
   if (!backdrop) {
     backdrop = document.createElement('div');
-    backdrop.className = 'nav-backdrop';
+    backdrop.className = 'velora-backdrop';
     backdrop.setAttribute('aria-hidden', 'true');
     document.body.appendChild(backdrop);
   }
 
-  function isOpen() {
-    return links.classList.contains('open');
+  /* ── Disclosure panels ────────────────────────────────────────── */
+
+  function openMenu(item, focusFirst) {
+    items.forEach(function (other) {
+      if (other !== item) closeMenu(other);
+    });
+    item.classList.add('is-open');
+    var btn = triggerOf(item);
+    if (btn) btn.setAttribute('aria-expanded', 'true');
+    if (focusFirst) {
+      var panel = panelOf(item);
+      var target = panel && panel.querySelector(FOCUSABLE);
+      if (target) target.focus();
+    }
   }
 
-  function setIsOpen(shouldOpen) {
+  function closeMenu(item) {
+    item.classList.remove('is-open');
+    var btn = triggerOf(item);
+    if (btn) btn.setAttribute('aria-expanded', 'false');
+  }
+
+  function closeAllMenus() {
+    items.forEach(closeMenu);
+  }
+
+  items.forEach(function (item) {
+    var btn = triggerOf(item);
+    if (!btn) return;
+    var timer = null;
+
+    item.addEventListener('mouseenter', function () {
+      if (!isDesktop()) return;
+      clearTimeout(timer);
+      openMenu(item);
+    });
+
+    item.addEventListener('mouseleave', function () {
+      if (!isDesktop()) return;
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        closeMenu(item);
+      }, 140);
+    });
+
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (item.classList.contains('is-open')) closeMenu(item);
+      else openMenu(item);
+    });
+
+    // Arrow keys open the panel and move focus into it (ARIA APG disclosure).
+    btn.addEventListener('keydown', function (e) {
+      if (!isDesktop()) return;
+      if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+      e.preventDefault();
+      openMenu(item);
+      var panel = panelOf(item);
+      if (!panel) return;
+      var focusables = panel.querySelectorAll(FOCUSABLE);
+      if (!focusables.length) return;
+      var target = e.key === 'ArrowDown' ? focusables[0] : focusables[focusables.length - 1];
+      target.focus();
+    });
+  });
+
+  /* ── Mobile panel ─────────────────────────────────────────────── */
+
+  function isMobileOpen() {
+    return links.classList.contains('is-open');
+  }
+
+  function setMobileOpen(shouldOpen) {
     var open = !!shouldOpen;
-    links.classList.toggle('open', open);
-    btn.classList.toggle('is-open', open);
-    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-    btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-    backdrop.classList.toggle('active', open);
-    document.body.style.overflow = open ? 'hidden' : '';
+    links.classList.toggle('is-open', open);
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    backdrop.classList.toggle('is-open', open);
+    document.body.classList.toggle('velora-open', open);
+    if (!open) closeAllMenus();
   }
 
-  function toggle() {
-    setIsOpen(!isOpen());
-  }
-
-  btn.addEventListener('click', toggle);
+  burger.addEventListener('click', function () {
+    setMobileOpen(!isMobileOpen());
+  });
 
   links.addEventListener('click', function (e) {
-    if (e.target.closest && e.target.closest('a')) setIsOpen(false);
+    var target = e.target;
+    if (!target || !target.closest) return;
+    // Follow real links (closes the panel); dropdown triggers fall through.
+    if (target.closest('a')) setMobileOpen(false);
   });
 
   backdrop.addEventListener('click', function () {
-    setIsOpen(false);
+    setMobileOpen(false);
+  });
+
+  /* ── Dismissal ────────────────────────────────────────────────── */
+
+  document.addEventListener('click', function (e) {
+    var onCard = e.target && e.target.closest ? e.target.closest('.velora-card') : null;
+    if (nav.contains(e.target) && !onCard) return;
+    closeAllMenus();
   });
 
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && isOpen()) {
-      setIsOpen(false);
-      btn.focus();
+    if (e.key !== 'Escape') return;
+    if (isMobileOpen()) {
+      setMobileOpen(false);
+      burger.focus();
+      return;
     }
+    var open = items.filter(function (i) {
+      return i.classList.contains('is-open');
+    })[0];
+    if (!open) return;
+    closeMenu(open);
+    var btn = triggerOf(open);
+    if (btn) btn.focus();
+  });
+
+  nav.addEventListener('focusout', function (e) {
+    if (!isDesktop()) return;
+    if (e.relatedTarget && nav.contains(e.relatedTarget)) return;
+    closeAllMenus();
   });
 
   var resizeTimer;
   window.addEventListener('resize', function () {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(function () {
-      if (window.innerWidth > TOGGLE_BP) setIsOpen(false);
+      if (window.innerWidth > TOGGLE_BP) {
+        setMobileOpen(false);
+        closeAllMenus();
+      }
     }, 150);
   });
 
-  setIsOpen(false);
+  setMobileOpen(false);
 })();
