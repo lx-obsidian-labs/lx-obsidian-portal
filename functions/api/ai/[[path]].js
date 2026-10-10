@@ -25,11 +25,13 @@ export async function onRequest(context) {
     if (path === 'chats' && method === 'POST') {
       const user = await requireAuth(request, secret);
       if (!user) return error('Auth required', 401);
-      const { agent_id, title } = await request.json();
-      if (!agent_id) return error('Agent ID required');
+      let body;
+      try { body = await request.json(); } catch { return error('Invalid JSON body', 400); }
+      const { agent_id, title } = body || {};
+      if (!agent_id) return error('Agent ID required', 400);
       const id = uuid();
-      await run(context, 'INSERT INTO ai_chats (id, user_id, agent_id, title) VALUES (?, ?, ?, ?)', id, user.id, agent_id, title || null);
-      return json({ chat: { id, agent_id, title } });
+      await run(context, 'INSERT INTO ai_chats (id, user_id, agent_id, title) VALUES (?, ?, ?, ?)', id, user.id, agent_id, title ? String(title).substring(0, 200) : null);
+      return json({ chat: { id, agent_id, title: title || null } });
     }
 
     if (path.match(/^chats\/[^\/]+\/messages$/) && method === 'GET') {
@@ -44,8 +46,11 @@ export async function onRequest(context) {
       const user = await requireAuth(request, secret);
       if (!user) return error('Auth required', 401);
       const chatId = path.split('/')[1];
-      const { content } = await request.json();
-      if (!content) return error('Content required');
+      let body;
+      try { body = await request.json(); } catch { return error('Invalid JSON body', 400); }
+      const content = ((body || {}).content || '').trim();
+      if (!content) return error('Content required', 400);
+      if (content.length > 20000) return error('Content too long (max 20000 characters)', 400);
       const id = uuid();
       await run(context, "INSERT INTO ai_messages (id, chat_id, role, content) VALUES (?, ?, 'user', ?)", id, chatId, content);
       const agent = await get(context, 'SELECT a.* FROM ai_chats c JOIN ai_agents a ON c.agent_id = a.id WHERE c.id = ?', chatId);
@@ -65,8 +70,11 @@ export async function onRequest(context) {
     if (path === 'credits/purchase' && method === 'POST') {
       const user = await requireAuth(request, secret);
       if (!user) return error('Auth required', 401);
-      const { amount } = await request.json();
-      await run(context, 'UPDATE users SET credits = credits + ? WHERE id = ?', amount || 10, user.id);
+      let body;
+      try { body = await request.json(); } catch { return error('Invalid JSON body', 400); }
+      const amount = Number((body || {}).amount) || 0;
+      if (!(amount > 0) || amount > 10000) return error('Invalid amount', 400);
+      await run(context, 'UPDATE users SET credits = credits + ? WHERE id = ?', amount, user.id);
       return json({ ok: true });
     }
 

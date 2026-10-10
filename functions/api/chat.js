@@ -254,7 +254,7 @@ function parseArtifact(raw) {
 // ── Template fallback ───────────────────────────────────────────
 function generateFromTemplate(spec) {
   const s = typeof spec === 'string' ? JSON.parse(spec) : spec;
-  const c = s.colors || { primary: '#7c5cff', secondary: '#34d399', accent: '#f59e0b', bg: '#0a0a0f', text: '#e4e4e7' };
+  const c = s.colors || { primary: '#C9A86A', secondary: '#34d399', accent: '#C9A86A', bg: '#07070a', text: '#e4e4e7' };
 
   let sectionsHtml = '';
   for (const sec of (s.sections || [])) {
@@ -287,6 +287,31 @@ function generateFromTemplate(spec) {
       ${(sec.fields || []).map(f => f === 'message' ? `<textarea placeholder="${f}" required></textarea>` : `<input type="${f === 'email' ? 'email' : 'text'}" placeholder="${f}" required>`).join('')}
       <button type="submit" class="btn">Send</button></form></div></section>`;
         break;
+      case 'stats':
+        sectionsHtml += `
+    <section class="section" id="${sec.id || ''}"><div class="container">
+      <h2>${sec.title || ''}</h2><div class="stats">${(sec.items || []).map(st => `<div class="stat"><span class="stat-value">${st.value || ''}</span><span class="stat-label">${st.label || ''}</span></div>`).join('')}</div></div></section>`;
+        break;
+      case 'features':
+        sectionsHtml += `
+    <section class="section alt" id="${sec.id || ''}"><div class="container">
+      <h2>${sec.title || ''}</h2><div class="grid">${(sec.items || []).map(f => `<div class="card"><h3>${f.title || ''}</h3><p>${f.text || ''}</p></div>`).join('')}</div></div></section>`;
+        break;
+      case 'logos':
+        sectionsHtml += `
+    <section class="section logos" id="${sec.id || ''}"><div class="container">
+      <p class="logos-label">${sec.title || 'Trusted by teams'}</p><div class="logos-row">${(sec.items || []).map(l => `<span class="logo-chip">${l}</span>`).join('')}</div></div></section>`;
+        break;
+      case 'testimonials':
+        sectionsHtml += `
+    <section class="section alt" id="${sec.id || ''}"><div class="container">
+      <h2>${sec.title || 'Testimonials'}</h2><div class="grid">${(sec.items || []).map(t => `<div class="card quote"><p class="quote-text">${t.quote || ''}</p><p class="quote-author">${t.author || ''}</p></div>`).join('')}</div></div></section>`;
+        break;
+      case 'pricing':
+        sectionsHtml += `
+    <section class="section" id="${sec.id || ''}"><div class="container">
+      <h2>${sec.title || 'Pricing'}</h2><div class="grid">${(sec.items || []).map(pl => `<div class="card plan"><h3>${pl.name || ''}</h3><p class="price">${pl.price || ''}</p><p>${pl.desc || ''}</p>${pl.cta ? `<a href="#" class="btn">${pl.cta}</a>` : ''}</div>`).join('')}</div></div></section>`;
+        break;
       case 'footer':
         sectionsHtml += `
     <footer class="footer"><div class="container">
@@ -316,6 +341,18 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem}
 .card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:1.5rem;transition:transform .2s}
 .card:hover{transform:translateY(-4px)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.5rem;max-width:900px;margin:0 auto}
+.stat{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:1.5rem;text-align:center}
+.stat-value{display:block;font-size:2rem;font-weight:700;color:var(--accent)}
+.stat-label{display:block;margin-top:.25rem;opacity:.7;font-size:.9rem}
+.logos{padding:3rem 0}
+.logos-label{text-align:center;opacity:.6;font-size:.8rem;text-transform:uppercase;letter-spacing:.12em;margin-bottom:1rem}
+.logos-row{display:flex;flex-wrap:wrap;justify-content:center;gap:1rem}
+.logo-chip{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:999px;padding:.45rem 1rem;font-size:.9rem;opacity:.8}
+.quote-text{font-style:italic;opacity:.9}
+.quote-author{margin-top:.75rem;color:var(--accent);font-weight:600;font-size:.9rem}
+.plan{display:flex;flex-direction:column;gap:.5rem;text-align:center}
+.plan .btn{margin-top:auto}
 .card h3{margin-bottom:0.5rem}
 .price{color:var(--accent);font-weight:700;font-size:1.1rem;margin-bottom:0.5rem}
 .btn{display:inline-block;padding:0.8rem 2rem;background:var(--primary);color:#fff;border:none;border-radius:8px;font-size:1rem;cursor:pointer;text-decoration:none;transition:opacity .2s}
@@ -342,8 +379,107 @@ ${html}
 </lxArtifact>`;
 }
 
+// ── Intent detection + spec building for fallback ───────────────
+function detectIntent(prompt) {
+  const p = prompt.toLowerCase();
+  if (/(shop|ecommerce|e-commerce|product|store|sell|catalogue)/.test(p)) return 'ecommerce';
+  if (/(dash|analytic|report|admin|metric|kpi|overview)/.test(p)) return 'dashboard';
+  if (/(blog|article|posts?|news|feed)/.test(p)) return 'blog';
+  if (/(portfolio|resume|cv|agency|gallery|showcase|profile)/.test(p)) return 'portfolio';
+  if (/(todo|task|checklist|kanban|tracker)/.test(p)) return 'todo';
+  if (/(contact|form|signup|subscribe|waitlist)/.test(p)) return 'contact';
+  if (/(pricing|plans?|saas|subscription)/.test(p)) return 'saas';
+  return 'landing';
+}
+
+function buildSpecFromPrompt(message) {
+  const intent = detectIntent(message);
+  const title = message.substring(0, 60);
+  const hero = { id: 'hero', type: 'hero', title, subtitle: 'Built with LX AI', cta: 'Get Started' };
+  const footer = { id: 'footer', type: 'footer', links: ['About', 'Contact'] };
+
+  switch (intent) {
+    case 'ecommerce':
+      return {
+        title,
+        sections: [
+          hero,
+          { id: 'products', type: 'grid', title: 'Products', items: ['Premium Headphones — R1,299', 'Smart Watch — R1,699', 'Portable Speaker — R499', 'Wireless Keyboard — R699', 'Studio Camera — R4,299', 'Echo Mini — R1,099'] },
+          { id: 'contact', type: 'form', title: 'Get in touch', fields: ['name', 'email', 'message'] },
+          footer
+        ]
+      };
+    case 'dashboard':
+      return {
+        title,
+        sections: [
+          { id: 'stats', type: 'stats', title: 'Overview', items: [{ value: 'R42.8k', label: 'Revenue' }, { value: '1,284', label: 'Active users' }, { value: '94.2%', label: 'Uptime' }, { value: '18', label: 'New signups' }] },
+          { id: 'features', type: 'features', title: 'Key metrics', items: [{ title: 'Revenue trend', text: 'Track monthly and weekly performance against targets.' }, { title: 'User growth', text: 'Monitor acquisition, activation and retention cohorts.' }, { title: 'System health', text: 'Latency, errors and uptime at a glance.' }] },
+          footer
+        ]
+      };
+    case 'blog':
+      return {
+        title,
+        sections: [
+          { id: 'hero', type: 'hero', title, subtitle: 'Ideas, notes and product updates', cta: 'Read latest' },
+          { id: 'posts', type: 'grid', title: 'Latest articles', items: ['How we ship AI features responsibly', 'Designing dark-mode interfaces people love', 'Lessons from building a browser agent', 'The state of open-weight models in 2026'] },
+          footer
+        ]
+      };
+    case 'portfolio':
+      return {
+        title,
+        sections: [
+          hero,
+          { id: 'work', type: 'grid', title: 'Selected work', items: ['Fintech dashboard', 'Retail e-commerce rebuild', 'Local SEO growth system', 'Smart TV streaming app'] },
+          { id: 'contact', type: 'form', title: 'Work with me', fields: ['name', 'email', 'message'] },
+          footer
+        ]
+      };
+    case 'todo':
+      return {
+        title,
+        sections: [
+          hero,
+          { id: 'tasks', type: 'features', title: 'Your tasks', items: [{ title: 'Design new landing hero', text: 'Refresh the hero with the winter campaign.' }, { title: 'Write documentation', text: 'Document the new API endpoints.' }, { title: 'Ship v2.0', text: 'Prepare the release notes and changelog.' }] },
+          footer
+        ]
+      };
+    case 'contact':
+      return {
+        title,
+        sections: [
+          hero,
+          { id: 'contact', type: 'form', title: 'Send a message', fields: ['name', 'email', 'message'] },
+          footer
+        ]
+      };
+    case 'saas':
+      return {
+        title,
+        sections: [
+          hero,
+          { id: 'features', type: 'features', title: 'Why choose us', items: [{ title: 'Fast by default', text: 'Sub-second responses with premium routing.' }, { title: 'Built to scale', text: 'From your first user to your millionth.' }, { title: 'Private and secure', text: 'Your data stays yours, always.' }] },
+          { id: 'pricing', type: 'pricing', title: 'Pricing', items: [{ name: 'Free', price: '$0', desc: 'Core features, limited quota', cta: 'Start' }, { name: 'Pro', price: '$29', desc: 'Everything, unlimited sessions', cta: 'Start Pro' }, { name: 'Enterprise', price: 'Custom', desc: 'Dedicated infra + SLA', cta: 'Contact' }] },
+          footer
+        ]
+      };
+    default:
+      return {
+        title,
+        sections: [
+          hero,
+          { id: 'features', type: 'features', title: 'Features', items: [{ title: 'Modern design', text: 'Clean, responsive and on-brand.' }, { title: 'Fast performance', text: 'Optimised CSS and minimal JavaScript.' }, { title: 'Accessible', text: 'Semantic HTML with ARIA labels.' }] },
+          { id: 'logos', type: 'logos', title: 'Trusted by great teams', items: ['Team A', 'Company B', 'Studio C', 'Brand D', 'Agency E'] },
+          footer
+        ]
+      };
+  }
+}
+
 // ── API call with fallback ──────────────────────────────────────
-async function callAI(messages, env, preferredProvider, preferredModel, maxTokens = 4096) {
+async function callAI(messages, env, preferredProvider, preferredModel, maxTokens = 4096, temperature = 0.4) {
   const providerOrder = preferredProvider === 'openrouter'
     ? ['openrouter', 'nvidia']
     : ['nvidia', 'openrouter'];
@@ -370,7 +506,7 @@ async function callAI(messages, env, preferredProvider, preferredModel, maxToken
             model: modelId,
             messages,
             max_tokens: maxTokens,
-            temperature: 0.4,
+            temperature: temperature,
             top_p: 0.85,
             stream: false
           })
@@ -417,9 +553,14 @@ export async function onRequest(context) {
 
   try {
     const body = await request.json();
-    const { message, mode = 'chat', provider = 'nvidia', model, code, history = [] } = body;
+    const { message, mode = 'chat', provider = 'nvidia', model, code, history = [], temperature } = body;
 
-    if (!message && !code) return new Response(JSON.stringify({ error: 'Message required' }), { status: 400, headers: { 'Content-Type': 'application/json', ...cors(request) } });
+    const promptText = (message || '').trim();
+    if (!promptText && !code) return new Response(JSON.stringify({ error: 'Message required' }), { status: 400, headers: { 'Content-Type': 'application/json', ...cors(request) } });
+    if (promptText && promptText.length > 6000) return new Response(JSON.stringify({ error: 'Message too long (max 6000 characters)' }), { status: 400, headers: { 'Content-Type': 'application/json', ...cors(request) } });
+    if (code && code.length > 200000) return new Response(JSON.stringify({ error: 'Code too large (max 200000 characters)' }), { status: 400, headers: { 'Content-Type': 'application/json', ...cors(request) } });
+    if (!['generate', 'refine', 'explain', 'chat'].includes(mode)) return new Response(JSON.stringify({ error: 'Unknown mode' }), { status: 400, headers: { 'Content-Type': 'application/json', ...cors(request) } });
+    const temperatureValue = (typeof temperature === 'number' && temperature >= 0 && temperature <= 2) ? temperature : 0.4;
 
     // ── Build messages based on mode ──
     let messages;
@@ -468,7 +609,7 @@ export async function onRequest(context) {
     }
 
     // ── Try AI providers ──
-    const result = await callAI(messages, env, provider, model, maxTokens);
+    const result = await callAI(messages, env, provider, model, maxTokens, temperatureValue);
 
     if (result) {
       // Parse the artifact from the response
@@ -498,14 +639,7 @@ export async function onRequest(context) {
         });
       } catch {
         // Not JSON — generate from description
-        const spec = {
-          title: message.substring(0, 50),
-          sections: [
-            { id: 'hero', type: 'hero', title: message.substring(0, 60), subtitle: 'Built with LX AI', cta: 'Get Started' },
-            { id: 'about', type: 'text', title: 'About', content: message },
-            { id: 'footer', type: 'footer', links: ['About', 'Contact'] }
-          ]
-        };
+        const spec = buildSpecFromPrompt(message);
         const html = generateFromTemplate(spec);
         const artifact = parseArtifact(html);
         return new Response(JSON.stringify({ reply: html, artifact, provider: 'template', model: 'fallback' }), {
@@ -515,7 +649,13 @@ export async function onRequest(context) {
       }
     }
 
-    return new Response(JSON.stringify({ error: 'All AI providers failed. Please try again.' }), {
+    const hasNvidia = !!env.NVIDIA_API_KEY;
+    const hasOpenRouter = !!env.OPENROUTER_API_KEY;
+    if (!hasNvidia && !hasOpenRouter) {
+      return new Response(JSON.stringify({ error: 'No AI provider is configured on this deployment.', error_code: 'no_provider' }), { status: 503, headers: { 'Content-Type': 'application/json', ...cors(request) } });
+    }
+
+    return new Response(JSON.stringify({ error: 'All AI providers failed. Please try again.', error_code: 'provider_failed' }), {
       status: 502,
       headers: { 'Content-Type': 'application/json', ...cors(request) }
     });
