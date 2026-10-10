@@ -14,14 +14,16 @@ export async function onRequest(context) {
   try {
     if (path === 'register' && method === 'POST') {
       const { email, password, name, company, phone } = await request.json();
-      if (!email || !password || !name) return error('Name, email, and password are required');
-      const existing = await get(context, 'SELECT id FROM users WHERE email = ?', email);
+      if (!name || (typeof name === 'string' && name.trim().length < 2)) return error('Name must be at least 2 characters');
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return error('A valid email address is required');
+      if (!password || typeof password !== 'string' || password.length < 8) return error('Password must be at least 8 characters');
+      const existing = await get(context, 'SELECT id FROM users WHERE email = ?', email.toLowerCase());
       if (existing) return error('Email already registered', 409);
       const id = uuid();
       const hashed = await hashPassword(password);
-      await run(context, 'INSERT INTO users (id, email, password, name, company, phone) VALUES (?, ?, ?, ?, ?, ?)', id, email, hashed, name, company || null, phone || null);
-      const token = await createToken({ id, email, name, role: 'customer' }, secret);
-      return json({ token, user: { id, email, name, company, role: 'customer' } });
+      await run(context, 'INSERT INTO users (id, email, password, name, company, phone) VALUES (?, ?, ?, ?, ?, ?)', id, email.toLowerCase(), hashed, name, company || null, phone || null);
+      const token = await createToken({ id, email: email.toLowerCase(), name, role: 'customer' }, secret);
+      return json({ token, user: { id, email: email.toLowerCase(), name, company, role: 'customer' } });
     }
 
     if (path === 'login' && method === 'POST') {

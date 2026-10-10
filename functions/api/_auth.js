@@ -7,12 +7,15 @@ const decoder = new TextDecoder();
 /* ---- Base64URL helpers ---- */
 
 function base64url(input) {
-  const str = typeof input === 'string' ? input : btoa(String.fromCharCode(...new Uint8Array(input)));
-  return str.replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
+  const bytes = typeof input === 'string' ? encoder.encode(input) : new Uint8Array(input);
+  let bin = '';
+  for (const b of bytes) bin += String.fromCharCode(b);
+  return btoa(bin).replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
 }
 
 function base64urlDecode(str) {
-  const padded = str.replace(/-/g, '+').replace(/_/g, '/');
+  const sanitized = str.replace(/-/g, '+').replace(/_/g, '/');
+  const padded = sanitized + '='.repeat((4 - (sanitized.length % 4)) % 4);
   const bin = atob(padded);
   return new Uint8Array([...bin].map(c => c.charCodeAt(0)));
 }
