@@ -479,7 +479,7 @@ function buildSpecFromPrompt(message) {
 }
 
 // ── API call with fallback ──────────────────────────────────────
-async function callAI(messages, env, preferredProvider, preferredModel, maxTokens = 4096, temperature = 0.4) {
+export async function callAI(messages, env, preferredProvider, preferredModel, maxTokens = 4096, temperature = 0.4) {
   const providerOrder = preferredProvider === 'openrouter'
     ? ['openrouter', 'nvidia']
     : ['nvidia', 'openrouter'];
@@ -545,6 +545,55 @@ function cors(request) {
   };
 }
 
+// ── Build messages based on mode ────────────────────────────────
+export function buildMessages(mode, message, code, history = []) {
+  switch (mode) {
+    case 'generate': {
+      // Single-phase generation: plan + code in one shot
+      return {
+        messages: [
+          { role: 'system', content: SYSTEM_PROMPT },
+          ...history.slice(-8).map(m => ({ role: m.role, content: m.content.substring(0, 2000) })),
+          { role: 'user', content: `Build this web application:\n${message}` }
+        ],
+        maxTokens: 8192
+      };
+    }
+
+    case 'refine': {
+      return {
+        messages: [
+          { role: 'system', content: REFINE_PROMPT },
+          { role: 'user', content: `Current code:\n${code || ''}\n\nChange requested: ${message}` }
+        ],
+        maxTokens: 8192
+      };
+    }
+
+    case 'explain': {
+      return {
+        messages: [
+          { role: 'system', content: EXPLAIN_PROMPT },
+          { role: 'user', content: code || message }
+        ],
+        maxTokens: 2048
+      };
+    }
+
+    default: {
+      // General chat — may include code generation if user asks
+      return {
+        messages: [
+          { role: 'system', content: CHAT_PROMPT },
+          ...history.slice(-16).map(m => ({ role: m.role, content: m.content.substring(0, 3000) })),
+          { role: 'user', content: message }
+        ],
+        maxTokens: 4096
+      };
+    }
+  }
+}
+
 // ── Handler ─────────────────────────────────────────────────────
 export async function onRequest(context) {
   const { request, env } = context;
@@ -562,51 +611,7 @@ export async function onRequest(context) {
     if (!['generate', 'refine', 'explain', 'chat'].includes(mode)) return new Response(JSON.stringify({ error: 'Unknown mode' }), { status: 400, headers: { 'Content-Type': 'application/json', ...cors(request) } });
     const temperatureValue = (typeof temperature === 'number' && temperature >= 0 && temperature <= 2) ? temperature : 0.4;
 
-    // ── Build messages based on mode ──
-    let messages;
-    let maxTokens;
-
-    switch (mode) {
-      case 'generate': {
-        // Single-phase generation: plan + code in one shot
-        messages = [
-          { role: 'system', content: SYSTEM_PROMPT },
-          ...history.slice(-8).map(m => ({ role: m.role, content: m.content.substring(0, 2000) })),
-          { role: 'user', content: `Build this web application:\n${message}` }
-        ];
-        maxTokens = 8192;
-        break;
-      }
-
-      case 'refine': {
-        messages = [
-          { role: 'system', content: REFINE_PROMPT },
-          { role: 'user', content: `Current code:\n${code || ''}\n\nChange requested: ${message}` }
-        ];
-        maxTokens = 8192;
-        break;
-      }
-
-      case 'explain': {
-        messages = [
-          { role: 'system', content: EXPLAIN_PROMPT },
-          { role: 'user', content: code || message }
-        ];
-        maxTokens = 2048;
-        break;
-      }
-
-      default: {
-        // General chat — may include code generation if user asks
-        messages = [
-          { role: 'system', content: CHAT_PROMPT },
-          ...history.slice(-16).map(m => ({ role: m.role, content: m.content.substring(0, 3000) })),
-          { role: 'user', content: message }
-        ];
-        maxTokens = 4096;
-        break;
-      }
-    }
+    const { messages, maxTokens } = buildMessages(mode, message, code, history);
 
     // ── Try AI providers ──
     const result = await callAI(messages, env, provider, model, maxTokens, temperatureValue);
