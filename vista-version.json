@@ -1,7 +1,7 @@
 {
-  "versionCode": 14,
-  "versionName": "1.0.7",
-  "downloadUrl": "https://github.com/lx-obsidian-labs/lx-obsidian-portal/raw/master/VistaCinema-v1.0.7.apk",
-  "changelog": "• NEW: Your Stats — lifetime figures from your watch history: time reached, titles finished, current streak and more\n• NEW: Milestone sharing — after a real achievement, share an editable message with a friend; notification taps open it directly\n• NEW: Redesigned bottom navigation — Home, Discover, Search, Library and Settings\n• NEW: Library resume button — continue a title in one tap\n• FIXED: Library no longer shows duplicate entries or crashes on the grid\n• FIXED: Settings back arrow now only appears on sub-pages",
-  "mandatory": false
+  "versionCode": 15,
+  "versionName": "1.0.8",
+  "downloadUrl": "https://github.com/lx-obsidian-labs/lx-obsidian-portal/raw/master/VistaCinema-v1.0.8.apk",
+  "changelog": "\u2022 FIXED: Critical \u2014 the empty app is fixed. v1.0.7 shipped a build that lost its content; 1.0.8 restores the full working app with all titles, artwork and playback.\n\u2022 This update is required for everyone on 1.0.7. It installs straight over your existing app \u2014 no data is lost.\n\u2022 Everything from 1.0.7 is included: Your Stats, milestone sharing, the new bottom navigation and Library resume.",
+  "mandatory": true
 }
