@@ -10,7 +10,7 @@
     var copy = {
       project: ['Tell us what you have in mind.', 'Share the problem you want to solve. We’ll use your brief to understand the work and discuss a practical next step.'],
       partnership: ['Let’s build together.', 'Tell us about your expertise, your organisation and the collaboration you have in mind.'],
-      beta: ['Help shape what comes next.', 'Tell us about your tools and a workflow you’d like the platform to improve. We’ll use your enquiry to discuss early-access opportunities.']
+      beta: ['Help shape what comes next.', 'Tell us about your tools and a workflow you’d like the platform to improve. The CLI is coming soon. We’ll use your enquiry to follow up about launch plans and future testing opportunities.']
     }[intent.value];
     document.getElementById('enquiryTitle').textContent = copy[0];
     document.getElementById('enquiryIntro').textContent = copy[1];
