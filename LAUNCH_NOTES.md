@@ -4,9 +4,9 @@ Prepared against master e4540d8e65de752726ace37b6acd13abb776a74e.
 
 ## What changed
 
-- A responsive company homepage with focused service copy, existing product imagery, a labelled platform concept and direct project/partner/early-access routes.
-- A dedicated platform page distinguishes planned app connections from the existing AI builder.
-- A single accessible enquiry form replaces the wizard that acknowledged submissions without sending them. Failed requests retain the brief; success is shown only after persistence.
+- The original homepage theme and layout are retained, with client-focused service copy, project/partner/beta routes, existing work and a clear discovery process. css/lx.css is unchanged from master.
+- Dedicated partners and hybrid coding-beta pages reuse the original navigation, footer, theme and motion scripts. The beta page distinguishes the usable coding beta from planned app connections.
+- An accessible enquiry form styled with the original contact-page components replaces the wizard that acknowledged submissions without sending them. Failed requests retain the brief; success is shown only after persistence.
 - Project, partnership and beta enquiries are stored in D1. The full brief is saved, rather than personal details being logged.
 - Newsletter failures are surfaced instead of being acknowledged as successful signups.
 - Generic social links removed and contact links no longer labelled Login.
@@ -47,7 +47,7 @@ Enquiries are persisted, not emailed. Monitor the `enquiries` table in Cloudflar
 - `npm test`: five backend tests cover persistence, normalisation, invalid input, and unavailable/failed storage.
 - `npm run build`: passes.
 - Subscriber/enquiry SQL applied successfully to an in-memory SQLite database; a complete enquiry was inserted and read back.
-- Local links, image paths, labels and unique IDs in the three refreshed built pages checked.
+- Local links, image paths, labels and unique IDs in the four refreshed pages checked.
 - Browser visual QA could not run in this environment because the Chromium download failed. Before merging, inspect desktop and mobile layouts, keyboard focus, the three enquiry routes, submission success/failure and newsletter handling in a Cloudflare preview.
 - No production forms were submitted; no production data or deployment was modified.
 
