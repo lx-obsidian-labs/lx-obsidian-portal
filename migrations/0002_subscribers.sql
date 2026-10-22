@@ -5,7 +5,7 @@
 --   npx wrangler d1 execute <name> --remote --file=migrations/0002_subscribers.sql
 -- and bind the database as DB (see wrangler.toml).
 --
--- The endpoint degrades gracefully when DB is absent: signups are logged instead.
+-- Failed writes return an error; a signup is confirmed only after persistence.
 
 CREATE TABLE IF NOT EXISTS subscribers (
   id         INTEGER PRIMARY KEY AUTOINCREMENT,

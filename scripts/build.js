@@ -8,7 +8,7 @@ const INCLUDE = [
   'index.html', '404.html', 'about.html', 'ai.html', 'blog.html', 'contact.html',
   'faq.html', 'marketplace.html', 'portfolio.html', 'services.html',
   'synapse.html', 'vista.html', 'local-visibility.html', 'mobile-apps.html',
-  'build.html',
+  'build.html', 'platform.html',
   'integrations.html', 'help-us-grow.html',
   'js', 'assets', 'functions',
   '_headers', '_redirects',

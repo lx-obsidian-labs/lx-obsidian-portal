@@ -1,8 +1,3 @@
-/**
- * Liquid Glass Footer — newsletter form.
- * No backend endpoint is provisioned, so validate client-side and acknowledge.
- * If the form carries a `data-endpoint`, POST the email there instead.
- */
 void (function () {
   'use strict';
 
@@ -57,7 +52,7 @@ void (function () {
               return {};
             })
             .then(function (data) {
-              if (!res.ok) throw new Error(data.error || 'Request failed');
+              if (!res.ok || !data.ok || !data.stored) throw new Error(data.error || 'Your subscription could not be saved. Please try again.');
               return data;
             });
         })
@@ -75,7 +70,6 @@ void (function () {
       return;
     }
 
-    say('Thanks — you are on the list.', true);
-    form.reset();
+    say('Subscriptions are temporarily unavailable. Please try again later.', false);
   });
 })();
