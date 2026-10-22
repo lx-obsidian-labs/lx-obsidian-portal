@@ -1,44 +1,41 @@
+/** Store an enquiry before acknowledging it. Requires migrations/0003_enquiries.sql. */
+function json(body, status = 200) {
+  return new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' } });
+}
 export async function onRequest(context) {
-  var headers = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type',
-    'Content-Type': 'application/json'
-  };
-
-  if (context.request.method === 'OPTIONS') {
-    return new Response(null, { status: 204, headers });
-  }
-
-  if (context.request.method !== 'POST') {
-    return new Response(JSON.stringify({ error: 'Method not allowed' }), { status: 405, headers });
-  }
-
+  const { request, env } = context;
+  if (request.method === 'OPTIONS') return new Response(null, { status: 204 });
+  if (request.method !== 'POST') return json({ error: 'Method not allowed' }, 405);
+  let body;
   try {
-    var body = await context.request.json();
-    var name = (body.name || '').trim();
-    var email = (body.email || '').trim();
-    var subject = (body.subject || '').trim();
-    var message = (body.message || '').trim();
-    var projectType = (body.projecttype || '').trim();
-
-    if (!name || !email || !subject || !message || !projectType) {
-      return new Response(JSON.stringify({ error: 'All fields are required' }), { status: 400, headers });
-    }
-
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      return new Response(JSON.stringify({ error: 'Invalid email' }), { status: 400, headers });
-    }
-
-    var contactEmail = context.env.CONTACT_EMAIL;
-    if (contactEmail) {
-      console.log('Contact form submission to:', contactEmail);
-    }
-
-    console.log('Contact submission:', { name, email, subject, projectType, budget: body.budget || '', launch: body.launch || '', website: body.website || '', preferred: body.preferred || '', messageLength: message.length });
-
-    return new Response(JSON.stringify({ ok: true }), { status: 200, headers });
-  } catch (err) {
-    return new Response(JSON.stringify({ error: 'Internal error' }), { status: 500, headers });
+    const raw = await request.text();
+    if (raw.length > 20000) return json({ error: 'Please shorten your enquiry.' }, 413);
+    body = JSON.parse(raw);
+    if (!body || typeof body !== 'object' || Array.isArray(body)) return json({ error: 'Invalid enquiry.' }, 400);
+  } catch {
+    return json({ error: 'Invalid JSON body.' }, 400);
+  }
+  const limits = { name: 120, email: 254, subject: 200, message: 10000, company: 200, projecttype: 200, budget: 100, launch: 100, website: 500, preferred: 200 };
+  const fields = {};
+  for (const [key, max] of Object.entries(limits)) {
+    if (body[key] != null && typeof body[key] !== 'string') return json({ error: 'Invalid enquiry fields.' }, 400);
+    fields[key] = (body[key] || '').trim();
+    if (fields[key].length > max) return json({ error: 'Please shorten the ' + key + ' field.' }, 400);
+  }
+  if (!fields.name || !fields.email || !fields.subject || !fields.message) return json({ error: 'Name, email, subject and message are required.' }, 400);
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fields.email)) return json({ error: 'Please enter a valid email address.' }, 400);
+  const intent = body.intent || 'project';
+  if (!['project', 'partnership', 'beta'].includes(intent)) return json({ error: 'Invalid enquiry type.' }, 400);
+  if (!env.DB) return json({ error: 'Enquiries are temporarily unavailable. Please try again later.' }, 503);
+  try {
+    const result = await env.DB.prepare(
+      'INSERT INTO enquiries (intent, name, email, company, subject, message, details, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
+    ).bind(intent, fields.name, fields.email.toLowerCase(), fields.company, fields.subject, fields.message,
+      JSON.stringify({ projecttype: fields.projecttype, budget: fields.budget, launch: fields.launch, website: fields.website, preferred: fields.preferred }), new Date().toISOString()).run();
+    if (!result.success) throw new Error('Write failed');
+    return json({ ok: true, stored: true }, 201);
+  } catch {
+    console.error('Enquiry persistence unavailable');
+    return json({ error: 'Your enquiry could not be saved. Please try again later.' }, 503);
   }
 }

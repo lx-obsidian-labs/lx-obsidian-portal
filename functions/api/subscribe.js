@@ -1,67 +1,28 @@
-/**
- * POST /api/subscribe
- * Newsletter signup for the Liquid Glass footer.
- *
- * Persists to the D1 `subscribers` table when the DB binding is provisioned
- * (see migrations/0002_subscribers.sql). Until then it validates, logs the
- * signup and still returns 200 so the footer keeps working.
- *
- * CORS headers are added by functions/api/_middleware.js.
- */
-import { run } from './_db.js';
-
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const MAX_EMAIL = 254;
-
-function json(payload, status) {
-  return new Response(JSON.stringify(payload), {
-    status,
-    headers: { 'Content-Type': 'application/json' },
-  });
+/** Persist subscriptions; never acknowledge a failed database write. */
+function json(payload, status = 200) {
+  return new Response(JSON.stringify(payload), { status, headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' } });
 }
-
 export async function onRequest(context) {
-  const { request } = context;
-
-  if (request.method === 'OPTIONS') {
-    return new Response(null, { status: 204 });
-  }
-  if (request.method !== 'POST') {
-    return json({ error: 'Method not allowed' }, 405);
-  }
-
+  const { request, env } = context;
+  if (request.method === 'OPTIONS') return new Response(null, { status: 204 });
+  if (request.method !== 'POST') return json({ error: 'Method not allowed' }, 405);
   let body;
   try {
-    body = await request.json();
-  } catch (_) {
-    return json({ error: 'Invalid JSON body' }, 400);
+    const raw = await request.text();
+    if (raw.length > 2048) return json({ error: 'Request too large.' }, 413);
+    body = JSON.parse(raw);
+  } catch { return json({ error: 'Invalid JSON body.' }, 400); }
+  if (!body || typeof body.email !== 'string') return json({ error: 'Please enter a valid email address.' }, 400);
+  const email = body.email.trim().toLowerCase();
+  if (email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return json({ error: 'Please enter a valid email address.' }, 400);
+  const source = typeof body.source === 'string' ? body.source.trim().slice(0, 64) : 'footer';
+  if (!env.DB) return json({ error: 'Subscriptions are temporarily unavailable. Please try again later.' }, 503);
+  try {
+    const result = await env.DB.prepare('INSERT INTO subscribers (email, source, created_at) VALUES (?, ?, ?) ON CONFLICT(email) DO NOTHING').bind(email, source, new Date().toISOString()).run();
+    if (!result.success) throw new Error('Write failed');
+    return json({ ok: true, stored: true });
+  } catch {
+    console.error('Subscription persistence unavailable');
+    return json({ error: 'Your subscription could not be saved. Please try again later.' }, 503);
   }
-
-  const email = String((body && body.email) || '').trim().toLowerCase();
-  const source = String((body && body.source) || 'footer').trim().slice(0, 64);
-
-  if (!email || email.length > MAX_EMAIL || !EMAIL_RE.test(email)) {
-    return json({ error: 'Please enter a valid email address.' }, 400);
-  }
-
-  if (context.env.DB) {
-    try {
-      await run(
-        context,
-        'INSERT INTO subscribers (email, source, created_at) VALUES (?, ?, ?) ' +
-          'ON CONFLICT(email) DO NOTHING',
-        email,
-        source,
-        new Date().toISOString()
-      );
-      return json({ ok: true, stored: true }, 200);
-    } catch (err) {
-      // Table missing or database unreachable — fall through to logging so the
-      // form still succeeds rather than showing the visitor an error.
-      console.log('subscribe: DB write failed:', err && err.message);
-    }
-  }
-
-  console.log('subscribe:', { email, source });
-  return json({ ok: true, stored: false }, 200);
 }
