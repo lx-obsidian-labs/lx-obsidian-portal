@@ -593,6 +593,17 @@ body:has(.lx-home)::before,body:has(.lx-home)::after{display:none!important}
 body:has(.lx-home) .glass-footer{background:#0b0d12!important}
 @media(max-width:800px){.lx-home-hero{padding:90px 0 70px}.lx-home-cards{grid-template-columns:1fr}.lx-home-section-head,.lx-home-close__inner{align-items:start;flex-direction:column}.lx-home-card{min-height:210px}}
 @media(max-width:480px){.lx-home-wrap{width:min(100% - 32px,1160px)}.lx-home-hero h1{font-size:clamp(2.9rem,12vw,4.2rem)}.lx-home-products{padding:65px 0}.lx-home-card{padding:24px}.lx-home-actions .lx-home-button{width:100%}}
+
+/* Editorial hero: one purposeful photograph, calmer rhythm, generous margins */
+.lx-home-hero__layout{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);align-items:center;gap:clamp(36px,5vw,84px)}
+.lx-home-hero{padding:clamp(95px,11vw,150px) 0 clamp(80px,9vw,118px)}
+.lx-home-hero h1{font-size:clamp(3rem,5.3vw,5.8rem);letter-spacing:-.065em;max-width:670px}
+.lx-home-hero__visual{position:relative;min-height:440px;overflow:hidden;border:1px solid #30343b;border-radius:7px;background:#11161c}
+.lx-home-hero__visual img{display:block;width:100%;height:100%;min-height:440px;object-fit:cover;filter:brightness(.72) saturate(.78)}
+.lx-home-hero__visual-caption{position:absolute;inset:auto 0 0;display:flex;justify-content:space-between;gap:10px;padding:17px 20px;background:linear-gradient(transparent,rgba(0,0,0,.8));color:#e6e9ed;font:600 9px 'Inter',sans-serif;letter-spacing:.13em}
+.lx-home-products{padding:clamp(76px,9vw,115px) 0}.lx-home-cards{gap:20px}.lx-home-card{padding:clamp(25px,3vw,38px);min-height:270px}.lx-home-section-head{margin-bottom:36px}
+@media(max-width:920px){.lx-home-hero__layout{grid-template-columns:1fr;gap:44px}.lx-home-hero__visual{min-height:300px;max-height:430px}.lx-home-hero__visual img{min-height:300px;max-height:430px}.lx-home-hero h1{max-width:780px}}
+@media(max-width:600px){.lx-home-hero{padding:80px 0 65px}.lx-home-hero__layout{gap:35px}.lx-home-hero__visual{min-height:235px}.lx-home-hero__visual img{min-height:235px;height:260px}.lx-home-products{padding:70px 0}.lx-home-cards{gap:14px}.lx-home-card{min-height:225px}}
 </style>
   <title>LX Obsidian Labs — AI SaaS Platform</title>
   <script type="application/ld+json">
@@ -660,12 +671,12 @@ body:has(.lx-home) .glass-footer{background:#0b0d12!important}
 </header>
 
   <main id="main" class="lx-home">
-<section class="lx-home-hero" aria-labelledby="home-title"><div class="lx-home-wrap">
+<section class="lx-home-hero" aria-labelledby="home-title"><div class="lx-home-wrap lx-home-hero__layout"><div class="lx-home-hero__content">
 <p class="lx-home-kicker">LX OBSIDIAN LABS / SOFTWARE &amp; PRODUCTS</p>
 <h1 id="home-title">Useful software.<br><span>Built with purpose.</span></h1>
 <p class="lx-home-intro">Explore our digital products or work with us to build custom software for your business. Simple tools. Thoughtful engineering.</p>
 <div class="lx-home-actions"><a class="lx-home-button lx-home-button--primary" href="#products">Explore our products</a><a class="lx-home-button" href="contact.html">Build with us</a></div>
-</div></section>
+</div><div class="lx-home-hero__visual"><img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&amp;fit=crop&amp;w=1100&amp;q=85" alt="Laptop workspace showing software development" loading="eager" decoding="async"><div class="lx-home-hero__visual-caption"><span>DESIGN / DEVELOP / DELIVER</span><span>LX OBSIDIAN LABS</span></div></div></div></section>
 <section class="lx-home-products" id="products" aria-labelledby="products-title"><div class="lx-home-wrap">
 <div class="lx-home-section-head"><div><p class="lx-home-kicker">EXPLORE</p><h2 id="products-title">What you can use today.</h2></div><p>Choose a product and get straight to it.</p></div>
 <div class="lx-home-cards">
