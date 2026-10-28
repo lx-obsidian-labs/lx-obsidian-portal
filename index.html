@@ -562,7 +562,19 @@ select.hack-input option{background:#111;color:#e4e4e7}
 @media(hover:none){
   .saas-product-card:hover,.ticker-link:hover,.glass-link:hover,.glass-social a:hover{transform:none}
 }
-\n</style>
+\n
+/* LX engineering-first homepage: retain Inter and Space Grotesk */
+.saas-hero{background-image:linear-gradient(rgba(255,255,255,.026) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.026) 1px,transparent 1px);background-size:48px 48px;background-position:center top}
+.lx-system-panel{position:relative;background:#0b0e14;border:1px solid rgba(255,255,255,.18);border-radius:4px;box-shadow:0 28px 80px rgba(0,0,0,.36);overflow:hidden;font-family:'Inter',sans-serif}
+.lx-system-panel__top,.lx-system-panel__bottom{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 20px;color:#929ba9;font:600 10px/1.4 'Inter',sans-serif;letter-spacing:.12em}
+.lx-system-panel__top{border-bottom:1px solid rgba(255,255,255,.12)}.lx-system-panel__bottom{border-top:1px solid rgba(255,255,255,.12)}.lx-system-panel__bottom a{color:var(--saas-accent-light);text-decoration:none}.lx-system-panel__bottom a:hover{text-decoration:underline}
+.lx-status-dot{display:inline-block;width:7px;height:7px;margin-right:8px;border-radius:50%;background:var(--saas-accent-light)}
+.lx-system-panel__body{padding:38px 24px 24px}.lx-system-panel__eyebrow{font:600 10px/1.5 'Inter',sans-serif;letter-spacing:.16em;color:var(--saas-accent-light)}
+.lx-system-panel__heading{font:500 clamp(1.45rem,2.6vw,2.3rem)/1.16 'Space Grotesk','Inter',sans-serif;letter-spacing:-.04em;color:#fff;margin:20px 0 34px}.lx-system-panel__rule{height:1px;background:rgba(255,255,255,.17)}
+.lx-system-panel__item{display:grid;grid-template-columns:30px 1fr auto;gap:12px;align-items:center;border-bottom:1px solid rgba(255,255,255,.1);padding:17px 0;color:#8d98a9;font-size:11px}.lx-system-panel__item strong{font-size:13px;font-weight:500;color:#f5f6fa}.lx-system-panel__item>span:last-child{font-size:9px;letter-spacing:.06em}
+@media(max-width:850px){.saas-hero__grid{grid-template-columns:1fr}.lx-system-panel{max-width:680px}.lx-system-panel__body{padding:28px 20px 20px}}
+@media(max-width:420px){.lx-system-panel__top,.lx-system-panel__bottom{padding:13px}.lx-system-panel__body{padding:22px 14px}.lx-system-panel__item{grid-template-columns:22px 1fr auto;gap:6px}.lx-system-panel__item>span:last-child{font-size:8px}}
+</style>
   <title>LX Obsidian Labs — AI SaaS Platform</title>
   <script type="application/ld+json">
   {
@@ -708,7 +720,18 @@ select.hack-input option{background:#111;color:#e4e4e7}
           </div>
           <div class="saas-hero__metrics"><div class="saas-hero__metric"><strong>Products</strong><span>Useful digital tools</span></div><div class="saas-hero__metric"><strong>Engineering</strong><span>Custom software</span></div><div class="saas-hero__metric"><strong>Infrastructure</strong><span>Built to scale</span></div></div>
         </div>
-        <div style="min-height:400px"></div>
+        <div class="lx-system-panel" aria-label="LX Obsidian Labs engineering capabilities">
+  <div class="lx-system-panel__top"><span><span class="lx-status-dot"></span> LX / SYSTEMS</span><span>ENGINEERING OVERVIEW</span></div>
+  <div class="lx-system-panel__body">
+    <div class="lx-system-panel__eyebrow">WHAT WE BUILD / 001</div>
+    <div class="lx-system-panel__heading">Digital infrastructure.<br>Designed to work.</div>
+    <div class="lx-system-panel__rule"></div>
+    <div class="lx-system-panel__item"><span>01</span><strong>Software products</strong><span>WEB / DESKTOP</span></div>
+    <div class="lx-system-panel__item"><span>02</span><strong>Business platforms</strong><span>SAAS / SYSTEMS</span></div>
+    <div class="lx-system-panel__item"><span>03</span><strong>Workflow automation</strong><span>TOOLS / API</span></div>
+  </div>
+  <div class="lx-system-panel__bottom"><span>BUILT BY LX OBSIDIAN LABS</span><a href="#products">VIEW PRODUCTS ↗</a></div>
+</div>
       </div>
     </section>
 
