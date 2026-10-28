@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const cp = require('child_process');
 const dist = path.resolve(__dirname, '../dist');
-const required = ['index.html', 'pdf/index.html', '404.html', '_redirects', 'css/lx.css'];
+const required = ['index.html', 'pdf/index.html', 'synapse/web/index.html', '404.html', '_redirects', 'css/lx.css'];
 for (const name of required) {
   if (!fs.existsSync(path.join(dist, name))) throw Error('Missing required asset: ' + name);
 }
@@ -23,3 +23,8 @@ function check(dir) {
 }
 check(dist);
 console.log('Release verification passed: required assets, PDF route, homepage link and JS syntax');
+
+const synapseWeb = fs.readFileSync(path.join(dist, 'synapse/web/index.html'), 'utf8');
+if (!synapseWeb.includes("fetch('/api/chat'")) throw Error('Synapse web chat endpoint missing');
+const synapseLanding = fs.readFileSync(path.join(dist, 'synapse.html'), 'utf8');
+if (!synapseLanding.includes('/synapse/web') || !synapseLanding.includes('release-notes')) throw Error('Synapse release notes or web link missing');
