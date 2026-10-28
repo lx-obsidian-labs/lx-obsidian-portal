@@ -134,6 +134,11 @@
   .syn-faq details code{background:rgba(255,255,255,.06);padding:.1rem .4rem;border-radius:6px;font-size:.85em;color:var(--saas-accent-light)}
   .syn-hero,.syn-install,[id]{scroll-margin-top:96px}
   .syn-dl:focus-visible,.syn-github:focus-visible{outline:2px solid var(--saas-accent-light);outline-offset:2px;border-radius:12px}
+
+/* LX Synapse product design / matching homepage typography and rhythm */
+body:has(.syn-clean){background:#090b0f!important;background-image:none!important;color:#f7f8fa;font-family:'Inter',sans-serif}body:has(.syn-clean)::before,body:has(.syn-clean)::after{display:none!important}.syn-clean{background:#090b0f;color:#f7f8fa}.syn-clean__wrap{width:min(1160px,calc(100% - 48px));margin:auto}.syn-clean__hero{padding:clamp(95px,11vw,150px) 0 clamp(80px,9vw,118px);border-bottom:1px solid #252932}.syn-clean__grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(36px,5vw,84px);align-items:center}.syn-clean__eyebrow{color:var(--saas-accent-light,#e36a8d);font:600 11px/1.5 'Inter',sans-serif;letter-spacing:.17em;margin:0 0 23px}.syn-clean h1{font:500 clamp(3rem,5.3vw,5.8rem)/.99 'Space Grotesk','Inter',sans-serif;letter-spacing:-.065em;margin:0}.syn-clean h1 span{color:#aab0ba}.syn-clean__lead{font:400 clamp(1rem,1.55vw,1.2rem)/1.7 'Inter',sans-serif;color:#aeb5c1;max-width:580px;margin:30px 0 0}.syn-clean__actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:35px}.syn-clean__button{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:10px 20px;border:1px solid #454b55;border-radius:5px;color:#f8f8f9;text-decoration:none;font:600 13px/1.35 'Inter',sans-serif}.syn-clean__button:hover{border-color:#fff;background:#1a1d24}.syn-clean__button--primary{background:var(--saas-accent-light,#d85b80);color:#090b0f;border-color:transparent}.syn-clean__button--primary:hover{background:#fff;color:#090b0f}.syn-clean__fine{color:#8c95a3;font-size:12px;margin:20px 0 0}.syn-clean__visual{background:#101319;border:1px solid #30343b;border-radius:7px;overflow:hidden}.syn-clean__visual-top,.syn-clean__visual-bottom{display:flex;justify-content:space-between;gap:12px;padding:18px 22px;color:#aeb5c1;font:600 10px 'Inter',sans-serif;letter-spacing:.12em}.syn-clean__visual-top{border-bottom:1px solid #30343b}.syn-clean__visual-bottom{border-top:1px solid #30343b}.syn-clean__visual-body{padding:45px 26px}.syn-clean__visual-body>p{color:var(--saas-accent-light,#e36a8d);font-size:11px;letter-spacing:.15em}.syn-clean__visual-body h2{font:500 clamp(1.7rem,2.6vw,2.5rem)/1.12 'Space Grotesk',sans-serif;letter-spacing:-.04em;margin:15px 0 35px}.syn-clean__step{display:grid;grid-template-columns:30px 1fr auto;gap:12px;align-items:center;padding:17px 0;border-top:1px solid #30343b;color:#aeb5c1;font-size:11px}.syn-clean__step strong{color:#f7f8fa;font-size:13px;font-weight:500}.syn-clean__step span:last-child{font-size:10px;letter-spacing:.08em}
+body:has(.syn-clean)>section.saas-section{background:#090b0f;border-color:#252932!important}body:has(.syn-clean)>section.saas-section .saas-wrap{max-width:1160px}body:has(.syn-clean) .glass-footer{background:#0b0d12!important}
+@media(max-width:920px){.syn-clean__grid{grid-template-columns:1fr}.syn-clean__visual{max-width:650px}}@media(max-width:600px){.syn-clean__wrap{width:calc(100% - 32px)}.syn-clean__hero{padding:80px 0 65px}.syn-clean h1{font-size:clamp(3rem,12vw,4.2rem)}.syn-clean__actions .syn-clean__button{width:100%}.syn-clean__visual-body{padding:28px 20px}}
 </style>
 <script type="application/ld+json">
 {
@@ -210,69 +215,7 @@
       <span class="velora-brand__label">Obsidian Labs</span>
     </a>
 
-    <nav class="velora-links" id="veloraLinks" aria-label="Primary">
-    <div class="velora-item">
-      <button type="button" class="velora-link has-chevron" aria-expanded="false" aria-controls="velora-menu-product" data-velora-menu>Product<svg class="velora-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
-      <div class="velora-menu" id="velora-menu-product" role="group" aria-label="Product">
-      <div class="velora-menu__col">
-        <p class="velora-menu__head">Platform</p>
-        <a class="velora-card" href="ai.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></svg></span><span class="velora-card__body"><span class="velora-card__title">AI Platform</span><span class="velora-card__desc">Autonomous AI systems</span></span></a>
-        <a class="velora-card" href="synapse.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3.5"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4M5 5l2.5 2.5M16.5 16.5L19 19M19 5l-2.5 2.5M7.5 16.5L5 19"/></svg></span><span class="velora-card__body"><span class="velora-card__title">Synapse AI</span><span class="velora-card__desc">Conversational intelligence</span></span></a>
-      </div>
-      <div class="velora-menu__col">
-        <p class="velora-menu__head">Apps</p>
-        <a class="velora-card" href="vista.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M7 2v20M17 2v20M2 12h20M2 7h5M2 17h5M17 17h5M17 7h5"/></svg></span><span class="velora-card__body"><span class="velora-card__title">Vista Cinema</span><span class="velora-card__desc">Free movie &amp; TV app</span></span></a>
-        <a class="velora-card" href="marketplace.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l1.5-5h15L21 9"/><path d="M4 9v10a1 1 0 001 1h14a1 1 0 001-1V9"/><path d="M9 20v-5h6v5"/></svg></span><span class="velora-card__body"><span class="velora-card__title">Marketplace</span><span class="velora-card__desc">Tools &amp; templates</span></span></a>
-      </div>
-      <div class="velora-menu__col">
-        <p class="velora-menu__head">Start</p>
-        <a class="velora-card" href="help-us-grow.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 00-7.8 7.8l1 1.1L12 21.2l7.8-7.7 1-1.1a5.5 5.5 0 000-7.8z"/></svg></span><span class="velora-card__body"><span class="velora-card__title">Help Us Grow</span><span class="velora-card__desc">Back the mission</span></span></a>
-        <a class="velora-card" href="contact.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 6l10 7 10-7"/></svg></span><span class="velora-card__body"><span class="velora-card__title">Contact</span><span class="velora-card__desc">Talk to our team</span></span></a>
-      </div>
-      </div>
-    </div>
-    <div class="velora-item">
-      <button type="button" class="velora-link has-chevron" aria-expanded="false" aria-controls="velora-menu-solutions" data-velora-menu>Solutions<svg class="velora-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
-      <div class="velora-menu" id="velora-menu-solutions" role="group" aria-label="Solutions">
-      <div class="velora-menu__col">
-        <p class="velora-menu__head">Services</p>
-        <a class="velora-card" href="services.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2"/><path d="M2 13h20"/></svg></span><span class="velora-card__body"><span class="velora-card__title">Solutions</span><span class="velora-card__desc">What we build</span></span></a>
-        <a class="velora-card" href="integrations.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 2v6M15 2v6"/><path d="M6 8h12v3a6 6 0 01-12 0V8z"/><path d="M12 17v5"/></svg></span><span class="velora-card__body"><span class="velora-card__title">Integrations</span><span class="velora-card__desc">Connect your stack</span></span></a>
-      </div>
-      <div class="velora-menu__col">
-        <p class="velora-menu__head">Growth</p>
-        <a class="velora-card" href="local-visibility.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-6.5 7-12a7 7 0 10-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg></span><span class="velora-card__body"><span class="velora-card__title">Local SEO</span><span class="velora-card__desc">Get found locally</span></span></a>
-        <a class="velora-card" href="mobile-apps.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/></svg></span><span class="velora-card__body"><span class="velora-card__title">Mobile Apps</span><span class="velora-card__desc">Ship to app stores</span></span></a>
-      </div>
-      <div class="velora-menu__col">
-        <p class="velora-menu__head">Proof</p>
-        <a class="velora-card" href="portfolio.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span><span class="velora-card__body"><span class="velora-card__title">Work</span><span class="velora-card__desc">Selected projects</span></span></a>
-        <a class="velora-card" href="faq.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 015.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></span><span class="velora-card__body"><span class="velora-card__title">FAQ</span><span class="velora-card__desc">Quick answers</span></span></a>
-      </div>
-      </div>
-    </div>
-    <div class="velora-item">
-      <button type="button" class="velora-link has-chevron" aria-expanded="false" aria-controls="velora-menu-company" data-velora-menu>Company<svg class="velora-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
-      <div class="velora-menu" id="velora-menu-company" role="group" aria-label="Company">
-      <div class="velora-menu__col">
-        <p class="velora-menu__head">Company</p>
-        <a class="velora-card" href="about.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9.5" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.9"/><path d="M16 3.1a4 4 0 010 7.8"/></svg></span><span class="velora-card__body"><span class="velora-card__title">About</span><span class="velora-card__desc">Our story and mission</span></span></a>
-        <a class="velora-card" href="blog.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/></svg></span><span class="velora-card__body"><span class="velora-card__title">Insights</span><span class="velora-card__desc">Ideas and updates</span></span></a>
-      </div>
-      <div class="velora-menu__col">
-        <p class="velora-menu__head">Support</p>
-        <a class="velora-card" href="help-us-grow.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 00-7.8 7.8l1 1.1L12 21.2l7.8-7.7 1-1.1a5.5 5.5 0 000-7.8z"/></svg></span><span class="velora-card__body"><span class="velora-card__title">Help Us Grow</span><span class="velora-card__desc">Back the mission</span></span></a>
-        <a class="velora-card" href="faq.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 015.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></span><span class="velora-card__body"><span class="velora-card__title">FAQ</span><span class="velora-card__desc">Quick answers</span></span></a>
-      </div>
-      <div class="velora-menu__col">
-        <p class="velora-menu__head">Connect</p>
-        <a class="velora-card" href="marketplace.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l1.5-5h15L21 9"/><path d="M4 9v10a1 1 0 001 1h14a1 1 0 001-1V9"/><path d="M9 20v-5h6v5"/></svg></span><span class="velora-card__body"><span class="velora-card__title">Marketplace</span><span class="velora-card__desc">Tools &amp; templates</span></span></a>
-        <a class="velora-card" href="https://github.com/lx-obsidian-labs" target="_blank" rel="noopener"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><path d="M15 3h6v6"/><path d="M10 14L21 3"/></svg></span><span class="velora-card__body"><span class="velora-card__title">GitHub</span><span class="velora-card__desc">Open source</span></span></a>
-      </div>
-      </div>
-    </div>
-      <a class="velora-link" href="blog.html">Insights</a>
-    </nav>
+    <nav class="velora-links" id="veloraLinks" aria-label="Primary"><a class="velora-link" href="index.html">Home</a><a class="velora-link" href="index.html#products">Products</a><a class="velora-link" href="vista.html">Vista Cinema</a><a class="velora-link" href="/pdf/">PDF Studio</a><a class="velora-link" href="services.html">Custom Software</a><a class="velora-link" href="about.html">Company</a></nav>
 
     <div class="velora-actions">
       <a class="velora-link" href="contact.html">Login</a>
@@ -282,22 +225,7 @@
   </div>
 </header>
 
-<main id="main" class="syn-hero" aria-label="Synapse AI">
-  <div class="container">
-    <div class="syn-hero__inner">
-      <span class="syn-hero__badge">By LX Obsidian Labs</span>
-      <h1 class="syn-hero__title">Synapse AI — your <span>AI browser agent</span></h1>
-      <p class="syn-hero__text">An AI-powered Chrome / Edge / Brave extension that turns any web page into an autonomous, controllable workspace. It runs an <strong>observe ? plan ? execute ? verify</strong> loop: it reads the live page, an AI model picks one action, the extension performs it, checks the result, and repeats until your objective is done. Works out of the box — no API key required.</p>
-      <div class="syn-hero__actions">
-        <a href="https://chromewebstore.google.com/detail/synapse-ai" id="synapseDownloadBtn" class="syn-dl" target="_blank" rel="noopener noreferrer">
-          <svg class="syn-dl__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          <span><span class="syn-dl__label">Download for Chrome</span><span class="syn-dl__meta" id="synapseVersion">v1.1.1 — free</span></span>
-        </a>
-        <a href="https://github.com/lx-obsidian-labs/synapse-social" class="saas-btn saas-btn--large" target="_blank" rel="noopener">View Source on GitHub</a>
-      </div>
-    </div>
-  </div>
-</main>
+<main id="main" class="syn-clean"><section class="syn-clean__hero"><div class="syn-clean__wrap syn-clean__grid"><div><p class="syn-clean__eyebrow">LX OBSIDIAN LABS / BROWSER PRODUCTIVITY</p><h1>Meet<br><span>Synapse.</span></h1><p class="syn-clean__lead">An AI-assisted browser extension that helps you automate repetitive tasks and work more efficiently across the web.</p><div class="syn-clean__actions"><a class="syn-clean__button syn-clean__button--primary" href="https://chromewebstore.google.com/detail/synapse-ai" id="synapseDownloadBtn" target="_blank" rel="noopener noreferrer">Get Synapse for Chrome ↗</a><a class="syn-clean__button" href="https://github.com/lx-obsidian-labs/synapse-social" target="_blank" rel="noopener noreferrer">View on GitHub ↗</a></div><p class="syn-clean__fine">Browser extension · Chrome and Chromium-based browsers</p></div><div class="syn-clean__visual" aria-label="Synapse workflow overview"><div class="syn-clean__visual-top"><span>● SYNAPSE / WORKSPACE</span><span>BROWSER ASSISTANT</span></div><div class="syn-clean__visual-body"><p>YOUR WORKFLOW</p><h2>Less repetition.<br>More progress.</h2><div class="syn-clean__step"><span>01</span><strong>Describe a task</strong><span>INPUT</span></div><div class="syn-clean__step"><span>02</span><strong>Review the plan</strong><span>PROCESS</span></div><div class="syn-clean__step"><span>03</span><strong>Stay in control</strong><span>OUTPUT</span></div></div><div class="syn-clean__visual-bottom">BUILT BY LX OBSIDIAN LABS</div></div></div></section></main>
 
 <section class="saas-section" id="capabilities" style="border-top:none">
   <div class="saas-wrap">
@@ -414,15 +342,7 @@
         </a>
         <p class="glass-footer__desc">South African AI and software engineering company building intelligent platforms, automation systems and digital infrastructure.</p>
       </div>
-      <div class="glass-footer__news">
-        <form class="glass-news" id="glassNews" data-endpoint="/api/subscribe" novalidate>
-          <span class="glass-news__field">
-            <input class="glass-news__input" type="email" name="email" placeholder="Your email" aria-label="Email address" required>
-          </span>
-          <button class="glass-news__btn" type="submit">Subscribe</button>
-        </form>
-        <p class="glass-news__note" id="glassNewsNote" hidden></p>
-      </div>
+      <div class="glass-footer__news"><p style="color:var(--saas-muted);margin:0 0 12px">Have a product or project in mind?</p><a class="saas-btn saas-btn--primary" href="contact.html">Contact our team</a></div>
     </div>
     <div class="glass-footer__cols">
       <div class="glass-col">
@@ -461,7 +381,7 @@
   </div>
 </footer>
 
-<script src="js/components/chat-widget.js?v=2"></script>
+
   <script src="js/ui/mobile-nav.js"></script>
 <script>
   (function () {
@@ -482,10 +402,10 @@
   })();
 </script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));}</script>
-  <script src="js/ui/dot-grid.js" defer></script>
-  <script src="js/ui/scroll-reveal.js" defer></script>
+  
+  
   <script src="js/ui/glass-footer.js" defer></script>
-  <script src="js/ui/ticker-blur.js" defer></script>
-  <script src="js/ui/ticker-links.js" defer></script>
+  
+  
 </body>
 </html>
