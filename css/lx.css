@@ -528,3 +528,14 @@ select.hack-input option{background:#111;color:#e4e4e7}
 @media(hover:none){
   .saas-product-card:hover,.ticker-link:hover,.glass-link:hover,.glass-social a:hover{transform:none}
 }
+
+/* Navigation usability refinements — retain existing Velora glass UI */
+.velora-nav a[aria-current="page"]{color:var(--vl-link-hover);font-weight:600}
+.velora-nav a[aria-current="page"]:not(.velora-brand):not(.velora-card){text-decoration:underline;text-decoration-color:currentColor;text-underline-offset:5px;text-decoration-thickness:1px}
+.velora-nav :is(a,button):focus-visible{outline:2px solid #d94a62;outline-offset:3px}
+.velora-menu{max-height:min(74vh,650px);overflow-y:auto;overscroll-behavior:contain}
+.velora-card{min-height:46px;height:auto}
+.velora-card__desc{white-space:normal}
+@media (prefers-reduced-motion:reduce){
+ .velora-nav,.velora-menu,.velora-link,.velora-link::before,.velora-chev,.velora-card{transition:none!important}
+}
