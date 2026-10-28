@@ -193,14 +193,17 @@ void (function () {
     }, 150);
   });
 
-  // Mark the current destination without depending on server-side templates.
-  var currentPath = location.pathname.replace(/\\/$/, '') || '/';
+  // Match both clean URLs and .html URLs consistently.
+  function normalizePath(path) {
+    path = path.replace(/\.html$/, '').replace(/\/$/, '');
+    return path === '/index' || path === '' ? '/' : path;
+  }
+  var currentPath = normalizePath(location.pathname);
   nav.querySelectorAll('a[href]').forEach(function (a) {
     try {
       var url = new URL(a.getAttribute('href'), location.href);
-      if (url.origin !== location.origin) return;
-      var path = url.pathname.replace(/\\.html$/, '').replace(/\\/$/, '') || '/';
-      if (path === currentPath && !url.hash) a.setAttribute('aria-current', 'page');
+      if (url.origin !== location.origin || url.hash) return;
+      if (normalizePath(url.pathname) === currentPath) a.setAttribute('aria-current', 'page');
     } catch (_) {}
   });
 
