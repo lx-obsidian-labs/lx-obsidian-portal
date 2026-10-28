@@ -42,6 +42,9 @@ const redirectFile = path.join(DIST, '_redirects');
 const rules = fs.readFileSync(redirectFile, 'utf8').split('\n');
 fs.writeFileSync(redirectFile, rules.filter(line => !line.trim().startsWith('/pdf ' ) && !line.trim().startsWith('/pdf/ ')).join('\n'));
 
+// Avoid Pages clean-URL collision: only /pdf/index.html is published.
+fs.rmSync(path.join(DIST, 'pdf.html'), { force: true });
+
 const cssDir = path.join(ROOT, 'css');
 const distCssDir = path.join(DIST, 'css');
 fs.mkdirSync(distCssDir, { recursive: true });
@@ -136,7 +139,7 @@ for (const file of ROOT_HTML) {
 }
 
 // A missing entry point must fail the build rather than silently ship a 404.
-for (const required of ['index.html', '404.html', 'pdf.html', '_redirects', 'css/lx.css']) {
+for (const required of ['index.html', '404.html', 'pdf/index.html', '_redirects', 'css/lx.css']) {
   if (!fs.existsSync(path.join(DIST, required))) throw new Error('Missing required published asset: ' + required);
 }
 console.log('Verified ' + ROOT_HTML.length + ' HTML pages and required published assets');
