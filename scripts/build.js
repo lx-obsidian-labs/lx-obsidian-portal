@@ -152,6 +152,10 @@ console.log('Verified ' + ROOT_HTML.length + ' HTML pages and required published
 const total = countFiles(DIST);
 console.log(`Build complete: dist/ (${total} files, ${getSize(DIST)} KB)`);
 
+// Enforce the release audit in Cloudflare Pages as well as local builds.
+// Pages invokes node scripts/build.js directly rather than npm run build.
+require('./audit-release.js');
+
 function countFiles(dir) {
   let count = 0;
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
