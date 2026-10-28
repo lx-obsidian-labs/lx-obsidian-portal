@@ -9,7 +9,7 @@ for (const name of required) {
 const home = fs.readFileSync(path.join(dist, 'index.html'), 'utf8');
 const routes = fs.readFileSync(path.join(dist, '_redirects'), 'utf8');
 if (!home.includes('href="/pdf"')) throw Error('Homepage PDF Studio link missing');
-if (!routes.includes('/pdf.html')) throw Error('PDF Studio route missing');
+if (!fs.existsSync(path.join(dist, 'pdf/index.html'))) throw Error('PDF Studio directory route missing');
 function check(dir) {
   for (const item of fs.readdirSync(dir, {withFileTypes:true})) {
     const file = path.join(dir, item.name);
