@@ -1,0 +1,15 @@
+{
+  "name": "vista-assistant",
+  "main": "src/worker.mjs",
+  "compatibility_date": "2026-10-01",
+  "ai": { "binding": "AI" },
+  "vars": {
+    "FIREBASE_PROJECT_ID": "vista-cinema",
+    "AI_MODEL": "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
+  },
+  "ratelimits": [{
+    "name": "ASSISTANT_LIMITER",
+    "namespace_id": "1009",
+    "simple": { "limit": 15, "period": 60 }
+  }]
+}

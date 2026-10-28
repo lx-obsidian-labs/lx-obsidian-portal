@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Backed up: shared preferences (settings, theme) and the databases (watchlist, watch history,
+  recent searches).
+
+  Everything else is excluded. Image and video caches are large and re-downloadable, so restoring
+  them would waste the viewer's data allowance to reproduce bytes the app will fetch again anyway.
+
+  Note this is an inclusive list, not an exclusion list: only the domains named below are backed
+  up, so anything added to the app later is excluded by default rather than silently leaking into
+  a cloud backup. That is the safer direction for the mistake to fail in.
+-->
+<full-backup-content>
+    <include domain="sharedpref" path="." />
+    <include domain="database" path="." />
+</full-backup-content>

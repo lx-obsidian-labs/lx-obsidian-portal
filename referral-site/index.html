@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<!--
+  Vista referral landing page.
+
+  DO NOT PUBLISH until the referral backend is live (Phase 1). This page advertises a reward
+  ("5 friends = 12 months free") that the current build cannot track or honour. Shipping it early
+  means collecting signups against a promise the product cannot keep yet.
+
+  VERSION/APK NOTE: the version, filename and SHA-256 below are the only places the build number
+  appears. Bump all three together when a new APK is dropped into ../ and ../tv/.
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vista Cinema - Invite friends, get 12 months free</title>
+    <meta name="description" content="Invite 5 friends to Vista Cinema and get 12 months of Premium free. Free movies and series on Android phone and smart TV.">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0A0A0A;
+            color: #FFFFFF;
+            min-height: 100vh;
+            line-height: 1.5;
+        }
+        .wrap { max-width: 760px; margin: 0 auto; padding: 0 20px; }
+
+        .hero {
+            text-align: center;
+            padding: 56px 20px 44px;
+            background: linear-gradient(180deg, #1A0A0A 0%, #0A0A0A 100%);
+        }
+        .logo {
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 20px;
+            background: #E50914;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: bold;
+        }
+        .offer {
+            display: inline-block;
+            background: rgba(229, 9, 20, 0.12);
+            border: 1px solid #E50914;
+            color: #FF6B72;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 7px 16px;
+            border-radius: 999px;
+            margin-bottom: 20px;
+        }
+        h1 { font-size: 34px; line-height: 1.15; margin-bottom: 14px; letter-spacing: -0.5px; }
+        h1 .hl { color: #E50914; }
+        .sub { color: #999; font-size: 17px; margin-bottom: 28px; }
+
+        /* Invited-by banner, revealed only when the link carries ?ref= */
+        .invite {
+            display: none;
+            background: #111;
+            border: 1px solid #2A2A2A;
+            border-left: 3px solid #E50914;
+            border-radius: 10px;
+            padding: 16px 20px;
+            margin: 0 auto 28px;
+            max-width: 520px;
+            text-align: left;
+        }
+        .invite.show { display: block; }
+        .invite-label { color: #666; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+        .invite-code { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 24px; font-weight: 700; letter-spacing: 3px; color: #FFF; }
+        .invite-note { color: #888; font-size: 13px; margin-top: 6px; }
+
+        .cta-row { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+        .btn {
+            display: inline-block;
+            text-decoration: none;
+            padding: 15px 28px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            transition: opacity 0.2s;
+        }
+        .btn:hover { opacity: 0.85; }
+        .btn-wa { background: #25D366; color: #06331A; }
+        .btn-red { background: #E50914; color: #fff; }
+        .btn-ghost { background: #1A1A1A; color: #CCC; border: 1px solid #2A2A2A; }
+        .cta-note { color: #555; font-size: 13px; }
+
+        section { padding: 44px 0; }
+        h2 { font-size: 23px; text-align: center; margin-bottom: 10px; }
+        .lead { color: #888; text-align: center; font-size: 15px; margin-bottom: 28px; }
+
+        .steps { display: grid; gap: 14px; }
+        .step { background: #111; border: 1px solid #1F1F1F; border-radius: 12px; padding: 20px; display: flex; gap: 16px; }
+        .step-num {
+            background: #E50914; color: #fff; width: 30px; height: 30px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-size: 14px;
+            font-weight: bold; flex-shrink: 0;
+        }
+        .step-body h3 { font-size: 16px; margin-bottom: 4px; }
+        .step-body p { color: #888; font-size: 14px; }
+
+        .tiers { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+        .tier { background: #111; border: 1px solid #1F1F1F; border-radius: 12px; padding: 20px 16px; text-align: center; }
+        .tier-top { font-size: 13px; color: #666; margin-bottom: 6px; }
+        .tier-num { font-size: 30px; font-weight: 800; letter-spacing: -1px; }
+        .tier-what { color: #E50914; font-size: 14px; font-weight: 600; margin-top: 6px; }
+        .tier.hl { border-color: #E50914; background: linear-gradient(180deg, rgba(229,9,20,0.14), #111); }
+        .tier.hl .tier-num { color: #FF6B72; }
+
+        .fine { color: #555; font-size: 13px; line-height: 1.7; }
+        .fine strong { color: #888; }
+
+        .price {
+            display: none;
+            background: #111; border: 1px solid #1F1F1F; border-radius: 12px;
+            padding: 22px; text-align: center; margin-bottom: 14px;
+        }
+        .price.show { display: block; }
+        .price-amt { font-size: 26px; font-weight: 800; }
+        .price-amt span { color: #E50914; }
+        .price-note { color: #777; font-size: 13px; margin-top: 6px; }
+
+        .downloads { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+        .dl { background: #111; border: 1px solid #262626; border-radius: 16px; padding: 24px; text-align: center; }
+        .dl h3 { font-size: 15px; margin-bottom: 4px; }
+        .dl .req { color: #666; font-size: 12px; margin-bottom: 16px; }
+        .dl .btn { width: 100%; }
+
+        footer { text-align: center; padding: 28px 20px; color: #444; font-size: 12px; border-top: 1px solid #1A1A1A; }
+        footer a { color: #E50914; text-decoration: none; }
+    </style>
+</head>
+<body>
+
+<div class="hero">
+    <div class="wrap">
+        <div class="logo">V</div>
+        <div class="offer">Referral programme</div>
+        <h1>Invite 5 friends.<br><span class="hl">Get 12 months free.</span></h1>
+        <p class="sub">Free movies and series on your phone or smart TV &mdash; and Premium on us for a whole year.</p>
+
+        <div class="invite" id="invite">
+            <div class="invite-label">You've been invited</div>
+            <div class="invite-code" id="inviteCode">&mdash;</div>
+            <div class="invite-note">Enter this code in Vista Cinema when you create your account.</div>
+        </div>
+
+        <!-- WhatsApp first: it is the dominant share channel here and skips the chooser entirely. -->
+        <div class="cta-row">
+            <button class="btn btn-wa" id="shareWa">Share on WhatsApp</button>
+            <a class="btn btn-ghost" id="shareMore" href="#">More sharing options</a>
+        </div>
+        <p class="cta-note" id="ctaNote">Also available on Facebook and TikTok &mdash; use &ldquo;More sharing options&rdquo;.</p>
+    </div>
+</div>
+
+<section>
+    <div class="wrap">
+        <h2>How it works</h2>
+        <p class="lead">Three steps. The free year is automatic.</p>
+        <div class="steps">
+            <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-body">
+                    <h3>Install Vista Cinema</h3>
+                    <p>Free on Android phones, tablets and smart TVs. No card needed.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-body">
+                    <h3>Get your invite code</h3>
+                    <p>Your code sits in your profile. Share the link with friends however you like &mdash; WhatsApp, Facebook, TikTok, or a group chat.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-body">
+                    <h3>Your friends sign up</h3>
+                    <p>They get extended free access when they join. Once five of them have genuinely started watching, your year of Premium unlocks automatically.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="wrap">
+        <h2>Your rewards</h2>
+        <p class="lead">Every milestone, not just the big one.</p>
+        <div class="tiers">
+            <div class="tier">
+                <div class="tier-top">Friends joined</div>
+                <div class="tier-num">1</div>
+                <div class="tier-what">Supporter badge</div>
+            </div>
+            <div class="tier">
+                <div class="tier-top">Friends joined</div>
+                <div class="tier-num">3</div>
+                <div class="tier-what">1 month free</div>
+            </div>
+            <div class="tier hl">
+                <div class="tier-top">Friends joined</div>
+                <div class="tier-num">5</div>
+                <div class="tier-what">12 months free</div>
+            </div>
+            <div class="tier">
+                <div class="tier-top">Friends joined</div>
+                <div class="tier-num">10</div>
+                <div class="tier-what">12 months + founder badge</div>
+            </div>
+        </div>
+
+        <p class="fine" style="margin-top:24px;">
+            <strong>What counts as a friend:</strong> they create an account, set a display name, and watch
+            for at least 10 minutes on a second day. We hold a referral for 7 days before it counts, so a
+            handful of throwaway accounts can't unlock a year of Premium. One person, one account, one count.
+        </p>
+
+        <div class="price" id="price">
+            <div class="price-amt">Premium is <span>R20</span> a month</div>
+            <div class="price-note">South Africa. Cancel any time &mdash; your free year doesn't need a card.</div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="wrap">
+        <h2>Get the app</h2>
+        <p class="lead">Free to download. Free to watch, for now.</p>
+        <div class="downloads">
+            <div class="dl">
+                <h3>Mobile &amp; Tablet</h3>
+                <div class="req">Android 7.0+ &middot; v1.0.6</div>
+                <a class="btn btn-red" href="../VistaCinema-v1.0.6.apk" download>Download APK</a>
+            </div>
+            <div class="dl">
+                <h3>Smart TV / Google TV</h3>
+                <div class="req">TV optimised &middot; Android 7.0+ &middot; v1.0.6</div>
+                <a class="btn btn-red" href="../tv/VistaCinema-TV-v1.0.6.apk" download>Download TV APK</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p>&copy; 2026 Vista Cinema. All rights reserved.</p>
+    <p style="margin-top: 8px;"><a href="../privacy-policy.html">Privacy Policy</a></p>
+</footer>
+
+<script>
+(function () {
+    'use strict';
+
+    /* Mirrors CountryResolver.kt in the app: first locale carrying a real region wins, since
+       per-app language overrides mean the base language's country is often not where the viewer
+       actually is. Kept deliberately identical so the page and the app bucket viewers the same way. */
+    function detectCountry() {
+        var locales = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language];
+        for (var i = 0; i < locales.length; i++) {
+            if (!locales[i]) continue;
+            var parts = String(locales[i]).split('-');
+            if (parts.length < 2) continue;
+            var region = parts[parts.length - 1].toUpperCase();
+            if (/^[A-Z]{2}$/.test(region) && region !== '00') return region;
+            if (region === '710') return 'ZA'; // UN M.49 numeric form of ZA
+        }
+        return '';
+    }
+
+    // Premium is only priced for South Africa, so only ZA viewers are shown a figure.
+    if (detectCountry() === 'ZA') {
+        document.getElementById('price').classList.add('show');
+    }
+
+    // Referrer code from the shared link. Surfaced, not stored server-side - the app validates
+    // and binds it at signup.
+    var code = new URLSearchParams(window.location.search).get('ref') || '';
+    if (/^[A-Z0-9]{4,12}$/i.test(code)) {
+        document.getElementById('inviteCode').textContent = code.toUpperCase();
+        document.getElementById('invite').classList.add('show');
+    }
+
+    function shareText() {
+        return "I've been watching Vista Cinema - movies and series, free on your phone or TV.\n\n"
+             + "Invite 5 friends and we both get free time on it:\n"
+             + window.location.href;
+    }
+
+    var message = shareText();
+
+    // wa.me with no phone number opens the contact picker with the message pre-written, which is
+    // the only form that works when the sender's number is unknown.
+    document.getElementById('shareWa').addEventListener('click', function () {
+        window.open('https://wa.me/?text=' + encodeURIComponent(message), '_blank', 'noopener');
+    });
+
+    if (navigator.share) {
+        var more = document.getElementById('shareMore');
+        more.textContent = 'Share';
+        more.addEventListener('click', function (e) {
+            e.preventDefault();
+            // Cancelling the sheet rejects; swallowing that is the whole point of a share sheet.
+            navigator.share({ text: message, title: 'Vista Cinema' }).catch(function () {});
+        });
+    }
+
+    if (navigator.clipboard) {
+        document.getElementById('ctaNote').textContent =
+            'WhatsApp first, or tap Share for Facebook, TikTok and anything else on your phone.';
+    }
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+{
+  "versionCode": 15,
+  "versionName": "1.0.8",
+  "downloadUrl": "https://github.com/lx-obsidian-labs/lx-obsidian-portal/raw/master/VistaCinema-v1.0.8.apk",
+  "changelog": "Critical fix: v1.0.7 shipped a build with no content (empty catalog). 1.0.8 restores the full working app. Required for all 1.0.7 users.",
+  "mandatory": true
+}

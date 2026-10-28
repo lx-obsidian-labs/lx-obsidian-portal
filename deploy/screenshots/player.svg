@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
+  <rect width="1080" height="1920" fill="#0A0A0A"/>
+  <!-- Status bar -->
+  <rect width="1080" height="80" fill="#0A0A0A"/>
+  <text x="960" y="52" font-family="sans-serif" font-size="28" fill="#888">9:41</text>
+  <!-- Title -->
+  <text x="60" y="160" font-family="sans-serif" font-size="48" font-weight="bold" fill="white">My Watchlist</text>
+  <text x="900" y="160" font-family="sans-serif" font-size="22" fill="#E50914">47 items</text>
+  <!-- Filter tabs -->
+  <rect x="60" y="200" width="180" height="44" rx="22" fill="#E50914"/>
+  <text x="110" y="228" font-family="sans-serif" font-size="20" fill="white">All</text>
+  <rect x="260" y="200" width="180" height="44" rx="22" fill="#1A1A1A"/>
+  <text x="310" y="228" font-family="sans-serif" font-size="20" fill="#888">Movies</text>
+  <rect x="460" y="200" width="180" height="44" rx="22" fill="#1A1A1A"/>
+  <text x="500" y="228" font-family="sans-serif" font-size="20" fill="#888">TV Shows</text>
+  <!-- Watchlist items -->
+  <rect x="60" y="300" width="960" height="200" rx="12" fill="#111"/>
+  <rect x="80" y="320" width="120" height="160" rx="8" fill="#1A0A0A"/>
+  <text x="128" y="420" font-family="sans-serif" font-size="36" fill="#E50914">V</text>
+  <text x="220" y="370" font-family="sans-serif" font-size="26" font-weight="bold" fill="white">Viking Legacy</text>
+  <text x="220" y="405" font-family="sans-serif" font-size="20" fill="#666">Movie &middot; 2024</text>
+  <text x="220" y="440" font-family="sans-serif" font-size="18" fill="#E50914">★ 7.8</text>
+
+  <rect x="60" y="520" width="960" height="200" rx="12" fill="#111"/>
+  <rect x="80" y="540" width="120" height="160" rx="8" fill="#0A0A2A"/>
+  <text x="128" y="640" font-family="sans-serif" font-size="36" fill="#1E90FF">V</text>
+  <text x="220" y="590" font-family="sans-serif" font-size="26" font-weight="bold" fill="white">Vice City</text>
+  <text x="220" y="625" font-family="sans-serif" font-size="20" fill="#666">TV Show &middot; S1</text>
+  <text x="220" y="660" font-family="sans-serif" font-size="18" fill="#E50914">★ 8.2</text>
+
+  <rect x="60" y="740" width="960" height="200" rx="12" fill="#111"/>
+  <rect x="80" y="760" width="120" height="160" rx="8" fill="#1A2A0A"/>
+  <text x="128" y="860" font-family="sans-serif" font-size="36" fill="#4CAF50">V</text>
+  <text x="220" y="810" font-family="sans-serif" font-size="26" font-weight="bold" fill="white">Valley of Dreams</text>
+  <text x="220" y="845" font-family="sans-serif" font-size="20" fill="#666">Movie &middot; 2024</text>
+  <text x="220" y="880" font-family="sans-serif" font-size="18" fill="#E50914">★ 7.1</text>
+
+  <rect x="60" y="960" width="960" height="200" rx="12" fill="#111"/>
+  <rect x="80" y="980" width="120" height="160" rx="8" fill="#2A0A2A"/>
+  <text x="128" y="1080" font-family="sans-serif" font-size="36" fill="#9C27B0">V</text>
+  <text x="220" y="1030" font-family="sans-serif" font-size="26" font-weight="bold" fill="white">Vanguard</text>
+  <text x="220" y="1065" font-family="sans-serif" font-size="20" fill="#666">Movie &middot; 2024</text>
+  <text x="220" y="1100" font-family="sans-serif" font-size="18" fill="#E50914">★ 6.9</text>
+
+  <rect x="60" y="1180" width="960" height="200" rx="12" fill="#111"/>
+  <rect x="80" y="1200" width="120" height="160" rx="8" fill="#2A2A0A"/>
+  <text x="128" y="1300" font-family="sans-serif" font-size="36" fill="#FFC107">V</text>
+  <text x="220" y="1250" font-family="sans-serif" font-size="26" font-weight="bold" fill="white">Vortex</text>
+  <text x="220" y="1285" font-family="sans-serif" font-size="20" fill="#666">TV Show &middot; S2</text>
+  <text x="220" y="1320" font-family="sans-serif" font-size="18" fill="#E50914">★ 8.0</text>
+  <!-- Bottom nav -->
+  <rect y="1800" width="1080" height="120" fill="#0F0F0F"/>
+  <line x1="0" y1="1800" x2="1080" y2="1800" stroke="#1A1A1A" stroke-width="1"/>
+  <text x="108" y="1870" font-family="sans-serif" font-size="22" fill="#666">Home</text>
+  <text x="324" y="1870" font-family="sans-serif" font-size="22" fill="#666">Discover</text>
+  <text x="540" y="1870" font-family="sans-serif" font-size="22" fill="#666">Schedule</text>
+  <text x="756" y="1870" font-family="sans-serif" font-size="22" fill="#E50914">Saved</text>
+  <text x="972" y="1870" font-family="sans-serif" font-size="22" fill="#666">Profile</text>
+</svg>

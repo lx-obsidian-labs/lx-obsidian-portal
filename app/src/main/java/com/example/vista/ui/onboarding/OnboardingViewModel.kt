@@ -1,0 +1,65 @@
+package com.example.vista.ui.onboarding
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.vista.data.local.PreferencesManager
+import com.example.vista.data.remote.firebase.FirebaseManager
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+
+data class OnboardingUiState(
+    val isWelcomeBack: Boolean = false,
+    val suggestedName: String = "",
+    val daysAway: Int = 0
+)
+
+@HiltViewModel
+class OnboardingViewModel @Inject constructor(
+    private val preferencesManager: PreferencesManager,
+    private val firebaseManager: FirebaseManager
+) : ViewModel() {
+
+    private val _uiState = MutableStateFlow(OnboardingUiState())
+    val uiState: StateFlow<OnboardingUiState> = _uiState.asStateFlow()
+
+    init {
+        viewModelScope.launch {
+            val seenAt = preferencesManager.onboardingSeenAt.first()
+            val displayName = preferencesManager.displayName.first()
+
+            // Signed-in viewers get their profile alias as the suggested name.
+            val suggested = if (displayName.isNotBlank()) {
+                displayName
+            } else {
+                runCatching { firebaseManager.getViewerProfile()?.alias }.getOrNull() ?: ""
+            }
+
+            _uiState.update {
+                it.copy(
+                    isWelcomeBack = seenAt > 0L,
+                    suggestedName = suggested,
+                    daysAway = com.example.vista.util.DateUtils.daysSince(seenAt)
+                )
+            }
+        }
+    }
+
+    /** Saves the chosen name and stamps onboarding as complete. */
+    fun finish(name: String) {
+        viewModelScope.launch {
+            val finalName = name.trim()
+            if (finalName.isNotBlank()) {
+                preferencesManager.setDisplayName(finalName)
+            } else if (_uiState.value.suggestedName.isNotBlank()) {
+                preferencesManager.setDisplayName(_uiState.value.suggestedName)
+            }
+            preferencesManager.markOnboardingSeen()
+        }
+    }
+}

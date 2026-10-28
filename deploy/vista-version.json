@@ -1,0 +1,7 @@
+{
+  "versionCode": 16,
+  "versionName": "1.0.9",
+  "downloadUrl": "https://github.com/lx-obsidian-labs/lx-obsidian-portal/raw/master/VistaCinema-v1.0.9.apk",
+  "changelog": "v1.0.9 Release: All stream & video verification errors resolved with Smart Cache Recovery. Introduced Vista AI Assistant (talk or chat for personalized recommendations & spoiler guides), clean icon-only bottom navigation bar, and enhanced Settings UI.",
+  "mandatory": false
+}

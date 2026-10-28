@@ -1,0 +1,24 @@
+# Copy this file to gradle.properties and fill in your API keys.
+# gradle.properties is in .gitignore and will NOT be committed.
+#
+# Alternatively, add these properties to your USER-LEVEL gradle.properties:
+#   - Windows: %USERPROFILE%\.gradle\gradle.properties
+#   - macOS:   ~/.gradle/gradle.properties
+#   - Linux:   ~/.gradle/gradle.properties
+
+# TMDB (The Movie Database) API
+# Get keys at https://www.themoviedb.org/settings/api
+TMDB_API_KEY=your_tmdb_api_key_here
+TMDB_ACCESS_TOKEN=your_tmdb_access_token_here
+
+# Watchmode API
+# Get key at https://www.watchmode.com/api
+WATCHMODE_API_KEY=your_watchmode_api_key_here
+
+# Vista Cinema first-party analytics (Cloudflare Pages Function + D1)
+# Leave blank to disable. Must match the VISTA_ANALYTICS_KEY secret on Cloudflare Pages.
+VISTA_ANALYTICS_BASE_URL=https://www.lxobsidianportal.co.za
+VISTA_ANALYTICS_KEY=
+
+# HTTPS URL of deployed Vista assistant backend; never put an AI provider key here.
+VISTA_AI_BASE_URL=

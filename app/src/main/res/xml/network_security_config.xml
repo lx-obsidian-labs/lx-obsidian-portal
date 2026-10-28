@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Cleartext HTTP is refused for every host in the app.
+
+  Why: `usesCleartextTraffic="true"` in the manifest allowed plaintext to *any* host, and the
+  player WebView ran with `MIXED_CONTENT_ALWAYS_ALLOW`. Combined, anyone sharing the network could
+  rewrite the page the player loads and have their own JavaScript execute inside the app. In a
+  streaming app that is the highest-value hole available, because the app loads third-party
+  provider pages by design.
+
+  No exceptions are declared on purpose. Every URL the app builds itself is https: the embed
+  templates are hardcoded, and media URL resolution refuses anything that does not resolve to an
+  https URL. A provider that needs http is a provider that cannot be used safely here.
+
+  If a future feature genuinely needs cleartext for one host, add a scoped
+  `<domain-config cleartextTrafficPermitted="true">` for that host only - never a blanket
+  `base-config` override.
+-->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+</network-security-config>
