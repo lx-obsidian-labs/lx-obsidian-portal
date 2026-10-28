@@ -1,85 +1,39 @@
-const CACHE = 'lx-obsidian-v20';
-const ASSETS = [
-  '/',
-  '/css/lx.css',
-  '/assets/generated/lx-hero-cluster-v3.webp',
-  '/assets/generated/lx-step-discover-v3.webp',
-  '/assets/generated/lx-step-engineer-v3.webp',
-  '/assets/generated/lx-step-launch-v3.webp',
-  '/assets/generated/lx-system-dashboard-v3.webp',
-  '/assets/generated/lx-developer-dashboard-v3.webp',
-  '/assets/generated/lx-home-hero-v2.webp',
-  '/assets/generated/lx-hero-core.webp',
-  '/assets/generated/lx-ai-automation.webp',
-  '/assets/generated/lx-product-ui.webp',
-  '/assets/vista-marketing-1.png',
-  '/assets/synapse-screenshot-1.png',
-  '/js/ui/mobile-nav.js',
-  '/js/ui/dot-grid.js',
-  '/js/ui/scroll-reveal.js',
-  '/js/ui/glass-footer.js',
-  '/js/ui/ticker-blur.js',
-  '/js/ui/ticker-links.js',
-  '/js/ui/hero-scene.js',
-  '/js/components/chat-widget.js',
-  '/robots.txt',
-  '/sitemap.xml'
-];
-
-self.addEventListener('install', function (e) {
-  e.waitUntil(caches.open(CACHE).then(function (cache) { return cache.addAll(ASSETS); }));
+/* LX Obsidian Labs — safe network-first service worker.
+   Never return HTML in response to CSS, JS, image or font requests. */
+const CACHE = 'lx-obsidian-v21';
+self.addEventListener('install', event => {
+  event.waitUntil(caches.open(CACHE));
   self.skipWaiting();
 });
-
-self.addEventListener('activate', function (e) {
-  e.waitUntil(caches.keys().then(function (keys) {
-    return Promise.all(keys.filter(function (k) { return k !== CACHE; }).map(function (k) { return caches.delete(k); }));
-  }));
-  self.clients.claim();
+self.addEventListener('activate', event => {
+  event.waitUntil((async () => {
+    const names = await caches.keys();
+    await Promise.all(names.filter(name => name.startsWith('lx-obsidian-') && name !== CACHE).map(name => caches.delete(name)));
+    await self.clients.claim();
+  })());
 });
-
-self.addEventListener('fetch', function (e) {
-  if (e.request.method !== 'GET') return;
-  var requestUrl = new URL(e.request.url);
-  var isCritical = e.request.mode === 'navigate' || requestUrl.pathname.endsWith('.html') || requestUrl.pathname === '/css/lx.css' || requestUrl.pathname.includes('/assets/generated/lx-');
-
-  if (isCritical) {
-    e.respondWith(
-      fetch(e.request).then(function (response) {
-        if (response && response.status === 200 && response.type === 'basic') {
-          // Don't cache HTML pages — they carry CSP headers that must stay fresh
-          var isHtml = requestUrl.pathname.endsWith('.html') || requestUrl.pathname === '/';
-          if (!isHtml) {
-            var clone = response.clone();
-            caches.open(CACHE).then(function (cache) { cache.put(e.request, clone); });
-          }
-        }
-        return response;
-      }).catch(function () {
-        return caches.match(e.request).then(function (cached) {
-          return cached || caches.match('/index.html');
-        });
-      })
-    );
-    return;
-  }
-
-  e.respondWith(
-    caches.match(e.request).then(function (cached) {
-      if (cached) return cached;
-      return fetch(e.request).then(function (response) {
-        if (response && response.status === 200 && response.type === 'basic') {
-          // Don't cache HTML pages
-          var isHtml = requestUrl.pathname.endsWith('.html');
-          if (!isHtml) {
-            var clone = response.clone();
-            caches.open(CACHE).then(function (cache) { cache.put(e.request, clone); });
-          }
-        }
-        return response;
-      }).catch(function () {
-        return caches.match('/index.html');
-      });
-    })
-  );
+self.addEventListener('fetch', event => {
+  const request = event.request;
+  if (request.method !== 'GET') return;
+  const url = new URL(request.url);
+  if (url.origin !== self.location.origin) return;
+  if (url.pathname.startsWith('/api/')) return;
+  const isDocument = request.mode === 'navigate' || request.destination === 'document';
+  event.respondWith((async () => {
+    try {
+      const response = await fetch(request, {cache:'no-store'});
+      // HTML is never stored. Assets may be cached as an offline fallback.
+      if (!isDocument && response.ok && response.type === 'basic') {
+        const cache = await caches.open(CACHE);
+        event.waitUntil(cache.put(request, response.clone()));
+      }
+      return response;
+    } catch (error) {
+      if (!isDocument) {
+        const cached = await caches.match(request);
+        if (cached) return cached;
+      }
+      return Response.error();
+    }
+  })());
 });
