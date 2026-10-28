@@ -19,6 +19,7 @@ void (function () {
   if (!nav || !links || !burger) return;
 
   var TOGGLE_BP = 1100;
+  var lastMobileFocus = null;
   var FOCUSABLE = 'a[href],button:not([disabled]),[tabindex]:not([tabindex="-1"])';
   var items = Array.prototype.slice.call(nav.querySelectorAll('.velora-item'));
 
@@ -122,6 +123,7 @@ void (function () {
     backdrop.classList.toggle('is-open', open);
     document.body.classList.toggle('velora-open', open);
     if (!open) closeAllMenus();
+    else lastMobileFocus = document.activeElement;
   }
 
   burger.addEventListener('click', function () {
@@ -133,6 +135,18 @@ void (function () {
     if (!target || !target.closest) return;
     // Follow real links (closes the panel); dropdown triggers fall through.
     if (target.closest('a')) setMobileOpen(false);
+  });
+
+  // Trap keyboard focus inside the open mobile navigation, without trapping desktop users.
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Tab' || !isMobileOpen() || isDesktop()) return;
+    var nodes = Array.prototype.slice.call(nav.querySelectorAll(FOCUSABLE)).filter(function (el) {
+      return el.getClientRects().length && getComputedStyle(el).visibility !== 'hidden';
+    });
+    if (!nodes.length) return;
+    var first = nodes[0], last = nodes[nodes.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   });
 
   backdrop.addEventListener('click', function () {
@@ -178,6 +192,17 @@ void (function () {
         closeAllMenus();
       }
     }, 150);
+  });
+
+  // Mark the current destination without depending on server-side templates.
+  var currentPath = location.pathname.replace(/\\/$/, '') || '/';
+  nav.querySelectorAll('a[href]').forEach(function (a) {
+    try {
+      var url = new URL(a.getAttribute('href'), location.href);
+      if (url.origin !== location.origin) return;
+      var path = url.pathname.replace(/\\.html$/, '').replace(/\\/$/, '') || '/';
+      if (path === currentPath && !url.hash) a.setAttribute('aria-current', 'page');
+    } catch (_) {}
   });
 
   setMobileOpen(false);
