@@ -10,7 +10,7 @@
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <meta name="description" content="Tell us about your project. Select what you're building, share your details, and request a project consultation with LX Obsidian Labs.">
 <meta property="og:title" content="Start a Project — LX Obsidian Labs">
-<meta property="og:description" content="Tell us about your project. Select what you're building, share your details, and book a discovery call.">
+<meta property="og:description" content="Tell us about your project. Select what you're building, share your details, and request a project consultation.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="LX Obsidian Labs">
 <meta property="og:locale" content="en_ZA">
@@ -22,7 +22,7 @@
 <meta property="og:image:alt" content="LX Obsidian Labs — South African AI and software engineering company">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Start a Project — LX Obsidian Labs">
-<meta name="twitter:description" content="Tell us about your project. Select what you're building, share your details, and book a discovery call.">
+<meta name="twitter:description" content="Tell us about your project. Select what you're building, share your details, and request a project consultation.">
 <meta name="twitter:image" content="https://www.lxobsidianportal.co.za/assets/og-default.png">
 <link rel="canonical" href="https://www.lxobsidianportal.co.za/contact">
 <link rel="alternate" hreflang="en-ZA" href="https://www.lxobsidianportal.co.za/contact">
@@ -268,13 +268,13 @@
           <div class="cform__group" style="margin-bottom:12px"><label class="cform__label" for="contactSubjectInput">Subject *</label><input type="text" class="cform__input" id="contactSubjectInput" placeholder="e.g. Need a booking platform for my restaurant" required><span class="cform__error" id="contactSubjectError">Please enter a subject</span></div>
           <div class="cform__group"><label class="cform__label" for="contactMessage">Message *</label><textarea class="cform__textarea cform__input" id="contactMessage" rows="5" placeholder="Describe your project, requirements, and any specific goals..." required></textarea><span class="cform__error" id="contactMessageError">Please describe your project</span></div>
           <div style="margin-top:12px"><label style="display:flex;align-items:flex-start;gap:8px;cursor:pointer"><input type="checkbox" id="contactNda" name="nda" style="margin-top:3px"><span style="font-size:.82rem;color:var(--saas-muted)">I'd like to discuss an NDA before sharing project details</span></label></div>
-          <div style="display:flex;justify-content:space-between;margin-top:24px"><button type="button" onclick="showFormStep(2)" class="saas-btn">? Back</button><button type="submit" class="saas-btn saas-btn--primary">Send Project Brief ?</button></div>
+          <div style="display:flex;justify-content:space-between;margin-top:24px"><button type="button" onclick="showFormStep(2)" class="saas-btn">? Back</button><button type="submit" class="saas-btn saas-btn--primary">Continue to WhatsApp</button></div>
         </div>
 
         <div id="contactSuccess" role="status" aria-live="polite" style="display:none;text-align:center;padding:32px">
           <div style="width:48px;height:48px;border-radius:50%;background:var(--saas-green);color:#000;display:grid;place-items:center;margin:0 auto 16px;font-size:1.2rem;font-weight:700">?</div>
-          <h2 style="font-weight:600;font-size:1.1rem;margin:0 0 8px">Request Received!</h2>
-          <p style="color:var(--saas-muted);font-size:.88rem">Thank you! We'll review your project details and get back to you within 24 hours.</p>
+          <h2 style="font-weight:600;font-size:1.1rem;margin:0 0 8px">Complete your enquiry in WhatsApp</h2>
+          <p style="color:var(--saas-muted);font-size:.88rem">Your enquiry is not submitted until you send the prepared message in WhatsApp.</p>
         </div>
       </form>
 
@@ -385,16 +385,35 @@
   })();
   (function(){
     var form = document.getElementById('contactForm');
-    var success = document.getElementById('contactSuccess');
-    if(form) {
-      form.addEventListener('submit', function(e){
-        e.preventDefault();
-        document.querySelectorAll('.cform__step').forEach(function(el){ el.classList.remove('active'); });
-        success.style.display = 'block';
-        var msg = encodeURIComponent('Hi, I just submitted a project brief on your contact form. Looking forward to hearing from you!');
-        setTimeout(function(){ window.open('https://wa.me/27694829711?text=' + msg, '_blank'); }, 1000);
-      });
-    }
+    var status = document.getElementById('contactSuccess');
+    if (!form || !status) return;
+    form.addEventListener('submit', function(event){
+      event.preventDefault();
+      var value = function(id){ var el=document.getElementById(id); return el ? el.value.trim() : ''; };
+      var required = ['contactName','contactEmail','contactSubjectInput','contactMessage'];
+      var missing = required.map(function(id){return document.getElementById(id);}).filter(function(el){return !el || !el.value.trim() || !el.checkValidity();});
+      if(missing.length){ missing[0].focus(); missing[0].reportValidity(); return; }
+      var brief = [
+        'LX Obsidian Labs — Project enquiry',
+        'Name: '+value('contactName'),
+        'Business: '+value('contactBusinessName'),
+        'Email: '+value('contactEmail'),
+        'WhatsApp: '+value('contactWhatsApp'),
+        'Project type: '+value('contactProjectType'),
+        'Industry: '+value('contactIndustry'),
+        'Budget: '+value('contactBudget'),
+        'Timeline: '+value('contactLaunch'),
+        'Subject: '+value('contactSubjectInput'),
+        'Details: '+value('contactMessage'),
+        'NDA requested: '+(document.getElementById('contactNda').checked?'Yes':'No')
+      ].join('\n');
+      var url='https://wa.me/27694829711?text='+encodeURIComponent(brief);
+      var a=document.createElement('a');
+      a.href=url;a.target='_blank';a.rel='noopener noreferrer';a.textContent='Open WhatsApp to send your project brief';
+      status.replaceChildren(a);
+      status.style.display='block';
+      a.click();
+    });
   })();
 </script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));}</script>
