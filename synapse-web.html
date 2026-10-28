@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Synapse AI web workspace — chat, draft and export research notes in your browser.">
+<title>Synapse Web Workspace | LX Obsidian Labs</title>
+<style>
+:root{font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;color-scheme:dark;background:#0b0f15;color:#eaf2f7}*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:flex;flex-direction:column}a{color:#67e0d2;text-decoration:none}a:hover{text-decoration:underline}
+header{display:flex;align-items:center;gap:15px;padding:16px 24px;border-bottom:1px solid #26313c;background:#121922;flex-wrap:wrap}
+.brand{font-weight:800;letter-spacing:.05em;color:#fff;margin-right:auto}.tag{font-size:12px;color:#a2b2c1;background:#1e2a35;padding:5px 10px;border-radius:20px}
+main{width:min(100%,1100px);margin:auto;flex:1;display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:22px;padding:24px}
+.panel{background:#121922;border:1px solid #293441;border-radius:16px;overflow:hidden;display:flex;flex-direction:column;min-height:65vh}
+.panel h1,.panel h2{font-size:17px;margin:0;padding:20px;border-bottom:1px solid #293441}.messages{padding:20px;flex:1;overflow:auto;min-height:350px;max-height:65vh;display:flex;flex-direction:column;gap:14px}
+.message{max-width:90%;border:1px solid #293441;padding:12px 15px;border-radius:13px;white-space:pre-wrap;line-height:1.6;overflow-wrap:anywhere}.assistant{align-self:flex-start;background:#1d2731}.user{align-self:flex-end;background:#143d3c;border-color:#236b65}
+form{display:flex;gap:10px;padding:14px;border-top:1px solid #293441}textarea{flex:1;resize:vertical;min-height:55px;max-height:180px;background:#0e141b;color:inherit;border:1px solid #344455;border-radius:10px;padding:13px;font:inherit}
+button{background:#2dd4bf;color:#08211f;border:0;border-radius:9px;padding:11px 15px;font:inherit;font-weight:700;cursor:pointer}button:disabled{opacity:.5;cursor:wait}
+aside p,aside li{color:#a8b9c8;font-size:13px;line-height:1.6}aside .body{padding:18px}aside button{margin:5px 0;background:#263544;color:#fff;width:100%;text-align:left}
+small{color:#8c9cae;display:block;margin-top:10px}footer{padding:14px 24px;color:#91a2b2;border-top:1px solid #26313c;font-size:12px}
+@media(max-width:820px){main{grid-template-columns:1fr;padding:12px}.panel{min-height:60vh}aside.panel{min-height:0}}
+</style></head><body>
+<header><a class="brand" href="/synapse">◆ SYNAPSE AI</a><span class="tag">WEB WORKSPACE · BETA</span><a href="/synapse">Extension & releases</a><a href="https://github.com/lx-obsidian-labs/synapse-social">Source</a></header>
+<main><section class="panel" aria-label="AI chat"><h1>Synapse Web · AI assistant</h1><div class="messages" id="messages" aria-live="polite"><div class="message assistant">Welcome to Synapse Web. Ask a question, draft content, or prepare a research outline. You can download a transcript or save a PDF using your browser's Print function.</div></div>
+<form id="form"><textarea id="prompt" aria-label="Your message" required maxlength="6000" placeholder="What should we work on?" ></textarea><button id="submit" type="submit">Send</button></form></section>
+<aside class="panel"><h2>Workspace tools</h2><div class="body"><p>Use this web assistant for drafting, planning and document preparation. AI replies are generated using LX Obsidian Labs' existing chat endpoint.</p>
+<button id="transcript">Download conversation (.txt)</button><button id="print">Print / Save PDF</button><button id="reset">New conversation</button>
+<small><strong>Scope:</strong> This browser page does not control other tabs, access your computer, or perform Chrome extension automation. Install the Synapse extension for those capabilities.</small></div></aside></main>
+<footer>Synapse Web beta · LX Obsidian Labs · AI responses may contain errors. Verify important facts and sources.</footer>
+<script>
+(()=>{
+const messages=document.getElementById('messages'),form=document.getElementById('form'),prompt=document.getElementById('prompt'),submit=document.getElementById('submit');
+let history=[];const append=(role,text)=>{const el=document.createElement('div');el.className='message '+(role==='user'?'user':'assistant');el.textContent=text;messages.append(el);messages.scrollTop=messages.scrollHeight;};
+form.addEventListener('submit',async e=>{e.preventDefault();const value=prompt.value.trim();if(!value||submit.disabled)return;prompt.value='';append('user',value);const prior=history.slice(-12);history.push({role:'user',content:value});submit.disabled=true;submit.textContent='Working…';
+try{const response=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:value,mode:'chat',history:prior})});const data=await response.json();if(!response.ok||!data.reply)throw new Error(data.error||'AI request failed');append('assistant',data.reply);history.push({role:'assistant',content:data.reply});}catch(err){append('assistant','Could not complete the request: '+err.message);}finally{submit.disabled=false;submit.textContent='Send';prompt.focus()}});
+document.getElementById('reset').onclick=()=>{history=[];messages.replaceChildren();append('assistant','New conversation started.')};
+document.getElementById('print').onclick=()=>window.print();
+document.getElementById('transcript').onclick=()=>{const content=history.map(x=>x.role.toUpperCase()+':\n'+x.content).join('\n\n');const url=URL.createObjectURL(new Blob([content],{type:'text/plain;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='synapse-web-conversation.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),30000)};
+})();
+</script></body></html>

@@ -34,6 +34,11 @@ for (const name of INCLUDE) {
   }
 }
 
+// Publish the Synapse web workspace at /synapse/web without requiring SPA fallback.
+const synapseWebDir = path.join(DIST, 'synapse', 'web');
+fs.mkdirSync(synapseWebDir, { recursive: true });
+fs.copyFileSync(path.join(ROOT, 'synapse-web.html'), path.join(synapseWebDir, 'index.html'));
+
 // Publish native PDF Studio directory and avoid conflicting rewrite rules.
 const pdfDir = path.join(DIST, 'pdf');
 fs.mkdirSync(pdfDir, { recursive: true });
@@ -139,7 +144,7 @@ for (const file of ROOT_HTML) {
 fs.rmSync(path.join(DIST, 'pdf.html'), { force: true });
 
 // A missing entry point must fail the build rather than silently ship a 404.
-for (const required of ['index.html', '404.html', 'pdf/index.html', '_redirects', 'css/lx.css']) {
+for (const required of ['index.html', '404.html', 'pdf/index.html', 'synapse/web/index.html', '_redirects', 'css/lx.css']) {
   if (!fs.existsSync(path.join(DIST, required))) throw new Error('Missing required published asset: ' + required);
 }
 console.log('Verified ' + ROOT_HTML.length + ' HTML pages and required published assets');
