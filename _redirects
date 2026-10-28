@@ -3,7 +3,7 @@
 # NOTE: apex→www redirect handled by functions/_middleware.js
 # (Cloudflare Pages _redirects cannot do host-level redirects)
 
-# Explicit .html → clean URL redirects (301)
+# PDF Studio: serve root-level HTML for both path variants\n/pdf             /pdf.html           200\n/pdf/            /pdf.html           200\n\n# Explicit .html → clean URL redirects (301)
 /about.html      /about              301
 /services.html   /services           301
 /portfolio.html  /portfolio          301
