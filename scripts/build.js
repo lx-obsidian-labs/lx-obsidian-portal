@@ -42,9 +42,6 @@ const redirectFile = path.join(DIST, '_redirects');
 const rules = fs.readFileSync(redirectFile, 'utf8').split('\n');
 fs.writeFileSync(redirectFile, rules.filter(line => !line.trim().startsWith('/pdf ' ) && !line.trim().startsWith('/pdf/ ')).join('\n'));
 
-// Avoid Pages clean-URL collision: only /pdf/index.html is published.
-fs.rmSync(path.join(DIST, 'pdf.html'), { force: true });
-
 const cssDir = path.join(ROOT, 'css');
 const distCssDir = path.join(DIST, 'css');
 fs.mkdirSync(distCssDir, { recursive: true });
@@ -137,6 +134,9 @@ for (const file of ROOT_HTML) {
   html = html.replace(/(<span class=["']velora-cta__pill["']>)Get Started(<\/span>)/g, '$1Start a Project$2');
   fs.writeFileSync(output, html);
 }
+
+// Remove the legacy PDF file only after HTML normalization has completed.
+fs.rmSync(path.join(DIST, 'pdf.html'), { force: true });
 
 // A missing entry point must fail the build rather than silently ship a 404.
 for (const required of ['index.html', '404.html', 'pdf/index.html', '_redirects', 'css/lx.css']) {
