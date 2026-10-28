@@ -22,6 +22,15 @@ void (function () {
   var FOCUSABLE = 'a[href],button:not([disabled]),[tabindex]:not([tabindex="-1"])';
   var items = Array.prototype.slice.call(nav.querySelectorAll('.velora-item'));
 
+  // Keep the mobile panel state aligned with the viewport after rotation or resize.
+  var desktopQuery = window.matchMedia('(min-width: ' + (TOGGLE_BP + 1) + 'px)');
+  desktopQuery.addEventListener('change', function (event) {
+    if (event.matches) {
+      setMobileOpen(false);
+      closeAllMenus();
+    }
+  });
+
   function isDesktop() {
     return window.matchMedia('(min-width: ' + (TOGGLE_BP + 1) + 'px)').matches;
   }
