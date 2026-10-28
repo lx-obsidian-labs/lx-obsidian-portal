@@ -4,12 +4,10 @@ const path = require('path');
 const ROOT = path.resolve(__dirname, '..');
 const DIST = path.join(ROOT, 'dist');
 
+const ROOT_HTML = fs.readdirSync(ROOT).filter(name => name.endsWith('.html') && fs.statSync(path.join(ROOT, name)).isFile());
+
 const INCLUDE = [
-  'index.html', '404.html', 'about.html', 'ai.html', 'blog.html', 'contact.html',
-  'faq.html', 'marketplace.html', 'portfolio.html', 'services.html',
-  'synapse.html', 'vista.html', 'local-visibility.html', 'mobile-apps.html',
-  'build.html', 'pdf.html',
-  'integrations.html', 'help-us-grow.html',
+  ...ROOT_HTML,
   'js', 'assets', 'functions',
   '_headers', '_redirects',
   'sw.js', 'manifest.json', 'robots.txt', 'sitemap.xml', 'llms.txt',
@@ -79,6 +77,22 @@ if (fs.existsSync(homePath)) {
   fs.writeFileSync(homePath, home);
   console.log('Homepage wired to genuine LX raster artwork');
 }
+
+// Normalize root-relative assets and internal HTML links across every published page.
+// This prevents nested/trailing-slash routes from resolving css/, js/ or assets/ incorrectly.
+for (const file of ROOT_HTML) {
+  const output = path.join(DIST, file);
+  let html = fs.readFileSync(output, 'utf8');
+  html = html.replace(/(\\b(?:href|src|poster)=)(["'])(?!\\/|#|https?:|mailto:|tel:|data:|blob:|javascript:)([^"']+)\\2/gi,
+    (match, attr, quote, target) => attr + quote + '/' + target + quote);
+  fs.writeFileSync(output, html);
+}
+
+// A missing entry point must fail the build rather than silently ship a 404.
+for (const required of ['index.html', '404.html', 'pdf.html', '_redirects', 'css/lx.css']) {
+  if (!fs.existsSync(path.join(DIST, required))) throw new Error('Missing required published asset: ' + required);
+}
+console.log('Verified ' + ROOT_HTML.length + ' HTML pages and required published assets');
 
 const total = countFiles(DIST);
 console.log(`Build complete: dist/ (${total} files, ${getSize(DIST)} KB)`);
