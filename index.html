@@ -574,6 +574,25 @@ select.hack-input option{background:#111;color:#e4e4e7}
 .lx-system-panel__item{display:grid;grid-template-columns:30px 1fr auto;gap:12px;align-items:center;border-bottom:1px solid rgba(255,255,255,.1);padding:17px 0;color:#8d98a9;font-size:11px}.lx-system-panel__item strong{font-size:13px;font-weight:500;color:#f5f6fa}.lx-system-panel__item>span:last-child{font-size:9px;letter-spacing:.06em}
 @media(max-width:850px){.saas-hero__grid{grid-template-columns:1fr}.lx-system-panel{max-width:680px}.lx-system-panel__body{padding:28px 20px 20px}}
 @media(max-width:420px){.lx-system-panel__top,.lx-system-panel__bottom{padding:13px}.lx-system-panel__body{padding:22px 14px}.lx-system-panel__item{grid-template-columns:22px 1fr auto;gap:6px}.lx-system-panel__item>span:last-child{font-size:8px}}
+
+/* Minimal, product-led homepage; original Inter / Space Grotesk typography retained */
+body:has(.lx-home){background:#090b0f!important;background-image:none!important}
+body:has(.lx-home)::before,body:has(.lx-home)::after{display:none!important}
+.lx-home{position:relative;z-index:1;background:#090b0f;color:#f7f8fa}
+.lx-home-wrap{width:min(1160px,calc(100% - 48px));margin:0 auto}
+.lx-home-hero{padding:clamp(105px,13vw,172px) 0 100px;background:#090b0f;border-bottom:1px solid #252932}
+.lx-home-kicker{color:var(--saas-accent-light,#e36a8d);font:600 11px/1.5 'Inter',sans-serif;letter-spacing:.17em;margin:0 0 23px}
+.lx-home-hero h1{font:500 clamp(3.3rem,7.4vw,7.5rem)/.99 'Space Grotesk','Inter',sans-serif;letter-spacing:-.075em;margin:0;max-width:1000px}
+.lx-home-hero h1 span{color:#aab0ba}.lx-home-intro{font:400 clamp(1rem,1.55vw,1.2rem)/1.7 'Inter',sans-serif;color:#aeb5c1;max-width:610px;margin:30px 0 0}
+.lx-home-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:35px}
+.lx-home-button{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 22px;border:1px solid #454b55;border-radius:5px;color:#f8f8f9;text-decoration:none;font:600 13px 'Inter',sans-serif;transition:border-color .15s,background .15s}
+.lx-home-button:hover,.lx-home-button:focus-visible{border-color:#fff;background:#1a1d24}.lx-home-button--primary{background:var(--saas-accent-light,#d85b80);color:#090b0f;border-color:transparent}.lx-home-button--primary:hover,.lx-home-button--primary:focus-visible{background:#fff;color:#090b0f}
+.lx-home-products{padding:86px 0 100px}.lx-home-section-head{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:30px}.lx-home-section-head h2,.lx-home-close h2{font:500 clamp(1.8rem,3.2vw,3rem)/1.1 'Space Grotesk','Inter',sans-serif;letter-spacing:-.045em;margin:0}.lx-home-section-head>p,.lx-home-close p:not(.lx-home-kicker){font-size:14px;line-height:1.6;color:#aeb5c1}
+.lx-home-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.lx-home-card{display:flex;flex-direction:column;min-height:245px;padding:30px;border:1px solid #2b3039;border-radius:5px;background:#101319;color:inherit;text-decoration:none;transition:border-color .15s,background .15s}.lx-home-card:hover,.lx-home-card:focus-visible{border-color:var(--saas-accent-light,#d85b80);background:#151920}.lx-home-card__number{font:600 10px 'Inter',sans-serif;letter-spacing:.15em;color:#aeb5c1}.lx-home-card h3{font:500 clamp(1.5rem,2.4vw,2.15rem) 'Space Grotesk','Inter',sans-serif;letter-spacing:-.04em;margin:26px 0 8px}.lx-home-card p{font:400 14px/1.65 'Inter',sans-serif;color:#aeb5c1;margin:0;max-width:360px}.lx-home-card__link{font:600 13px 'Inter',sans-serif;color:var(--saas-accent-light,#e36a8d);margin-top:auto;padding-top:26px}.lx-home-card--service{background:#15151b}
+.lx-home-close{border-top:1px solid #252932;padding:70px 0 85px}.lx-home-close__inner{display:flex;justify-content:space-between;align-items:center;gap:30px}.lx-home-close p:not(.lx-home-kicker){margin:15px 0 0}
+body:has(.lx-home) .glass-footer{background:#0b0d12!important}
+@media(max-width:800px){.lx-home-hero{padding:90px 0 70px}.lx-home-cards{grid-template-columns:1fr}.lx-home-section-head,.lx-home-close__inner{align-items:start;flex-direction:column}.lx-home-card{min-height:210px}}
+@media(max-width:480px){.lx-home-wrap{width:min(100% - 32px,1160px)}.lx-home-hero h1{font-size:clamp(2.9rem,12vw,4.2rem)}.lx-home-products{padding:65px 0}.lx-home-card{padding:24px}.lx-home-actions .lx-home-button{width:100%}}
 </style>
   <title>LX Obsidian Labs — AI SaaS Platform</title>
   <script type="application/ld+json">
@@ -586,7 +605,7 @@ select.hack-input option{background:#111;color:#e4e4e7}
     "url": "https://www.lxobsidianportal.co.za",
     "logo": "https://www.lxobsidianportal.co.za/assets/og-default.png",
     "foundingDate": "2016",
-    "description": "South African AI and software engineering company building intelligent platforms, automation systems and digital infrastructure.",
+    "description": "Software products, digital tools and custom engineering. Explore Vista Cinema, Synapse and LX PDF Studio.",
     "areaServed": { "@type": "Country", "name": "South Africa" },
     "knowsAbout": ["Artificial intelligence", "Software engineering", "Web development", "Mobile applications", "Automation", "Cloud infrastructure"],
     "sameAs": ["https://github.com/lx-obsidian-labs"],
@@ -630,70 +649,7 @@ select.hack-input option{background:#111;color:#e4e4e7}
       <span class="velora-brand__label">Obsidian Labs</span>
     </a>
 
-    <nav class="velora-links" id="veloraLinks" aria-label="Primary">
-    <div class="velora-item">
-      <button type="button" class="velora-link has-chevron" aria-expanded="false" aria-controls="velora-menu-product" data-velora-menu>Products<svg class="velora-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
-      <div class="velora-menu" id="velora-menu-product" role="group" aria-label="Product">
-      <div class="velora-menu__col">
-        <p class="velora-menu__head">Platform</p>
-        <a class="velora-card" href="ai.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></svg></span><span class="velora-card__body"><span class="velora-card__title">AI Platform</span><span class="velora-card__desc">Autonomous AI systems</span></span></a>
-        <a class="velora-card" href="synapse.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3.5"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4M5 5l2.5 2.5M16.5 16.5L19 19M19 5l-2.5 2.5M7.5 16.5L5 19"/></svg></span><span class="velora-card__body"><span class="velora-card__title">Synapse AI</span><span class="velora-card__desc">Conversational intelligence</span></span></a>
-      </div>
-      <div class="velora-menu__col">
-        <p class="velora-menu__head">Apps</p>
-        <a class="velora-card" href="vista.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M7 2v20M17 2v20M2 12h20M2 7h5M2 17h5M17 17h5M17 7h5"/></svg></span><span class="velora-card__body"><span class="velora-card__title">Vista Watch</span><span class="velora-card__desc">Free movie &amp; TV app</span></span></a>
-        <a class="velora-card" href="/pdf"><span class="velora-card__icon" aria-hidden="true">▤</span><span class="velora-card__body"><span class="velora-card__title">LX PDF Studio</span><span class="velora-card__desc">Edit and organize PDFs</span></span></a>
-        <a class="velora-card" href="marketplace.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l1.5-5h15L21 9"/><path d="M4 9v10a1 1 0 001 1h14a1 1 0 001-1V9"/><path d="M9 20v-5h6v5"/></svg></span><span class="velora-card__body"><span class="velora-card__title">Marketplace</span><span class="velora-card__desc">Tools &amp; templates</span></span></a>
-      </div>
-      <div class="velora-menu__col">
-        <p class="velora-menu__head">Start</p>
-        <a class="velora-card" href="help-us-grow.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 00-7.8 7.8l1 1.1L12 21.2l7.8-7.7 1-1.1a5.5 5.5 0 000-7.8z"/></svg></span><span class="velora-card__body"><span class="velora-card__title">Help Us Grow</span><span class="velora-card__desc">Back the mission</span></span></a>
-        <a class="velora-card" href="contact.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 6l10 7 10-7"/></svg></span><span class="velora-card__body"><span class="velora-card__title">Contact</span><span class="velora-card__desc">Talk to our team</span></span></a>
-      </div>
-      </div>
-    </div>
-    <div class="velora-item">
-      <button type="button" class="velora-link has-chevron" aria-expanded="false" aria-controls="velora-menu-solutions" data-velora-menu>Services<svg class="velora-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
-      <div class="velora-menu" id="velora-menu-solutions" role="group" aria-label="Solutions">
-      <div class="velora-menu__col">
-        <p class="velora-menu__head">Services</p>
-        <a class="velora-card" href="services.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2"/><path d="M2 13h20"/></svg></span><span class="velora-card__body"><span class="velora-card__title">Solutions</span><span class="velora-card__desc">What we build</span></span></a>
-        <a class="velora-card" href="integrations.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 2v6M15 2v6"/><path d="M6 8h12v3a6 6 0 01-12 0V8z"/><path d="M12 17v5"/></svg></span><span class="velora-card__body"><span class="velora-card__title">Integrations</span><span class="velora-card__desc">Connect your stack</span></span></a>
-      </div>
-      <div class="velora-menu__col">
-        <p class="velora-menu__head">Growth</p>
-        <a class="velora-card" href="local-visibility.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-6.5 7-12a7 7 0 10-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg></span><span class="velora-card__body"><span class="velora-card__title">Local SEO</span><span class="velora-card__desc">Get found locally</span></span></a>
-        <a class="velora-card" href="mobile-apps.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/></svg></span><span class="velora-card__body"><span class="velora-card__title">Mobile Apps</span><span class="velora-card__desc">Ship to app stores</span></span></a>
-      </div>
-      <div class="velora-menu__col">
-        <p class="velora-menu__head">Proof</p>
-        <a class="velora-card" href="portfolio.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span><span class="velora-card__body"><span class="velora-card__title">Work</span><span class="velora-card__desc">Selected projects</span></span></a>
-        <a class="velora-card" href="faq.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 015.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></span><span class="velora-card__body"><span class="velora-card__title">FAQ</span><span class="velora-card__desc">Quick answers</span></span></a>
-      </div>
-      </div>
-    </div>
-    <div class="velora-item">
-      <button type="button" class="velora-link has-chevron" aria-expanded="false" aria-controls="velora-menu-company" data-velora-menu>Company<svg class="velora-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
-      <div class="velora-menu" id="velora-menu-company" role="group" aria-label="Company">
-      <div class="velora-menu__col">
-        <p class="velora-menu__head">Company</p>
-        <a class="velora-card" href="about.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9.5" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.9"/><path d="M16 3.1a4 4 0 010 7.8"/></svg></span><span class="velora-card__body"><span class="velora-card__title">About</span><span class="velora-card__desc">Our story and mission</span></span></a>
-        <a class="velora-card" href="blog.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/></svg></span><span class="velora-card__body"><span class="velora-card__title">Insights</span><span class="velora-card__desc">Ideas and updates</span></span></a>
-      </div>
-      <div class="velora-menu__col">
-        <p class="velora-menu__head">Support</p>
-        <a class="velora-card" href="help-us-grow.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 00-7.8 7.8l1 1.1L12 21.2l7.8-7.7 1-1.1a5.5 5.5 0 000-7.8z"/></svg></span><span class="velora-card__body"><span class="velora-card__title">Help Us Grow</span><span class="velora-card__desc">Back the mission</span></span></a>
-        <a class="velora-card" href="faq.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 015.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></span><span class="velora-card__body"><span class="velora-card__title">FAQ</span><span class="velora-card__desc">Quick answers</span></span></a>
-      </div>
-      <div class="velora-menu__col">
-        <p class="velora-menu__head">Connect</p>
-        <a class="velora-card" href="marketplace.html"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l1.5-5h15L21 9"/><path d="M4 9v10a1 1 0 001 1h14a1 1 0 001-1V9"/><path d="M9 20v-5h6v5"/></svg></span><span class="velora-card__body"><span class="velora-card__title">Marketplace</span><span class="velora-card__desc">Tools &amp; templates</span></span></a>
-        <a class="velora-card" href="https://github.com/lx-obsidian-labs" target="_blank" rel="noopener"><span class="velora-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><path d="M15 3h6v6"/><path d="M10 14L21 3"/></svg></span><span class="velora-card__body"><span class="velora-card__title">GitHub</span><span class="velora-card__desc">Open source</span></span></a>
-      </div>
-      </div>
-    </div>
-      <a class="velora-link" href="portfolio.html">Work</a>
-    </nav>
+    <nav class="velora-links lx-home-nav" id="veloraLinks" aria-label="Primary"><a class="velora-link" href="#products">Products</a><a class="velora-link" href="/vista">Vista Cinema</a><a class="velora-link" href="/synapse">Synapse</a><a class="velora-link" href="/pdf/">PDF Studio</a><a class="velora-link" href="services.html">Custom Software</a><a class="velora-link" href="about.html">Company</a></nav>
 
     <div class="velora-actions">
       <a class="velora-link" href="contact.html">Contact</a>
@@ -703,204 +659,25 @@ select.hack-input option{background:#111;color:#e4e4e7}
   </div>
 </header>
 
-  <main id="main">
+  <main id="main" class="lx-home">
+<section class="lx-home-hero" aria-labelledby="home-title"><div class="lx-home-wrap">
+<p class="lx-home-kicker">LX OBSIDIAN LABS / SOFTWARE &amp; PRODUCTS</p>
+<h1 id="home-title">Useful software.<br><span>Built with purpose.</span></h1>
+<p class="lx-home-intro">Explore our digital products or work with us to build custom software for your business. Simple tools. Thoughtful engineering.</p>
+<div class="lx-home-actions"><a class="lx-home-button lx-home-button--primary" href="#products">Explore our products</a><a class="lx-home-button" href="contact.html">Build with us</a></div>
+</div></section>
+<section class="lx-home-products" id="products" aria-labelledby="products-title"><div class="lx-home-wrap">
+<div class="lx-home-section-head"><div><p class="lx-home-kicker">EXPLORE</p><h2 id="products-title">What you can use today.</h2></div><p>Choose a product and get straight to it.</p></div>
+<div class="lx-home-cards">
+<a class="lx-home-card" href="/vista"><span class="lx-home-card__number">01 / ENTERTAINMENT</span><h3>Vista Cinema</h3><p>Discover movies and television in one place.</p><span class="lx-home-card__link">Explore Vista <span aria-hidden="true">↗</span></span></a>
+<a class="lx-home-card" href="/synapse"><span class="lx-home-card__number">02 / PRODUCTIVITY</span><h3>Synapse</h3><p>Explore our AI-assisted productivity tools.</p><span class="lx-home-card__link">Explore Synapse <span aria-hidden="true">↗</span></span></a>
+<a class="lx-home-card" href="/pdf/"><span class="lx-home-card__number">03 / DOCUMENTS</span><h3>LX PDF Studio</h3><p>Merge, split and organise PDFs in your browser.</p><span class="lx-home-card__link">Open PDF Studio <span aria-hidden="true">↗</span></span></a>
+<a class="lx-home-card lx-home-card--service" href="contact.html"><span class="lx-home-card__number">04 / BUSINESS</span><h3>Custom Software</h3><p>Need a website, app or business platform? Tell us what you're building.</p><span class="lx-home-card__link">Discuss your project <span aria-hidden="true">↗</span></span></a>
+</div></div></section>
+<section class="lx-home-close"><div class="lx-home-wrap lx-home-close__inner"><div><p class="lx-home-kicker">LET'S BUILD</p><h2>Have a project in mind?</h2><p>Tell us what you need. We'll help you define the next step.</p></div><a class="lx-home-button lx-home-button--primary" href="contact.html">Contact LX Obsidian Labs</a></div></section>
+</main>
 
-    <!-- ------- HERO ------- -->
-    <section class="saas-hero">
-      <div class="hero-canvas-wrap" id="heroCanvas"></div>
-      <div class="hero-overlay"></div>
-      <div class="saas-hero__grid">
-        <div>
-          <div class="saas-hero__pill"><i></i> SOFTWARE · PRODUCTS · ENGINEERING</div>
-          <h1 class="saas-hero__title">Software built<br>for <span>what’s next.</span></h1>
-          <p class="saas-hero__desc">We design and engineer digital products, business platforms and automation. Explore the tools we build, or work with us to bring your next product to life.</p>
-          <div class="saas-hero__actions">
-            <a class="saas-btn saas-btn--primary saas-btn--large" href="#products">Explore Products</a>
-            <a class="saas-btn saas-btn--large" href="contact.html">Work With Us</a>
-          </div>
-          <div class="saas-hero__metrics"><div class="saas-hero__metric"><strong>Products</strong><span>Useful digital tools</span></div><div class="saas-hero__metric"><strong>Engineering</strong><span>Custom software</span></div><div class="saas-hero__metric"><strong>Infrastructure</strong><span>Built to scale</span></div></div>
-        </div>
-        <div class="lx-system-panel" aria-label="LX Obsidian Labs engineering capabilities">
-  <div class="lx-system-panel__top"><span><span class="lx-status-dot"></span> LX / SYSTEMS</span><span>ENGINEERING OVERVIEW</span></div>
-  <div class="lx-system-panel__body">
-    <div class="lx-system-panel__eyebrow">WHAT WE BUILD / 001</div>
-    <div class="lx-system-panel__heading">Digital infrastructure.<br>Designed to work.</div>
-    <div class="lx-system-panel__rule"></div>
-    <div class="lx-system-panel__item"><span>01</span><strong>Software products</strong><span>WEB / DESKTOP</span></div>
-    <div class="lx-system-panel__item"><span>02</span><strong>Business platforms</strong><span>SAAS / SYSTEMS</span></div>
-    <div class="lx-system-panel__item"><span>03</span><strong>Workflow automation</strong><span>TOOLS / API</span></div>
-  </div>
-  <div class="lx-system-panel__bottom"><span>BUILT BY LX OBSIDIAN LABS</span><a href="#products">VIEW PRODUCTS ↗</a></div>
-</div>
-      </div>
-    </section>
-
-    <!-- ------- CAPABILITY STRIP ------- -->
-    <section class="saas-cap-strip"><div class="saas-wrap saas-cap-grid">
-      <a class="saas-cap" href="#platform"><div class="saas-cap__icon">AI</div><b>AI Agents</b><p>Create and deploy intelligent agents with custom prompts.</p></a>
-      <a class="saas-cap" href="ai.html"><div class="saas-cap__icon">API</div><b>Chat Completions</b><p>Unified API for NVIDIA and OpenRouter models.</p></a>
-      <a class="saas-cap" href="#platform"><div class="saas-cap__icon">&lt;/&gt;</div><b>Code Generation</b><p>AI-powered code assistance and generation.</p></a>
-      <a class="saas-cap" href="#platform"><div class="saas-cap__icon">DOC</div><b>Document Analysis</b><p>Extract insights from documents and data.</p></a>
-      <a class="saas-cap" href="#platform"><div class="saas-cap__icon">IMG</div><b>Image Understanding</b><p>Visual AI capabilities for content analysis.</p></a>
-    </div></section>
-
-<!-- ------- COMPANIES WE'VE HELPED ------- -->
-    <section class="saas-section" style="padding:64px 0;border-top:1px solid var(--saas-border)">
-      <div class="saas-wrap" style="text-align:center">
-        <div class="saas-eyebrow">TRUSTED BY</div>
-        <h2 class="saas-heading" style="font-size:clamp(1.6rem,2.5vw,2.2rem);margin-top:10px">Companies We've Helped</h2>
-        <p style="color:var(--saas-muted);max-width:520px;margin:10px auto 0;line-height:1.7;font-size:.9rem">We've partnered with businesses across education, training, retail and technology to build digital solutions that drive real results.</p>
-        <div class="clients-grid">
-          <div class="client-logo-card">
-            <div class="client-logo-card__icon"><img src="assets/images/clients/cia-logo.png" alt="Crane International Academy"></div>
-            <span>Crane International Academy</span>
-          </div>
-          <div class="client-logo-card">
-            <div class="client-logo-card__icon"><img src="assets/images/clients/excell-logo.png" alt="Excell Training Academy"></div>
-            <span>Excell Training Academy</span>
-          </div>
-          <div class="client-logo-card">
-            <div class="client-logo-card__icon">N4</div>
-            <span>Newton's 4th Training Academy</span>
-          </div>
-          <div class="client-logo-card">
-            <div class="client-logo-card__icon">PT</div>
-            <span>Progressive Training Projects</span>
-          </div>
-          <div class="client-logo-card">
-            <div class="client-logo-card__icon">MC</div>
-            <span>Mr Cover</span>
-          </div>
-          <div class="client-logo-card">
-            <div class="client-logo-card__icon">AI</div>
-            <span>African Intelligence</span>
-          </div>
-          <div class="client-logo-card">
-            <div class="client-logo-card__icon"><img src="assets/images/clients/beyond-lifestyle-logo.png" alt="Beyond Lifestyle"></div>
-            <span>Beyond Lifestyle</span>
-          </div>
-          <div class="client-logo-card">
-            <div class="client-logo-card__icon">ES</div>
-            <span>Electrosphere</span>
-          </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- VELORA:TICKER-LINKS -->
-<section class="velora-band velora-band--flush" aria-labelledby="veloraShowcase">
-  <div class="saas-wrap">
-    <span class="saas-eyebrow">Built by LX Obsidian</span>
-    <h2 class="velora-band__title" id="veloraShowcase" style="margin:10px 0 0;font:500 clamp(1.6rem,2.6vw,2.2rem)/1.1 'Space Grotesk',sans-serif;letter-spacing:-.04em;color:#fff">Products &amp; platforms</h2>
-  </div>
-  <div class="ticker-links" data-speed="42">
-    <div class="ticker-links__track">
-        <a class="ticker-link" href="ai.html" data-image="assets/hero-image.png"><span class="ticker-link__media"><img src="assets/hero-image.png" alt="" loading="lazy"></span><span class="ticker-link__title">AI Platform</span><span class="ticker-link__desc">Unified inference across NVIDIA and OpenRouter models.</span><span class="ticker-link__cta">Explore &rarr;</span></a>
-        <a class="ticker-link" href="synapse.html" data-image="assets/synapse-screenshot-2.png"><span class="ticker-link__media"><img src="assets/synapse-screenshot-2.png" alt="" loading="lazy"></span><span class="ticker-link__title">Synapse AI</span><span class="ticker-link__desc">Conversational intelligence for your workflows.</span><span class="ticker-link__cta">Explore &rarr;</span></a>
-        <a class="ticker-link" href="vista.html" data-image="assets/vista-marketing-1.png"><span class="ticker-link__media"><img src="assets/vista-marketing-1.png" alt="" loading="lazy"></span><span class="ticker-link__title">Vista Cinema</span><span class="ticker-link__desc">Free movie & TV companion for Android.</span><span class="ticker-link__cta">Explore &rarr;</span></a>
-        <a class="ticker-link" href="/pdf"><span class="ticker-link__media"><span style="font:800 1.35rem/1 'Space Grotesk',sans-serif;color:var(--saas-text)">PDF<span style="color:#e14b65">.</span></span></span><span class="ticker-link__title">LX PDF Studio</span><span class="ticker-link__desc">Merge, split, rotate and organize PDFs in your browser.</span><span class="ticker-link__cta">Open Studio &rarr;</span></a>
-                <a class="ticker-link" href="marketplace.html"><span class="ticker-link__media"><span style="font:700 .9rem/1 'Space Grotesk',sans-serif;color:var(--saas-dim);letter-spacing:.06em">MA</span></span><span class="ticker-link__title">Marketplace</span><span class="ticker-link__desc">Ready-made tools, templates and integrations.</span><span class="ticker-link__cta">Explore &rarr;</span></a>
-        <a class="ticker-link" href="mobile-apps.html"><span class="ticker-link__media"><span style="font:700 .9rem/1 'Space Grotesk',sans-serif;color:var(--saas-dim);letter-spacing:.06em">MO</span></span><span class="ticker-link__title">Mobile Apps</span><span class="ticker-link__desc">Ship to the App Store and Play Store.</span><span class="ticker-link__cta">Explore &rarr;</span></a>
-        <a class="ticker-link" href="local-visibility.html"><span class="ticker-link__media"><span style="font:700 .9rem/1 'Space Grotesk',sans-serif;color:var(--saas-dim);letter-spacing:.06em">LO</span></span><span class="ticker-link__title">Local SEO</span><span class="ticker-link__desc">Get found by nearby customers.</span><span class="ticker-link__cta">Explore &rarr;</span></a>
-        <a class="ticker-link" href="integrations.html"><span class="ticker-link__media"><span style="font:700 .9rem/1 'Space Grotesk',sans-serif;color:var(--saas-dim);letter-spacing:.06em">IN</span></span><span class="ticker-link__title">Integrations</span><span class="ticker-link__desc">Connect the stack you already run.</span><span class="ticker-link__cta">Explore &rarr;</span></a>
-    </div>
-  </div>
-</section>
-
-<!-- ------- FEATURED PRODUCTS ------- -->
-    <section class="saas-section" id="products"><div class="saas-wrap">
-      <header class="saas-section__head"><div>
-        <div class="saas-eyebrow">FEATURED SOLUTIONS</div>
-        <h2 class="saas-heading">Explore what we build.</h2>
-      </div><a href="marketplace.html" style="color:var(--saas-text);font-size:0.8rem;font-weight:500;text-decoration:none">Explore marketplace &rarr;</a></header>
-      <div class="saas-products-grid">
-        <a href="synapse.html" class="saas-product-card">
-          <div class="saas-product-card__visual">
-            <img src="assets/synapse-screenshot-1.png" alt="Synapse AI browser automation extension showing autonomous web task execution" loading="lazy">
-            <span class="saas-product-card__badge">Free</span>
-          </div>
-          <div class="saas-product-card__body">
-            <div class="saas-product-card__cat">AI — Browser Automation</div>
-            <h3>Synapse AI</h3>
-            <p>Browser automation powered by AI. Observe, plan, execute and verify — all inside the browser.</p>
-            <span class="saas-btn saas-btn--primary" style="width:100%">Open Synapse</span>
-          </div>
-        </a>
-        <a href="vista.html" class="saas-product-card">
-          <div class="saas-product-card__visual">
-            <img src="assets/vista-marketing-1.png" alt="Vista Cinema movie and TV browsing interface" loading="lazy">
-            <span class="saas-product-card__badge">Free</span>
-          </div>
-          <div class="saas-product-card__body">
-            <div class="saas-product-card__cat">Android — Entertainment</div>
-            <h3>Vista Cinema</h3>
-            <p>Free movie and TV streaming companion. Browse, search, save favourites and explore cast &amp; crew on Android and Smart TV.</p>
-            <span class="saas-btn saas-btn--primary" style="width:100%">Open Vista</span>
-          </div>
-        </a>
-        <a href="/pdf" class="saas-product-card" aria-label="Open LX PDF Studio">
-          <div class="saas-product-card__visual" style="background:linear-gradient(135deg,rgba(200,40,65,.16),rgba(255,255,255,.025));display:flex;align-items:center;justify-content:center">
-            <div style="display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px">
-              <span style="font-size:3.5rem;font-weight:800;letter-spacing:-.09em;color:var(--saas-text);font-family:'Space Grotesk',sans-serif" aria-hidden="true">PDF<span style="color:#e14b65">.</span></span>
-              <span style="font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--saas-muted)">LX Obsidian Labs</span>
-            </div>
-            <span class="saas-product-card__badge">Free tool</span>
-          </div>
-          <div class="saas-product-card__body">
-            <div class="saas-product-card__cat">Productivity — PDF tools</div>
-            <h3>LX PDF Studio</h3>
-            <p>Merge, split, rotate, watermark and organize PDF documents in your browser. Your files stay on your device.</p>
-            <span class="saas-btn saas-btn--primary" style="width:100%">Open PDF Studio</span>
-          </div>
-        </a>
-        <a href="contact.html" class="saas-product-card">
-          <div class="saas-product-card__visual" style="background:linear-gradient(135deg,rgba(255,255,255,0.07),rgba(255,255,255,0.02))">
-            <div style="font-size:3rem;opacity:0.3;font-family:'Space Grotesk',monospace">&lt;/&gt;</div>
-          </div>
-          <div class="saas-product-card__body">
-            <div class="saas-product-card__cat">Custom — Engineering</div>
-            <h3>Custom Software</h3>
-            <p>Need something specific? We design and build bespoke AI systems, platforms and business tools.</p>
-            <span class="saas-btn saas-btn--ghost" style="width:100%">Start a Project</span>
-          </div>
-        </a>
-      </div>
-    </div></section>
-
-    <!-- ------- HOW WE WORK ------- -->
-    <section class="saas-section" id="platform"><div class="saas-wrap">
-      <header class="saas-section__head"><div><div class="saas-eyebrow">HOW WE WORK</div><h2 class="saas-heading">From idea to launch.</h2></div><p>Custom software and digital products, designed around your goals.</p></header>
-      <div class="saas-steps">
-        <div class="saas-step"><div class="saas-step__num">01</div><h3>Tell us your idea</h3><p>Share the problem, your goals and what you need the software to do.</p></div>
-        <div class="saas-step"><div class="saas-step__num">02</div><h3>Design and build</h3><p>We plan the experience, develop the solution and test its core workflows.</p></div>
-        <div class="saas-step"><div class="saas-step__num">03</div><h3>Launch and improve</h3><p>We help deploy your product and refine it based on real feedback.</p></div>
-      </div>
-    </div></section>
-
-    <!-- VELORA:TICKER-BLUR -->
-<section class="velora-band" aria-labelledby="veloraStatement">
-  <div class="saas-wrap velora-band__inner">
-    <span class="saas-eyebrow">From idea to impact</span>
-    <h2 class="velora-band__title" id="veloraStatement" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap">We help teams automate, integrate, scale and ship</h2>
-    <div class="ticker-blur" data-texts="Automate|Integrate|Scale|Ship|Grow" aria-hidden="true"></div>
-    <p class="velora-band__sub">South African AI and software engineering &mdash; from first prototype to production systems.</p>
-  </div>
-</section>
-
-    <!-- ------- CTA ------- -->
-    <section class="saas-cta"><div class="saas-wrap saas-cta__inner"><div>
-      <h2>Ready to build something meaningful?</h2>
-      <p>Tell us what you need. We'll engineer the solution.</p>
-    </div><div class="saas-hero__actions">
-      <a class="saas-btn saas-btn--primary saas-btn--large" href="contact.html">Start a Project</a>
-      <a class="saas-btn saas-btn--large" href="portfolio.html">See the work</a>
-    </div></div></section>
-
-  </main>
-
-  <!-- ------- FOOTER ------- -->
-  <footer class="glass-footer">
+<footer class="glass-footer">
   <div class="glass-footer__inner">
     <div class="glass-footer__top">
       <div class="glass-footer__brand">
@@ -950,15 +727,15 @@ select.hack-input option{background:#111;color:#e4e4e7}
   </div>
 </footer>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="js/ui/hero-scene.js"></script>
-  <script src="js/components/chat-widget.js?v=2"></script>
+  
+  
+  
   <script src="js/ui/mobile-nav.js"></script>
   <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));}</script>
-  <script src="js/ui/dot-grid.js" defer></script>
-  <script src="js/ui/scroll-reveal.js" defer></script>
+  
+  
   <script src="js/ui/glass-footer.js" defer></script>
-  <script src="js/ui/ticker-blur.js" defer></script>
-  <script src="js/ui/ticker-links.js" defer></script>
+  
+  
 </body>
 </html>
