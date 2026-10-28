@@ -95,6 +95,22 @@ for (const file of ROOT_HTML) {
 }
 console.log('Synchronized Velora navigation on ' + synchronizedNavs + ' additional pages');
 
+const footerPattern = /<footer class="glass-footer"[^>]*>[\\s\\S]*?<\\/footer>/;
+const canonicalFooter = homeHtml.match(footerPattern)?.[0];
+let synchronizedFooters = 0;
+if (canonicalFooter) {
+  for (const file of ROOT_HTML) {
+    if (file === 'index.html') continue;
+    const output = path.join(DIST, file);
+    const html = fs.readFileSync(output, 'utf8');
+    if (!footerPattern.test(html)) continue;
+    fs.writeFileSync(output, html.replace(footerPattern, canonicalFooter));
+    synchronizedFooters++;
+  }
+}
+console.log('Synchronized glass footer on ' + synchronizedFooters + ' additional pages');
+
+
 // Normalize root-relative assets and internal HTML links across every published page.
 // This prevents nested/trailing-slash routes from resolving css/, js/ or assets/ incorrectly.
 for (const file of ROOT_HTML) {
