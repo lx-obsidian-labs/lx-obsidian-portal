@@ -95,7 +95,7 @@ for (const file of ROOT_HTML) {
 }
 console.log('Synchronized Velora navigation on ' + synchronizedNavs + ' additional pages');
 
-const footerPattern = /<footer class="glass-footer"[^>]*>[\\s\\S]*?<\\/footer>/;
+const footerPattern = /<footer class="glass-footer"[^>]*>[\s\S]*?<\/footer>/;
 const canonicalFooter = homeHtml.match(footerPattern)?.[0];
 let synchronizedFooters = 0;
 if (canonicalFooter) {
