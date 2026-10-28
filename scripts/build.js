@@ -78,6 +78,23 @@ if (fs.existsSync(homePath)) {
   console.log('Homepage wired to genuine LX raster artwork');
 }
 
+// Use the homepage navigation as the canonical shared header for all pages
+// that already implement the Velora navigation component.
+const homeHtml = fs.readFileSync(path.join(DIST, 'index.html'), 'utf8');
+const navPattern = /<header class="velora-nav"[^>]*>[\s\S]*?<\/header>/;
+const canonicalNav = homeHtml.match(navPattern)?.[0];
+if (!canonicalNav) throw new Error('Canonical homepage navigation missing');
+let synchronizedNavs = 0;
+for (const file of ROOT_HTML) {
+  if (file === 'index.html') continue;
+  const output = path.join(DIST, file);
+  const html = fs.readFileSync(output, 'utf8');
+  if (!navPattern.test(html)) continue;
+  fs.writeFileSync(output, html.replace(navPattern, canonicalNav));
+  synchronizedNavs++;
+}
+console.log('Synchronized Velora navigation on ' + synchronizedNavs + ' additional pages');
+
 // Normalize root-relative assets and internal HTML links across every published page.
 // This prevents nested/trailing-slash routes from resolving css/, js/ or assets/ incorrectly.
 for (const file of ROOT_HTML) {
