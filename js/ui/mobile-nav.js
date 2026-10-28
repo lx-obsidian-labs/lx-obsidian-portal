@@ -19,7 +19,6 @@ void (function () {
   if (!nav || !links || !burger) return;
 
   var TOGGLE_BP = 1100;
-  var lastMobileFocus = null;
   var FOCUSABLE = 'a[href],button:not([disabled]),[tabindex]:not([tabindex="-1"])';
   var items = Array.prototype.slice.call(nav.querySelectorAll('.velora-item'));
 
@@ -123,7 +122,6 @@ void (function () {
     backdrop.classList.toggle('is-open', open);
     document.body.classList.toggle('velora-open', open);
     if (!open) closeAllMenus();
-    else lastMobileFocus = document.activeElement;
   }
 
   burger.addEventListener('click', function () {
@@ -145,7 +143,8 @@ void (function () {
     });
     if (!nodes.length) return;
     var first = nodes[0], last = nodes[nodes.length - 1];
-    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    if (!nav.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+    else if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
     else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   });
 
