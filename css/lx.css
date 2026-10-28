@@ -539,3 +539,21 @@ select.hack-input option{background:#111;color:#e4e4e7}
 @media (prefers-reduced-motion:reduce){
  .velora-nav,.velora-menu,.velora-link,.velora-link::before,.velora-chev,.velora-card{transition:none!important}
 }
+
+
+/* Professional rebuild: homepage presentation and responsive improvements */
+.lx-home-hero{position:relative;overflow:hidden;background:radial-gradient(ellipse at 78% 32%,#1c1c2a 0%,#0b0c12 52%,#08090d 100%);padding:clamp(110px,12vw,176px) 0 clamp(70px,8vw,116px)}
+.lx-home-hero__layout{align-items:center;gap:clamp(30px,5vw,80px)}
+.lx-home-hero__content{position:relative;z-index:1}
+.lx-home-hero h1{max-width:900px;letter-spacing:-.065em;text-wrap:balance}
+.lx-home-hero__visual{position:relative;overflow:hidden;border-radius:20px;border:1px solid rgba(202,206,242,.17);box-shadow:0 30px 100px rgba(0,0,0,.45);background:#10111b}
+.lx-home-hero__visual img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover}
+.lx-home-hero__visual-caption{position:absolute;bottom:0;left:0;right:0;display:flex;justify-content:space-between;gap:12px;padding:16px 20px;background:linear-gradient(transparent,rgba(5,6,12,.88));color:#e6e7f4;font-size:10px;letter-spacing:.12em}
+.lx-home-button{border-radius:9px;min-height:50px;padding:0 24px}
+.lx-home-card{border-radius:16px;min-height:255px;transition:transform .2s ease,border-color .2s ease,background .2s ease}
+.lx-home-card:hover{transform:translateY(-4px)}
+.lx-home-card:focus-visible,.lx-home-button:focus-visible,.velora-link:focus-visible{outline:3px solid #b7b6f8;outline-offset:4px}
+.lx-home-section-head h2{text-wrap:balance}
+@media(max-width:800px){.lx-home-hero{padding:100px 0 64px}.lx-home-hero__layout{gap:28px}.lx-home-hero h1{font-size:clamp(2.9rem,10vw,5rem)}.lx-home-hero__visual{border-radius:14px}.lx-home-hero__visual-caption{font-size:9px;padding:12px}.lx-home-cards{grid-template-columns:1fr}.lx-home-card{min-height:210px;padding:25px}}
+@media(max-width:480px){.lx-home-actions{display:grid;grid-template-columns:1fr}.lx-home-button{width:100%}.lx-home-hero__visual-caption span:last-child{display:none}}
+@media(prefers-reduced-motion:reduce){.lx-home-card{transition:none}.lx-home-card:hover{transform:none}}
