@@ -34,6 +34,14 @@ for (const name of INCLUDE) {
   }
 }
 
+// Publish native PDF Studio directory and avoid conflicting rewrite rules.
+const pdfDir = path.join(DIST, 'pdf');
+fs.mkdirSync(pdfDir, { recursive: true });
+fs.copyFileSync(path.join(ROOT, 'pdf.html'), path.join(pdfDir, 'index.html'));
+const redirectFile = path.join(DIST, '_redirects');
+const rules = fs.readFileSync(redirectFile, 'utf8').split('\n');
+fs.writeFileSync(redirectFile, rules.filter(line => !line.trim().startsWith('/pdf ' ) && !line.trim().startsWith('/pdf/ ')).join('\n'));
+
 const cssDir = path.join(ROOT, 'css');
 const distCssDir = path.join(DIST, 'css');
 fs.mkdirSync(distCssDir, { recursive: true });
