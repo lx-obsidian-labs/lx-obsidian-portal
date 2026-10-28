@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LX PDF Studio | LX Obsidian Labs</title><meta name="description" content="Free browser-based PDF tools from LX Obsidian Labs. Merge, split, rotate and organize PDF documents."><style>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LX PDF Studio | LX Obsidian Labs</title><meta name="theme-color" content="#090c14"><meta name="description" content="Free browser-based PDF tools from LX Obsidian Labs. Merge, split, rotate and organize PDF documents."><style>
 :root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#edf1f9;background:#090c14;color-scheme:dark}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;background:radial-gradient(ellipse 85% 45% at 50% -10%,#321727 0%,transparent 70%),#090c14}button,input{font:inherit}button{color:inherit}a{color:inherit;text-decoration:none}
 header{position:relative;z-index:2;background:#0d111bd9;border-bottom:1px solid #ffffff14;padding:21px max(24px,calc((100vw - 1160px)/2));display:flex;justify-content:space-between;align-items:center;gap:20px;backdrop-filter:blur(18px)}
@@ -7,4 +7,139 @@ main{max-width:1160px;margin:auto;padding:78px 24px 90px}.intro{text-align:cente
 .tools{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px;margin:56px 0 34px}.tool{background:linear-gradient(145deg,#171c2a,#111622);border:1px solid #ffffff15;border-radius:17px;text-align:left;padding:25px;cursor:pointer;transition:transform .2s,border-color .2s,box-shadow .2s;min-height:163px;box-shadow:0 10px 30px #0002}.tool:hover,.tool.active{border-color:#ff5269a0;box-shadow:0 10px 35px #ff526912;transform:translateY(-3px)}.tool:focus-visible,button:focus-visible,a:focus-visible,.drop:focus-within{outline:2px solid #ff667d;outline-offset:3px}.tool strong{display:block;font-size:17px;margin:15px 0 7px;color:#f5f7fc}.tool small{color:#98a5b9;font-size:13px}.emoji{font-size:27px;display:block}
 .workspace{background:linear-gradient(155deg,#161b29,#101520);border:1px solid #ffffff1c;border-radius:22px;padding:34px;max-width:850px;margin:0 auto;box-shadow:0 30px 80px #0005}.workspace h2{margin:0 0 8px;font-size:25px;letter-spacing:-.03em}.workspace p{color:#9ba8bb;line-height:1.6}.drop{display:block;border:2px dashed #586073;background:#ffffff06;border-radius:16px;padding:39px 18px;text-align:center;cursor:pointer;margin:25px 0;transition:background .2s,border-color .2s}.drop:hover,.drop.drag{border-color:#ff5269;background:#ff526910}.drop strong{color:#eaf0fb}input[type=file]{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden}.hint{font-size:13px}.files{display:grid;gap:9px;margin:15px 0}.file{border:1px solid #ffffff18;background:#ffffff07;padding:12px 15px;border-radius:11px;display:flex;align-items:center;justify-content:space-between;gap:12px}.file span{overflow-wrap:anywhere;min-width:0;color:#d9e0ec;font-size:14px}.file button{border:1px solid #ffffff20;background:#ffffff10;padding:7px 12px;border-radius:8px;cursor:pointer;font-size:12px}.file button:hover{background:#ff526923}.actions{display:flex;align-items:center;gap:17px;flex-wrap:wrap}button.primary{background:#e83f59;border:1px solid #ff6c82;color:white;border-radius:11px;padding:14px 26px;font-weight:750;cursor:pointer;box-shadow:0 9px 22px #e83f592a}button.primary:hover:not(:disabled){background:#f34d65}button.primary:disabled{opacity:.45;cursor:not-allowed}.status{color:#aab5c5;font-size:13px}footer{text-align:center;color:#79879c;font-size:13px;padding:32px 20px;border-top:1px solid #ffffff12}footer a:hover{color:#fff}
 @media(max-width:800px){.tools{grid-template-columns:repeat(2,minmax(0,1fr))}main{padding:56px 20px 65px}}@media(max-width:520px){header{padding:17px 18px}.brand{font-size:17px}nav{gap:12px;font-size:11px}main{padding:45px 15px 60px}.intro p{font-size:14px}.tools{gap:10px;margin:35px 0 22px}.tool{padding:17px;min-height:137px}.tool strong{font-size:14px}.tool small{font-size:12px}.workspace{padding:21px;border-radius:17px}.drop{padding:29px 12px}.workspace h2{font-size:22px}}
-</style></head><body><header><a class="brand" href="/">LX <span>PDF</span> Studio</a><nav><a href="#tools">All tools</a><a href="#workspace">Workspace</a><a href="/portfolio.html">Portfolio</a></nav></header><main><section class="intro"><div class="pill">BY LX OBSIDIAN LABS</div><h1>Every PDF tool.<br>One workspace.</h1><p>Merge, split, rotate and organize your PDF files in seconds.<br>Files are processed in your browser, not uploaded to our servers.</p></section><section id="tools" class="tools"><button class="tool active" data-tool="merge"><span class="emoji">📚</span><strong>Merge PDF</strong><small>Combine documents</small></button><button class="tool" data-tool="split"><span class="emoji">✂️</span><strong>Split PDF</strong><small>Save each page separately</small></button><button class="tool" data-tool="rotate"><span class="emoji">🔄</span><strong>Rotate PDF</strong><small>Turn all pages 90°</small></button><button class="tool" data-tool="images"><span class="emoji">🖼️</span><strong>Images to PDF</strong><small>Convert JPG and PNG</small></button></section><section class="workspace" id="workspace"><h2 id="heading">Merge PDF</h2><p id="description">Select two or more PDF files to combine.</p><label class="drop" id="drop" for="upload"><div style="font-size:32px">📄</div><strong>Drop files here or click to browse</strong><p class="hint">Your files stay on this device</p></label><input id="upload" type="file" accept=".pdf,application/pdf" multiple><div id="files" class="files"></div><div class="actions"><button id="run" class="primary" disabled>Merge PDF</button><span id="status" class="status" role="status" aria-live="polite">Select files to begin.</span></div></section></main><footer>© LX Obsidian Labs · Built for your documents · <a href="/">Back to LX Obsidian Labs</a></footer><script type="module">import {PDFDocument,degrees} from 'https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/+esm';const modes={merge:['Merge PDF','Select two or more PDF files to combine.'],split:['Split PDF','Export every page as a separate PDF.'],rotate:['Rotate PDF','Rotate all pages 90° clockwise.'],images:['Images to PDF','Combine JPG and PNG images into a PDF.']};let mode='merge',files=[];const $=id=>document.getElementById(id);const upload=$('upload'),drop=$('drop'),list=$('files'),run=$('run'),status=$('status');function render(){list.innerHTML='';files.forEach((f,i)=>{const d=document.createElement('div');d.className='file';const name=document.createElement('span');name.textContent=(i+1)+'. '+f.name;const remove=document.createElement('button');remove.textContent='Remove';remove.onclick=()=>{files.splice(i,1);render()};d.append(name,remove);list.append(d)});run.disabled=!files.length||(mode==='merge'&&files.length<2);run.textContent=modes[mode][0];status.textContent=files.length?files.length+' file(s) selected.':'Select files to begin.'}document.querySelectorAll('[data-tool]').forEach(b=>b.onclick=()=>{mode=b.dataset.tool;files=[];upload.value='';upload.accept=mode==='images'?'image/png,image/jpeg':'.pdf,application/pdf';$('heading').textContent=modes[mode][0];$('description').textContent=modes[mode][1];document.querySelectorAll('[data-tool]').forEach(t=>t.classList.toggle('active',t===b));render();$('workspace').scrollIntoView({behavior:'smooth',block:'center'})});function add(fs){const allowed=[...fs].filter(f=>mode==='images'?['image/png','image/jpeg'].includes(f.type):f.type==='application/pdf'||f.name.toLowerCase().endsWith('.pdf'));files.push(...allowed);render()}upload.onchange=e=>add(e.target.files);drop.ondragover=e=>{e.preventDefault();drop.classList.add('drag')};drop.ondragleave=()=>drop.classList.remove('drag');drop.ondrop=e=>{e.preventDefault();drop.classList.remove('drag');add(e.dataTransfer.files)};function save(bytes,name,type='application/pdf'){const url=URL.createObjectURL(new Blob([bytes],{type}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),30000)}run.onclick=async()=>{run.disabled=true;status.textContent='Processing…';try{if(mode==='merge'){const out=await PDFDocument.create();for(const f of files){const src=await PDFDocument.load(await f.arrayBuffer());const pages=await out.copyPages(src,src.getPageIndices());pages.forEach(p=>out.addPage(p))}save(await out.save(),'lx-merged.pdf')}else if(mode==='split'){const src=await PDFDocument.load(await files[0].arrayBuffer());for(let i=0;i<src.getPageCount();i++){const out=await PDFDocument.create();const [page]=await out.copyPages(src,[i]);out.addPage(page);save(await out.save(),'lx-page-'+(i+1)+'.pdf')}}else if(mode==='rotate'){const doc=await PDFDocument.load(await files[0].arrayBuffer());doc.getPages().forEach(p=>p.setRotation(degrees((p.getRotation().angle+90)%360)));save(await doc.save(),'lx-rotated.pdf')}else{const out=await PDFDocument.create();for(const f of files){const bytes=await f.arrayBuffer();const img=f.type==='image/png'?await out.embedPng(bytes):await out.embedJpg(bytes);const page=out.addPage([img.width,img.height]);page.drawImage(img,{x:0,y:0,width:img.width,height:img.height})}save(await out.save(),'lx-images.pdf')}status.textContent='Done! Check your downloads.'}catch(e){status.textContent='Could not process file: '+e.message}finally{run.disabled=false}};</script></body></html>
+
+/* Product polish */
+.intro{max-width:780px;margin:0 auto}.intro h1{background:linear-gradient(110deg,#fff 20%,#ff879a 90%);background-clip:text;-webkit-background-clip:text;color:transparent}.intro p{max-width:590px;margin:auto}.trust{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:25px}.trust span{font-size:12px;color:#b7c3d5;border:1px solid #ffffff1b;border-radius:50px;padding:9px 13px;background:#ffffff06}.tool{position:relative}.tool.active:after{content:"SELECTED";position:absolute;top:16px;right:14px;color:#ff879a;font-size:9px;font-weight:800;letter-spacing:.1em}.workspace{max-width:920px}.workspace-top{display:flex;align-items:center;justify-content:space-between;gap:16px}.workspace-top .label{font-size:11px;color:#ff879a;font-weight:800;letter-spacing:.12em}.settings{display:flex;gap:14px;flex-wrap:wrap;margin:15px 0 20px}.settings label{display:grid;gap:8px;color:#b9c4d5;font-size:13px}.settings input,.settings select{background:#0c111d;border:1px solid #ffffff26;color:#edf1f9;border-radius:9px;padding:11px 13px;min-width:150px;max-width:100%}.settings input:focus,.settings select:focus{outline:2px solid #ff5269}.file-controls{display:flex;gap:6px;flex-shrink:0}.file-controls button{min-width:34px}.file .file-meta{display:grid;gap:3px;min-width:0}.file .file-meta small{color:#8290a5}.privacy-note{font-size:12px;color:#8d9aaf;margin:20px 0 0}.status[data-kind="error"]{color:#ff8a98}.status[data-kind="success"]{color:#71e2b5}.tool:disabled{opacity:.5}.section-note{text-align:center;color:#7d8ba2;font-size:13px;margin:25px auto 0}@media(max-width:520px){.file{align-items:flex-start}.file-controls{flex-wrap:wrap;justify-content:flex-end}.workspace-top{align-items:flex-start}.settings{display:grid}.settings input,.settings select{width:100%}}
+</style></head><body><header><a class="brand" href="/">LX <span>PDF</span> Studio</a><nav><a href="#tools">All tools</a><a href="#workspace">Workspace</a><a href="/portfolio.html">Portfolio</a></nav></header><main><section class="intro"><div class="pill">BY LX OBSIDIAN LABS</div><h1>Every PDF tool.<br>One workspace.</h1><p>Merge, split, rotate and organize your PDF files in seconds.<br>Files are processed in your browser, not uploaded to our servers.</p><div class="trust"><span>🔒 On-device processing</span><span>⚡ No account required</span><span>✦ Free document tools</span></div></section><section id="tools" class="tools"><button class="tool active" data-tool="merge"><span class="emoji">📚</span><strong>Merge PDF</strong><small>Combine documents</small></button><button class="tool" data-tool="split"><span class="emoji">✂️</span><strong>Split PDF</strong><small>Save each page separately</small></button><button class="tool" data-tool="rotate"><span class="emoji">🔄</span><strong>Rotate PDF</strong><small>Turn all pages 90°</small></button><button class="tool" data-tool="images"><span class="emoji">🖼️</span><strong>Images to PDF</strong><small>Convert JPG and PNG</small></button><button class="tool" data-tool="extract"><span class="emoji">📑</span><strong>Extract pages</strong><small>Save selected pages</small></button><button class="tool" data-tool="remove"><span class="emoji">🗑️</span><strong>Remove pages</strong><small>Delete unwanted pages</small></button><button class="tool" data-tool="watermark"><span class="emoji">✒️</span><strong>Watermark PDF</strong><small>Add a text watermark</small></button><button class="tool" data-tool="reorder"><span class="emoji">↕️</span><strong>Reorder pages</strong><small>Set a new page order</small></button></section><section class="workspace" id="workspace"><div class="workspace-top"><div><div class="label">YOUR DOCUMENT WORKSPACE</div><h2 id="heading">Merge PDF</h2></div><span style="font-size:28px" aria-hidden="true">✦</span></div><p id="description">Select two or more PDF files to combine.</p><label class="drop" id="drop" for="upload"><div style="font-size:32px">📄</div><strong>Drop files here or click to browse</strong><p class="hint">Your files stay on this device</p></label><input id="upload" type="file" accept=".pdf,application/pdf" multiple><div id="files" class="files"></div><div id="settings" class="settings"></div><div class="actions"><button id="run" class="primary" disabled>Merge PDF</button><span id="status" class="status" role="status" aria-live="polite">Select files to begin.</span><p class="privacy-note">🔒 Processing happens on your device. Files are not uploaded to LX Obsidian Labs.</p></div><p class="section-note">Built with care by LX Obsidian Labs · Works on desktop and mobile</p></section></main><footer>© LX Obsidian Labs · Built for your documents · <a href="/">Back to LX Obsidian Labs</a></footer><script type="module">
+const $=id=>document.getElementById(id);
+const modes={
+ merge:['Merge PDF','Combine two or more PDF documents into one file.','📚'],
+ split:['Split PDF','Extract pages as separate PDF downloads.','✂️'],
+ rotate:['Rotate PDF','Rotate every page by your chosen angle.','🔄'],
+ images:['Images to PDF','Turn your JPG or PNG images into a single PDF.','🖼️'],
+ extract:['Extract pages','Choose which pages to keep in a new PDF.','📑'],
+ remove:['Remove pages','Remove unwanted pages from your document.','🗑️'],
+ watermark:['Watermark PDF','Add a subtle text watermark to every page.','✒️'],
+ reorder:['Reorder pages','Enter your preferred page sequence.','↕️']
+};
+let mode='merge',files=[],busy=false,lib=null;
+const upload=$('upload'),drop=$('drop'),list=$('files'),run=$('run'),status=$('status'),settings=$('settings');
+function setStatus(msg,kind=''){status.textContent=msg;status.dataset.kind=kind}
+async function getLib(){
+ if(lib)return lib;
+ setStatus('Loading document engine…');
+ lib=await import('https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/+esm');
+ return lib;
+}
+function options(){
+ settings.replaceChildren();
+ const fields={
+ rotate:[['angle','Rotation','select',[['90','90° clockwise'],['180','180°'],['270','90° counterclockwise']]]],
+ extract:[['pages','Pages to extract','text','1-3, 5']],
+ remove:[['pages','Pages to remove','text','2, 4-6']],
+ reorder:[['pages','New page order','text','3, 1, 2']],
+ watermark:[['mark','Watermark text','text','CONFIDENTIAL']]
+ };
+ (fields[mode]||[]).forEach(([id,label,type,options])=>{
+  const wrap=document.createElement('label');wrap.textContent=label;
+  const el=document.createElement(type==='select'?'select':'input');el.id='setting-'+id;
+  if(type==='select'){options.forEach(([v,t])=>{const opt=document.createElement('option');opt.value=v;opt.textContent=t;el.append(opt)})}
+  else{el.type='text';el.placeholder=options;el.value=mode==='watermark'?'CONFIDENTIAL':''}
+  wrap.append(el);settings.append(wrap);
+ });
+}
+function render(){
+ list.replaceChildren();
+ files.forEach((f,i)=>{
+  const row=document.createElement('div');row.className='file';
+  const meta=document.createElement('div');meta.className='file-meta';
+  const name=document.createElement('span');name.textContent=(i+1)+'. '+f.name;
+  const size=document.createElement('small');size.textContent=(f.size/1024/1024).toFixed(2)+' MB';
+  meta.append(name,size);
+  const controls=document.createElement('div');controls.className='file-controls';
+  function action(text,title,fn){const b=document.createElement('button');b.type='button';b.textContent=text;b.title=title;b.setAttribute('aria-label',title+' '+f.name);b.disabled=busy;b.onclick=fn;controls.append(b)}
+  if(i>0)action('↑','Move up',()=>{[files[i-1],files[i]]=[files[i],files[i-1]];render()});
+  if(i<files.length-1)action('↓','Move down',()=>{[files[i+1],files[i]]=[files[i],files[i+1]];render()});
+  action('✕','Remove',()=>{files.splice(i,1);render()});
+  row.append(meta,controls);list.append(row);
+ });
+ run.disabled=busy||!files.length||(mode==='merge'&&files.length<2);
+ run.textContent=busy?'Processing…':modes[mode][0]+' →';
+ if(!busy)setStatus(files.length?files.length+' file'+(files.length===1?'':'s')+' ready.':'Choose files to begin.');
+}
+function switchMode(next){
+ mode=next;files=[];upload.value='';
+ upload.accept=mode==='images'?'image/png,image/jpeg':'.pdf,application/pdf';
+ upload.multiple=mode==='merge'||mode==='images';
+ $('heading').textContent=modes[mode][0];$('description').textContent=modes[mode][1];
+ document.querySelectorAll('[data-tool]').forEach(b=>{b.classList.toggle('active',b.dataset.tool===mode);b.setAttribute('aria-pressed',String(b.dataset.tool===mode))});
+ options();render();$('workspace').scrollIntoView({behavior:'smooth',block:'start'});
+}
+document.querySelectorAll('[data-tool]').forEach(b=>b.addEventListener('click',()=>switchMode(b.dataset.tool)));
+function add(incoming){
+ const valid=[...incoming].filter(f=>mode==='images'?['image/png','image/jpeg'].includes(f.type):f.type==='application/pdf'||f.name.toLowerCase().endsWith('.pdf'));
+ if(valid.length!==incoming.length)setStatus('Some unsupported files were skipped.','error');
+ if(!valid.length)return;
+ files=(mode==='merge'||mode==='images')?[...files,...valid]:[valid[0]];
+ upload.value='';render();
+}
+upload.addEventListener('change',e=>add(e.target.files));
+drop.addEventListener('dragover',e=>{e.preventDefault();drop.classList.add('drag')});
+drop.addEventListener('dragleave',()=>drop.classList.remove('drag'));
+drop.addEventListener('drop',e=>{e.preventDefault();drop.classList.remove('drag');add(e.dataTransfer.files)});
+function parsePages(raw,total,allowOrder=false){
+ if(!raw.trim())throw Error('Enter page numbers, such as 1-3, 5.');
+ const values=[];
+ for(const part of raw.split(',')){
+  const m=part.trim().match(/^(\d+)(?:\s*-\s*(\d+))?$/);
+  if(!m)throw Error('Invalid page range: '+part.trim());
+  const start=Number(m[1]),end=m[2]?Number(m[2]):start;
+  if(start<1||end>total||end<start)throw Error('Page numbers must be between 1 and '+total+'.');
+  for(let n=start;n<=end;n++)values.push(n-1);
+ }
+ if(!allowOrder&&new Set(values).size!==values.length)throw Error('Duplicate page numbers are not allowed.');
+ return values;
+}
+function save(bytes,name){const url=URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}));const a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000)}
+run.addEventListener('click',async()=>{
+ if(busy)return;busy=true;render();setStatus('Processing locally…');
+ try{
+  const {PDFDocument,degrees,rgb,StandardFonts}=await getLib();
+  if(mode==='merge'){
+   const out=await PDFDocument.create();
+   for(const f of files){const src=await PDFDocument.load(await f.arrayBuffer());const copied=await out.copyPages(src,src.getPageIndices());copied.forEach(p=>out.addPage(p))}
+   save(await out.save(),'lx-merged.pdf');
+  }else if(mode==='images'){
+   const out=await PDFDocument.create();
+   for(const f of files){const bytes=await f.arrayBuffer();const image=f.type==='image/png'?await out.embedPng(bytes):await out.embedJpg(bytes);const page=out.addPage([image.width,image.height]);page.drawImage(image,{x:0,y:0,width:image.width,height:image.height})}
+   save(await out.save(),'lx-images.pdf');
+  }else{
+   const doc=await PDFDocument.load(await files[0].arrayBuffer());
+   const total=doc.getPageCount();if(!total)throw Error('The PDF has no pages.');
+   if(mode==='rotate'){
+    const angle=Number($('setting-angle').value);
+    doc.getPages().forEach(p=>p.setRotation(degrees((p.getRotation().angle+angle)%360)));
+    save(await doc.save(),'lx-rotated.pdf');
+   }else if(mode==='watermark'){
+    const text=$('setting-mark').value.trim();if(!text)throw Error('Enter watermark text.');
+    const font=await doc.embedFont(StandardFonts.Helvetica);
+    for(const p of doc.getPages()){const {width,height}=p.getSize();const fontSize=Math.max(14,Math.min(42,width/Math.max(12,text.length*.65)));const tw=font.widthOfTextAtSize(text,fontSize);p.drawText(text,{x:Math.max(8,(width-tw)/2),y:height/2,size:fontSize,font,color:rgb(.82,.25,.33),opacity:.25,rotate:degrees(0)})}
+    save(await doc.save(),'lx-watermarked.pdf');
+   }else if(mode==='split'){
+    if(total>15&&!confirm('This document has '+total+' pages and will trigger '+total+' downloads. Continue?'))return;
+    for(let i=0;i<total;i++){const out=await PDFDocument.create();const [page]=await out.copyPages(doc,[i]);out.addPage(page);save(await out.save(),'lx-page-'+String(i+1).padStart(3,'0')+'.pdf')}
+   }else{
+    const indexes=parsePages($('setting-pages').value,total,mode==='reorder');
+    const selected=mode==='remove'?doc.getPageIndices().filter(i=>!indexes.includes(i)):indexes;
+    if(!selected.length)throw Error('At least one page must remain.');
+    if(mode==='reorder'&&(selected.length!==total||new Set(selected).size!==total))throw Error('Reordering requires every page exactly once.');
+    const out=await PDFDocument.create();const copied=await out.copyPages(doc,selected);copied.forEach(p=>out.addPage(p));
+    save(await out.save(),mode==='extract'?'lx-extracted.pdf':mode==='remove'?'lx-pages-removed.pdf':'lx-reordered.pdf');
+   }
+  }
+  setStatus('Done! Your download is ready.','success');
+ }catch(e){setStatus('Unable to process: '+(e?.message||String(e)),'error')}
+ finally{busy=false;run.disabled=!files.length||(mode==='merge'&&files.length<2);run.textContent=modes[mode][0]+' →'}
+});
+options();render();
+</script></body></html>
