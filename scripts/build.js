@@ -85,6 +85,12 @@ for (const file of ROOT_HTML) {
   let html = fs.readFileSync(output, 'utf8');
   html = html.replace(/(\\b(?:href|src|poster)=)(["'])(?!\\/|#|https?:|mailto:|tel:|data:|blob:|javascript:)([^"']+)\\2/gi,
     (match, attr, quote, target) => attr + quote + '/' + target + quote);
+  // Navigation consistency: don't advertise a login when the link only opens Contact.
+  html = html.replace(/(<a\\b[^>]*class=["'][^"']*velora-link[^"']*["'][^>]*href=["']\\/?contact(?:\\.html)?["'][^>]*>)\\s*Login\\s*(<\\/a>)/gi,
+    '$1Contact$2');
+  // Give the primary action a truthful, client-focused label without changing its styling.
+  html = html.replace(/(<span class=["']velora-cta__pill["']>)Get Started(<\\/span>)/g,
+    '$1Start a Project$2');
   fs.writeFileSync(output, html);
 }
 
