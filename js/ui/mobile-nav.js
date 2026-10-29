@@ -19,6 +19,18 @@ void (function () {
   if (!nav || !links || !burger) return;
 
   var TOGGLE_BP = 1100;
+  // The menu is portaled to document.body on mobile so the transformed
+  // floating header cannot clip it or create a false fixed-position viewport.
+  var menuHome = links.parentNode;
+  var menuNext = links.nextSibling;
+  function placeMenuInBody() {
+    if (links.parentNode !== document.body) document.body.appendChild(links);
+    links.classList.add('velora-mobile-portal');
+  }
+  function restoreMenu() {
+    links.classList.remove('velora-mobile-portal');
+    if (links.parentNode !== menuHome) menuHome.insertBefore(links, menuNext);
+  }
   var FOCUSABLE = 'a[href],button:not([disabled]),[tabindex]:not([tabindex="-1"])';
   var items = Array.prototype.slice.call(nav.querySelectorAll('.velora-item'));
 
@@ -27,6 +39,7 @@ void (function () {
   desktopQuery.addEventListener('change', function (event) {
     if (event.matches) {
       setMobileOpen(false);
+      restoreMenu();
       closeAllMenus();
     }
   });
@@ -125,12 +138,13 @@ void (function () {
 
   function setMobileOpen(shouldOpen) {
     var open = !!shouldOpen;
+    if (open && !isDesktop()) placeMenuInBody();
     links.classList.toggle('is-open', open);
     burger.setAttribute('aria-expanded', open ? 'true' : 'false');
     burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
     backdrop.classList.toggle('is-open', open);
     document.body.classList.toggle('velora-open', open);
-    if (!open) closeAllMenus();
+    if (!open) { closeAllMenus(); restoreMenu(); }
   }
 
   burger.addEventListener('click', function () {
@@ -147,12 +161,12 @@ void (function () {
   // Trap keyboard focus inside the open mobile navigation, without trapping desktop users.
   document.addEventListener('keydown', function (e) {
     if (e.key !== 'Tab' || !isMobileOpen() || isDesktop()) return;
-    var nodes = Array.prototype.slice.call(nav.querySelectorAll(FOCUSABLE)).filter(function (el) {
+    var nodes = Array.prototype.slice.call(nav.querySelectorAll(FOCUSABLE)).concat(Array.prototype.slice.call(links.querySelectorAll(FOCUSABLE))).filter(function (el) {
       return el.getClientRects().length && getComputedStyle(el).visibility !== 'hidden';
     });
     if (!nodes.length) return;
     var first = nodes[0], last = nodes[nodes.length - 1];
-    if (!nav.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+    if (!nav.contains(document.activeElement) && !links.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
     else if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
     else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   });
@@ -165,7 +179,7 @@ void (function () {
 
   document.addEventListener('click', function (e) {
     var onCard = e.target && e.target.closest ? e.target.closest('.velora-card') : null;
-    if (nav.contains(e.target) && !onCard) return;
+    if ((nav.contains(e.target) || links.contains(e.target)) && !onCard) return;
     closeAllMenus();
   });
 
