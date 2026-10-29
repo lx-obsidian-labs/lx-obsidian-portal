@@ -1,7 +1,9 @@
 {
-  "versionCode": 15,
-  "versionName": "1.0.8",
-  "downloadUrl": "https://github.com/lx-obsidian-labs/lx-obsidian-portal/raw/master/VistaCinema-v1.0.8.apk",
-  "changelog": "\u2022 FIXED: Critical \u2014 the empty app is fixed. v1.0.7 shipped a build that lost its content; 1.0.8 restores the full working app with all titles, artwork and playback.\n\u2022 This update is required for everyone on 1.0.7. It installs straight over your existing app \u2014 no data is lost.\n\u2022 Everything from 1.0.7 is included: Your Stats, milestone sharing, the new bottom navigation and Library resume.",
+  "versionCode": 16,
+  "versionName": "1.0.9",
+  "downloadUrl": "https://github.com/lx-obsidian-labs/lx-obsidian-portal/raw/master/VistaCinema-v1.0.9.apk",
+  "changelog": "NEW: Real NVIDIA-powered AI conversations with follow-up memory, profile-aware recommendations and knowledge of Vista's features.\nNEW: Floating chat, app-page actions and Search shortcuts.\nNEW: Hands-free voice turns and improved Android voice selection.\nIMPROVED: AI/voice settings, profile experience and playback recovery.\nREQUIRED: Open Vista and tap Install Update Now, then approve Android's installer. A dedicated kids version is in planning.",
+  "sha256": "041131BC0350B193B2FF8327CC95289FED0AAF73D10BB79A22C09BE09221DB05",
+  "sizeBytes": 22369333,
   "mandatory": true
 }
