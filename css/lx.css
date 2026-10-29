@@ -579,3 +579,23 @@ select.hack-input option{background:#111;color:#e4e4e7}
  .velora-links{top:calc(100% + 10px);max-height:calc(100dvh - 94px - env(safe-area-inset-top));padding:12px}
 }
 @media (max-width:350px){.velora-cta{display:none}.velora-brand__label{max-width:160px}}
+
+
+/* Mobile menu portal: outside the floating, transformed header. */
+@media(max-width:1100px){
+ body>.velora-links.velora-mobile-portal{position:fixed!important;top:calc(max(10px,env(safe-area-inset-top)) + 78px)!important;left:12px!important;right:12px!important;bottom:auto!important;width:calc(100vw - 24px)!important;max-width:680px!important;margin:0 auto!important;height:auto!important;max-height:calc(100dvh - 105px - env(safe-area-inset-top))!important;padding:14px!important;display:none!important;flex-direction:column!important;align-items:stretch!important;gap:4px!important;overflow-x:hidden!important;overflow-y:auto!important;z-index:1001!important;border-radius:20px!important;border:1px solid #3b3d44!important;background:#17191e!important;color:#f6f7f9!important;box-shadow:0 20px 65px #000b!important;transform:none!important;opacity:1!important;visibility:visible!important;pointer-events:auto!important}
+ body>.velora-links.velora-mobile-portal.is-open{display:flex!important}
+ body>.velora-links.velora-mobile-portal>.velora-link,body>.velora-links.velora-mobile-portal>.velora-item>.velora-link{display:flex!important;width:100%!important;min-height:49px!important;padding:12px 15px!important;justify-content:flex-start!important;color:#f4f4f5!important;background:transparent!important;border-radius:11px!important;font-size:16px!important;white-space:normal!important;text-align:left!important}
+ body>.velora-links.velora-mobile-portal>.velora-item>.velora-link.has-chevron{justify-content:space-between!important}
+ body>.velora-links.velora-mobile-portal>.velora-link:hover,body>.velora-links.velora-mobile-portal>.velora-item>.velora-link:hover{background:#30343b!important}
+ body>.velora-links.velora-mobile-portal .velora-item{width:100%!important;display:flex!important;flex-direction:column!important;align-items:stretch!important}
+ body>.velora-links.velora-mobile-portal .velora-menu{position:static!important;display:none!important;transform:none!important;width:100%!important;max-width:100%!important;background:#22252b!important;box-shadow:none!important;border:0!important;padding:8px!important;opacity:1!important;visibility:visible!important;pointer-events:auto!important}
+ body>.velora-links.velora-mobile-portal .velora-item.is-open>.velora-menu{display:grid!important}
+ body>.velora-links.velora-mobile-portal .velora-card__title{color:#fff!important}
+ body>.velora-links.velora-mobile-portal .velora-card__desc,body>.velora-links.velora-mobile-portal .velora-menu__head{color:#bac0ca!important}
+ body>.velora-links.velora-mobile-portal .velora-card{color:#eee!important;background:#2a2d33!important}
+ body>.velora-links.velora-mobile-portal a[aria-current="page"]{color:#ff879d!important}
+ body>.velora-backdrop{z-index:995!important}
+ body>.velora-nav{z-index:999!important}
+}
+@media(max-width:480px){body>.velora-links.velora-mobile-portal{top:calc(max(10px,env(safe-area-inset-top)) + 71px)!important;max-height:calc(100dvh - 90px - env(safe-area-inset-top))!important}}
