@@ -539,3 +539,43 @@ select.hack-input option{background:#111;color:#e4e4e7}
 @media (prefers-reduced-motion:reduce){
  .velora-nav,.velora-menu,.velora-link,.velora-link::before,.velora-chev,.velora-card{transition:none!important}
 }
+
+
+/* Shared mobile navigation fix — 2026-10-29.
+   The old position:fixed menu lived inside a transformed floating navbar,
+   so on mobile its viewport-sized inset was calculated against the navbar
+   rather than the screen, clipping and overlapping the links. */
+@media (max-width:1100px){
+ .velora-nav{width:calc(100% - 24px);max-width:680px;top:max(10px,env(safe-area-inset-top));height:64px;overflow:visible}
+ .velora-nav__inner{position:relative;gap:10px;padding:7px 9px 7px 13px}
+ .velora-brand{flex:1 1 auto;min-width:0}
+ .velora-brand__label{max-width:150px}
+ .velora-actions{flex:0 0 auto;gap:7px}
+ .velora-actions>.velora-link{display:none}
+ .velora-burger{display:grid;place-content:center;width:44px;height:44px;position:relative;z-index:4}
+ .velora-links{position:absolute;inset:auto;top:calc(100% + 13px);left:0;right:0;width:100%;height:auto;max-height:calc(100dvh - 110px - env(safe-area-inset-top));z-index:2;display:none;flex-direction:column;align-items:stretch;gap:5px;padding:15px;overflow-y:auto;overscroll-behavior:contain;border:1px solid rgba(255,255,255,.17);border-radius:20px;background:rgba(23,25,31,.98);box-shadow:0 22px 70px rgba(0,0,0,.55);-webkit-backdrop-filter:blur(22px);backdrop-filter:blur(22px)}
+ .velora-links.is-open{display:flex}
+ .velora-links>.velora-link,.velora-links>.velora-item>.velora-link{width:100%;min-height:48px;padding:13px 16px;border-radius:11px;color:#f5f6f8;font-size:15px;font-weight:550;line-height:1.35;white-space:normal;justify-content:flex-start;text-align:left}
+ .velora-links>.velora-item>.velora-link.has-chevron{justify-content:space-between}
+ .velora-links .velora-link:hover,.velora-links .velora-link:focus-visible,.velora-links .velora-item.is-open>.velora-link{background:rgba(255,255,255,.10);color:#fff}
+ .velora-links .velora-item{min-width:0}
+ .velora-links .velora-menu{position:static;left:auto;top:auto;display:none;width:100%;max-width:100%;max-height:none;overflow:visible;opacity:1;visibility:visible;pointer-events:auto;transform:none;border:0;border-radius:12px;padding:8px;background:rgba(255,255,255,.055);box-shadow:none}
+ .velora-links .velora-item.is-open>.velora-menu{display:grid;transform:none}
+ .velora-links .velora-menu__head{color:#aeb8c5}
+ .velora-links .velora-card{background:rgba(255,255,255,.05);color:#dce0e6;min-height:48px}
+ .velora-links .velora-card__title{color:#fff}
+ .velora-links .velora-card__desc{color:#aab1bd}
+ .velora-links .velora-card:hover{background:rgba(255,255,255,.12)}
+ .velora-links a[aria-current="page"]{color:#ff8196}
+ .velora-backdrop{z-index:85}
+ .velora-nav{z-index:90}
+ body.velora-open{overflow:hidden;touch-action:auto}
+}
+@media (max-width:480px){
+ .velora-nav{height:60px;width:calc(100% - 20px)}
+ .velora-nav__inner{padding:6px 7px 6px 10px}
+ .velora-brand__label{max-width:118px;font-size:12px}
+ .velora-cta__pill{height:40px;padding:0 12px;font-size:12px}
+ .velora-links{top:calc(100% + 10px);max-height:calc(100dvh - 94px - env(safe-area-inset-top));padding:12px}
+}
+@media (max-width:350px){.velora-cta{display:none}.velora-brand__label{max-width:160px}}
