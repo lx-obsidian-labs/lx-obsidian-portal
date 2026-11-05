@@ -29,7 +29,8 @@ if (!synapseWeb.includes("fetch('/api/chat'")) throw Error('Synapse web chat end
 const synapseLanding = fs.readFileSync(path.join(dist, 'synapse.html'), 'utf8');
 if (!synapseLanding.includes('/synapse/web') || !synapseLanding.includes('release-notes')) throw Error('Synapse release notes or web link missing');
 
-\n// Marketing and enquiry regression checks.
+
+// Marketing and enquiry regression checks.
 const contact = fs.readFileSync(path.join(dist,'contact.html'),'utf8');
 const contactApi = fs.readFileSync(path.join(dist,'functions/api/contact.js'),'utf8');
 const portfolio = fs.readFileSync(path.join(dist,'portfolio.html'),'utf8');
@@ -44,3 +45,28 @@ if(integrations.includes('href="#" class="integration-card"')) throw Error('Dead
 if(ai.includes('index.html#pricing')) throw Error('Invalid AI pricing link present');
 if(!home.includes('We engineer custom software')) throw Error('Homepage positioning reverted');
 console.log('Marketing verification passed: secure lead capture, honest CTAs, case study snapshots, updated positioning');
+
+// Site-wide design, navigation and link-integrity guardrails.
+const htmlFiles = fs.readdirSync(dist).filter(name => name.endsWith('.html'));
+const canonicalNavigation = home.match(/<header class="velora-nav"[^>]*>[\s\S]*?<\/header>/)?.[0];
+if(!canonicalNavigation || !canonicalNavigation.includes('href="/#solutions"') || !canonicalNavigation.includes('href="/#products"')) {
+ throw Error('Shared navigation must use cross-page-safe homepage anchor URLs');
+}
+if (home.includes('https://www.linkedin.com') || home.includes('https://x.com') || home.includes('https://www.youtube.com')) throw Error('Generic social media domains are not verified company accounts');
+for(const file of htmlFiles) {
+ const content=fs.readFileSync(path.join(dist,file),'utf8');
+ if(!/<h1[\s>]/i.test(content)) throw Error('Missing page H1: '+file);
+ const nav=content.match(/<header class="velora-nav"[^>]*>[\s\S]*?<\/header>/)?.[0];
+ if(nav && nav!==canonicalNavigation) throw Error('Navigation drift: '+file);
+ for(const match of content.matchAll(/\b(?:src|href)=(["'])([^"']+)\1/g)) {
+  const href=match[2];
+  if(!href || /^(https?:|mailto:|tel:|data:|blob:|javascript:|\/\/|#)/i.test(href)) continue;
+  let route=href.split(/[?#]/)[0].replace(/^\//,'');
+  if(!route || route.startsWith('api/')) continue;
+  const candidates=[route,route+'.html',route+'/index.html'];
+  if(!candidates.some(candidate=>fs.existsSync(path.join(dist,candidate)))) throw Error('Broken local link '+href+' in '+file);
+ }
+}
+if (fs.readFileSync(path.join(dist,'services.html'),'utf8').includes('Website Launch Pricing')) throw Error('Old price-led enterprise services section remains');
+if (fs.readFileSync(path.join(dist,'about.html'),'utf8').includes("We don't use templates")) throw Error('Absolute no-templates claim remains');
+console.log('Site-wide audit passed for '+htmlFiles.length+' pages: nav consistency, local links, core content claims');
