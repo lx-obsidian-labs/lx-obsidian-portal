@@ -599,3 +599,21 @@ select.hack-input option{background:#111;color:#e4e4e7}
  body>.velora-nav{z-index:999!important}
 }
 @media(max-width:480px){body>.velora-links.velora-mobile-portal{top:calc(max(10px,env(safe-area-inset-top)) + 71px)!important;max-height:calc(100dvh - 90px - env(safe-area-inset-top))!important}}
+
+/* Site-wide 2026 design consistency: preserve product-specific application layouts. */
+:root { --lx-page-bg:#000; --lx-page-surface:#101010; --lx-page-border:rgba(255,255,255,.10); --lx-page-content:1200px; }
+body { background:var(--lx-page-bg); }
+main[id="main"] { background-color:var(--lx-page-bg); }
+main[id="main"][style*="padding-top:64px"] { padding-top:clamp(72px,7.5vw,88px) !important; }
+main[id="main"][style*="padding-top:64px"] > section.saas-section:first-child { padding-top:clamp(32px,4vw,52px) !important; padding-bottom:clamp(42px,6vw,68px) !important; }
+main[id="main"] > section.saas-section:first-child .saas-heading { max-width:1000px; margin-inline:auto; line-height:1.12; text-wrap:balance; }
+main[id="main"] > section.saas-section:first-child p { text-wrap:pretty; }
+main[id="main"] .saas-eyebrow { letter-spacing:.15em; }
+main[id="main"] .saas-section { scroll-margin-top:110px; }
+main[id="main"] :is(.saas-card,.work-card,.client-logo-card) { border-color:var(--lx-page-border); }
+:where(main[id="main"]) a:focus-visible { outline:2px solid #fafafa; outline-offset:3px; }
+@media(max-width:800px){
+ main[id="main"][style*="padding-top:64px"] { padding-top:76px !important; }
+ main[id="main"][style*="padding-top:64px"] > section.saas-section:first-child { padding-top:24px !important; padding-bottom:40px !important; }
+ main[id="main"] > section.saas-section:first-child .saas-heading { font-size:clamp(2rem,9vw,3.5rem); }
+}
