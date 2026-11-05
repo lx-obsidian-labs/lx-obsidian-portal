@@ -182,7 +182,7 @@
     <div class="saas-wrap" style="text-align:center">
       <div class="saas-eyebrow">START A PROJECT</div>
       <h1 class="saas-heading" style="margin-top:14px">What are you building?</h1>
-      <p style="color:var(--saas-muted);max-width:560px;margin:16px auto 0;line-height:1.7">Tell us about your project and we'll get back to you within 24 hours to schedule a discovery call.</p>
+      <p style="color:var(--saas-muted);max-width:560px;margin:16px auto 0;line-height:1.7">Tell us about the challenge you need solved. We will review your enquiry and contact you to arrange the next step.</p>
     </div>
   </section>
 
@@ -225,7 +225,7 @@
 
   <section class="saas-section" style="border-top:none">
     <div class="saas-wrap" style="max-width:640px">
-      <form class="cform" id="contactForm" novalidate>
+      <form class="cform" id="contactForm" novalidate><div class="cform__group" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden"><label for="contactCompanyWebsite">Leave this empty</label><input type="text" id="contactCompanyWebsite" autocomplete="off" tabindex="-1"></div>
         <input type="hidden" id="contactSubject" value="">
         <input type="hidden" id="contactProjectType" value="">
         <div class="cform__progress">
@@ -267,14 +267,15 @@
           <p style="color:var(--saas-muted);font-size:.82rem;margin:0 0 24px">Tell us what you need built.</p>
           <div class="cform__group" style="margin-bottom:12px"><label class="cform__label" for="contactSubjectInput">Subject *</label><input type="text" class="cform__input" id="contactSubjectInput" placeholder="e.g. Need a booking platform for my restaurant" required><span class="cform__error" id="contactSubjectError">Please enter a subject</span></div>
           <div class="cform__group"><label class="cform__label" for="contactMessage">Message *</label><textarea class="cform__textarea cform__input" id="contactMessage" rows="5" placeholder="Describe your project, requirements, and any specific goals..." required></textarea><span class="cform__error" id="contactMessageError">Please describe your project</span></div>
-          <div style="margin-top:12px"><label style="display:flex;align-items:flex-start;gap:8px;cursor:pointer"><input type="checkbox" id="contactNda" name="nda" style="margin-top:3px"><span style="font-size:.82rem;color:var(--saas-muted)">I'd like to discuss an NDA before sharing project details</span></label></div>
-          <div style="display:flex;justify-content:space-between;margin-top:24px"><button type="button" onclick="showFormStep(2)" class="saas-btn">? Back</button><button type="submit" class="saas-btn saas-btn--primary">Send Project Brief ?</button></div>
+          <p style="color:var(--saas-muted);font-size:.8rem;line-height:1.6;margin-top:14px">Submitting this form sends your project details to LX Obsidian Labs for enquiry handling. Avoid including passwords, identity numbers or other sensitive information. For confidential work, request an NDA below before sharing protected details.</p><div style="margin-top:12px"><label style="display:flex;align-items:flex-start;gap:8px;cursor:pointer"><input type="checkbox" id="contactNda" name="nda" style="margin-top:3px"><span style="font-size:.82rem;color:var(--saas-muted)">I'd like to discuss an NDA before sharing project details</span></label></div>
+          <div style="display:flex;justify-content:space-between;margin-top:24px"><button type="button" onclick="showFormStep(2)" class="saas-btn">? Back</button><button type="submit" class="saas-btn saas-btn--primary">Send Project Brief</button></div>
         </div>
 
+        <p id="contactSubmissionStatus" role="alert" hidden style="color:#f0b4b4;font-size:.84rem;line-height:1.6;margin:16px 0"></p>
         <div id="contactSuccess" role="status" aria-live="polite" style="display:none;text-align:center;padding:32px">
           <div style="width:48px;height:48px;border-radius:50%;background:var(--saas-green);color:#000;display:grid;place-items:center;margin:0 auto 16px;font-size:1.2rem;font-weight:700">?</div>
           <h2 style="font-weight:600;font-size:1.1rem;margin:0 0 8px">Request Received!</h2>
-          <p style="color:var(--saas-muted);font-size:.88rem">Thank you! We'll review your project details and get back to you within 24 hours.</p>
+          <p style="color:var(--saas-muted);font-size:.88rem">Your project enquiry has been securely recorded. We will contact you about the next step.</p>
         </div>
       </form>
 
@@ -386,15 +387,50 @@
   (function(){
     var form = document.getElementById('contactForm');
     var success = document.getElementById('contactSuccess');
-    if(form) {
-      form.addEventListener('submit', function(e){
-        e.preventDefault();
-        document.querySelectorAll('.cform__step').forEach(function(el){ el.classList.remove('active'); });
-        success.style.display = 'block';
-        var msg = encodeURIComponent('Hi, I just submitted a project brief on your contact form. Looking forward to hearing from you!');
-        setTimeout(function(){ window.open('https://wa.me/27694829711?text=' + msg, '_blank'); }, 1000);
-      });
-    }
+    if (!form) return;
+    var submit = form.querySelector('button[type="submit"]');
+    var status = document.getElementById('contactSubmissionStatus');
+    var value = function(id) { var node=document.getElementById(id); return node ? node.value.trim() : ''; };
+    var busy = false;
+    form.addEventListener('submit', async function(e){
+      e.preventDefault();
+      if (busy) return;
+      var payload = {
+        name:value('contactName'), business_name:value('contactBusinessName'), email:value('contactEmail'),
+        phone:value('contactWhatsApp'), industry:value('contactIndustry'), budget:value('contactBudget'),
+        launch:value('contactLaunch'), subject:value('contactSubjectInput'), message:value('contactMessage'),
+        projecttype:value('contactProjectType') || 'Not sure yet',
+        nda:document.getElementById('contactNda').checked,
+        company_website:value('contactCompanyWebsite')
+      };
+      if(payload.name.length<2 || !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(payload.email)) {
+        status.textContent='Please add your name and a valid email address.';
+        status.hidden=false; showFormStep(1); return;
+      }
+      if(!payload.industry) {status.textContent='Please choose an industry.';status.hidden=false;showFormStep(2);return;}
+      if(payload.subject.length<4 || payload.message.length<15) {
+        status.textContent='Please add a subject and at least 15 characters describing the project.';
+        status.hidden=false;showFormStep(3);return;
+      }
+      busy=true; submit.disabled=true; submit.textContent='Sending securely…';
+      status.textContent='Saving your project enquiry…';status.hidden=false;
+      try {
+        var response=await fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+        var result=await response.json();
+        if(!response.ok || !result.saved || !result.reference) throw new Error(result.error || 'Submission unsuccessful');
+        document.querySelectorAll('.cform__step').forEach(function(el){el.classList.remove('active');});
+        success.style.display='block';
+        success.querySelector('p').textContent='Your project enquiry has been securely recorded. Reference: '+result.reference+'. We will use your contact details to follow up.';
+        status.hidden=true;
+        form.reset();
+        success.scrollIntoView({behavior:'smooth',block:'center'});
+      } catch(err) {
+        status.textContent='Your brief has not been confirmed as saved. '+(err.message || 'Please retry or use the contact options below.');
+        status.hidden=false;
+      } finally {
+        busy=false;submit.disabled=false;submit.textContent='Send Project Brief';
+      }
+    });
   })();
 </script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));}</script>
