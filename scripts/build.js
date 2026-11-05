@@ -35,6 +35,9 @@ for (const name of INCLUDE) {
   }
 }
 
+// Generate verified downloadable PDF and CSV resources into the deploy output.
+require('./generate-downloadables.js');
+
 // Publish the Synapse web workspace at /synapse/web without requiring SPA fallback.
 const synapseWebDir = path.join(DIST, 'synapse', 'web');
 fs.mkdirSync(synapseWebDir, { recursive: true });
