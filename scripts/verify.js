@@ -70,3 +70,25 @@ for(const file of htmlFiles) {
 if (fs.readFileSync(path.join(dist,'services.html'),'utf8').includes('Website Launch Pricing')) throw Error('Old price-led enterprise services section remains');
 if (fs.readFileSync(path.join(dist,'about.html'),'utf8').includes("We don't use templates")) throw Error('Absolute no-templates claim remains');
 console.log('Site-wide audit passed for '+htmlFiles.length+' pages: nav consistency, local links, core content claims');
+
+// Download hub regression tests: verified generated files and honest links.
+const downloads = fs.readFileSync(path.join(dist,'downloads.html'),'utf8');
+const expectedDownloads = [
+ 'lx-obsidian-capabilities-2026.pdf',
+ 'project-discovery-workbook.pdf',
+ 'vista-cinema-install-guide.pdf',
+ 'project-requirements-template.csv'
+];
+for (const file of expectedDownloads) {
+ const output=path.join(dist,'downloads',file);
+ if (!fs.existsSync(output)) throw Error('Missing downloadable resource: '+file);
+ if (!downloads.includes('/downloads/'+file)) throw Error('Downloads page does not link to: '+file);
+ const bytes=fs.readFileSync(output);
+ if (bytes.length<150) throw Error('Resource unexpectedly small: '+file);
+ if (file.endsWith('.pdf') && (!bytes.subarray(0,8).toString('latin1').startsWith('%PDF-1.') || !bytes.toString('latin1').trimEnd().endsWith('%%EOF'))) throw Error('Invalid PDF wrapper: '+file);
+}
+if (!home.includes('href="/downloads"') || !home.includes('Downloads &amp; Resources')) throw Error('Downloads not discoverable in primary navigation/footer');
+if (!downloads.includes('VistaCinema-v1.0.9.apk') || !downloads.includes('VistaCinema-TV-v1.0.9.apk')) throw Error('Latest official Android builds missing from downloads');
+if (!downloads.includes('GitHub sign-in') || !downloads.includes('artifact may expire')) throw Error('Synapse build caveat missing');
+if (downloads.includes('href="#"')) throw Error('Placeholder link on download hub');
+console.log('Downloads checks passed: PDF headers, files, discoverability, release links');
