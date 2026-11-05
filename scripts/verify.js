@@ -28,3 +28,19 @@ const synapseWeb = fs.readFileSync(path.join(dist, 'synapse/web/index.html'), 'u
 if (!synapseWeb.includes("fetch('/api/chat'")) throw Error('Synapse web chat endpoint missing');
 const synapseLanding = fs.readFileSync(path.join(dist, 'synapse.html'), 'utf8');
 if (!synapseLanding.includes('/synapse/web') || !synapseLanding.includes('release-notes')) throw Error('Synapse release notes or web link missing');
+
+\n// Marketing and enquiry regression checks.
+const contact = fs.readFileSync(path.join(dist,'contact.html'),'utf8');
+const contactApi = fs.readFileSync(path.join(dist,'functions/api/contact.js'),'utf8');
+const portfolio = fs.readFileSync(path.join(dist,'portfolio.html'),'utf8');
+const integrations = fs.readFileSync(path.join(dist,'integrations.html'),'utf8');
+const ai = fs.readFileSync(path.join(dist,'ai.html'),'utf8');
+if(!contact.includes("fetch('/api/contact'") || !contact.includes('result.saved') || !contact.includes('result.reference')) throw Error('Contact flow lacks server-confirmed durable submission');
+if(contact.includes("window.open('https://wa.me/27694829711?text='")) throw Error('Legacy false-positive WhatsApp contact handler remains');
+if(!contactApi.includes('INSERT INTO project_leads') || !contactApi.includes('env.DB.prepare')) throw Error('Lead storage endpoint is missing');
+if(!contactApi.includes('Untrusted origin') || !contactApi.includes('emailOK')) throw Error('Server-side validation guard missing');
+if(!portfolio.includes('id="project-snapshots"')) throw Error('Engineering case-study snapshots missing');
+if(integrations.includes('href="#" class="integration-card"')) throw Error('Dead integration CTAs present');
+if(ai.includes('index.html#pricing')) throw Error('Invalid AI pricing link present');
+if(!home.includes('We engineer custom software')) throw Error('Homepage positioning reverted');
+console.log('Marketing verification passed: secure lead capture, honest CTAs, case study snapshots, updated positioning');
