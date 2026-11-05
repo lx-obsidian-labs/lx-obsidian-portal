@@ -403,7 +403,7 @@
         nda:document.getElementById('contactNda').checked,
         company_website:value('contactCompanyWebsite')
       };
-      if(payload.name.length<2 || !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(payload.email)) {
+      if(payload.name.length<2 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) {
         status.textContent='Please add your name and a valid email address.';
         status.hidden=false; showFormStep(1); return;
       }
