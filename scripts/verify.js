@@ -92,3 +92,11 @@ if (!downloads.includes('VistaCinema-v1.0.9.apk') || !downloads.includes('VistaC
 if (!downloads.includes('GitHub sign-in') || !downloads.includes('artifact may expire')) throw Error('Synapse build caveat missing');
 if (downloads.includes('href="#"')) throw Error('Placeholder link on download hub');
 console.log('Downloads checks passed: PDF headers, files, discoverability, release links');
+
+// Resource-centre UX regression checks.
+if (!downloads.includes('id="dlSearch"') || !downloads.includes('id="dlResults"') || !downloads.includes('id="dlEmpty"')) throw Error('Download centre search/empty states missing');
+if (!downloads.includes('id="download-help"') || !downloads.includes('data-copy="041131BC0350B193B2FF8327CC95289FED0AAF73D10BB79A22C09BE09221DB05"')) throw Error('Download safety guidance or published checksum missing');
+if (!fs.readFileSync(path.join(dist,'services.html'),'utf8').includes('/downloads/project-discovery-workbook.pdf')) throw Error('Services resource CTA missing');
+if (!contact.includes('/downloads/project-discovery-workbook.pdf')) throw Error('Contact brief workbook link missing');
+if (!fs.readFileSync(path.join(dist,'vista.html'),'utf8').includes('Open Downloads &amp; Resources')) throw Error('Vista download centre link missing');
+console.log('Resource centre UX checks passed');
