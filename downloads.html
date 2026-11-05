@@ -67,6 +67,33 @@
 @media(max-width:850px){.dl-grid{grid-template-columns:1fr}.dl-archive__list{grid-template-columns:1fr 1fr}.dl-cta{flex-direction:column;align-items:start}}
 @media(max-width:600px){.dl-hero{padding-top:100px;padding-bottom:47px}.dl-wrap{width:calc(100% - 36px)}.dl-content{padding-top:36px}.dl-grouphead{flex-direction:column;align-items:start}.dl-card{min-height:0}.dl-quick .dl-button{width:100%}.dl-archive__list{grid-template-columns:1fr}.dl-cta{padding:25px}}
 @media(prefers-reduced-motion:reduce){.dl-button{transition:none}}
+
+/* Resource centre refinements */
+.dl-searchbox{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px;align-items:end;padding:24px;border:1px solid #363636;border-radius:18px;background:linear-gradient(120deg,#171717,#0a0a0a);margin-bottom:25px}
+.dl-searchbox__label{display:block;font-size:.73rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:#b6b6b6;margin-bottom:10px}
+.dl-searchbox__field{display:flex;align-items:center;gap:10px;background:#080808;border:1px solid #444;padding:0 16px;border-radius:11px;min-height:54px}
+.dl-searchbox__field:focus-within{border-color:#f1f1f1;box-shadow:0 0 0 2px rgba(255,255,255,.08)}
+.dl-searchbox__field svg{flex:none;width:18px;height:18px;color:#bbb}
+.dl-searchbox__field input{width:100%;background:transparent;outline:none;border:0;color:#fff;font-size:.96rem;min-width:0}
+.dl-searchbox__field input::placeholder{color:#828282}
+.dl-searchbox__reset{padding:10px 4px;color:#bbb;text-decoration:underline;text-underline-offset:3px;font-weight:600;font-size:.8rem}
+.dl-searchbox__help{color:#b6b6b6;font-size:.83rem;line-height:1.65;max-width:245px}
+.dl-results{font-size:.82rem;color:#aaa;margin:-7px 0 24px}
+.dl-empty{padding:45px 24px;text-align:center;border:1px dashed #555;border-radius:16px;margin:12px 0 45px}
+.dl-empty h2{font:500 1.5rem 'Space Grotesk',sans-serif;margin-bottom:10px}
+.dl-empty p{font-size:.89rem;color:#aaa}
+.dl-link-small{color:#ddd;text-decoration:underline;text-underline-offset:3px}
+.dl-card__checksum{background:#080808;border:1px solid #323232;padding:12px 13px;border-radius:10px;font-size:.75rem;line-height:1.5;color:#aaa;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.dl-card__checksum code{font:500 .73rem ui-monospace,SFMono-Regular,Consolas,monospace;color:#ddd;overflow-wrap:anywhere}
+.dl-copy{font-size:.75rem;font-weight:600;padding:7px 11px;border-radius:8px;border:1px solid #595959;color:#fff}
+.dl-copy:hover{background:#292929}
+.dl-help{margin-top:60px;padding:32px;border:1px solid #343434;border-radius:18px}
+.dl-help h2{font:500 clamp(1.55rem,2.6vw,2.1rem) 'Space Grotesk',sans-serif;letter-spacing:-.04em;margin-bottom:17px}
+.dl-help details{border-top:1px solid #383838;padding:16px 0}
+.dl-help summary{cursor:pointer;font-weight:600;font-size:.92rem}
+.dl-help p{color:#aaa;font-size:.86rem;line-height:1.75;margin-top:12px;max-width:850px}
+.dl-help a{color:#ddd;text-decoration:underline;text-underline-offset:3px}
+@media(max-width:700px){.dl-searchbox{grid-template-columns:1fr;padding:18px}.dl-searchbox__help{max-width:none}.dl-help{padding:22px}}
 </style>
 </head>
 <body>
@@ -96,12 +123,19 @@
  <p class="dl-aside">For desktop and mobile browsers. App files are hosted on LX Obsidian Labs' GitHub repository.</p>
 </div></section>
 <div class="dl-wrap dl-content">
+<div class="dl-searchbox" role="search">
+ <div><label class="dl-searchbox__label" for="dlSearch">Find a product, file or resource</label>
+ <div class="dl-searchbox__field"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m16 16 5 5"></path></svg><input id="dlSearch" type="search" autocomplete="off" placeholder="Try Vista, Android TV, project brief, PDF..."><button id="dlClearSearch" type="button" class="dl-searchbox__reset" hidden>Clear</button></div></div>
+ <p class="dl-searchbox__help">Search only the resources on this page. No account, tracking profile or information submission is required.</p>
+</div>
+<p class="dl-results" id="dlResults" role="status" aria-live="polite"></p>
 <div class="dl-filters" role="group" aria-label="Filter downloadable resources">
  <button class="dl-filter" type="button" data-filter="all" aria-pressed="true">All resources</button>
  <button class="dl-filter" type="button" data-filter="software" aria-pressed="false">Software</button>
  <button class="dl-filter" type="button" data-filter="resources" aria-pressed="false">Business resources</button>
  <button class="dl-filter" type="button" data-filter="guides" aria-pressed="false">Install guides</button>
 </div>
+<div class="dl-empty" id="dlEmpty" hidden role="status"><h2>No matching resources</h2><p>Try a different keyword or <button class="dl-link-small" type="button" id="dlShowAll">show all downloads</button>.</p></div>
 <section class="dl-group" id="software" data-group="software" aria-labelledby="dl-software-heading">
  <div class="dl-grouphead"><div><div class="dl-eyebrow">01 / SOFTWARE</div><h2 id="dl-software-heading">Official application builds</h2></div><p>Choose the download that matches your device. Version and availability are shown for clarity.</p></div>
  <div class="dl-grid">
@@ -109,7 +143,7 @@
    <div class="dl-card__top"><span class="dl-logo" aria-hidden="true">VC</span><span class="dl-tag">Android mobile</span></div>
    <h3>Vista Cinema — Phone & Tablet</h3>
    <p>Install the Android version of Vista Cinema for a phone or tablet. Use the latest listed package unless your device requires a different build.</p>
-   <div class="dl-card__meta"><span>APK</span><span>Version 1.0.9</span><span>21.3 MB</span><span>Android</span></div>
+   <div class="dl-card__meta"><span>APK</span><span>Version 1.0.9</span><span>21.3 MB</span><span>Android</span></div><div class="dl-card__checksum"><span><strong>SHA-256</strong> (published release manifest)<br><code>041131BC0350B193B2FF8327CC95289FED0AAF73D10BB79A22C09BE09221DB05</code></span><button type="button" class="dl-copy" data-copy="041131BC0350B193B2FF8327CC95289FED0AAF73D10BB79A22C09BE09221DB05" aria-label="Copy published phone APK SHA-256">Copy checksum</button></div>
    <div class="dl-card__bottom"><a class="dl-button dl-button--primary" href="https://github.com/lx-obsidian-labs/lx-obsidian-portal/raw/master/VistaCinema-v1.0.9.apk" rel="noopener">Download APK ↗</a><a href="/vista">Product information</a></div>
   </article>
   <article class="dl-card">
@@ -177,6 +211,14 @@
   </article>
  </div>
 </section>
+<section class="dl-help" id="download-help" aria-labelledby="dl-help-title">
+  <div class="dl-eyebrow">HELP & FILE SAFETY</div><h2 id="dl-help-title">Download questions, answered.</h2>
+  <details><summary>Which Vista Cinema file should I download?</summary><p>Choose the phone/tablet APK for an Android mobile device. Choose the Android TV package for Android TV or Google TV. Version 1.0.9 is the latest version currently listed in this repository. Older builds are retained separately for compatibility access.</p></details>
+  <details><summary>How can I verify the APK I downloaded?</summary><p>The phone APK's published SHA-256 fingerprint is available above. After downloading, calculate the file's SHA-256 digest and compare it character-for-character. On Windows PowerShell, use <code>Get-FileHash -Algorithm SHA256 -Path "your-file.apk"</code>. A different result means you should not install that file. The TV APK is listed separately and should not be assumed to have the same checksum.</p></details>
+  <details><summary>Why does Synapse lead to GitHub instead of a direct ZIP?</summary><p>The currently advertised Synapse build is published through the project's GitHub releases or Actions workflow. GitHub can require you to sign in for workflow artifacts, and older temporary artifacts may expire. We avoid showing a direct ZIP link without a verified permanent file.</p></details>
+  <details><summary>Do the PDFs and template require an account?</summary><p>No. The downloadable company overview, discovery workbook and CSV template are publicly accessible. You can save them and complete them at your own pace; the downloads do not submit your information to LX Obsidian Labs.</p></details>
+  <details><summary>Is there a Windows or macOS installer for LX PDF Studio?</summary><p>There is no verified desktop installer listed for LX PDF Studio. It runs in your browser at <a href="/pdf">LX PDF Studio</a>. If you need a custom document processing system for your business, <a href="/contact">discuss the requirements with our team</a>.</p></details>
+</section>
 <section class="dl-cta" aria-labelledby="dl-next"><div><div class="dl-eyebrow">HAVE A PROJECT IN MIND?</div><h2 id="dl-next">Let's turn your requirements into a plan.</h2><p>Download a discovery worksheet or speak to LX Obsidian Labs about the system your business needs. You do not need to arrive with a finished technical specification.</p></div><a class="dl-button dl-button--primary" href="/contact">Discuss your project ↗</a></section>
 </div></main>
 <footer class="glass-footer">
@@ -232,13 +274,55 @@
 <script src="/js/ui/glass-footer.js" defer></script>
 <script>
 (function(){
-const controls=Array.from(document.querySelectorAll('.dl-filter'));
-const groups=Array.from(document.querySelectorAll('.dl-group'));
-controls.forEach(button=>button.addEventListener('click',function(){
- const value=this.dataset.filter;
- controls.forEach(item=>item.setAttribute('aria-pressed',String(item===this)));
- groups.forEach(group=>{group.hidden=!(value==='all'||group.dataset.group===value);});
-}));
+ 'use strict';
+ const controls=Array.from(document.querySelectorAll('.dl-filter'));
+ const groups=Array.from(document.querySelectorAll('.dl-group'));
+ const cards=Array.from(document.querySelectorAll('.dl-group .dl-card'));
+ const search=document.getElementById('dlSearch');
+ const clear=document.getElementById('dlClearSearch');
+ const empty=document.getElementById('dlEmpty');
+ const status=document.getElementById('dlResults');
+ let active='all';
+ function update(){
+   const query=search.value.trim().toLowerCase();
+   let shown=0;
+   groups.forEach(group=>{
+     let count=0;
+     const eligible=(active==='all'||active===group.dataset.group);
+     group.querySelectorAll('.dl-card').forEach(card=>{
+       const match=eligible && (!query||card.textContent.toLowerCase().includes(query));
+       card.hidden=!match;
+       if(match){count++;shown++;}
+     });
+     group.hidden=count===0;
+   });
+   // The archive is only relevant to the software category; text search should not show unrelated versions.
+   const archive=document.querySelector('.dl-archive');
+   if(archive){archive.hidden=(active!=='all'&&active!=='software') || !!query;}
+   empty.hidden=shown!==0;
+   status.textContent=shown===1?'1 matching resource':shown+' matching resources';
+   clear.hidden=query.length===0;
+ }
+ controls.forEach(button=>button.addEventListener('click',function(){
+   active=this.dataset.filter;
+   controls.forEach(item=>item.setAttribute('aria-pressed',String(item===this)));
+   update();
+ }));
+ search.addEventListener('input',update);
+ function reset(){active='all';search.value='';controls.forEach(item=>item.setAttribute('aria-pressed',String(item.dataset.filter==='all')));update();search.focus();}
+ clear.addEventListener('click',()=>{search.value='';update();search.focus();});
+ document.getElementById('dlShowAll').addEventListener('click',reset);
+ document.querySelectorAll('.dl-copy').forEach(button=>button.addEventListener('click',async function(){
+    const checksum=this.dataset.copy;
+    const original=this.textContent;
+    try{
+      if(!navigator.clipboard || !navigator.clipboard.writeText)throw new Error('Clipboard unavailable');
+      await navigator.clipboard.writeText(checksum);
+      this.textContent='Copied';
+    }catch(_){this.textContent='Select text above';}
+    window.setTimeout(()=>{this.textContent=original;},2200);
+ }));
+ update();
 })();
 </script>
 </body></html>
