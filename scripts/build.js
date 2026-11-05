@@ -97,6 +97,10 @@ if (fs.existsSync(homePath)) {
 const homeHtml = fs.readFileSync(path.join(DIST, 'index.html'), 'utf8');
 const navPattern = /<header class="velora-nav"[^>]*>[\s\S]*?<\/header>/;
 const canonicalNav = homeHtml.match(navPattern)?.[0];
+// The shared nav is used on inner pages too; section anchors must resolve to the homepage.
+if (canonicalNav && (/href=\"#solutions\"/.test(canonicalNav) || /href=\"#products\"/.test(canonicalNav))) {
+  throw new Error('Shared navigation has a page-relative section anchor; use /#solutions and /#products');
+}
 if (!canonicalNav) throw new Error('Canonical homepage navigation missing');
 let synchronizedNavs = 0;
 for (const file of ROOT_HTML) {
