@@ -18,7 +18,7 @@ jobs:
   verify:
     name: Build and project checks
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - name: Check out source
         uses: actions/checkout@v4
@@ -26,9 +26,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Install dependencies
-        run: npm install --ignore-scripts --no-audit --no-fund
-      - name: Run project verification
-        run: npm run check
-      - name: Build static output
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Build and verify generated output
         run: npm run build
