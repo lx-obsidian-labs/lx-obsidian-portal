@@ -29,5 +29,7 @@ jobs:
           cache: npm
       - name: Install locked dependencies
         run: npm ci --no-audit --no-fund
+      - name: Test contact API behavior
+        run: npm test
       - name: Build and verify generated output
         run: npm run build
