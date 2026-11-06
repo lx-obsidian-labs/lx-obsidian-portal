@@ -62,3 +62,46 @@ test('honeypot does not store an enquiry', async () => {
   assert.equal(response.status, 200);
   assert.equal(ctx.getWrites(), 0);
 });
+
+test('rejects unsupported content type without writing', async () => {
+  const ctx = context(valid, {contentType: 'text/plain'});
+  const response = await (await handler)(ctx);
+  assert.equal(response.status, 415);
+  assert.equal(ctx.getWrites(), 0);
+});
+
+test('rejects missing origin before writing', async () => {
+  const request = new Request('https://lxobsidianportal.co.za/api/contact', {
+    method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(valid)
+  });
+  const ctx = context(valid);
+  ctx.request = request;
+  const response = await (await handler)(ctx);
+  assert.equal(response.status, 403);
+  assert.equal(ctx.getWrites(), 0);
+});
+
+test('rejects invalid JSON without writing', async () => {
+  const ctx = context('{not-json');
+  const response = await (await handler)(ctx);
+  assert.equal(response.status, 400);
+  assert.equal(ctx.getWrites(), 0);
+});
+
+test('rejects incomplete required fields without writing', async () => {
+  const ctx = context({...valid, industry: '', message: 'short'});
+  const response = await (await handler)(ctx);
+  assert.equal(response.status, 400);
+  assert.equal(ctx.getWrites(), 0);
+});
+
+test('reports failed database write without claiming success', async () => {
+  const ctx = context(valid);
+  ctx.env.DB = {prepare() {
+    return {bind() {return {async run() {throw new Error('database unavailable');}};}};
+  }};
+  const response = await (await handler)(ctx);
+  assert.equal(response.status, 503);
+  const body = await response.json();
+  assert.notEqual(body.saved, true);
+});
