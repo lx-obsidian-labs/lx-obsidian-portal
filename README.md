@@ -6,6 +6,13 @@ This repository supports the web presence of LX Obsidian Labs and its software p
 
 **Website:** https://www.lxobsidianportal.co.za
 
+**Development stage:** Active Development / Iterative Release (production status must be checked against the deployed site).  
+**Verification:** Build checks and contact API tests are configured; passing CI and live lead-delivery results remain unverified.  
+**Implemented scope under review:** Static marketing pages, downloadable resources, Cloudflare Pages Functions contact endpoint and D1-backed lead persistence.  
+**Next milestone:** Obtain passing CI evidence and exercise the production contact journey with controlled test data.
+
+The portfolio [evaluation standard](https://github.com/lx-obsidian-labs/lx-obsidian-labs/blob/main/PORTFOLIO_EVALUATION.md) separates maturity from engineering quality. Planned features do not reduce the engineering assessment.
+
 > **Verification status:** The repository's exact build process, framework, deployment branch and current live status require confirmation against its source and hosting configuration.
 
 ## Project goals
@@ -32,6 +39,15 @@ Inspect the repository structure and build manifest first. Use the package manag
 - [ ] Confirm Cloudflare deployment configuration and rollback procedure
 - [ ] Record performance evidence and screenshots
 - [ ] Document deployment ownership and third-party attribution
+
+## Inspectable engineering evidence
+
+- [Build and verification workflow](.github/workflows/verify.yml)
+- [Contact API behavior tests](tests/contact-api.test.cjs)
+- [Release and link-integrity checks](scripts/verify.js)
+- [Engineering case study](docs/ENGINEERING_CASE_STUDY.md)
+
+Run `npm ci`, `npm test` and `npm run build` locally using a compatible Node.js runtime. Passing results are not asserted here until confirmed.
 
 ## Maintainer
 
