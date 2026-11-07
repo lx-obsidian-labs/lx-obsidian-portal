@@ -7,6 +7,7 @@ This repository supports the web presence of LX Obsidian Labs and its software p
 **Website:** https://www.lxobsidianportal.co.za
 
 **Development stage:** Active Development / Iterative Release (production status must be checked against the deployed site).  
+**CI evidence (2026-11-07):** [Verify portal run 42397050121](https://github.com/lx-obsidian-labs/lx-obsidian-portal/actions/runs/42397050121) completed successfully at commit `a5f96f28d682d91931970f3be730b28e2e5f58a8`. Production lead delivery remains unverified.  
 **Verification:** Build checks and contact API tests are configured; passing CI and live lead-delivery results remain unverified.  
 **Implemented scope under review:** Static marketing pages, downloadable resources, Cloudflare Pages Functions contact endpoint and D1-backed lead persistence.  
 **Next milestone:** Confirm CI for contact API regression coverage, then exercise production lead persistence and notification delivery with controlled test data.
