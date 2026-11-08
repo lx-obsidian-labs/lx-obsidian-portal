@@ -4,6 +4,11 @@
 
 VersionCode **17**, optional update. [Release notes and signed APK verification](RELEASE-1.0.10.md).
 
+### Smart TV responsiveness & Android device detection
+
+- Includes the Smart TV responsiveness and device-detection improvements: identifies Android phones, tablets, Android TV / Google TV, Fire TV and supported remote-driven Android TV boxes using system features, TV UI mode and touchscreen/D-pad signals.
+- TV-focused cards have clearer focus feedback, and D-pad row/grid scrolling keeps remote navigation responsive. A shared signed APK includes both phone and TV launchers; screen flows and device compatibility can differ.
+
 - Added festive collections, date-aware Christmas/New Year copy, daily picks and a seasonal opt-out.
 - Improved movie suggestions, explicit feedback, visible reasons, runtime/year filtering and candidate diversity.
 - Added persistent downloads for supported direct sources and a separate offline library/player; some providers remain streaming-only.

@@ -2,7 +2,7 @@
   "versionCode": 17,
   "versionName": "1.0.10",
   "downloadUrl": "https://lxobsidianportal.co.za/api/vista-download?platform=android",
-  "changelog": "NEW: Festive Home collections, Christmas countdown and seasonal picks.\nIMPROVED: Movie suggestions with visible reasons, meaningful viewing and saved-title seeds, runtime/year filters and Not for me feedback.\nNEW: Downloads from supported direct sources, with an unmetered queue and a separate offline player. Some sources remain streaming-only.\nIMPROVED: Searchable Settings, AI & Voice and Downloads controls, native audio/subtitle preferences and accurate onboarding.\nIMPROVED: Catalog-backed AI actions for comparison, library, resume and download review. Cloud AI requires sign-in; actions remain reviewable. Phone/tablet and TV interfaces differ.",
+  "changelog": "SMART TV: Responsive D-pad scrolling and clearer TV focus, plus detection of Android phones, tablets, Android TV / Google TV, Fire TV and supported TV boxes.\nNEW: Festive Home collections, Christmas countdown and seasonal picks.\nIMPROVED: Movie suggestions with visible reasons, meaningful viewing and saved-title seeds, runtime/year filters and Not for me feedback.\nNEW: Downloads from supported direct sources, with an unmetered queue and a separate offline player. Some sources remain streaming-only.\nIMPROVED: Searchable Settings, AI & Voice and Downloads controls, native audio/subtitle preferences and accurate onboarding.\nIMPROVED: Catalog-backed AI actions for comparison, library, resume and download review. Cloud AI requires sign-in; actions remain reviewable. Phone/tablet and TV interfaces differ.",
   "sha256": "31BADF75DFBA417D3D3871BB76084311AE293A06C468C5399BCB1EDC88DA5B1A",
   "sizeBytes": 22501177,
   "mandatory": false

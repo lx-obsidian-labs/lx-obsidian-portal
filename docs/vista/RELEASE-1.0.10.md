@@ -4,6 +4,7 @@
 
 ## What's new
 
+- **Smart TV responsiveness & Android device detection:** the included device detector classifies phones, tablets, Android TV / Google TV, Fire TV and supported remote-driven TV boxes using system features, TV UI mode and touchscreen/D-pad signals. TV focus feedback and D-pad row/grid scrolling improve large-screen navigation. These TV improvements are included alongside the new phone features.
 - Festive Home collections from November 1 to January 5, a Christmas countdown, rotating picks and a seasonal visibility preference.
 - Movie suggestions with visible reasons, meaningful-viewing and watchlist signals, explicit genre/negative feedback, runtime/year constraints and more varied picks.
 - Catalog-backed AI actions: show your watchlist, offer actual resume progress, compare exact movie metadata and prepare a download review. Numbered follow-ups refer to the current results. Save/remove operations need confirmation; opening a download review does not mean a download has started.
