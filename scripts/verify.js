@@ -73,6 +73,7 @@ console.log('Site-wide audit passed for '+htmlFiles.length+' pages: nav consiste
 
 // Download hub regression tests: verified generated files and honest links.
 const downloads = fs.readFileSync(path.join(dist,'downloads.html'),'utf8');
+const vistaRelease = JSON.parse(fs.readFileSync(path.join(dist,'vista-version.json'),'utf8'));
 const expectedDownloads = [
  'lx-obsidian-capabilities-2026.pdf',
  'project-discovery-workbook.pdf',
@@ -88,14 +89,14 @@ for (const file of expectedDownloads) {
  if (file.endsWith('.pdf') && (!bytes.subarray(0,8).toString('latin1').startsWith('%PDF-1.') || !bytes.toString('latin1').trimEnd().endsWith('%%EOF'))) throw Error('Invalid PDF wrapper: '+file);
 }
 if (!home.includes('href="/downloads"') || !home.includes('Downloads &amp; Resources')) throw Error('Downloads not discoverable in primary navigation/footer');
-if (!downloads.includes('VistaCinema-v1.0.9.apk') || !downloads.includes('VistaCinema-TV-v1.0.9.apk')) throw Error('Latest official Android builds missing from downloads');
+if (!downloads.includes('VistaCinema-v'+vistaRelease.versionName+'.apk') || !downloads.includes('VistaCinema-TV-v'+vistaRelease.versionName+'.apk')) throw Error('Latest official Android builds missing from downloads');
 if (!downloads.includes('GitHub sign-in') || !downloads.includes('artifact may expire')) throw Error('Synapse build caveat missing');
 if (downloads.includes('href="#"')) throw Error('Placeholder link on download hub');
 console.log('Downloads checks passed: PDF headers, files, discoverability, release links');
 
 // Resource-centre UX regression checks.
 if (!downloads.includes('id="dlSearch"') || !downloads.includes('id="dlResults"') || !downloads.includes('id="dlEmpty"')) throw Error('Download centre search/empty states missing');
-if (!downloads.includes('id="download-help"') || !downloads.includes('data-copy="041131BC0350B193B2FF8327CC95289FED0AAF73D10BB79A22C09BE09221DB05"')) throw Error('Download safety guidance or published checksum missing');
+if (!downloads.includes('id="download-help"') || !downloads.includes('data-copy="'+vistaRelease.sha256+'"')) throw Error('Download safety guidance or published checksum missing');
 if (!fs.readFileSync(path.join(dist,'services.html'),'utf8').includes('/downloads/project-discovery-workbook.pdf')) throw Error('Services resource CTA missing');
 if (!contact.includes('/downloads/project-discovery-workbook.pdf')) throw Error('Contact brief workbook link missing');
 if (!fs.readFileSync(path.join(dist,'vista.html'),'utf8').includes('Open Downloads &amp; Resources')) throw Error('Vista download centre link missing');

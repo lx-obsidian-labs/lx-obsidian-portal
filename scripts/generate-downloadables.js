@@ -130,7 +130,7 @@ discovery.paragraph('https://www.lxobsidianportal.co.za/contact');
 discovery.save('project-discovery-workbook.pdf');
 
 const install=new Document('Vista installation guide');
-install.title('VISTA CINEMA / INSTALL GUIDE','Android phone, tablet and Android TV | Version 1.0.9 listed on the LX website.');
+install.title('VISTA CINEMA / INSTALL GUIDE','Android phone, tablet and Android TV | Version 1.0.10 listed on the LX website.');
 install.section('Before you begin');
 install.bullet('Choose the package that matches your device: Android phone/tablet or Android TV.');
 install.bullet('Use the official LX Obsidian download hub or the linked LX GitHub repository. Do not use unrelated download mirrors.');
@@ -141,6 +141,8 @@ install.bullet('2. Select Vista Cinema for Android and download the APK.');
 install.bullet('3. Open the downloaded file in your Files or Downloads application.');
 install.bullet('4. If prompted, grant installation permission only to the trusted app used to open the APK.');
 install.bullet('5. Follow the Android installation prompts and launch Vista Cinema.');
+install.bullet('New viewers see an introduction after choosing guest browsing or signing in; your name is optional. Existing users can replay it in Settings > About.');
+install.bullet('Eligible movie/episode downloads wait for an unmetered connection. Manage completed offline copies in Library > Downloads; some sources remain streaming-only.');
 install.section('Android TV / Google TV');
 install.bullet('1. Open the official download page on a compatible device.');
 install.bullet('2. Choose the Android TV build. Transfer the APK to the TV if required.');

@@ -1,5 +1,7 @@
 # Vista Cinema - Deployment Package
 
+**Current release: 1.0.10 / 17**, optional update. The signed binary is 22,501,177 bytes; SHA-256 `31BADF75DFBA417D3D3871BB76084311AE293A06C468C5399BCB1EDC88DA5B1A`. APKs are GitHub-only; Cloudflare Pages receives website output and docs, not APKs. See [current release details](../RELEASE-1.0.10.md). Historical 1.0.9 staging details below are preserved for reference.
+
 Local staging folder for the public download page, the in-app update manifest, and the signed
 release APKs.
 

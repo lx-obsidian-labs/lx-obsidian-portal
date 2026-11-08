@@ -21,6 +21,8 @@ The deployed endpoint is `https://vista-assistant.feedpatelmusic.workers.dev`; A
 
 ## Conversation and actions
 
+The 1.0.10 client negotiates `agentic: true` for catalog-backed Details, download review, Watch List lookup, actual Resume and exact-title comparison. Numbered follow-ups are bounded to current results. Legacy clients retain their original allowlist. Android constructs routes and performs confirmed app operations; the model does not run arbitrary code or certify playback/download availability.
+
 - `mode: plan` returns a validated catalog action or an allowlisted page destination.
 - Android resolves catalog metadata and prepares title cards and navigation actions.
 - `mode: reply` generates a natural answer using recent conversation, catalog context, profile alias and enabled taste preferences. Email, passwords and tokens are not included in the profile context.
@@ -42,4 +44,4 @@ Tap the microphone once to start foreground hands-free turn-taking. Listening pa
 
 ## Announcements
 
-`node send_fcm_cli.mjs --send` uses the existing Firebase CLI login to send the **required 1.0.9 update** announcement to `vista_updates`. Without `--send`, FCM only validates it. The payload sets `check_update=true`, `release_status=live` and `mandatory=true`, and also says a kids version is planned. Send only after verifying the public mandatory manifest and GitHub APK download. An earlier coming-soon announcement was already accepted. FCM prompts users to open the app; installation still requires Android user approval. Run again only when another broadcast is intended.
+The release sender now targets **optional 1.0.10 availability** and refuses to send until the public manifest has version 17/1.0.10, hash and size. The festive coming-soon greeting was already accepted once. Do not repeat announcements as deployment checks. APK installation still requires Android user approval; FCM acceptance is not proof of delivery to every device.

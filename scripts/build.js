@@ -157,8 +157,18 @@ for (const required of ['index.html', '404.html', 'pdf/index.html', 'synapse/web
 }
 console.log('Verified ' + ROOT_HTML.length + ' HTML pages and required published assets');
 
+// APKs are GitHub assets, never Cloudflare Pages uploads. Fail closed if packaging regresses.
+function verifyNoInstallers(dir) {
+  for (const item of fs.readdirSync(dir, { withFileTypes: true })) {
+    const file = path.join(dir, item.name);
+    if (item.isDirectory()) verifyNoInstallers(file);
+    else if (/\.(apk|aab|jks|keystore)$/i.test(item.name)) throw new Error('Installer/signing file leaked into Pages output: ' + file);
+  }
+}
+verifyNoInstallers(DIST);
+
 const total = countFiles(DIST);
-console.log(`Build complete: dist/ (${total} files, ${getSize(DIST)} KB)`);
+console.log(`Build complete: dist/ (${total} files, ${Math.round(getSize(DIST) / 1024)} KB)`);
 
 function countFiles(dir) {
   let count = 0;
@@ -177,5 +187,5 @@ function getSize(dir) {
     if (entry.isDirectory()) total += getSize(p);
     else total += fs.statSync(p).size;
   }
-  return Math.round(total / 1024);
+  return total;
 }

@@ -1,6 +1,10 @@
 # Vista Cinema - Build Report
 
-## Current verification: 1.0.9 signed release and debug builds successful
+## Current release: 1.0.10 / 17
+
+[Verified artifact and release notes](RELEASE-1.0.10.md). Signed release build/lint, package/version/signature verification, JVM regressions and Android test APK compilation pass. Size **22,501,177 bytes**; SHA-256 **31BADF75DFBA417D3D3871BB76084311AE293A06C468C5399BCB1EDC88DA5B1A**. Certificate fingerprint matches the documented 1.0.9 production certificate. Final physical-device offline/onboarding/upgrade checks remain pending. Sections below preserve earlier release history.
+
+## Historical verification: 1.0.9 signed release and debug builds successful
 
 Verified **October 29, 2026**. VersionName **1.0.9**, versionCode **16**.
 
@@ -147,4 +151,4 @@ See `README.md` for the module layout and build commands, `DEPLOYMENT.md` for sh
 
 ---
 
-**Current result: 1.0.9 signed release and debug builds successful; release artifacts and mandatory manifest prepared for publication.**
+**Historical 1.0.9 result: signed release and debug builds successful; release artifacts and mandatory manifest prepared for publication. See the current 1.0.10 verification at the top.**

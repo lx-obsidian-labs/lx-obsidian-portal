@@ -5,7 +5,7 @@ Browse and search movies and series, read cast and "where to watch" info, build 
 and stream titles through multiple embed sources. Ships with in-app updates delivered from its
 own website.
 
-**Release package:** 1.0.9 (versionCode 16), signed and verified October 29, 2026. The release manifest marks this as a required update. Min SDK 24 (Android 7.0+), target SDK 35. Check the public manifest for deployment status.
+**Current release:** 1.0.10 (versionCode 17), signed package verified 7 November 2026; optional update. Festive discovery, better movie suggestions, catalog-backed AI actions, advanced Settings, accurate onboarding and downloads from supported sources are detailed in [the release notes](RELEASE-1.0.10.md). Minimum SDK 24 (Android 7.0+), target SDK 35. Final physical-device coverage and source-specific compatibility are described explicitly in the release record.
 
 **Website / APK repository:** [lx-obsidian-labs/lx-obsidian-portal](https://github.com/lx-obsidian-labs/lx-obsidian-portal), branch `master`. Public downloads: [Vista Cinema](https://lxobsidianportal.co.za/vista.html). See `DEPLOYMENT.md` for the verified publishing destinations and current release status.
 

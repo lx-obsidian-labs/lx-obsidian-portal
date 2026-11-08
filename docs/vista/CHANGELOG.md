@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.0.10] — 2026-11-07
+
+VersionCode **17**, optional update. [Release notes and signed APK verification](RELEASE-1.0.10.md).
+
+- Added festive collections, date-aware Christmas/New Year copy, daily picks and a seasonal opt-out.
+- Improved movie suggestions, explicit feedback, visible reasons, runtime/year filtering and candidate diversity.
+- Added persistent downloads for supported direct sources and a separate offline library/player; some providers remain streaming-only.
+- Added searchable Settings, AI & Voice and Downloads pages, real native language/caption preferences and storage tools.
+- Added catalog-backed assistant comparison, library, resume, numbered-reference and download-review actions with confirmation/status handling.
+- Preserved and corrected onboarding and first-time guest/sign-in/profile-setup routes; optional name, durable completion, replay and local-device limitations are explicit.
+- Strengthened provider-page ad filtering without removing Vista's own AdMob.
+- APKs stay in GitHub; Cloudflare builds exclude installers. Existing release history and site design are retained.
+
+Build/JVM/backend/model-contract checks pass; final physical-device coverage remains pending. See the release note for the exact scope rather than treating compilation as a device-test pass.
+
 All notable changes to Vista Cinema.
 
 ## [1.0.9] - 2026-10-29

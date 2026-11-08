@@ -1,5 +1,15 @@
 # Vista Cinema deployment runbook
 
+## Current 1.0.10 publication
+
+Current release: **1.0.10 / versionCode 17**, optional (`mandatory: false`). Signed APK: **22,501,177 bytes**, SHA-256 **31BADF75DFBA417D3D3871BB76084311AE293A06C468C5399BCB1EDC88DA5B1A**. [Release notes](RELEASE-1.0.10.md) list verification scope and limitations.
+
+Publish the signed binary in GitHub as `VistaCinema-v1.0.10.apk` and the identical TV filename `tv/VistaCinema-TV-v1.0.10.apk`. Cloudflare Pages builds website `master` into `dist`; installers/signing files are excluded and guarded by the build. The root update manifest is `vista-version.json`. Keep the existing site design, canonical shared navigation/footer, redirects and project bindings.
+
+An in-place production-signed update preserves local onboarding, guest-trial timestamps, preferences and library data. New viewers still receive onboarding; no universal offline-provider or TV feature-parity guarantee is made. Final device offline/onboarding/signed-upgrade coverage remains pending. Verify public APK Git object/hash/size and the live manifest after publication. Send an available-now announcement only after that verification; the coming-soon greeting was already accepted once.
+
+## Historical 1.0.9 runbook
+
 Last verified: **October 29, 2026**.
 
 ## Current status
