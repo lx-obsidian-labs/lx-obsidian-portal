@@ -12,6 +12,7 @@ VersionCode **17**, optional update. [Release notes and signed APK verification]
 - Preserved and corrected onboarding and first-time guest/sign-in/profile-setup routes; optional name, durable completion, replay and local-device limitations are explicit.
 - Strengthened provider-page ad filtering without removing Vista's own AdMob.
 - APKs stay in GitHub; Cloudflare builds exclude installers. Existing release history and site design are retained.
+- Added a redirect-only GitHub Release CDN download route for networks where the GitHub web/raw hop stalls. APK bytes are not proxied through Pages. Removed an existing `/404` rewrite that looped with Pages clean URLs during the live-site audit.
 
 Build/JVM/backend/model-contract checks pass; final physical-device coverage remains pending. See the release note for the exact scope rather than treating compilation as a device-test pass.
 

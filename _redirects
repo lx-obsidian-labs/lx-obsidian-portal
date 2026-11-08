@@ -43,5 +43,5 @@
 /support        /contact             301
 /help           /faq                 301
 
-# Custom 404
-/404            /404.html       200
+# Pages serves 404.html automatically. Rewriting /404 back to its .html URL loops
+# with Pages' built-in clean-URL redirect, so no custom 404 rewrite is needed.

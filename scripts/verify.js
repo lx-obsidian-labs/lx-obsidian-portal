@@ -89,7 +89,7 @@ for (const file of expectedDownloads) {
  if (file.endsWith('.pdf') && (!bytes.subarray(0,8).toString('latin1').startsWith('%PDF-1.') || !bytes.toString('latin1').trimEnd().endsWith('%%EOF'))) throw Error('Invalid PDF wrapper: '+file);
 }
 if (!home.includes('href="/downloads"') || !home.includes('Downloads &amp; Resources')) throw Error('Downloads not discoverable in primary navigation/footer');
-if (!downloads.includes('VistaCinema-v'+vistaRelease.versionName+'.apk') || !downloads.includes('VistaCinema-TV-v'+vistaRelease.versionName+'.apk')) throw Error('Latest official Android builds missing from downloads');
+if (!downloads.includes('Version '+vistaRelease.versionName) || !downloads.includes('/api/vista-download?platform=android') || !downloads.includes('/api/vista-download?platform=tv')) throw Error('Latest official Android builds missing from downloads');
 if (!downloads.includes('GitHub sign-in') || !downloads.includes('artifact may expire')) throw Error('Synapse build caveat missing');
 if (downloads.includes('href="#"')) throw Error('Placeholder link on download hub');
 console.log('Downloads checks passed: PDF headers, files, discoverability, release links');

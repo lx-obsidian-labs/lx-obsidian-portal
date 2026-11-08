@@ -16,8 +16,9 @@ The new festive, offline, advanced Settings and agentic chat screens are phone/t
 
 ## Downloads and verification
 
-- [Android phone/tablet APK](https://github.com/lx-obsidian-labs/lx-obsidian-portal/raw/master/VistaCinema-v1.0.10.apk)
-- [Android TV APK](https://github.com/lx-obsidian-labs/lx-obsidian-portal/raw/master/tv/VistaCinema-TV-v1.0.10.apk)
+- [Android phone/tablet APK](https://lxobsidianportal.co.za/api/vista-download?platform=android)
+- [Android TV APK](https://lxobsidianportal.co.za/api/vista-download?platform=tv)
+- [GitHub Release and direct asset alternatives](https://github.com/lx-obsidian-labs/lx-obsidian-portal/releases/tag/v1.0.10)
 - Package: `com.example.vista`.
 - Version: `1.0.10` / `17`.
 - Android minimum/target: `24` / `35` (Android 7.0+).
@@ -28,6 +29,8 @@ The new festive, offline, advanced Settings and agentic chat screens are phone/t
 
 **APKs are hosted in GitHub.** Cloudflare Pages serves the website, release notes, generated installation guide and update manifest; its build excludes installers and signing files.
 
+The first-party download links resolve public GitHub Release assets to their CDN URLs and return a redirect; they do not buffer, proxy or store the APK on Cloudflare. Both GitHub asset SHA-256 digests match the release hash above. This route avoids the GitHub web/raw download hop that returned gateway timeouts on a tested network. The direct GitHub Release remains a fallback.
+
 ## Verification scope
 
 Release build/lint and signing/package/version verification passed. JVM regressions and Android test APK compilation passed. Twelve backend tests and three actual NVIDIA action-contract probes passed. These checks do not establish universal provider/network/TV compatibility. Final physical-device offline-playback, onboarding UI and production signed-upgrade matrix coverage remains pending following device disconnection; source-specific download availability is not guaranteed.
@@ -36,4 +39,4 @@ Release build/lint and signing/package/version verification passed. JVM regressi
 
 Install over the existing production app using Android's installer; do not uninstall just to update. A matching signature preserves local data. New users choose sign-in or the three-day guest trial, then receive the introduction. Existing users retain completion and can replay the tour in Settings → About. Cloud AI requires sign-in; complete eligible offline copies open from Library → Downloads.
 
-[Full changelog](CHANGELOG.md) · [Build verification](BUILD_REPORT.md) · [Downloads centre](/downloads) · [Privacy](/privacy-policy.html) · [Terms](/vista-terms.html)
+[Full changelog](https://lxobsidianportal.co.za/docs/vista/CHANGELOG.md) · [Build verification](https://lxobsidianportal.co.za/docs/vista/BUILD_REPORT.md) · [Downloads centre](https://lxobsidianportal.co.za/downloads) · [Privacy](https://lxobsidianportal.co.za/privacy-policy.html) · [Terms](https://lxobsidianportal.co.za/vista-terms.html)
