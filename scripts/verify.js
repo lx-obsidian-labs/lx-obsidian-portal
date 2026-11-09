@@ -101,3 +101,11 @@ if (!fs.readFileSync(path.join(dist,'services.html'),'utf8').includes('/download
 if (!contact.includes('/downloads/project-discovery-workbook.pdf')) throw Error('Contact brief workbook link missing');
 if (!fs.readFileSync(path.join(dist,'vista.html'),'utf8').includes('Open Downloads &amp; Resources')) throw Error('Vista download centre link missing');
 console.log('Resource centre UX checks passed');
+
+// Careers module safeguards: discovery remains isolated from the rest of the hub.
+const careers = fs.readFileSync(path.join(dist,'careers.html'),'utf8');
+const careersApi = fs.readFileSync(path.join(dist,'functions/api/careers/platforms.js'),'utf8');
+if (!home.includes('href="/careers"')) throw Error('Careers missing from hub navigation');
+if (!careers.includes('id="careerResults"') || !careers.includes('js/careers.js')) throw Error('Careers discovery UI missing');
+if (!careersApi.includes('clockintoday.com/api/v1/') || !careersApi.includes('onRequestGet')) throw Error('Careers API integration missing');
+console.log('Careers module structural checks passed');

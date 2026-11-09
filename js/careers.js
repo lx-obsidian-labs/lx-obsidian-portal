@@ -1,0 +1,12 @@
+'use strict';
+(()=>{const form=document.getElementById('careerForm'),query=document.getElementById('careerQuery'),category=document.getElementById('careerCategory'),results=document.getElementById('careerResults'),status=document.getElementById('careerStatus');
+const el=(tag,text,className)=>{const e=document.createElement(tag);if(text!=null)e.textContent=String(text);if(className)e.className=className;return e};
+const allowedUrl=value=>{try{const u=new URL(value);return ['https:','http:'].includes(u.protocol)?u.href:null}catch{return null}};
+async function search(){status.textContent='Finding platforms…';results.replaceChildren();const params=new URLSearchParams();if(query.value.trim())params.set('q',query.value.trim());if(category.value)params.set('category',category.value);
+try{const res=await fetch('/api/careers/platforms?'+params.toString(),{headers:{Accept:'application/json'}});const payload=await res.json();if(!res.ok)throw Error(payload.error||'Provider unavailable');
+const data=Array.isArray(payload.items)?payload.items:[];status.textContent=data.length?data.length+' platform'+(data.length===1?'':'s')+' found':'No matching platforms found. Try a different term.';
+data.forEach(item=>{const card=el('article',null,'career-card');card.append(el('h3',item.name));if(item.description)card.append(el('p',item.description));const tags=el('div',null,'career-tags');for(const v of [item.category,item.location,item.payment].filter(Boolean).slice(0,3))tags.append(el('span',v));card.append(tags);const url=allowedUrl(item.url);if(url){const a=el('a','View platform details ↗');a.href=url;a.target='_blank';a.rel='noopener noreferrer nofollow';card.append(a)}results.append(card)});
+}catch(e){status.textContent='Platform discovery is temporarily unavailable. Please try again later.';console.warn('Careers source unavailable:',e.message)}}
+form.addEventListener('submit',event=>{event.preventDefault();search()});
+fetch('/api/careers/platforms?mode=categories').then(r=>r.ok?r.json():Promise.reject()).then(data=>{for(const item of (data.categories||[])){const value=typeof item==='string'?item:item.name;if(typeof value==='string'&&value.length<100){const o=new Option(value,value);category.add(o)}}}).catch(()=>{});
+search()})();
