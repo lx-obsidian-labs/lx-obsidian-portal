@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en-ZA">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LX Careers | Explore work platforms — LX Obsidian Labs</title>
+<meta name="description" content="Explore legitimate work and gig platforms with LX Careers, part of the LX Obsidian Labs technology hub.">
+<meta name="robots" content="index,follow"><meta name="theme-color" content="#0B0B0F">
+<link rel="canonical" href="https://www.lxobsidianportal.co.za/careers">
+<link rel="icon" href="/assets/favicon.svg"><link rel="stylesheet" href="/css/lx.css">
+<style>
+:root{color-scheme:dark}html{background:#0b0b0f}body{background:#0b0b0f;color:#f4f5fa;font-family:Inter,system-ui,sans-serif;margin:0}
+.careers{max-width:1180px;margin:0 auto;padding:125px 24px 90px}.career-kicker{color:#85aaff;font-weight:700;font-size:.75rem;letter-spacing:.17em;text-transform:uppercase}
+.careers h1{font-size:clamp(2.45rem,6vw,5.2rem);letter-spacing:-.065em;line-height:1.05;max-width:850px;margin:22px 0}.careers p{line-height:1.7}.career-lead{font-size:1.08rem;color:#adb2c2;max-width:740px}
+.career-panel{background:#14151d;border:1px solid #292c39;border-radius:20px;padding:24px;margin-top:35px}.career-controls{display:grid;grid-template-columns:2fr 1fr auto;gap:12px}
+.careers input,.careers select{width:100%;background:#0c0d13;border:1px solid #373b4d;border-radius:10px;padding:14px;color:#fff;min-height:50px}
+.careers button,.career-action{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:12px 22px;background:#2e6bff;color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer}
+.careers button:focus-visible,.careers a:focus-visible,.careers input:focus-visible,.careers select:focus-visible{outline:3px solid #8dabff;outline-offset:3px}
+.career-note{color:#aeb3c6;font-size:.86rem}.career-status{margin:25px 0;color:#cbd0db;min-height:25px}
+.career-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.career-card{background:#161821;border:1px solid #2c3040;border-radius:16px;padding:22px;display:flex;flex-direction:column;gap:12px}
+.career-card h3{font-size:1.23rem;letter-spacing:-.025em;margin:0}.career-card p{color:#bbc0d0;font-size:.91rem;margin:0;flex:1}.career-tags{display:flex;flex-wrap:wrap;gap:7px}.career-tags span{font-size:.72rem;border:1px solid #3c4254;padding:5px 9px;border-radius:20px;color:#c9d2e6}
+.career-card a{color:#9cb9ff;text-decoration:underline;text-underline-offset:4px;font-weight:600}.career-foot{border-top:1px solid #292d3a;margin-top:42px;padding-top:20px;color:#a4aabd;font-size:.86rem}
+@media(max-width:850px){.career-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.career-controls{grid-template-columns:1fr 1fr}.career-controls input{grid-column:1/-1}}@media(max-width:560px){.careers{padding:105px 18px 60px}.career-grid,.career-controls{grid-template-columns:1fr}.career-controls input{grid-column:auto}.career-panel{padding:16px}}
+</style>
+</head><body>
+<a href="#careers-main" style="position:absolute;left:-9999px" onfocus="this.style.left='10px'" onblur="this.style.left='-9999px'">Skip to content</a>
+<header class="velora-nav" id="veloraNav">
+<div class="velora-nav__inner"><a class="velora-brand" href="/"><span class="velora-brand__mark">LX</span><span class="velora-brand__label">Obsidian Labs</span></a>
+<nav class="velora-links lx-home-nav" id="veloraLinks" aria-label="Primary"><a class="velora-link" href="/#solutions">Solutions</a><a class="velora-link" href="/services">Services</a><a class="velora-link" href="/portfolio">Our Work</a><a class="velora-link" href="/#products">Products</a><a class="velora-link" href="/downloads">Downloads</a><a class="velora-link" href="/careers" aria-current="page">Careers</a><a class="velora-link" href="/about">Company</a></nav>
+<div class="velora-actions"><a class="velora-link" href="/contact">Contact</a><a class="velora-cta" href="/contact"><span class="velora-cta__pill">Discuss a Project</span></a><button type="button" class="velora-burger" id="veloraBurger" aria-label="Open menu" aria-expanded="false" aria-controls="veloraLinks"><span></span><span></span></button></div></div></header>
+<main class="careers" id="careers-main">
+<div class="career-kicker">LX OBSIDIAN LABS / CAREERS HUB</div><h1>Explore new ways to work.</h1>
+<p class="career-lead">Discover work and gig platforms, understand eligibility requirements and find the right place to apply. Built for transparent discovery, not misleading application promises.</p>
+<section class="career-panel" aria-label="Platform search"><form id="careerForm" class="career-controls">
+<label><span class="career-note">Keywords</span><input name="q" id="careerQuery" maxlength="100" placeholder="e.g. freelance design, delivery, remote"></label>
+<label><span class="career-note">Category</span><select name="category" id="careerCategory"><option value="">All categories</option></select></label>
+<button type="submit">Search platforms</button></form>
+<p class="career-note">ClockInToday currently focuses on US gig-work platforms. Availability and residency requirements vary. This directory does not submit job applications.</p></section>
+<p class="career-status" id="careerStatus" role="status" aria-live="polite">Loading work platforms…</p><section class="career-grid" id="careerResults" aria-label="Work platforms"></section>
+<div class="career-foot">Platform information provided by <a href="https://clockintoday.com/" target="_blank" rel="noopener noreferrer">ClockInToday</a> (CC BY 4.0). Always verify eligibility, payment terms and application requirements directly on the provider's website. LX Obsidian Labs is not affiliated with listed platforms.</div>
+</main><script src="/js/ui/mobile-nav.js" defer></script><script src="/js/careers.js" defer></script></body></html>
