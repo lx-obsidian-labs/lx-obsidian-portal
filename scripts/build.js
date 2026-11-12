@@ -14,7 +14,6 @@ const INCLUDE = [
   '_headers', '_redirects',
   'sw.js', 'manifest.json', 'robots.txt', 'sitemap.xml', 'llms.txt',
   'vista-version.json',
-  'docs',
   'package.json'
 ];
 
