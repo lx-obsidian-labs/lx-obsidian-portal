@@ -8,7 +8,7 @@ Source review, not penetration testing.
 |---|---|
 | Contact body limit | Actual streamed byte limit implemented; regression tests added, CI pending |
 | Chat accepts user-controlled history and model | Schema and roles validated; model allowlist and quotas outstanding |
-| Chat provider calls | 15-second per-attempt timeout added; total retry budget outstanding |
+| Chat provider calls | 15-second per-attempt timeout and 25-second aggregate upstream deadline added; runtime verification pending |
 | AI output contains executable HTML | Verify sandbox isolation and prohibit privileged execution |
 | CSP permits unsafe-inline and unsafe-eval | Inventory dependencies, migrate incrementally and test report-only policy |
 | Build copies functions and docs into dist | Separate server source and internal documentation from static output after route audit |
