@@ -610,7 +610,26 @@ export async function onRequest(context) {
   try {
     const bad = (error, status = 400) => new Response(JSON.stringify({error}), {status, headers:{'Content-Type':'application/json', ...cors(request)}});
     let body;
-    try { body = await request.json(); } catch { return bad('Invalid JSON'); }
+    // Bound memory use even when Content-Length is absent or inaccurate.
+    const limit = 1024 * 1024;
+    if (Number(request.headers.get('Content-Length') || 0) > limit) return bad('Request too large',413);
+    try {
+      const reader = request.body?.getReader();
+      if (!reader) return bad('Invalid JSON');
+      const decoder = new TextDecoder('utf-8',{fatal:true});
+      let size = 0, raw = '';
+      while (true) {
+        const {done,value} = await reader.read();
+        if (done) break;
+        size += value.byteLength;
+        if (size > limit) {
+          await reader.cancel().catch(()=>{});
+          return bad('Request too large',413);
+        }
+        raw += decoder.decode(value,{stream:true});
+      }
+      body = JSON.parse(raw + decoder.decode());
+    } catch { return bad('Invalid JSON'); }
     if (!body || typeof body !== 'object' || Array.isArray(body)) return bad('Invalid request');
     const { message = '', mode = 'chat', provider = 'nvidia', model, code, history = [], temperature } = body;
     if (typeof message !== 'string' || (code !== undefined && typeof code !== 'string')) return bad('Invalid message or code');
