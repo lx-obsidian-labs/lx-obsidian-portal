@@ -499,6 +499,7 @@ export async function callAI(messages, env, preferredProvider, preferredModel, m
       try {
         const resp = await fetch('https://' + prov.hostname + prov.path, {
           method: 'POST',
+          signal: AbortSignal.timeout(15000),
           headers: {
             'Authorization': 'Bearer ' + apiKey,
             'Content-Type': 'application/json',
@@ -603,8 +604,14 @@ export async function onRequest(context) {
   if (request.method !== 'POST') return new Response(JSON.stringify({ error: 'POST only' }), { status: 405, headers: { 'Content-Type': 'application/json', ...cors(request) } });
 
   try {
-    const body = await request.json();
-    const { message, mode = 'chat', provider = 'nvidia', model, code, history = [], temperature } = body;
+    const bad = (error, status = 400) => new Response(JSON.stringify({error}), {status, headers:{'Content-Type':'application/json', ...cors(request)}});
+    let body;
+    try { body = await request.json(); } catch { return bad('Invalid JSON'); }
+    if (!body || typeof body !== 'object' || Array.isArray(body)) return bad('Invalid request');
+    const { message = '', mode = 'chat', provider = 'nvidia', model, code, history = [], temperature } = body;
+    if (typeof message !== 'string' || (code !== undefined && typeof code !== 'string')) return bad('Invalid message or code');
+    if (!Array.isArray(history) || history.length > 100 || history.some(m => !m || !['user','assistant'].includes(m.role) || typeof m.content !== 'string')) return bad('Invalid history');
+    if (!Object.hasOwn(PROVIDERS, provider) || (model !== undefined && (typeof model !== 'string' || model.length > 200))) return bad('Invalid provider or model');
 
     const promptText = (message || '').trim();
     if (!promptText && !code) return new Response(JSON.stringify({ error: 'Message required' }), { status: 400, headers: { 'Content-Type': 'application/json', ...cors(request) } });
@@ -668,7 +675,7 @@ export async function onRequest(context) {
     });
 
   } catch (err) {
-    return new Response(JSON.stringify({ error: err.message }), {
+    return new Response(JSON.stringify({ error: 'Internal server error' }), {
       status: 500,
       headers: { 'Content-Type': 'application/json', ...cors(request) }
     });
