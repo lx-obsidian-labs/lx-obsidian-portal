@@ -29,6 +29,8 @@ jobs:
           cache: npm
       - name: Install locked dependencies
         run: npm ci --no-audit --no-fund
+      - name: Verify engineering documentation
+        run: npm run check:docs
       - name: Test contact API behavior
         run: npm test
       - name: Build and verify generated output
