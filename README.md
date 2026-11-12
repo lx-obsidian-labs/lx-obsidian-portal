@@ -61,3 +61,7 @@ Run `npm ci`, `npm test` and `npm run build` locally using Node.js 22, as config
 - [Maintainer and continuity guide](docs/MAINTAINER_GUIDE.md)
 - [Contact API reference](docs/CONTACT_API_REFERENCE.md)
 - [LX Obsidian Labs documentation standard](docs/DOCUMENTATION_STANDARD.md)
+
+- [System architecture and request flows](docs/ARCHITECTURE.md)
+- [Product API reference](docs/PRODUCT_API_REFERENCE.md)
+- [Security review and release risks](docs/SECURITY_REVIEW.md)
