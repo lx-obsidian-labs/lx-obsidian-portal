@@ -1,3 +1,5 @@
+// Engineering: LX Obsidian Labs | https://www.lxobsidianportal.co.za
+// Preserve existing third-party attribution and applicable notices.
 // ── System prompt (adapted from bolt.diy architecture) ──────────
 // Uses <lxArtifact> + <lxAction> structured output format
 // so the LLM output is cleanly parseable instead of raw HTML dumps.
