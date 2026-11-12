@@ -1,3 +1,5 @@
+// Engineering: LX Obsidian Labs | https://www.lxobsidianportal.co.za
+// Preserve existing third-party attribution and applicable notices.
 // Project enquiry API — accepts same-origin form submissions only.
 // D1 is the durable source of truth; optional LEADS_WEBHOOK_URL enables notification.
 const json = (data, status = 200) => new Response(JSON.stringify(data), {
