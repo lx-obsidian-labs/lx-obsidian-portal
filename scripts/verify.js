@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const cp = require('child_process');
 const dist = path.resolve(__dirname, '../dist');
+if (fs.existsSync(path.join(dist,'docs'))) throw Error('Internal engineering documentation leaked into static output');
 const required = ['index.html', 'pdf/index.html', 'synapse/web/index.html', '404.html', '_redirects', 'css/lx.css'];
 for (const name of required) {
   if (!fs.existsSync(path.join(dist, name))) throw Error('Missing required asset: ' + name);
