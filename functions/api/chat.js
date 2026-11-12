@@ -486,6 +486,8 @@ export async function callAI(messages, env, preferredProvider, preferredModel, m
     ? ['openrouter', 'nvidia']
     : ['nvidia', 'openrouter'];
 
+  // Bound total upstream latency across all provider/model fallbacks.
+  const deadline = Date.now() + 25000;
   for (const provName of providerOrder) {
     const prov = PROVIDERS[provName];
     const apiKey = prov.getKey(env);
@@ -496,10 +498,12 @@ export async function callAI(messages, env, preferredProvider, preferredModel, m
       : prov.models;
 
     for (const modelId of modelList) {
+      const remaining = deadline - Date.now();
+      if (remaining <= 0) return null;
       try {
         const resp = await fetch('https://' + prov.hostname + prov.path, {
           method: 'POST',
-          signal: AbortSignal.timeout(15000),
+          signal: AbortSignal.timeout(Math.min(15000, remaining)),
           headers: {
             'Authorization': 'Bearer ' + apiKey,
             'Content-Type': 'application/json',
