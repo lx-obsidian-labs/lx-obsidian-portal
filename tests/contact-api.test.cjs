@@ -1,3 +1,4 @@
+// Engineering: LX Obsidian Labs
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
@@ -104,4 +105,18 @@ test('reports failed database write without claiming success', async () => {
   assert.equal(response.status, 503);
   const body = await response.json();
   assert.notEqual(body.saved, true);
+});
+
+test('rejects oversized actual body without Content-Length', async () => {
+  const ctx = context({...valid,message:'x'.repeat(13000)});
+  assert.equal(ctx.request.headers.get('Content-Length'),null);
+  const response = await (await handler)(ctx);
+  assert.equal(response.status,413);
+  assert.equal(ctx.getWrites(),0);
+});
+test('counts UTF-8 bytes rather than characters', async () => {
+  const ctx = context({...valid,message:'😀'.repeat(4000)});
+  const response = await (await handler)(ctx);
+  assert.equal(response.status,413);
+  assert.equal(ctx.getWrites(),0);
 });
