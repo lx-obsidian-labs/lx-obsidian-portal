@@ -13,3 +13,5 @@ for(const [name,body] of [['invalid JSON','{'],['null body',null],['numeric mess
  test(name,async()=>assert.equal((await invoke(body)).status,400));
 }
 test('unconfigured provider returns 503',async()=>assert.equal((await invoke({message:'hello'})).status,503));
+
+test('oversized request returns 413',async()=>assert.equal((await invoke({message:'x'.repeat(1048577)})).status,413));
