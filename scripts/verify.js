@@ -1,3 +1,5 @@
+// Engineering: LX Obsidian Labs | https://www.lxobsidianportal.co.za
+// Preserve existing third-party attribution and applicable notices.
 const fs = require('fs');
 const path = require('path');
 const cp = require('child_process');
