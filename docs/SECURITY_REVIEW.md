@@ -11,7 +11,7 @@ Source review, not penetration testing.
 | Chat provider calls | 15-second per-attempt timeout and 25-second aggregate upstream deadline added; runtime verification pending |
 | AI output contains executable HTML | Verify sandbox isolation and prohibit privileged execution |
 | CSP permits unsafe-inline and unsafe-eval | Inventory dependencies, migrate incrementally and test report-only policy |
-| Build copies functions and docs into dist | Separate server source and internal documentation from static output after route audit |
+| Build copies functions into dist | Docs excluded and guard added; server-source packaging still requires route audit |
 | D1 migration scripts disagree with config | Locate authoritative schema and reconcile before executing |
 | Webhook may transmit personal information | Approve destination, retention and access policy |
 
