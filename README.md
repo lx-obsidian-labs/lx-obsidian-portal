@@ -65,3 +65,5 @@ Run `npm ci`, `npm test` and `npm run build` locally using Node.js 22, as config
 - [System architecture and request flows](docs/ARCHITECTURE.md)
 - [Product API reference](docs/PRODUCT_API_REFERENCE.md)
 - [Security review and release risks](docs/SECURITY_REVIEW.md)
+
+- [Release evidence and acceptance gates](docs/RELEASE_EVIDENCE.md)
