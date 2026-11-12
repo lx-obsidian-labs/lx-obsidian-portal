@@ -8,13 +8,13 @@ This repository supports the web presence of LX Obsidian Labs and its software p
 
 **Development stage:** Active Development / Iterative Release (production status must be checked against the deployed site).  
 **CI evidence (2026-11-07):** [Verify portal run 42397050121](https://github.com/lx-obsidian-labs/lx-obsidian-portal/actions/runs/42397050121) completed successfully at commit `a5f96f28d682d91931970f3be730b28e2e5f58a8`. Production lead delivery remains unverified.  
-**Verification:** Build checks and contact API tests are configured; passing CI and live lead-delivery results remain unverified.  
+**Verification:** Historical CI evidence is linked above; current HEAD and live lead delivery remain unverified.  
 **Implemented scope under review:** Static marketing pages, downloadable resources, Cloudflare Pages Functions contact endpoint and D1-backed lead persistence.  
 **Next milestone:** Confirm CI for contact API regression coverage, then exercise production lead persistence and notification delivery with controlled test data.
 
 The portfolio [evaluation standard](https://github.com/lx-obsidian-labs/lx-obsidian-labs/blob/main/PORTFOLIO_EVALUATION.md) separates maturity from engineering quality. Planned features do not reduce the engineering assessment.
 
-> **Verification status:** The repository's exact build process, framework, deployment branch and current live status require confirmation against its source and hosting configuration.
+> **Architecture:** Static HTML/CSS/JavaScript, custom Node.js build, Cloudflare Pages Functions and D1. CI targets master; actual production deployment configuration remains unverified.
 
 ## Project goals
 
@@ -27,7 +27,7 @@ These are project objectives, not assertions that every capability has been test
 
 ## Local development
 
-Inspect the repository structure and build manifest first. Use the package manager, runtime version and commands declared by the project. Never publish production environment variables.
+Use Node.js 22. Run `npm ci`, `npm test`, `npm run build`, then `npx wrangler pages dev dist` for a built-output preview. Never publish production environment variables. Migration scripts require reconciliation before use.
 
 ## Engineering and release checklist
 
@@ -55,3 +55,9 @@ Run `npm ci`, `npm test` and `npm run build` locally using Node.js 22, as config
 **LX Obsidian Labs** — Nathan Vilane
 
 [Engineering portfolio](https://github.com/lx-obsidian-labs) · [Contact](mailto:vilanenathan@gmail.com)
+
+## Maintainer documentation
+
+- [Maintainer and continuity guide](docs/MAINTAINER_GUIDE.md)
+- [Contact API reference](docs/CONTACT_API_REFERENCE.md)
+- [LX Obsidian Labs documentation standard](docs/DOCUMENTATION_STANDARD.md)
