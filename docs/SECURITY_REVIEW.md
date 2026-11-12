@@ -6,9 +6,9 @@ Source review, not penetration testing.
 
 | Finding | Required action |
 |---|---|
-| Contact body limit relies on Content-Length | Enforce actual byte limit and test chunked requests |
-| Chat accepts user-controlled history and model | Validate schema, roles, provider/model and quotas |
-| Chat provider calls lack explicit timeout | Add bounded timeouts and retry budget |
+| Contact body limit | Actual streamed byte limit implemented; regression tests added, CI pending |
+| Chat accepts user-controlled history and model | Schema and roles validated; model allowlist and quotas outstanding |
+| Chat provider calls | 15-second per-attempt timeout added; total retry budget outstanding |
 | AI output contains executable HTML | Verify sandbox isolation and prohibit privileged execution |
 | CSP permits unsafe-inline and unsafe-eval | Inventory dependencies, migrate incrementally and test report-only policy |
 | Build copies functions and docs into dist | Separate server source and internal documentation from static output after route audit |
