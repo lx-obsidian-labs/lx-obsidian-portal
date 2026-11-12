@@ -6,7 +6,7 @@ Engineering attribution: LX Obsidian Labs — https://www.lxobsidianportal.co.za
 The portal is a static HTML/CSS/JavaScript site assembled by Node.js, not a React application. Cloudflare Pages serves dist; Pages Functions provide server-side endpoints. Wrangler config declares D1 binding DB. Product applications may have independent repositories and release lifecycles.
 
 ## Reproduce
-Use Node.js 22. Run npm ci, npm test, npm run build, then npm run dev (Wrangler local development; current script serves repository root rather than dist). For production-equivalent preview run npx wrangler pages dev dist after building. Never use production secrets or customer records locally.
+Use Node.js 22. Run npm ci, npm test, npm run build, then npm run dev (builds and serves dist through Wrangler). For a preview without rebuilding run npx wrangler pages dev dist after building. Never use production secrets or customer records locally.
 
 ## Source map
 scripts/build.js assembles output, synchronises shared navigation/footer from index.html, generates resources, normalises links and publishes nested PDF/Synapse entry points. scripts/verify.js validates output assets, links, JS syntax and marketing regressions. css/lx.css is canonical; legacy saas.css must not override it. functions/api/contact.js handles lead capture. tests/contact-api.test.cjs uses mocked D1. .github/workflows/verify.yml runs tests and build on master.
