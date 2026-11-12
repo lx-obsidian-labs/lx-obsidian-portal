@@ -24,8 +24,26 @@ export async function onRequest(context) {
   }
   if (Number(request.headers.get('Content-Length') || 0) > 12000) return json({error:'Request too large'},413);
   if (!env.DB) return json({error:'Service temporarily unavailable'},503);
+  // Enforce the actual streamed byte count, not just the optional Content-Length.
   let input;
-  try { input = await request.json(); } catch { return json({error:'Invalid JSON'},400); }
+  try {
+    const reader = request.body?.getReader();
+    if (!reader) return json({error:'Invalid JSON'},400);
+    const decoder = new TextDecoder('utf-8', {fatal:true});
+    let bytes = 0, raw = '';
+    while (true) {
+      const {done,value} = await reader.read();
+      if (done) break;
+      bytes += value.byteLength;
+      if (bytes > 12000) {
+        await reader.cancel().catch(()=>{});
+        return json({error:'Request too large'},413);
+      }
+      raw += decoder.decode(value,{stream:true});
+    }
+    raw += decoder.decode();
+    input = JSON.parse(raw);
+  } catch { return json({error:'Invalid JSON'},400); }
   if (!input || typeof input !== 'object' || Array.isArray(input)) return json({error:'Invalid request'},400);
   // Honeypot: bots should not get a stored enquiry.
   if (clean(input.company_website,500)) return json({ok:true, reference:'RECEIVED'});
