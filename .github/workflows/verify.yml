@@ -31,7 +31,13 @@ jobs:
         run: npm ci --no-audit --no-fund
       - name: Verify engineering documentation
         run: npm run check:docs
-      - name: Test contact API behavior
+      - name: Test API behavior
         run: npm test
       - name: Build and verify generated output
         run: npm run build
+
+      - name: Record successful verification
+        run: |
+          echo '## Portal verification' >> "$GITHUB_STEP_SUMMARY"
+          echo "Commit: $GITHUB_SHA" >> "$GITHUB_STEP_SUMMARY"
+          echo 'Documentation checks, API tests and build completed. Live production checks are separate.' >> "$GITHUB_STEP_SUMMARY"
