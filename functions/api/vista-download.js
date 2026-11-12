@@ -1,3 +1,5 @@
+// Engineering: LX Obsidian Labs | https://www.lxobsidianportal.co.za
+// Preserve existing third-party attribution and applicable notices.
 // Resolve a public GitHub Release asset to its CDN URL. Never buffer or proxy APK bytes.
 const release = {
   android: { id: '723495986', filename: 'VistaCinema-v1.0.10.apk' },
