@@ -18,4 +18,4 @@ Verify CI for the exact commit, preview routes /, /pdf, /synapse/web, /contact a
 Authorised successors need GitHub organisation, Cloudflare account, domain/DNS and billing access, plus private secret recovery and product repository access. Never commit credentials. Record named owners privately. A successor must independently clone, build, preview and demonstrate rollback; no such exercise is verified.
 
 ## Known blockers
-Migration scripts reference lx-portal while Wrangler declares lx-obsidian-db; the referenced initial SQL file was not retrievable. Do not execute migration or seed commands until reconciled. Production lead delivery and current deployment remain unverified. Build copies docs into public output: do not place private operational details there.
+Migration scripts reference lx-portal while Wrangler declares lx-obsidian-db; the referenced initial SQL file was not retrievable. Do not execute migration or seed commands until reconciled. Production lead delivery and current deployment remain unverified. Build excludes docs from static output; the GitHub repository may still be public. Never place private operational details in it.
