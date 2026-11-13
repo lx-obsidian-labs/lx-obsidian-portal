@@ -12,7 +12,7 @@ Source review, not penetration testing.
 | AI output contains executable HTML | Verify sandbox isolation and prohibit privileged execution |
 | CSP permits unsafe-inline and unsafe-eval | Inventory dependencies, migrate incrementally and test report-only policy |
 | Build copies functions into dist | Docs excluded and guard added; server-source packaging still requires route audit |
-| D1 migration scripts disagree with config | Locate authoritative schema and reconcile before executing |
+| D1 migration scripts disagree with config | Migration and seed commands disabled; recover authoritative schema before restoring them |
 | Webhook may transmit personal information | Approve destination, retention and access policy |
 
 Do not publish secrets, customer records or private recovery information. Verify deployed function headers separately from static _headers. Report vulnerabilities privately through the organisation's authorised contact channel. No remediation is claimed merely because it is documented.
