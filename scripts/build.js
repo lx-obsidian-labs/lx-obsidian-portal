@@ -149,6 +149,10 @@ for (const file of ROOT_HTML) {
   fs.writeFileSync(output, html);
 }
 
+// Refresh nested entrypoints from normalized source so navigation and assets match.
+fs.copyFileSync(path.join(DIST, 'pdf.html'), path.join(pdfDir, 'index.html'));
+fs.copyFileSync(path.join(DIST, 'synapse-web.html'), path.join(synapseWebDir, 'index.html'));
+
 // Remove the legacy PDF file only after HTML normalization has completed.
 fs.rmSync(path.join(DIST, 'pdf.html'), { force: true });
 
