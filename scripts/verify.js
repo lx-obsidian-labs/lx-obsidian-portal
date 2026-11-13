@@ -104,3 +104,6 @@ if (!fs.readFileSync(path.join(dist,'services.html'),'utf8').includes('/download
 if (!contact.includes('/downloads/project-discovery-workbook.pdf')) throw Error('Contact brief workbook link missing');
 if (!fs.readFileSync(path.join(dist,'vista.html'),'utf8').includes('Open Downloads &amp; Resources')) throw Error('Vista download centre link missing');
 console.log('Resource centre UX checks passed');
+
+for (const id of ['start-here','study-tools']) if (!home.includes('id="'+id+'"')) throw Error('Missing visitor journey: '+id);
+for (const href of ['/pdf','/synapse','/downloads','/contact']) if (!home.includes('href="'+href+'"')) throw Error('Missing task destination: '+href);
