@@ -685,6 +685,10 @@ body:has(.lx-home) .glass-footer{background:#000!important}
 .lx-home .lx-home-close{border-top:1px solid rgba(255,255,255,.1)}
 @media(max-width:820px){.lx-home .lx-studio-grid{grid-template-columns:1fr}.lx-home .lx-proof__grid{grid-template-columns:1fr}.lx-home .lx-studio-section,.lx-home .lx-home-products{padding:65px 0}.lx-home .lx-studio-card{min-height:0}.lx-home .lx-home-hero{padding-top:98px}.lx-home .lx-home-hero h1{font-size:clamp(2.65rem,11vw,4.5rem)}}
 </style>
+<style id="lx-journey-accessibility">
+/* LX Obsidian Labs: task-first navigation */
+.lx-journeys{padding-block:clamp(32px,5vw,64px)}.lx-journeys .lx-studio-card a{display:flex;align-items:center;min-height:44px;margin-top:4px;text-decoration:underline;text-underline-offset:4px}.lx-journeys small{display:block;color:#bdbdbd;margin-top:12px;line-height:1.5}.lx-journeys [id],#start-here{scroll-margin-top:100px}.lx-journeys a:focus-visible,.lx-home-actions a:focus-visible,.velora-nav a:focus-visible,.velora-nav button:focus-visible{outline:3px solid #78aaff;outline-offset:4px}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.lx-journeys *{transition:none!important;animation:none!important}}
+</style>
 </head>
 <body>
 <a href="#main" class="skip-link">Skip to content</a>
@@ -697,7 +701,7 @@ body:has(.lx-home) .glass-footer{background:#000!important}
       <span class="velora-brand__label">Obsidian Labs</span>
     </a>
 
-    <nav class="velora-links lx-home-nav" id="veloraLinks" aria-label="Primary"><a class="velora-link" href="/#solutions">Solutions</a><a class="velora-link" href="/services">Services</a><a class="velora-link" href="/portfolio">Our Work</a><a class="velora-link" href="/#products">Products</a><a class="velora-link" href="/downloads">Downloads</a><a class="velora-link" href="/about">Company</a></nav>
+    <nav class="velora-links lx-home-nav" id="veloraLinks" aria-label="Primary"><a class="velora-link" href="/#start-here">Start here</a><a class="velora-link" href="/services">Services</a><a class="velora-link" href="/portfolio">Our Work</a><a class="velora-link" href="/#study-tools">Tools</a><a class="velora-link" href="/downloads">Downloads</a><a class="velora-link" href="/about">Company</a></nav>
 
     <div class="velora-actions">
       <a class="velora-link" href="contact.html">Contact</a>
@@ -713,10 +717,19 @@ body:has(.lx-home) .glass-footer{background:#000!important}
     <p class="lx-home-kicker">SOUTH AFRICAN SOFTWARE ENGINEERING &amp; AI STUDIO</p>
     <h1 id="home-title">We engineer custom software<br><span>that scales your business.</span></h1>
     <p class="lx-home-intro">From bespoke digital platforms to tailored AI integrations, LX Obsidian Labs designs, develops and delivers software and automation engineered around the needs of South African businesses.</p>
-    <div class="lx-home-actions"><a class="lx-home-button lx-home-button--primary" href="/contact">Request a Project Discovery Call</a><a class="lx-home-button" href="/portfolio">View Our Work</a></div>
+    <div class="lx-home-actions"><a class="lx-home-button lx-home-button--primary" href="/contact">Discuss your project</a><a class="lx-home-button" href="/portfolio">View Our Work</a></div>
     <div class="lx-trustline" aria-label="Our approach"><span>South African engineering studio</span><span>Custom-built solutions</span><span>Discovery to delivery</span></div>
   </div><div class="lx-home-hero__visual"><img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&amp;fit=crop&amp;w=1100&amp;q=85" alt="Software engineering workspace with laptop and development tools" loading="eager" decoding="async"><div class="lx-home-hero__visual-caption"><span>DISCOVER / ENGINEER / DELIVER</span><span>LX OBSIDIAN LABS</span></div></div></div>
 </section>
+<!-- Engineering and UX: LX Obsidian Labs -->
+<section class="lx-studio-section lx-journeys" id="start-here" aria-labelledby="journey-title"><div class="lx-home-wrap">
+  <div class="lx-studio-intro"><p class="lx-home-kicker">START HERE</p><h2 id="journey-title">What would you like to do?</h2><p>Choose a task. No technical knowledge needed.</p></div>
+  <div class="lx-studio-grid">
+    <article class="lx-studio-card" id="study-tools"><span class="lx-studio-card__eyebrow">FOR STUDENTS &amp; EVERYDAY USERS</span><h3>Study, research and work with documents</h3><p>Find practical tools for assignments, research and everyday productivity.</p><a href="/pdf">Work with PDFs →</a><a href="/synapse">Explore AI assistance →</a><a href="/downloads">Find downloads and resources →</a><small>Check AI-generated information before using it in academic work.</small></article>
+    <article class="lx-studio-card"><span class="lx-studio-card__eyebrow">FOR BUSINESSES &amp; ENTREPRENEURS</span><h3>Build a website, app or business system</h3><p>Tell us what you need to improve. We can help you define the right solution, even if you do not have a technical brief.</p><a href="/services">See what we can build →</a><a href="/contact">Discuss your idea →</a><a href="/portfolio">See previous work →</a></article>
+    <article class="lx-studio-card"><span class="lx-studio-card__eyebrow">FOR EXISTING USERS</span><h3>Find an app or get help</h3><p>Access our products, installers and answers to common questions.</p><a href="/vista">Explore Vista Cinema →</a><a href="/downloads">Find app downloads →</a><a href="/faq">Get answers →</a></article>
+  </div>
+</div></section>
 <section class="lx-studio-section" id="solutions" aria-labelledby="solutions-title"><div class="lx-home-wrap">
   <div class="lx-studio-intro"><p class="lx-home-kicker">ENGINEERING SERVICES</p><h2 id="solutions-title">Technology built around your business. Not the other way around.</h2><p>Whether you need to replace manual processes, bring a new platform to market or connect disconnected systems, we start with the problem—and engineer the right solution.</p></div>
   <div class="lx-studio-grid">
@@ -736,7 +749,7 @@ body:has(.lx-home) .glass-footer{background:#000!important}
 <section class="lx-home-products" id="products" aria-labelledby="products-title"><div class="lx-home-wrap">
   <div class="lx-home-section-head"><div><p class="lx-home-kicker">FROM OUR LABS / PRODUCT PORTFOLIO</p><h2 id="products-title">Products we build and maintain.</h2></div><p>Our studio also develops independent products. Explore them separately from our client engineering services.</p></div>
   <div class="lx-home-cards">
-    <a class="lx-home-card" href="/vista"><span class="lx-home-card__number">01 / ENTERTAINMENT</span><h3>Vista Cinema</h3><p>Festive movie discovery, helpful AI actions and offline downloads from supported sources.</p><span class="lx-home-card__link">Explore Vista <span aria-hidden="true">↗</span></span></a>
+    <a class="lx-home-card" href="/vista"><span class="lx-home-card__number">01 / ENTERTAINMENT</span><h3>Vista Cinema</h3><p>Movie discovery, helpful AI actions and offline downloads from supported sources.</p><span class="lx-home-card__link">Explore Vista <span aria-hidden="true">↗</span></span></a>
     <a class="lx-home-card" href="/synapse"><span class="lx-home-card__number">02 / AI PRODUCTIVITY</span><h3>Synapse</h3><p>Explore our approach to AI-assisted browser workflows and productivity.</p><span class="lx-home-card__link">Explore Synapse <span aria-hidden="true">↗</span></span></a>
     <a class="lx-home-card" href="/pdf"><span class="lx-home-card__number">03 / DOCUMENT WORKFLOWS</span><h3>LX PDF Studio</h3><p>Handle PDF tasks in your browser with convenient document tools.</p><span class="lx-home-card__link">Open PDF Studio <span aria-hidden="true">↗</span></span></a>
   </div>
