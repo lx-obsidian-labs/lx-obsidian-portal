@@ -67,3 +67,5 @@ Run `npm ci`, `npm test` and `npm run build` locally using Node.js 22, as config
 - [Security review and release risks](docs/SECURITY_REVIEW.md)
 
 - [Release evidence and acceptance gates](docs/RELEASE_EVIDENCE.md)
+
+- [Database recovery and migration readiness](docs/DATABASE_RECOVERY.md)
