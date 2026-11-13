@@ -8,6 +8,8 @@ Engineering attribution: LX Obsidian Labs — https://www.lxobsidianportal.co.za
 | Actual request size limit | functions/api/contact.js | oversized and UTF-8 regression tests |
 | AI request schema | functions/api/chat.js | tests/chat-api.test.cjs |
 | Product download routing | functions/api/vista-download.js | release metadata and live redirects pending |
+| Canonical domain routing | functions/_middleware.js | tests/middleware.test.cjs |
+| Database migration safety | scripts/database-guard.js | commands intentionally fail closed; schema recovery pending |
 | Build integrity | scripts/build.js | npm run build |
 | Documentation integrity | scripts/verify-docs.js | npm run check:docs |
 
