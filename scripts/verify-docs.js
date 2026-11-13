@@ -3,7 +3,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const assert = require('node:assert/strict');
 const root = path.resolve(__dirname, '..');
-const required = ['README.md','docs/MAINTAINER_GUIDE.md','docs/CONTACT_API_REFERENCE.md','docs/DOCUMENTATION_STANDARD.md','docs/ARCHITECTURE.md','docs/PRODUCT_API_REFERENCE.md','docs/SECURITY_REVIEW.md','docs/RELEASE_EVIDENCE.md'];
+const required = ['README.md','docs/MAINTAINER_GUIDE.md','docs/CONTACT_API_REFERENCE.md','docs/DOCUMENTATION_STANDARD.md','docs/ARCHITECTURE.md','docs/PRODUCT_API_REFERENCE.md','docs/SECURITY_REVIEW.md','docs/RELEASE_EVIDENCE.md','docs/DATABASE_RECOVERY.md'];
 for (const name of required) {
   const file = path.join(root,name);
   const body = fs.readFileSync(file,'utf8');
