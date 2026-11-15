@@ -1,0 +1,53 @@
+name: Vista iOS
+on:
+  workflow_dispatch:
+  push:
+    paths: ['ios/**', '.github/workflows/vista-ios.yml']
+  pull_request:
+    paths: ['ios/**', '.github/workflows/vista-ios.yml']
+permissions:
+  contents: read
+concurrency:
+  group: vista-ios-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  simulator:
+    runs-on: macos-15
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Configure optional catalog credentials
+        env:
+          TMDB_ACCESS_TOKEN: ${{ secrets.TMDB_ACCESS_TOKEN }}
+          BACKUP_MOVIES_API_KEY: ${{ secrets.BACKUP_MOVIES_API_KEY }}
+        run: node ios/scripts/configure.mjs
+      - name: Generate Xcode project
+        run: |
+          brew install xcodegen
+          xcodegen generate --spec ios/project.yml
+      - name: Select an available iPhone simulator
+        run: |
+          DEVICE_ID=$(xcrun simctl list devices available -j | python3 -c 'import sys,json; d=json.load(sys.stdin); print(next(x["udid"] for k,v in d["devices"].items() if "iOS" in k for x in v if x["name"].startswith("iPhone")))')
+          echo "SIMULATOR_ID=$DEVICE_ID" >> "$GITHUB_ENV"
+      - name: Build and test native iOS app
+        run: |
+          xcodebuild test -project ios/Vista.xcodeproj -scheme Vista \
+            -destination "platform=iOS Simulator,id=$SIMULATOR_ID" \
+            -derivedDataPath ios/DerivedData -resultBundlePath ios/build/VistaTests.xcresult \
+            CODE_SIGNING_ALLOWED=NO
+      - name: Package simulator application
+        run: ditto -c -k --sequesterRsrc --keepParent ios/DerivedData/Build/Products/Debug-iphonesimulator/Vista.app ios/build/Vista-iOS-Simulator.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Vista-iOS-Simulator
+          path: ios/build/Vista-iOS-Simulator.zip
+          retention-days: 7
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Vista-iOS-Test-Results
+          path: ios/build/VistaTests.xcresult
+          if-no-files-found: ignore

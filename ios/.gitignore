@@ -1,0 +1,8 @@
+Config/Secrets.xcconfig
+*.xcodeproj/
+DerivedData/
+build/
+*.xcresult/
+*.ipa
+*.zip
+Vista/Assets.xcassets/AppIcon.appiconset/AppIcon.png
