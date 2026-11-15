@@ -167,7 +167,7 @@ function verifyNoInstallers(dir) {
   for (const item of fs.readdirSync(dir, { withFileTypes: true })) {
     const file = path.join(dir, item.name);
     if (item.isDirectory()) verifyNoInstallers(file);
-    else if (/\.(apk|aab|jks|keystore)$/i.test(item.name)) throw new Error('Installer/signing file leaked into Pages output: ' + file);
+    else if (/\.(apk|aab|ipa|p12|mobileprovision|jks|keystore)$/i.test(item.name)) throw new Error('Installer/signing file leaked into Pages output: ' + file);
   }
 }
 verifyNoInstallers(DIST);

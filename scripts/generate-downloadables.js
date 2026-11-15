@@ -130,7 +130,7 @@ discovery.paragraph('https://www.lxobsidianportal.co.za/contact');
 discovery.save('project-discovery-workbook.pdf');
 
 const install=new Document('Vista installation guide');
-install.title('VISTA CINEMA / INSTALL GUIDE','Android phone, tablet and Android TV | Version 1.0.10 listed on the LX website.');
+install.title('VISTA CINEMA / INSTALL GUIDE','Android phone, tablet and Android TV | Version 1.0.11 listed on the LX website.');
 install.section('Before you begin');
 install.bullet('Choose the package that matches your device: Android phone/tablet or Android TV.');
 install.bullet('Use the official LX Obsidian download hub or the linked LX GitHub repository. Do not use unrelated download mirrors.');

@@ -52,7 +52,7 @@ console.log('Marketing verification passed: secure lead capture, honest CTAs, ca
 // Site-wide design, navigation and link-integrity guardrails.
 const htmlFiles = fs.readdirSync(dist).filter(name => name.endsWith('.html'));
 const canonicalNavigation = home.match(/<header class="velora-nav"[^>]*>[\s\S]*?<\/header>/)?.[0];
-if(!canonicalNavigation || !canonicalNavigation.includes('href="/#solutions"') || !canonicalNavigation.includes('href="/#products"')) {
+if(!canonicalNavigation || !canonicalNavigation.includes('href="/#start-here"') || !canonicalNavigation.includes('href="/#study-tools"')) {
  throw Error('Shared navigation must use cross-page-safe homepage anchor URLs');
 }
 if (home.includes('https://www.linkedin.com') || home.includes('https://x.com') || home.includes('https://www.youtube.com')) throw Error('Generic social media domains are not verified company accounts');

@@ -2,11 +2,13 @@
 // Preserve existing third-party attribution and applicable notices.
 // Resolve a public GitHub Release asset to its CDN URL. Never buffer or proxy APK bytes.
 const release = {
-  android: { id: '723495986', filename: 'VistaCinema-v1.0.10.apk' },
-  tv: { id: '723495987', filename: 'VistaCinema-TV-v1.0.10.apk' }
+  android: { id: '750227218', filename: 'VistaCinema-v1.0.11.apk' },
+  tv: { id: '750227219', filename: 'VistaCinema-TV-v1.0.11.apk' },
+  ios: { id: '750219527', filename: 'Vista-iOS-Unsigned.ipa' },
+  'ios-archive': { id: '750219525', filename: 'Vista-iOS-Device-Archive.zip' }
 };
 const repository = 'lx-obsidian-labs/lx-obsidian-portal';
-const version = 'v1.0.10';
+const version = 'v1.0.11';
 
 export async function onRequest(context) {
   const request = context.request;
@@ -14,8 +16,8 @@ export async function onRequest(context) {
   const url = new URL(request.url);
   const platform = url.searchParams.get('platform') || 'android';
   const asset = Object.prototype.hasOwnProperty.call(release, platform) ? release[platform] : null;
-  if (!asset) return new Response('Choose android or tv.', { status: 400 });
-  const key = new Request(`${url.origin}/api/vista-download?platform=${platform}`);
+  if (!asset) return new Response('Choose android, tv, ios or ios-archive. iOS builds are unsigned developer downloads.', { status: 400 });
+  const key = new Request(`${url.origin}/api/vista-download?platform=${platform}&release=${version}`);
   const cache = globalThis.caches?.default;
   const cached = cache ? await cache.match(key) : null;
   if (cached) return cached;

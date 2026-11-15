@@ -11,7 +11,7 @@ test('redirects to the GitHub asset CDN without reading APK bytes', async () => 
   let cancelled = false;
   try {
     globalThis.fetch = async (url, init) => {
-      assert.match(url, /releases\/assets\/723495986$/);
+      assert.match(url, /releases\/assets\/750227218$/);
       assert.equal(init.redirect, 'manual');
       return new Response(new ReadableStream({cancel(){cancelled=true;}}), {status:302,headers:{Location:'https://release-assets.githubusercontent.com/test.apk?token=public-temporary'}});
     };
@@ -32,7 +32,7 @@ test('rejects unexpected upstream redirect hosts and uses the fixed release fall
   try {
     globalThis.fetch=async()=>new Response(null,{status:302,headers:{Location:'https://untrusted.example/payload.apk'}});
     const response=await(await handler)(context('?platform=tv'));
-    assert.equal(response.headers.get('Location'),'https://github.com/lx-obsidian-labs/lx-obsidian-portal/releases/download/v1.0.10/VistaCinema-TV-v1.0.10.apk');
+    assert.equal(response.headers.get('Location'),'https://github.com/lx-obsidian-labs/lx-obsidian-portal/releases/download/v1.0.11/VistaCinema-TV-v1.0.11.apk');
   } finally {globalThis.fetch=original;}
 });
 test('upstream outage retains a public GitHub fallback', async () => {
@@ -41,9 +41,17 @@ test('upstream outage retains a public GitHub fallback', async () => {
     globalThis.fetch=async()=>{throw new Error('Network unavailable');};
     const response=await(await handler)(context());
     assert.equal(response.status,302);
-    assert.match(response.headers.get('Location'),/github\.com\/lx-obsidian-labs\/lx-obsidian-portal\/releases\/download\/v1\.0\.10\/VistaCinema-v1\.0\.10\.apk$/);
+    assert.match(response.headers.get('Location'),/github\.com\/lx-obsidian-labs\/lx-obsidian-portal\/releases\/download\/v1\.0\.11\/VistaCinema-v1\.0\.11\.apk$/);
   } finally {globalThis.fetch=original;}
 });
 test('rejects mutation methods', async () => {
   assert.equal((await(await handler)(context('', 'POST'))).status,405);
+});
+test('iOS device download remains pinned to the explicitly unsigned IPA', async () => {
+  const original=globalThis.fetch;
+  try {
+    globalThis.fetch=async()=>{throw new Error('Network unavailable');};
+    const response=await(await handler)(context('?platform=ios'));
+    assert.equal(response.headers.get('Location'),'https://github.com/lx-obsidian-labs/lx-obsidian-portal/releases/download/v1.0.11/Vista-iOS-Unsigned.ipa');
+  } finally {globalThis.fetch=original;}
 });
