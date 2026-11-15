@@ -35,6 +35,7 @@ Do not commit generated secret configuration, Xcode build output or credentials.
 
 - `Vista-iOS-Simulator`: zipped `Vista.app` for a **macOS iOS Simulator**, matching the runner's architecture (not an installable iPhone IPA).
 - `Vista-iOS-Test-Results`: Xcode result bundle, including failed-run diagnostics when available.
+- `Vista-iOS-Device-Unsigned`: actual arm64 iPhone device archive and an **unsigned** IPA. These are developer artifacts that require Apple signing/provisioning before installation; they are not simulator binaries and are not a direct-install distribution.
 
 Optional repository Actions secrets: `TMDB_ACCESS_TOKEN`, `BACKUP_MOVIES_API_KEY`. Simulator builds don't need Apple signing. Trigger from Actions → Vista iOS → Run workflow, or push an iOS change. Pull requests from forks receive no repository secrets.
 

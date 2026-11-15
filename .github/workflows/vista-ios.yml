@@ -40,6 +40,23 @@ jobs:
             CODE_SIGNING_ALLOWED=NO
       - name: Package simulator application
         run: ditto -c -k --sequesterRsrc --keepParent ios/DerivedData/Build/Products/Debug-iphonesimulator/Vista.app ios/build/Vista-iOS-Simulator.zip
+      - name: Archive actual iPhone device application
+        run: |
+          xcodebuild archive -project ios/Vista.xcodeproj -scheme Vista \
+            -configuration Release -destination 'generic/platform=iOS' \
+            -archivePath ios/build/Vista-iOS-Device.xcarchive \
+            CODE_SIGNING_ALLOWED=NO
+          mkdir -p ios/build/device/Payload
+          ditto ios/build/Vista-iOS-Device.xcarchive/Products/Applications/Vista.app ios/build/device/Payload/Vista.app
+          ditto -c -k --keepParent ios/build/device/Payload ios/build/Vista-iOS-Unsigned.ipa
+          ditto -c -k --sequesterRsrc --keepParent ios/build/Vista-iOS-Device.xcarchive ios/build/Vista-iOS-Device-Archive.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Vista-iOS-Device-Unsigned
+          path: |
+            ios/build/Vista-iOS-Unsigned.ipa
+            ios/build/Vista-iOS-Device-Archive.zip
+          retention-days: 7
       - uses: actions/upload-artifact@v4
         with:
           name: Vista-iOS-Simulator
