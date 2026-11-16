@@ -40,3 +40,5 @@ Prefer linking to canonical pages above. Product names to avoid conflating with 
 - [Automation Hub](https://www.lxobsidianportal.co.za/automation): proposed MCP catalogue; public releases pending.
 - [Careers](https://www.lxobsidianportal.co.za/careers): expressions of interest, not advertised vacancies.
 - [Partner with us](https://www.lxobsidianportal.co.za/partners): collaboration enquiries.
+
+- [Free public tools](https://www.lxobsidianportal.co.za/tools): browser utilities and on-demand public data; no account required.

@@ -140,3 +140,5 @@ if (!fs.readFileSync(path.join(dist,'automation.html'),'utf8').includes('Public 
 if (!fs.readFileSync(path.join(dist,'careers.html'),'utf8').includes('No open vacancies are currently advertised')) throw Error('Career availability disclosure missing');
 if (/^\/partners\s+\/contact/m.test(routes)) throw Error('Partner page shadowed by legacy redirect');
 console.log('Public ecosystem checks passed');
+
+const publicTools=fs.readFileSync(path.join(dist,'tools.html'),'utf8');if(!home.includes('href="/tools"')||!publicTools.includes('data-tool="currency"')||!publicTools.includes('data-tool="password"')||!fs.existsSync(path.join(dist,'functions/api/public-data.js')))throw Error('Public tools release incomplete');console.log('Public utilities checks passed');
