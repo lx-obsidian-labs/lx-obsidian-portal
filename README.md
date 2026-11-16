@@ -54,7 +54,7 @@ Run `npm ci`, `npm test` and `npm run build` locally using Node.js 22, as config
 
 **LX Obsidian Labs** — Nathan Vilane
 
-[Engineering portfolio](https://github.com/lx-obsidian-labs) · [Contact](mailto:vilanenathan@gmail.com)
+[Engineering portfolio](https://github.com/lx-obsidian-labs) · [Contact](mailto:info@lxobsidianportal.co.za)
 
 ## Maintainer documentation
 

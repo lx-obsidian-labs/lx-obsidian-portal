@@ -103,7 +103,7 @@ capabilities.section('Engineering examples');
 capabilities.paragraph('Visit our public portfolio for project snapshots spanning education websites, retail interfaces and studio products. These examples demonstrate technical scope and are not unverified performance guarantees.');
 capabilities.section('Discuss your project');
 capabilities.paragraph('Website: https://www.lxobsidianportal.co.za/contact');
-capabilities.paragraph('Email: vilanenathan@gmail.com  |  South Africa  |  Remote project discussions available');
+capabilities.paragraph('Email: sales@lxobsidianportal.co.za  |  South Africa  |  Remote project discussions available');
 capabilities.save('lx-obsidian-capabilities-2026.pdf');
 
 const discovery=new Document('Project discovery workbook');

@@ -28,7 +28,7 @@ const ORG_JSONLD = `<script type="application/ld+json">
   "sameAs": ["https://github.com/lx-obsidian-labs"],
   "contactPoint": {
     "@type": "ContactPoint",
-    "email": "hello@lxobsidian.com",
+    "email": "info@lxobsidianportal.co.za",
     "contactType": "customer service"
   }
 }

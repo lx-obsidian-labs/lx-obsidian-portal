@@ -30,7 +30,7 @@ Founded in South Africa in 2016, LX Obsidian Labs designs and engineers custom s
 
 ## Optional
 
-- Human contact: hello@lxobsidian.com
+- Human contact: info@lxobsidianportal.co.za
 - Source code: https://github.com/lx-obsidian-labs
 - Canonical site: https://www.lxobsidianportal.co.za
 

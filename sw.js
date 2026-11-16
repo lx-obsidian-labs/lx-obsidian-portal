@@ -1,6 +1,6 @@
 /* LX Obsidian Labs — safe network-first service worker.
    Never return HTML in response to CSS, JS, image or font requests. */
-const CACHE = 'lx-obsidian-v21';
+const CACHE = 'lx-obsidian-v22';
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE));
   self.skipWaiting();
