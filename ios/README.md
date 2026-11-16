@@ -1,6 +1,6 @@
-# Vista Cinema for iOS
+# Vista Watch for iOS
 
-Native **SwiftUI**, iPhone/iPad, **iOS 17+**. This first iOS preview shares TMDB identifiers and embed providers with Android. Version **1.0.11**, build **18**. Android's implementation remains separate.
+Native **SwiftUI**, iPhone/iPad, **iOS 17+**. This iOS preview shares TMDB identifiers and embed providers with Android. Vista Watch branding: version **1.0.12**, build **19**. Android's implementation remains separate.
 
 ## Implemented
 

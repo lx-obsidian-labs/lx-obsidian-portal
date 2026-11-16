@@ -2,6 +2,13 @@ import XCTest
 @testable import Vista
 
 final class VistaTests: XCTestCase {
+    func testSupportReportDoesNotIncludeDiagnosticsWithoutConsent() {
+        let details = ContactDiagnostics(version: "1.0.12", os: "Test OS", manufacturer: "Apple", model: "Private QA model", category: "Phone")
+        let report = BugReportBuilder.build(issue: .playback, description: "Example", version: "1.0.12", includeDiagnostics: false, diagnostics: details)
+        XCTAssertEqual(report.recipient, AppContacts.support)
+        XCTAssertFalse(report.body.contains(details.model))
+        XCTAssertEqual(URLComponents(url: report.mailto!, resolvingAgainstBaseURL: false)?.queryItems?.first { $0.name == "subject" }?.value, report.subject)
+    }
     private func title(kind: MediaKind = .movie) -> Media {
         Media(id: 597, kind: kind, title: "Example", overview: "", posterPath: nil, backdropPath: nil, date: nil, rating: nil)
     }

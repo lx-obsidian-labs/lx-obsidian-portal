@@ -151,15 +151,21 @@ struct LibraryView: View {
 struct SettingsView: View {
     var body: some View {
         List {
-            Section("Vista Cinema") {
-                LabeledContent("Version", value: "1.0.11 · iOS preview")
+            Section("Help & Support") {
+                NavigationLink("Help & Support") { SupportView() }
+                Text(AppContacts.support).textSelection(.enabled)
+                Link("Official website", destination: AppContacts.website)
+            }
+            Section("Vista Watch") {
+                LabeledContent("Version", value: "\(Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "") · iOS preview")
                 LabeledContent("Watchlist", value: "Stored on this device")
                 Text("Live TV and Sports are being planned. Availability and timing are not confirmed.").font(.subheadline).foregroundStyle(.secondary)
             }
             Section("About the catalog") {
                 Text("This product uses the TMDB API but is not endorsed or certified by TMDB.").font(.footnote)
                 Link("The Movie Database", destination: URL(string: "https://www.themoviedb.org")!)
-                Link("Vista privacy policy", destination: URL(string: "https://www.lxobsidianportal.co.za/privacy-policy.html")!)
+                Link("Vista Watch privacy policy", destination: AppContacts.privacyPolicy)
+                Link("Terms of service", destination: AppContacts.terms)
             }
         }.navigationTitle("Settings")
     }
