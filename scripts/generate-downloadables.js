@@ -150,7 +150,7 @@ install.bullet('3. Open it with your TV file manager; follow your device-specifi
 install.bullet('4. Launch the TV application and follow its on-screen guidance.');
 install.section('Security and support');
 install.paragraph('Android may display warnings for apps installed outside an app store. Do not override device security warnings unless you understand and trust the source. Older APK versions are maintained for compatibility access and may lack fixes.');
-install.paragraph('Support: https://www.lxobsidianportal.co.za/contact');
+install.paragraph('Support: support@lxobsidianportal.co.za | https://www.lxobsidianportal.co.za/vista#vista-support');
 install.save('vista-cinema-install-guide.pdf');
 
 const rows=[
