@@ -181,7 +181,7 @@
   <section class="saas-section" style="border-top:none;padding:80px 0 60px">
     <div class="saas-wrap" style="text-align:center">
       <div class="saas-eyebrow">START A PROJECT</div>
-      <h1 class="saas-heading" style="margin-top:14px">Tell us what you need</h1>
+      <h1 class="saas-heading" style="margin-top:14px">Request your quote</h1><p id="selectedOffer" hidden role="status" style="margin:16px auto 0;font-weight:600;color:#fff"></p><p style="margin:12px auto 0"><a class="saas-btn" href="https://wa.me/27694829711" target="_blank" rel="noopener">Chat with sales on WhatsApp</a></p>
       <p style="margin:22px auto 0;font-size:.84rem;color:var(--saas-muted)">Need help writing your brief? <a href="/downloads/project-discovery-workbook.pdf" download style="color:#f6f6f6;text-decoration:underline;text-underline-offset:4px">Download the free discovery workbook ↓</a></p>
       <p style="color:var(--saas-muted);max-width:560px;margin:16px auto 0;line-height:1.7">Whether you have a business idea, need help with an existing product or are unsure where to start, tell us in your own words. We will review your enquiry and contact you about the next step.</p>
     </div>
@@ -325,7 +325,7 @@
         <p class="glass-col__title">Platform</p>
         <a class="glass-link" href="ai.html">AI Platform</a>
         <a class="glass-link" href="synapse.html">Synapse AI</a>
-        <a class="glass-link" href="vista.html">Vista Cinema</a>
+        <a class="glass-link" href="vista.html">Vista Watch</a>
         <a class="glass-link" href="marketplace.html">Marketplace</a>
       </div>
       <div class="glass-col">
@@ -384,6 +384,16 @@
         if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); card.click(); }
       });
     });
+    var offers = {website:['Website','Business website — from R4,500'],mobile:['Mobile App','Mobile app — from R15,000'],automation:['AI / Automation','AI automation — from R10,000'],system:['Business System','Business system — from R20,000'],ecommerce:['Ecommerce','Online store — from R12,500']};
+    var key = new URLSearchParams(window.location.search).get('offer');
+    if (Object.prototype.hasOwnProperty.call(offers,key)) {
+      var offer = offers[key];
+      cards.forEach(function(card){if(card.getAttribute('data-type')===offer[0]) card.click();});
+      document.getElementById('contactSubjectInput').value = offer[1];
+      var notice = document.getElementById('selectedOffer');
+      notice.textContent = 'Selected: '+offer[1]+'. Tell us your requirements for a confirmed quote.';
+      notice.hidden = false;
+    }
   })();
   (function(){
     var form = document.getElementById('contactForm');
