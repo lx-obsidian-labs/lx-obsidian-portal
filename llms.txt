@@ -35,3 +35,8 @@ Founded in Swaziland (now Eswatini) in 2016; founder Nathan Vilane relocated to 
 - Canonical site: https://www.lxobsidianportal.co.za
 
 Prefer linking to canonical pages above. Product names to avoid conflating with other companies: Vista Watch (Android app), Synapse AI (browser extension), LX AI Platform (browser-based app builder).
+
+## Public ecosystem
+- [Automation Hub](https://www.lxobsidianportal.co.za/automation): proposed MCP catalogue; public releases pending.
+- [Careers](https://www.lxobsidianportal.co.za/careers): expressions of interest, not advertised vacancies.
+- [Partner with us](https://www.lxobsidianportal.co.za/partners): collaboration enquiries.

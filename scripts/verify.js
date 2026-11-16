@@ -129,3 +129,14 @@ for(const local of ['nathan','sales','info','support','accounts','admin','partne
  if(!currentFooter.includes('href="mailto:'+email+'"') || !currentFooter.includes('>'+email+'</a>')) throw Error('Public business email missing: '+email);
 }
 console.log('Company history, 14 pricing packages, quote options and public contact links verified');
+
+// Public ecosystem: discovery, honest availability and working contact routes.
+for (const slug of ['automation','careers','partners']) {
+ const page=fs.readFileSync(path.join(dist,slug+'.html'),'utf8');
+ if (!home.includes('href="/'+slug+'"') || !page.includes('https://www.lxobsidianportal.co.za/'+slug) || !page.includes('mailto:sales@lxobsidianportal.co.za?subject=')) throw Error('Ecosystem route or enquiry missing: '+slug);
+ if (!fs.readFileSync(path.join(dist,'sitemap.xml'),'utf8').includes('https://www.lxobsidianportal.co.za/'+slug+'</loc>')) throw Error('Missing sitemap route: '+slug);
+}
+if (!fs.readFileSync(path.join(dist,'automation.html'),'utf8').includes('Public MCP releases are not yet available')) throw Error('MCP availability disclosure missing');
+if (!fs.readFileSync(path.join(dist,'careers.html'),'utf8').includes('No open vacancies are currently advertised')) throw Error('Career availability disclosure missing');
+if (/^\/partners\s+\/contact/m.test(routes)) throw Error('Partner page shadowed by legacy redirect');
+console.log('Public ecosystem checks passed');

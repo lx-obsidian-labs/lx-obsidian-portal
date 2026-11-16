@@ -23,13 +23,13 @@
 /local-visibility.html /local-visibility 301
 /mobile-apps.html /mobile-apps      301
 /industries       /services           301
-/partners         /contact            301
+
 /advertise        /contact            301
 /index.html      /                   301
 
 # Legacy routes for removed pages
 /industries.html  /services           301
-/partners.html    /contact            301
+/partners.html /partners 301
 /advertise.html   /contact            301
 
 # Legacy path support → clean URLs
@@ -45,3 +45,6 @@
 
 # Pages serves 404.html automatically. Rewriting /404 back to its .html URL loops
 # with Pages' built-in clean-URL redirect, so no custom 404 rewrite is needed.
+
+/automation.html /automation 301
+/careers.html /careers 301
