@@ -215,6 +215,7 @@
           <div class="ptype-card__title">Ecommerce</div>
           <div class="ptype-card__desc">Online store or marketplace</div>
         </div>
+        <div class="ptype-card" data-type="Social Media" tabindex="0" role="button" aria-pressed="false"><div class="ptype-card__title">Social Media</div><div class="ptype-card__desc">Content, captions and scheduling</div></div><div class="ptype-card" data-type="Digital Support" tabindex="0" role="button" aria-pressed="false"><div class="ptype-card__title">Digital Support</div><div class="ptype-card__desc">Website care, SEO or managed automation</div></div>
         <div class="ptype-card" data-type="Not sure yet" tabindex="0" role="button" aria-pressed="false">
           <div class="ptype-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
           <div class="ptype-card__title">Not sure yet</div>
@@ -384,12 +385,13 @@
         if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); card.click(); }
       });
     });
-    var offers = {website:['Website','Business website — from R4,500'],mobile:['Mobile App','Mobile app — from R15,000'],automation:['AI / Automation','AI automation — from R10,000'],system:['Business System','Business system — from R20,000'],ecommerce:['Ecommerce','Online store — from R12,500']};
-    var key = new URLSearchParams(window.location.search).get('offer');
+    var offers = {website:['Website','Business website — R4,500'],professional:['Website','Professional website — R7,500'],mobile:['Mobile App','Mobile app — from R15,000'],automation:['AI / Automation','AI automation — from R10,000'],system:['Business System','Business system — from R20,000'],ecommerce:['Ecommerce','Online store — from R12,500'],'social-starter':['Social Media','Social Starter — R999/month'],'social-growth':['Social Media','Social Growth — R1,999/month'],'social-plus':['Social Media','Social Plus — R3,499/month'],care:['Digital Support','Website care — R499/month'],seo:['Digital Support','Local SEO — R999/month'],managed:['Digital Support','Managed automation — from R1,499/month']};
+    var params = new URLSearchParams(window.location.search); var key = params.get('offer'); if(key==='website' && params.get('package')==='professional') key='professional';
     if (Object.prototype.hasOwnProperty.call(offers,key)) {
       var offer = offers[key];
       cards.forEach(function(card){if(card.getAttribute('data-type')===offer[0]) card.click();});
       document.getElementById('contactSubjectInput').value = offer[1];
+      document.getElementById('contactMessage').value = 'I would like a quote for '+offer[1]+'.';
       var notice = document.getElementById('selectedOffer');
       notice.textContent = 'Selected: '+offer[1]+'. Tell us your requirements for a confirmed quote.';
       notice.hidden = false;
