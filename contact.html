@@ -189,7 +189,7 @@
 
   <section class="saas-section" style="border-top:none">
     <div class="saas-wrap" style="max-width:640px">
-      <p style="color:var(--saas-muted);margin-bottom:16px">Choose the closest option below. If you are unsure, select “Not sure yet”.</p><div class="ptype-grid" id="ptypeGrid">
+      <p style="color:var(--saas-muted);margin-bottom:16px">Choose the closest option below. If you are unsure, select “Not sure yet”.</p><div id="lxQuoteBuilder" style="padding:20px;border:1px solid var(--saas-border);border-radius:12px;margin-bottom:20px;background:var(--saas-card)"><h2 style="font-size:1.25rem;font-weight:700;margin-bottom:8px">Build your price estimate</h2><p style="font-size:.85rem;color:var(--saas-muted);margin-bottom:14px">Select a service and any extras. No technical description required.</p><label for="lxQuotePlan">Service package</label><select class="cform__select cform__input" id="lxQuotePlan"><option value="">Select a package or continue below</option><option value="website">Business website — R4 500</option><option value="professional">Professional website — R7 500</option><option value="ecommerce">Online store — R12 500</option><option value="mobile">Mobile app MVP — R15 000</option><option value="automation">AI automation — R10 000</option><option value="system">Business system MVP — R20 000</option><option value="social-starter">Social Starter — R999/month</option><option value="social-growth">Social Growth — R1 999/month</option><option value="social-plus">Social Plus — R3 499/month</option><option value="care">Website care — R499/month</option><option value="seo">Local SEO — R999/month</option><option value="managed">Managed automation — R1 499/month</option></select><div id="lxQuoteExtras" hidden style="margin-top:14px"><label for="lxExtraPages">Extra website pages beyond package</label><select id="lxExtraPages" class="cform__select cform__input"><option value="0">None</option><option value="1">1 extra pages (+R350)</option><option value="2">2 extra pages (+R700)</option><option value="3">3 extra pages (+R1050)</option><option value="5">5 extra pages (+R1750)</option><option value="10">10 extra pages (+R3500)</option></select><label for="lxPayment" style="display:block;margin-top:10px">Payment gateway integration</label><select id="lxPayment" class="cform__select cform__input"><option value="0">No additional integration</option><option value="2500">One supported gateway (+R2,500)</option></select><label for="lxCare" style="display:block;margin-top:10px">Website maintenance</label><select id="lxCare" class="cform__select cform__input"><option value="0">No monthly care</option><option value="499">Website care (+R499/month)</option></select></div><div aria-live="polite" style="margin-top:16px;padding-top:12px;border-top:1px solid var(--saas-border)"><strong id="lxQuoteTotal">Choose a service to calculate</strong><p id="lxQuoteMonthly" style="color:var(--saas-muted);font-size:.88rem"></p></div><p style="font-size:.75rem;color:var(--saas-muted);margin-top:10px">Indicative estimate, not a binding quotation. Domain, hosting, transaction fees, ad spend, third-party subscriptions and applicable taxes confirmed in the written quote. Online store includes one supported gateway.</p></div><div class="ptype-grid" id="ptypeGrid">
         <div class="ptype-card" data-type="Website" tabindex="0" role="button" aria-pressed="false">
           <div class="ptype-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
           <div class="ptype-card__title">Website</div>
@@ -452,5 +452,30 @@
   <script src="js/ui/glass-footer.js" defer></script>
   <script src="js/ui/ticker-blur.js" defer></script>
   <script src="js/ui/ticker-links.js" defer></script>
+<script>
+(function(){
+ const plans={"website":{"name":"Business website","price":4500,"term":"once-off"},"professional":{"name":"Professional website","price":7500,"term":"once-off"},"ecommerce":{"name":"Online store","price":12500,"term":"once-off"},"mobile":{"name":"Mobile app MVP","price":15000,"term":"once-off"},"automation":{"name":"AI automation","price":10000,"term":"once-off"},"system":{"name":"Business system MVP","price":20000,"term":"once-off"},"social-starter":{"name":"Social Starter","price":999,"term":"monthly"},"social-growth":{"name":"Social Growth","price":1999,"term":"monthly"},"social-plus":{"name":"Social Plus","price":3499,"term":"monthly"},"care":{"name":"Website care","price":499,"term":"monthly"},"seo":{"name":"Local SEO","price":999,"term":"monthly"},"managed":{"name":"Managed automation","price":1499,"term":"monthly"}};
+ const types={website:'Website',professional:'Website',ecommerce:'Ecommerce',mobile:'Mobile App',automation:'AI / Automation',system:'Business System','social-starter':'Social Media','social-growth':'Social Media','social-plus':'Social Media',care:'Digital Support',seo:'Digital Support',managed:'Digital Support'};
+ const select=document.getElementById('lxQuotePlan'),extras=document.getElementById('lxQuoteExtras'),pages=document.getElementById('lxExtraPages'),payment=document.getElementById('lxPayment'),care=document.getElementById('lxCare'),total=document.getElementById('lxQuoteTotal'),monthly=document.getElementById('lxQuoteMonthly'),msg=document.getElementById('contactMessage'),subject=document.getElementById('contactSubjectInput');
+ const format=n=>'R'+n.toLocaleString('en-ZA');
+ let generated='';
+ function update(){
+  const key=select.value,p=plans[key];if(!p){extras.hidden=true;total.textContent='Choose a service to calculate';monthly.textContent='';if(msg.value===generated)msg.value='';generated='';return;}
+  const isWeb=['website','professional','ecommerce'].includes(key);extras.hidden=!isWeb;payment.disabled=key==='ecommerce';
+  const x=isWeb?Number(pages.value):0,y=isWeb&&key!=='ecommerce'?Number(payment.value):0,z=isWeb?Number(care.value):0;
+  const once=(p.term==='once-off'?p.price:0)+x*350+y,month=(p.term==='monthly'?p.price:0)+z;
+  total.textContent=once?'Estimated once-off: '+format(once):'Monthly plan: '+format(month);
+  monthly.textContent=once&&month?'Plus '+format(month)+' per month':'';
+  const next='Requested package: '+p.name+'; '+(once?'Estimated once-off '+format(once)+'; ':'')+(month?'Estimated monthly '+format(month)+'; ':'')+(x?'Extra pages: '+x+'; ':'')+(y?'One additional payment gateway; ':'')+(z?'Website care; ':'')+'Please confirm final scope and total.';
+  if(!msg.value||msg.value===generated||msg.value.startsWith('I would like a quote for ')){msg.value=next;}generated=next;
+  subject.value=p.name+' quotation';
+  document.querySelectorAll('.ptype-card').forEach(card=>{if(card.getAttribute('data-type')===types[key]&&!card.classList.contains('selected'))card.click();});
+  const notice=document.getElementById('selectedOffer');if(notice){notice.textContent='Selected: '+p.name+'. Your estimate is shown below.';notice.hidden=false;}
+ }
+ [select,pages,payment,care].forEach(el=>el.addEventListener('change',update));
+ const params=new URLSearchParams(location.search);let key=params.get('offer');if(key==='website'&&params.get('package')==='professional')key='professional';if(Object.prototype.hasOwnProperty.call(plans,key)){select.value=key;update();}
+ document.getElementById('contactForm').addEventListener('submit',function(){if(select.value&&generated&&msg.value!==generated&&!msg.value.includes('Requested package:'))msg.value=generated+'\n'+msg.value;},true);
+})();
+</script>
 </body>
 </html>
