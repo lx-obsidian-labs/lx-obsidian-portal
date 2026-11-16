@@ -3,7 +3,7 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://www.lxobsidianportal.co.za/</loc>
-    <lastmod>2026-11-07</lastmod>
+    <lastmod>2026-11-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -51,7 +51,7 @@
   </url>
   <url>
     <loc>https://www.lxobsidianportal.co.za/vista</loc>
-    <lastmod>2026-11-15</lastmod>
+    <lastmod>2026-11-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -69,7 +69,7 @@
   </url>
   <url>
     <loc>https://www.lxobsidianportal.co.za/about</loc>
-    <lastmod>2026-10-10</lastmod>
+    <lastmod>2026-11-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -120,5 +120,9 @@
     <lastmod>2026-11-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://www.lxobsidianportal.co.za/pdf</loc>
+    <lastmod>2026-11-16</lastmod>
   </url>
 </urlset>
