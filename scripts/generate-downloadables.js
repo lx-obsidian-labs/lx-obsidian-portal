@@ -83,7 +83,7 @@ class Document {
 const capabilities=new Document('Capabilities profile');
 capabilities.title('ENGINEERING THAT MOVES BUSINESS FORWARD','2026 capabilities overview | Custom software, AI workflows and digital platforms.');
 capabilities.section('Who we are');
-capabilities.paragraph('LX Obsidian Labs is a South African software engineering and AI studio. We design, develop and improve software around the workflows, users and operational needs of each client.');
+capabilities.paragraph('LX Obsidian Labs is an African software engineering and AI studio, founded in Swaziland (now Eswatini) in 2016. Its founder relocated to South Africa in 2020. Today we design, develop and improve software around the workflows, users and operational needs of each client.');
 capabilities.section('Where we can help');
 [
 'CUSTOM SOFTWARE: Bespoke business platforms, administrative systems, portals and internal productivity tools.',

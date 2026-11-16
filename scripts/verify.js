@@ -107,3 +107,25 @@ console.log('Resource centre UX checks passed');
 
 for (const id of ['start-here','study-tools']) if (!home.includes('id="'+id+'"')) throw Error('Missing visitor journey: '+id);
 for (const href of ['/pdf','/synapse','/downloads','/contact']) if (!home.includes('href="'+href+'"')) throw Error('Missing task destination: '+href);
+
+// Company history and transparent pricing regression guards.
+const servicePage=fs.readFileSync(path.join(dist,'services.html'),'utf8');
+const aboutPage=fs.readFileSync(path.join(dist,'about.html'),'utf8');
+const aiSummary=fs.readFileSync(path.join(dist,'llms.txt'),'utf8');
+for(const [name,content] of [['homepage',home],['about',aboutPage],['llms.txt',aiSummary]]) {
+ if(!content.includes('Swaziland (now Eswatini)') || !content.includes('2020') || /Founded in South Africa in 2016/i.test(content)) throw Error('Company origin story mismatch: '+name);
+}
+const pricingKeys=['website','professional','ecommerce','mobile','automation','system','social-starter','social-growth','social-plus','care','seo','managed','domain-coza','domain-com'];
+for(const key of pricingKeys){
+ const card=servicePage.match(new RegExp('<article class="lx-rate" data-package="'+key+'">[\\s\\S]*?<\\/article>'))?.[0];
+ if(!card || !card.includes('What you get') || !card.includes('What costs extra:') || !card.includes('lx-rate-price')) throw Error('Incomplete pricing disclosure: '+key);
+ if(!contact.includes('value="'+key+'"')) throw Error('Quote option missing: '+key);
+}
+for(const domainKey of ['domain-coza','domain-com']) if(!servicePage.includes('href="/contact?offer='+domainKey+'"')) throw Error('Domain quote routing missing: '+domainKey);
+if(!contact.includes('id="lxQuoteFeatures"') || !contact.includes('id="lxQuoteExclusions"') || !contact.includes("p.term==='annual'")) throw Error('Quote scope/annual pricing missing');
+const currentFooter=home.match(/<footer class="glass-footer"[^>]*>[\s\S]*?<\/footer>/)?.[0]||'';
+for(const local of ['nathan','sales','info','support','accounts','admin','partnerships','careers','hello']) {
+ const email=local+'@lxobsidianportal.co.za';
+ if(!currentFooter.includes('href="mailto:'+email+'"') || !currentFooter.includes('>'+email+'</a>')) throw Error('Public business email missing: '+email);
+}
+console.log('Company history, 14 pricing packages, quote options and public contact links verified');

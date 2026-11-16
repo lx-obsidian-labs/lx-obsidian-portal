@@ -2,7 +2,7 @@
 
 **Company website and product portfolio | LX Obsidian Labs**
 
-This repository supports the web presence of LX Obsidian Labs and its software products.
+This repository supports the web presence of LX Obsidian Labs and its software products. The studio began in Swaziland (now Eswatini) in 2016; founder Nathan Vilane relocated to South Africa in 2020.
 
 **Website:** https://www.lxobsidianportal.co.za
 
