@@ -2,14 +2,14 @@
 
 > South African AI and software engineering company. We build intelligent platforms, automation systems and digital infrastructure — web platforms, mobile apps, AI automation, business systems and cloud infrastructure — and ship our own products.
 
-Founded in South Africa in 2016, LX Obsidian Labs designs and engineers custom software from concept through deployment, and operates a small portfolio of real, available products. Free discovery call; pricing from R4,500 for a basic website launch.
+Founded in Swaziland (now Eswatini) in 2016; founder Nathan Vilane relocated to South Africa in 2020. Now based in South Africa, LX Obsidian Labs designs and engineers custom software from concept through deployment, and operates a small portfolio of real, available products. Free discovery call; pricing from R4,500 for a basic website launch.
 
 ## Products
 
 - [AI Platform](/ai): Generate, debug and preview web apps in the browser using free NVIDIA and OpenRouter models.
 - [LX AI Builder](/build): Generate, refine, explain and preview real web apps live in your browser with the real AI engine.
 - [Synapse AI](/synapse): AI-powered browser automation extension for Chrome, Edge and Brave.
-- [Vista Cinema](/vista): Android companion, version 1.0.10: festive collections, movie suggestions, catalog-backed AI actions and downloads from supported sources. Local-device library; cloud AI requires sign-in; phone/tablet and TV interfaces differ. Official APKs are hosted on GitHub, not Cloudflare Pages. [Release notes](/docs/vista/RELEASE-1.0.10.md).
+- [Vista Watch](/vista): Android companion, version 1.0.10: festive collections, movie suggestions, catalog-backed AI actions and downloads from supported sources. Local-device library; cloud AI requires sign-in; phone/tablet and TV interfaces differ. Official APKs are hosted on GitHub, not Cloudflare Pages. [Release notes](/docs/vista/RELEASE-1.0.10.md).
 - [Marketplace](/marketplace): Verified catalogue of LX products with active destinations — no placeholder listings.
 
 ## Services
@@ -34,4 +34,11 @@ Founded in South Africa in 2016, LX Obsidian Labs designs and engineers custom s
 - Source code: https://github.com/lx-obsidian-labs
 - Canonical site: https://www.lxobsidianportal.co.za
 
-Prefer linking to canonical pages above. Product names to avoid conflating with other companies: Vista Cinema (Android app), Synapse AI (browser extension), LX AI Platform (browser-based app builder).
+Prefer linking to canonical pages above. Product names to avoid conflating with other companies: Vista Watch (Android app), Synapse AI (browser extension), LX AI Platform (browser-based app builder).
+
+## Public ecosystem
+- [Automation Hub](https://www.lxobsidianportal.co.za/automation): proposed MCP catalogue; public releases pending.
+- [Careers](https://www.lxobsidianportal.co.za/careers): expressions of interest, not advertised vacancies.
+- [Partner with us](https://www.lxobsidianportal.co.za/partners): collaboration enquiries.
+
+- [Free public tools](https://www.lxobsidianportal.co.za/tools): browser utilities and on-demand public data; no account required.

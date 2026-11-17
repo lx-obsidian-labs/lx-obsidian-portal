@@ -1,0 +1,3 @@
+# Public tools
+
+LX Obsidian Labs. /tools provides five browser-local utilities and three read-only external integrations: Frankfurter v2, World Bank Indicators v2 and Nager.Date Community v4. No keys required. Fixed provider hosts and allowlisted query parameters; 8 second upstream timeout; errors are explicit. No user text, password or calculation amount sent to providers. Reference data may be delayed. Provider attribution is shown on each card. No paid APIs or weather API added. Check provider terms and quotas periodically. Run npm test and npm run build; verify live endpoints after deployment. Public-data route uses Cloudflare fetch caching, not a general-purpose proxy. Consider edge rate limiting before high-volume use.
