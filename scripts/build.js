@@ -162,7 +162,7 @@ for (const file of ROOT_HTML) {
     if (route === '/pdf' || route === '/pdf.html' || route === '/pdf/index.html') dest = '/pdf/';
     else if (route === '/index.html') dest = '/';
     else if (route === '/synapse-web.html') dest = '/synapse/web';
-    else if (/^\\/[^/]+\\.html$/.test(route) && ROOT_HTML.includes(route.slice(1)) && route !== '/404.html') dest = route.slice(0,-5);
+    else if (route.endsWith('.html') && ROOT_HTML.includes(route.slice(1)) && route !== '/404.html') dest = route.slice(0,-5);
     return 'href='+quote+prefix+dest+tail+quote;
   });
   // Avoid misleading Login labels that actually lead to Contact.
