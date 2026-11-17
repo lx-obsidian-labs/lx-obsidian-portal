@@ -7,6 +7,7 @@ const ROOT = path.resolve(__dirname, '..');
 const DIST = path.join(ROOT, 'dist');
 
 const ROOT_HTML = fs.readdirSync(ROOT).filter(name => name.endsWith('.html') && fs.statSync(path.join(ROOT, name)).isFile());
+const vistaRelease = JSON.parse(fs.readFileSync(path.join(ROOT, 'vista-version.json'), 'utf8'));
 
 const INCLUDE = [
   ...ROOT_HTML,
@@ -14,6 +15,7 @@ const INCLUDE = [
   '_headers', '_redirects',
   'sw.js', 'manifest.json', 'robots.txt', 'sitemap.xml', 'llms.txt',
   'vista-version.json',
+  'brand.json',
   'package.json'
 ];
 
@@ -138,6 +140,11 @@ console.log('Synchronized glass footer on ' + synchronizedFooters + ' additional
 for (const file of ROOT_HTML) {
   const output = path.join(DIST, file);
   let html = fs.readFileSync(output, 'utf8');
+  if (file === 'vista.html') {
+    html = html.replaceAll('1.0.11', vistaRelease.versionName)
+      .replace('brings clearer catalog and playback recovery, refined TV navigation and a new way to tell us how Vista really feels.',
+        'brings improved playback and catalog recovery, TV playback options, official support, clearer login errors and expanded avatars.');
+  }
   // Match quoted HTML attributes, leaving external, absolute and fragment URLs unchanged.
   html = html.replace(/\b(href|src|poster)=(["'])([^"']+)\2/gi, (match, attr, quote, target) => {
     if (/^(?:\/|#|[a-z][a-z0-9+.-]*:|\/\/)/i.test(target)) return match;
@@ -161,6 +168,26 @@ for (const required of ['index.html', '404.html', 'pdf/index.html', 'synapse/web
   if (!fs.existsSync(path.join(DIST, required))) throw new Error('Missing required published asset: ' + required);
 }
 console.log('Verified ' + ROOT_HTML.length + ' HTML pages and required published assets');
+
+// Apply the current name to all published templates and dynamic product labels, not archives/URLs.
+const { brandPublicContent } = require('./brand.js');
+function publishBrand(dir) {
+  for (const item of fs.readdirSync(dir, {withFileTypes:true})) {
+    const file = path.join(dir, item.name);
+    if (item.isDirectory()) publishBrand(file);
+    else if (/\.(html|js|json|svg|txt|xml)$/i.test(item.name)) {
+      const text = fs.readFileSync(file, 'utf8');
+      const updated = brandPublicContent(text);
+      if (updated !== text) fs.writeFileSync(file, updated);
+    }
+  }
+}
+publishBrand(DIST);
+
+// Retired raster marketing composites contain the previous name baked into their pixels.
+for (const name of ['vista-marketing-1.png', 'vista-marketing-2.png']) {
+  for (const folder of ['assets', 'assets/images']) fs.rmSync(path.join(DIST, folder, name), {force:true});
+}
 
 // APKs are GitHub assets, never Cloudflare Pages uploads. Fail closed if packaging regresses.
 function verifyNoInstallers(dir) {

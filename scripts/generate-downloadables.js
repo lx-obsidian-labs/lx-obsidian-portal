@@ -6,7 +6,7 @@ const path = require('path');
 const OUT = path.resolve(__dirname, '../dist/downloads');
 fs.mkdirSync(OUT, {recursive:true});
 const PAGE_W = 595, PAGE_H = 842;
-const textClean = s => String(s).replace(/[\u2013\u2014]/g,'-').replace(/[\u2018\u2019]/g,"'").replace(/[\u201c\u201d]/g,'"').replace(/\u2022/g,'-').replace(/[^\x20-\x7e]/g,' ');
+const textClean = s => String(s).replaceAll('Vista Cinema','Vista Watch').replaceAll('VISTA CINEMA','VISTA WATCH').replace(/[\u2013\u2014]/g,'-').replace(/[\u2018\u2019]/g,"'").replace(/[\u201c\u201d]/g,'"').replace(/\u2022/g,'-').replace(/[^\x20-\x7e]/g,' ');
 const esc = s => textClean(s).replace(/\\/g,'\\\\').replace(/\(/g,'\\(').replace(/\)/g,'\\)');
 const fmt = n => Number(n).toFixed(2);
 class Document {
@@ -151,7 +151,9 @@ install.bullet('4. Launch the TV application and follow its on-screen guidance.'
 install.section('Security and support');
 install.paragraph('Android may display warnings for apps installed outside an app store. Do not override device security warnings unless you understand and trust the source. Older APK versions are maintained for compatibility access and may lack fixes.');
 install.paragraph('Support: support@lxobsidianportal.co.za | https://www.lxobsidianportal.co.za/vista#vista-support');
-install.save('vista-cinema-install-guide.pdf');
+install.save('vista-watch-install-guide.pdf');
+// Preserve already-shared guide URLs while the published download centre uses the new name.
+fs.copyFileSync(path.join(OUT,'vista-watch-install-guide.pdf'), path.join(OUT,'vista-cinema-install-guide.pdf'));
 
 const rows=[
 ['Section','Question','Your answer','Priority (must / should / later)'],

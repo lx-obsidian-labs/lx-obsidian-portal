@@ -46,7 +46,7 @@ if(!contactApi.includes('Untrusted origin') || !contactApi.includes('emailOK')) 
 if(!portfolio.includes('id="project-snapshots"')) throw Error('Engineering case-study snapshots missing');
 if(integrations.includes('href="#" class="integration-card"')) throw Error('Dead integration CTAs present');
 if(ai.includes('index.html#pricing')) throw Error('Invalid AI pricing link present');
-if(!home.includes('We engineer custom software')) throw Error('Homepage positioning reverted');
+if(!/<h1\b[^>]*id="home-title"[^>]*>Websites, apps and AI<br>\s*<span>for your business\.<\/span><\/h1>/.test(home)) throw Error('Homepage positioning reverted');
 console.log('Marketing verification passed: secure lead capture, honest CTAs, case study snapshots, updated positioning');
 
 // Site-wide design, navigation and link-integrity guardrails.
@@ -80,7 +80,7 @@ const vistaRelease = JSON.parse(fs.readFileSync(path.join(dist,'vista-version.js
 const expectedDownloads = [
  'lx-obsidian-capabilities-2026.pdf',
  'project-discovery-workbook.pdf',
- 'vista-cinema-install-guide.pdf',
+ 'vista-watch-install-guide.pdf',
  'project-requirements-template.csv'
 ];
 for (const file of expectedDownloads) {
@@ -104,6 +104,14 @@ if (!fs.readFileSync(path.join(dist,'services.html'),'utf8').includes('/download
 if (!contact.includes('/downloads/project-discovery-workbook.pdf')) throw Error('Contact brief workbook link missing');
 if (!fs.readFileSync(path.join(dist,'vista.html'),'utf8').includes('Open Downloads &amp; Resources')) throw Error('Vista download centre link missing');
 console.log('Resource centre UX checks passed');
+
+for (const file of htmlFiles) {
+ const html = fs.readFileSync(path.join(dist,file),'utf8');
+ if (html.includes('Vista Cinema') || html.includes('VISTA CINEMA')) throw Error('Retired product name published in '+file);
+ if (html.includes('vista-marketing-1.png') || html.includes('vista-marketing-2.png')) throw Error('Retired brand artwork referenced in '+file);
+}
+if (!downloads.includes('Vista Watch') || !fs.existsSync(path.join(dist,'assets/vista-watch-mark.svg'))) throw Error('Vista Watch identity is missing');
+console.log('Vista Watch branding passed across published pages, identity assets and download guides');
 
 for (const id of ['start-here','study-tools']) if (!home.includes('id="'+id+'"')) throw Error('Missing visitor journey: '+id);
 for (const href of ['/pdf','/synapse','/downloads','/contact']) if (!home.includes('href="'+href+'"')) throw Error('Missing task destination: '+href);

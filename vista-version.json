@@ -1,9 +1,9 @@
 {
-  "versionCode": 18,
-  "versionName": "1.0.11",
+  "versionCode": 19,
+  "versionName": "1.0.12",
   "downloadUrl": "https://lxobsidianportal.co.za/api/vista-download?platform=android",
-  "changelog": "FIXED: Clearer catalog errors and retry, with independent TVMaze fallback instead of empty successful results.\nIMPROVED: Earlier, all-frame targeted provider-ad cleanup on supported WebViews.\nTV: Consistent focus-driven scrolling, row focus restoration and more space around enlarged cards.\nPOLISH: Clearer loading and recovery screens, adaptive collection grids and failed-page retry.\nNEW: Optional Help shape Vista feedback poll in phone/tablet Home and Settings.\nPLAYBACK: Optional NexStream backup movie source after existing providers. Availability remains provider-dependent.\nLive TV and Sports are being planned; availability and timing are not confirmed.",
-  "sha256": "1590E86FC074AE039A2154ADA6BDAC3DFC0A4B6E75DA69A51BAD325DFEDED1C0",
-  "sizeBytes": 22583266,
+  "changelog": "PLAYBACK: Improved playback and catalog recovery, confirmed working in maintainer device testing. Availability remains provider-dependent.\nTV: Shared mobile/TV release with refined navigation and playback options.\nSUPPORT: Official support screens and reviewable reports.\nACCOUNT: Clearer, actionable login error dialogs.\nPOLISH: Expanded avatars, updated artwork and Vista Watch identity.",
+  "sha256": "F8E7C8F97A1835BA58E20F69F968C4B7D4E50F0319CB67CCE66F102D03920360",
+  "sizeBytes": 23020491,
   "mandatory": false
 }

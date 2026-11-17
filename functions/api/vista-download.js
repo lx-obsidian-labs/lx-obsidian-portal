@@ -2,13 +2,13 @@
 // Preserve existing third-party attribution and applicable notices.
 // Resolve a public GitHub Release asset to its CDN URL. Never buffer or proxy APK bytes.
 const release = {
-  android: { id: '750227218', filename: 'VistaCinema-v1.0.11.apk' },
-  tv: { id: '750227219', filename: 'VistaCinema-TV-v1.0.11.apk' },
-  ios: { id: '750219527', filename: 'Vista-iOS-Unsigned.ipa' },
-  'ios-archive': { id: '750219525', filename: 'Vista-iOS-Device-Archive.zip' }
+  android: { id: '758454372', filename: 'VistaWatch-v1.0.12.apk' },
+  tv: { id: '758454353', filename: 'VistaWatch-TV-v1.0.12.apk' },
+  ios: { id: '750219527', filename: 'Vista-iOS-Unsigned.ipa', version: 'v1.0.11' },
+  'ios-archive': { id: '750219525', filename: 'Vista-iOS-Device-Archive.zip', version: 'v1.0.11' }
 };
 const repository = 'lx-obsidian-labs/lx-obsidian-portal';
-const version = 'v1.0.11';
+const version = 'v1.0.12';
 
 export async function onRequest(context) {
   const request = context.request;
@@ -17,11 +17,12 @@ export async function onRequest(context) {
   const platform = url.searchParams.get('platform') || 'android';
   const asset = Object.prototype.hasOwnProperty.call(release, platform) ? release[platform] : null;
   if (!asset) return new Response('Choose android, tv, ios or ios-archive. iOS builds are unsigned developer downloads.', { status: 400 });
-  const key = new Request(`${url.origin}/api/vista-download?platform=${platform}&release=${version}`);
+  const assetVersion = asset.version || version;
+  const key = new Request(`${url.origin}/api/vista-download?platform=${platform}&release=${assetVersion}`);
   const cache = globalThis.caches?.default;
   const cached = cache ? await cache.match(key) : null;
   if (cached) return cached;
-  const fallback = `https://github.com/${repository}/releases/download/${version}/${asset.filename}`;
+  const fallback = `https://github.com/${repository}/releases/download/${assetVersion}/${asset.filename}`;
   try {
     const upstream = await fetch(`https://api.github.com/repos/${repository}/releases/assets/${asset.id}`, {
       headers: { Accept: 'application/octet-stream', 'User-Agent': 'LX-Obsidian-Vista-Downloads' },
