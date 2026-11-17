@@ -2,7 +2,7 @@
   "versionCode": 19,
   "versionName": "1.0.12",
   "downloadUrl": "https://lxobsidianportal.co.za/api/vista-download?platform=android",
-  "changelog": "PLAYBACK: Improved playback and catalog recovery, confirmed working in maintainer device testing. Availability remains provider-dependent.\nTV: Shared mobile/TV release with refined navigation and playback options.\nSUPPORT: Official support screens and reviewable reports.\nACCOUNT: Clearer, actionable login error dialogs.\nPOLISH: Expanded avatars, updated artwork and Vista Watch identity.",
+  "changelog": "WHAT'S NEW IN VISTA WATCH 1.0.12\n• Improved playback and catalog recovery, confirmed working in our latest device testing.\n• Refined TV navigation and playback-source controls.\n• Official Help & Support with reviewable problem reports and a TV support QR.\n• Clearer login error dialogs with recovery actions.\n• Expanded avatars, refreshed artwork and consistent Vista Watch identity.\n\nQUICK TIPS\n• TV: press Menu or hold OK during playback to choose a source, change next-episode autoplay or open help. Back returns to video. Embedded providers may need Play next episode manually.\n• Mobile: Settings > Account > Edit Avatar changes your avatar.\n• Settings > Help & Support > Report a problem lets you review a report before sending it in your email app. Nothing is sent automatically.\n• Download the update, then approve the Android installation prompt. Install over your existing app.\n\nFull changelog and guide: https://www.lxobsidianportal.co.za/vista-1-0-12\nStream availability remains provider-dependent. Thank you for helping improve Vista Watch!",
   "sha256": "F8E7C8F97A1835BA58E20F69F968C4B7D4E50F0319CB67CCE66F102D03920360",
   "sizeBytes": 23020491,
   "mandatory": false
