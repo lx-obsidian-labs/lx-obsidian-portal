@@ -150,6 +150,21 @@ for (const file of ROOT_HTML) {
     if (/^(?:\/|#|[a-z][a-z0-9+.-]*:|\/\/)/i.test(target)) return match;
     return attr + '=' + quote + '/' + target + quote;
   });
+  // Direct internal page links to canonical public routes, preserving fragments and queries.
+  html = html.replace(/\bhref=(["'])([^"']+)\1/gi, (match, quote, href) => {
+    const origin = 'https://www.lxobsidianportal.co.za';
+    const prefix = href.startsWith(origin+'/') ? origin : '';
+    const local = prefix ? href.slice(prefix.length) : href;
+    if (!local.startsWith('/') || local.startsWith('//')) return match;
+    const [route, suffix = ''] = local.split(/(?=[?#])/s, 2);
+    const tail = local.slice(route.length);
+    let dest = route;
+    if (route === '/pdf' || route === '/pdf.html' || route === '/pdf/index.html') dest = '/pdf/';
+    else if (route === '/index.html') dest = '/';
+    else if (route === '/synapse-web.html') dest = '/synapse/web';
+    else if (/^\\/[^/]+\\.html$/.test(route) && ROOT_HTML.includes(route.slice(1)) && route !== '/404.html') dest = route.slice(0,-5);
+    return 'href='+quote+prefix+dest+tail+quote;
+  });
   // Avoid misleading Login labels that actually lead to Contact.
   html = html.replace(/(<a\b[^>]*href=["']\/?contact(?:\.html)?["'][^>]*>)\s*Login\s*(<\/a>)/gi, '$1Contact$2');
   html = html.replace(/(<span class=["']velora-cta__pill["']>)Get Started(<\/span>)/g, '$1Start a Project$2');

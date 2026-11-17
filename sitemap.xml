@@ -3,7 +3,7 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://www.lxobsidianportal.co.za/</loc>
-    <lastmod>2026-11-16</lastmod>
+    <lastmod>2026-11-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -15,13 +15,13 @@
   </url>
   <url>
     <loc>https://www.lxobsidianportal.co.za/build</loc>
-    <lastmod>2026-10-10</lastmod>
+    <lastmod>2026-11-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.lxobsidianportal.co.za/services</loc>
-    <lastmod>2026-10-10</lastmod>
+    <lastmod>2026-11-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -45,7 +45,7 @@
   </url>
   <url>
     <loc>https://www.lxobsidianportal.co.za/synapse</loc>
-    <lastmod>2026-10-10</lastmod>
+    <lastmod>2026-11-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -110,24 +110,24 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.lxobsidianportal.co.za/privacy-policy.html</loc>
+    <loc>https://www.lxobsidianportal.co.za/privacy-policy</loc>
     <lastmod>2026-11-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
-    <loc>https://www.lxobsidianportal.co.za/vista-terms.html</loc>
+    <loc>https://www.lxobsidianportal.co.za/vista-terms</loc>
     <lastmod>2026-11-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
-    <loc>https://www.lxobsidianportal.co.za/pdf</loc>
-    <lastmod>2026-11-16</lastmod>
+    <loc>https://www.lxobsidianportal.co.za/pdf/</loc>
+    <lastmod>2026-11-17</lastmod>
   </url>
   <url>
     <loc>https://www.lxobsidianportal.co.za/obsidian-labs</loc>
-    <lastmod>2026-11-16</lastmod>
+    <lastmod>2026-11-17</lastmod>
   </url>
   <url>
     <loc>https://www.lxobsidianportal.co.za/software-development-guide-south-africa</loc>
@@ -153,4 +153,5 @@
   <url><loc>https://www.lxobsidianportal.co.za/careers</loc><lastmod>2026-11-17</lastmod></url>
   <url><loc>https://www.lxobsidianportal.co.za/partners</loc><lastmod>2026-11-17</lastmod></url>
 <url><loc>https://www.lxobsidianportal.co.za/tools</loc><lastmod>2026-11-17</lastmod></url>
+  <url><loc>https://www.lxobsidianportal.co.za/synapse/web</loc><lastmod>2026-11-17</lastmod></url>
 </urlset>

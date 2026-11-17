@@ -11,7 +11,7 @@ for (const name of required) {
 }
 const home = fs.readFileSync(path.join(dist, 'index.html'), 'utf8');
 const routes = fs.readFileSync(path.join(dist, '_redirects'), 'utf8');
-if (!home.includes('href="/pdf"')) throw Error('Homepage PDF Studio link missing');
+if (!home.includes('href="/pdf/"')) throw Error('Homepage PDF Studio link missing');
 if (!fs.existsSync(path.join(dist, 'pdf/index.html'))) throw Error('PDF Studio directory route missing');
 if (fs.existsSync(path.join(dist, 'pdf.html'))) throw Error('Duplicate PDF entrypoint causes Pages clean URL conflict');
 function check(dir) {
@@ -114,7 +114,7 @@ if (!downloads.includes('Vista Watch') || !fs.existsSync(path.join(dist,'assets/
 console.log('Vista Watch branding passed across published pages, identity assets and download guides');
 
 for (const id of ['start-here','study-tools']) if (!home.includes('id="'+id+'"')) throw Error('Missing visitor journey: '+id);
-for (const href of ['/pdf','/synapse','/downloads','/contact']) if (!home.includes('href="'+href+'"')) throw Error('Missing task destination: '+href);
+for (const href of ['/pdf/','/synapse','/downloads','/contact']) if (!home.includes('href="'+href+'"')) throw Error('Missing task destination: '+href);
 
 // Company history and transparent pricing regression guards.
 const servicePage=fs.readFileSync(path.join(dist,'services.html'),'utf8');
@@ -157,3 +157,13 @@ const planMatch=contact.match(/const plans=(\{[^\n]+\});/);if(!planMatch)throw E
 for(const [key,value] of Object.entries(rateCard)){const card=servicePage.match(new RegExp('<article class="lx-rate" data-package="'+key+'">[\\s\\S]*?<\\/article>'))?.[0];if(!card||!card.includes('R'+value.toLocaleString('en-US'))||quoteRates[key]?.price!==value)throw Error('Price mismatch: '+key);const option=contact.match(new RegExp('<option value="'+key+'">[^<]+<\\/option>'))?.[0];if(!option||!option.includes('R'+value.toLocaleString('en-US')))throw Error('Quote option price mismatch: '+key);}
 if(!home.includes('R6,000')||!aiSummary.includes('R6,000')||!contact.includes('x*650+y')||!contact.includes('value="850">Website care'))throw Error('Pricing rollout incomplete');
 console.log('Pricing consistency verified');
+
+// Canonical consistency and high-priority SEO discovery.
+const seoSitemap=fs.readFileSync(path.join(dist,'sitemap.xml'),'utf8');
+const seoOrigin='https://www.lxobsidianportal.co.za';
+const seoUrls=[...seoSitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m=>m[1]);
+if(new Set(seoUrls).size!==seoUrls.length)throw Error('Duplicate sitemap entries');
+for(const [route,file] of [['/pdf/','pdf/index.html'],['/privacy-policy','privacy-policy.html'],['/vista-terms','vista-terms.html'],['/synapse/web','synapse/web/index.html']]){const content=fs.readFileSync(path.join(dist,file),'utf8');if(!seoUrls.includes(seoOrigin+route)||!content.includes('rel="canonical" href="'+seoOrigin+route+'"'))throw Error('Canonical mismatch: '+route);}
+for(const route of ['/software-development-guide-south-africa','/ai-automation-guide','/obsidian-labs','/engineering-case-studies'])if(!home.includes('href="'+route+'"'))throw Error('SEO discovery link missing: '+route);
+if(!home.includes('R6,000')||!servicePage.includes('Website development, software and AI services in South Africa'))throw Error('Commercial SEO positioning missing');
+console.log('SEO canonical and discovery checks passed');
