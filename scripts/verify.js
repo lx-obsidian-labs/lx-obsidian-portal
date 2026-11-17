@@ -150,3 +150,10 @@ if (/^\/partners\s+\/contact/m.test(routes)) throw Error('Partner page shadowed 
 console.log('Public ecosystem checks passed');
 
 const publicTools=fs.readFileSync(path.join(dist,'tools.html'),'utf8');if(!home.includes('href="/tools"')||!publicTools.includes('data-tool="currency"')||!publicTools.includes('data-tool="password"')||!fs.existsSync(path.join(dist,'functions/api/public-data.js')))throw Error('Public tools release incomplete');console.log('Public utilities checks passed');
+
+// Pricing consistency: every advertised base price matches the quote calculator.
+const rateCard={"website":6000,"professional":12000,"ecommerce":22000,"mobile":35000,"automation":18000,"system":45000,"social-starter":950,"social-growth":1800,"social-plus":3500,"care":850,"seo":1800,"managed":3000,"domain-coza":249,"domain-com":499};
+const planMatch=contact.match(/const plans=(\{[^\n]+\});/);if(!planMatch)throw Error('Quote rate data missing');const quoteRates=JSON.parse(planMatch[1]);
+for(const [key,value] of Object.entries(rateCard)){const card=servicePage.match(new RegExp('<article class="lx-rate" data-package="'+key+'">[\\s\\S]*?<\\/article>'))?.[0];if(!card||!card.includes('R'+value.toLocaleString('en-US'))||quoteRates[key]?.price!==value)throw Error('Price mismatch: '+key);const option=contact.match(new RegExp('<option value="'+key+'">[^<]+<\\/option>'))?.[0];if(!option||!option.includes('R'+value.toLocaleString('en-US')))throw Error('Quote option price mismatch: '+key);}
+if(!home.includes('R6,000')||!aiSummary.includes('R6,000')||!contact.includes('x*650+y')||!contact.includes('value="850">Website care'))throw Error('Pricing rollout incomplete');
+console.log('Pricing consistency verified');
