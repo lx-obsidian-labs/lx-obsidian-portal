@@ -1,0 +1,158 @@
+/* Engineering: LX Obsidian Labs | https://www.lxobsidianportal.co.za */
+:root {
+  --lx-page-gutter: clamp(1rem, 3.6vw, 2.75rem);
+  --lx-page-width: 74rem;
+  --lx-section-space: clamp(2.75rem, 6vw, 5.75rem);
+  --lx-card-gap: clamp(.85rem, 2vw, 1.5rem);
+  --lx-reading-width: 68ch;
+}
+
+@media screen {
+  body:has(> .velora-nav) { --lx-anchor-offset: 6.5rem; }
+  body:has(> .velora-nav) main :where([id]) { scroll-margin-block-start: var(--lx-anchor-offset); }
+
+  main :where(h1, h2, h3) { overflow-wrap: anywhere; }
+  main :where(img, video, iframe) { max-inline-size: 100%; }
+
+  main :is(.saas-wrap, .lx-home-wrap, .lx-eco-wrap, .dl-wrap, .vista-clean__wrap, .syn-clean__wrap, .store-hero__grid) {
+    width: min(var(--lx-page-width), calc(100% - 2 * var(--lx-page-gutter)));
+    margin-inline: auto;
+  }
+
+  .lx-home .lx-sales-hero .lx-home-intro { max-inline-size: var(--lx-reading-width); }
+  .lx-home .lx-sale-grid { gap: clamp(.65rem, 1.5vw, 1rem); }
+  .lx-home .lx-sale-card { padding: clamp(.75rem, 1.6vw, 1.25rem); border-radius: .75rem; }
+  .lx-home .lx-sale-card span { line-height: 1.4; }
+  body > .ft-wrap, main .ft-wrap { padding-inline: var(--lx-page-gutter); }
+  main .ft-section { padding-block: var(--lx-section-space); }
+  .store-shell .store-hero { padding-block: clamp(2rem, 5vw, 4.5rem); }
+  main.ios-release { padding-inline: var(--lx-page-gutter); }
+  main.ios-release > :is(p, li), .shell main :is(p, li) { max-inline-size: var(--lx-reading-width); }
+
+  main :is(.saas-section, .lx-studio-section, .lx-home-products, .lx-home-services, .lx-eco-section) {
+    padding-block: var(--lx-section-space);
+  }
+
+  main :is(.lx-home-intro, .lx-eco-lead, .saas-section__head p, .lx-studio-intro > p, .dl-hero p,
+    .vista-clean__hero p, .syn-clean__hero p, .ft-hero p, .ft-section > .ft-wrap > p) {
+    max-inline-size: var(--lx-reading-width);
+  }
+
+  main :is(.saas-section__head, .lx-home-section-head, .dl-grouphead) {
+    gap: clamp(.75rem, 3vw, 2rem);
+    margin-block-end: clamp(1.25rem, 3vw, 2.75rem);
+  }
+
+  main :is(.lx-eco-grid, .lx-studio-grid, .lx-home-cards, .dl-grid, .saas-steps) { gap: var(--lx-card-gap); }
+  main :is(.lx-eco-grid, .lx-studio-grid, .lx-home-cards, .dl-grid, .saas-steps) > * { min-inline-size: 0; }
+
+  main.lx-guide {
+    width: min(100%, 54rem);
+    padding-inline: var(--lx-page-gutter);
+    padding-block-start: clamp(6.5rem, 11vw, 9rem);
+  }
+  .lx-guide :is(p, li) { max-inline-size: var(--lx-reading-width); }
+  .lx-guide h1 { max-inline-size: 24ch; }
+  .lx-guide h2 { margin-block-start: clamp(1.75rem, 4vw, 3rem); }
+  .lx-guide ul { padding-inline-start: 1.35em; }
+  .lx-guide :is(a, code), .shell main a { overflow-wrap: anywhere; }
+
+  .glass-footer {
+    width: min(var(--lx-page-width), calc(100% - 2 * var(--lx-page-gutter)));
+    margin-block-start: var(--lx-section-space);
+  }
+  .glass-footer .glass-footer__inner {
+    padding: clamp(1rem, 4vw, 2.75rem);
+    gap: clamp(1rem, 3vw, 2rem);
+  }
+  .glass-footer .glass-footer__top { gap: 1.25rem; }
+  .glass-footer .glass-footer__cols {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(.8rem, 3vw, 2rem);
+  }
+  .glass-footer .glass-col { min-inline-size: 0; gap: .35rem; }
+  .glass-footer .glass-link {
+    display: flex;
+    align-items: center;
+    min-block-size: 2rem;
+    max-inline-size: 100%;
+    overflow-wrap: anywhere;
+  }
+  .glass-footer :is(.glass-link, .glass-col a):focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+  .glass-footer section .glass-col {
+    padding: .8rem;
+    border: 1px solid rgb(127 127 127 / .25);
+    border-radius: .75rem;
+  }
+
+  .studio .studio__wrap { gap: var(--lx-card-gap); }
+  .tpl-app .tpl-side { padding: var(--lx-page-gutter); }
+  main:has(#messages) { gap: var(--lx-card-gap); padding-inline: var(--lx-page-gutter); }
+  main:has(#messages) .panel textarea { min-inline-size: 0; }
+  .cv-main .cv-workspace { gap: var(--lx-card-gap); }
+  .cv-main .cv-editor, .cv-main .cv-preview { min-inline-size: 0; }
+
+  .studio-main .intro > p { max-inline-size: var(--lx-reading-width); }
+  .studio-main :is(.workspace, .tool, .studio-topbar #studioSearch) { min-inline-size: 0; }
+  .studio-main :is(.tool strong, .tool small, .file-meta) { overflow-wrap: anywhere; }
+  .studio-main .file-meta { min-inline-size: 0; }
+  .studio-main .tool-filters { flex-wrap: wrap; }
+
+  :is(.studio__wrap, .tpl-main, .tpl-panel, .tpl-side, main > .panel, .store-shell, .store-hero__grid > *) { min-inline-size: 0; }
+  :is(.tpl-code, .lx-guide pre, .shell main pre) { overflow: auto; max-inline-size: 100%; }
+
+  @media (max-width: 48rem) {
+    body:has(> .velora-nav) { --lx-anchor-offset: 5.5rem; }
+
+    main :is(.saas-section__head, .lx-home-section-head, .dl-grouphead) {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    main:not([class]) > .saas-section:first-child { padding-block-start: clamp(2.25rem, 6vw, 3.5rem); }
+    main .lx-eco-hero { padding-block: clamp(2.4rem, 8vw, 4rem) 2.5rem; }
+    main.ios-release { padding-block-start: 6.5rem; }
+    .store-shell { padding-block-start: 6rem; }
+    .cv-main .cv-hero { padding-block-end: 1.25rem; }
+    .dl-page .dl-hero { padding-block: clamp(6.3rem, 17vw, 8rem) 2.5rem; }
+
+    .glass-footer .glass-footer__cols { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .glass-footer .glass-footer__top { align-items: flex-start; }
+    .glass-footer .glass-link { min-block-size: 2.25rem; }
+
+    .studio-main .tool-discovery { margin-block-end: 1rem; }
+    .studio-main .tool-filters button { min-block-size: 2.5rem; }
+    .studio-main .workspace { scroll-margin-block-start: 5.75rem; }
+    .studio-main .file-item { flex-wrap: wrap; }
+  }
+
+  @media (max-width: 38rem) {
+    main :is(.lx-eco-grid, .lx-studio-grid, .lx-home-cards, .dl-grid, .saas-steps) { grid-template-columns: minmax(0, 1fr); }
+    main :is(.saas-btn, .lx-home-button, .dl-button) { max-inline-size: 100%; white-space: normal; text-align: center; }
+    .glass-footer section .glass-footer__cols { grid-template-columns: minmax(0, 1fr); }
+    .glass-footer section .glass-col { gap: .5rem; }
+
+    main:has(#messages) .messages { min-block-size: clamp(13rem, 36dvh, 22rem); padding: 1rem; }
+    main:has(#messages) .panel form { padding: .75rem; }
+    .cv-main .cv-output { scroll-margin-block-start: 5.5rem; }
+
+    .studio-shell .studio-main .tools { grid-template-columns: minmax(0, 1fr); }
+    .studio-main .tool {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      column-gap: .75rem;
+      row-gap: .25rem;
+      align-content: center;
+      min-block-size: 5.75rem;
+    }
+    .studio-main .tool :is(.tool-icon, .emoji) { grid-row: span 2; align-self: center; }
+    .studio-main .tool strong { margin: 0; }
+    .studio-main .workspace { padding: 1rem; }
+    .studio-main .studio-topbar { flex-wrap: wrap; gap: .65rem; }
+    .studio-main .studio-topbar #studioSearch { flex: 1 1 10rem; min-block-size: 2.75rem; }
+    .studio-main .studio-topbar .studio-account { flex: 0 0 auto; }
+  }
+}
