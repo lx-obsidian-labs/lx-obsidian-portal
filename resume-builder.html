@@ -14,7 +14,7 @@
   <meta property="og:image" content="https://www.lxobsidianportal.co.za/assets/og-default.png">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/css/lx.css">
-  <link rel="stylesheet" href="/css/resume-builder.css?v=6">
+  <link rel="stylesheet" href="/css/resume-builder.css?v=7">
 </head>
 <body class="cv-page">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -89,7 +89,7 @@
         <label>Header alignment
           <select name="alignment"><option value="default">Template default</option><option value="left">Left</option><option value="centre">Centred</option></select>
         </label>
-        <label>Lead section after summary
+        <label>First CV section
           <select name="firstSection"><option value="default">Template default</option><option value="education">Education and training</option><option value="experience">Experience and projects</option><option value="skills">Skills</option></select>
         </label>
         <button type="button" id="cv-design-reset" class="cv-button">Reset design</button>
@@ -116,6 +116,14 @@
           <label>City or region<input data-field="location" maxlength="100" placeholder="e.g. Middelburg, Mpumalanga"></label>
           <label>Portfolio or LinkedIn URL<input type="url" data-field="link" maxlength="200" placeholder="https://"></label>
         </div>
+      </fieldset>
+      <fieldset class="cv-panel">
+        <legend>Photo <span>Optional</span></legend>
+        <label for="cv-photo">Add a photo</label>
+        <input id="cv-photo" type="file" accept="image/jpeg,image/png,image/webp" aria-describedby="cv-photo-note">
+        <p class="cv-note" id="cv-photo-note">JPEG, PNG or WebP, up to 15 MB. The photo is cropped to a square, processed on this device and included in your CV export. Leave it off if the employer asks for a photo-free CV.</p>
+        <button type="button" id="cv-remove-photo" class="cv-button" hidden>Remove photo</button>
+        <p id="cv-photo-status" class="cv-note" role="status"></p>
       </fieldset>
       <fieldset class="cv-panel">
         <legend>Target role <span>Optional</span></legend>
@@ -266,6 +274,6 @@
     </div>
   </div>
 </footer><script src="/js/ui/mobile-nav.js" defer></script><script src="/js/ui/glass-footer.js" defer></script>
-<script type="module" src="/js/resume-builder.js?v=7"></script>
+<script type="module" src="/js/resume-builder.js?v=8"></script>
 </body>
 </html>

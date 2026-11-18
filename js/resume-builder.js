@@ -1,6 +1,6 @@
 // Engineering: LX Obsidian Labs | https://www.lxobsidianportal.co.za
-import { createWordDocument } from './resume-word.js?v=2';
-import { getCustomTemplate, getTemplate, templates } from './resume-templates.js?v=3';
+import { createWordDocument } from './resume-word.js?v=3';
+import { getCustomTemplate, getTemplate, templates } from './resume-templates.js?v=4';
 
 const byId = id => document.getElementById(id);
 const form = byId('cv-form');
@@ -41,6 +41,8 @@ const groups = {
 };
 const entryLimit = 12;
 let selectedTemplate;
+let photo = '';
+let photoRevision = 0;
 let pending;
 let controller;
 
@@ -105,6 +107,7 @@ function addEntry(group, values = {}, focus = false) {
 
 function readCV() {
   const cv = Object.fromEntries(fields.map(field => [field.dataset.field, field.value.trim()]));
+  cv.photo = photo;
   for (const group of Object.keys(groups)) {
     cv[group] = [...groupContainer(group).children].map(entry =>
       Object.fromEntries([...entry.querySelectorAll('[data-item]')].map(field => [field.dataset.item, field.value.trim()]))
@@ -128,12 +131,17 @@ function getBlocks(cv, template) {
   }
   push('name', cv.name);
   push('title', cv.title);
-  push('contact', [cv.email, cv.phone, cv.location, cv.link].filter(Boolean).join(' | '));
-  if (cv.summary) {
-    push('section', 'Professional summary');
-    cv.summary.split(/\r?\n/).map(line => line.trim()).forEach(line => push('paragraph', line));
-  }
+  push('contact', [cv.email, cv.phone, cv.location, template.separatePortfolio ? '' : cv.link].filter(Boolean).join(' | '));
+  if (template.separatePortfolio && cv.link) push('portfolio', 'Portfolio: ' + cv.link);
+  if (blocks.length) blocks.at(-1).headerEnd = true;
   for (const group of template.sections) {
+    if (group === 'summary') {
+      if (cv.summary) {
+        push('section', 'Professional summary');
+        cv.summary.split(/\r?\n/).map(line => line.trim()).forEach(line => push('paragraph', line));
+      }
+      continue;
+    }
     if (group === 'skills') {
       if (cv.skills) {
         push('section', 'Skills');
@@ -157,11 +165,20 @@ function renderPaper(target, cv, template) {
   const blocks = getBlocks(cv, template);
   target.style.setProperty('--cv-accent', '#' + template.accent);
   target.style.setProperty('--cv-rule', '#' + template.sectionRule);
+  target.dataset.layout = template.id;
   target.classList.toggle('cv-paper--centred', Boolean(template.centreHeader));
   const output = document.createDocumentFragment();
+  if (cv.photo) {
+    const image = element('img', null, 'cv-photo');
+    image.src = cv.photo;
+    image.alt = 'CV portrait';
+    image.width = 84;
+    image.height = 84;
+    output.append(image);
+  }
   let bulletList;
   const tag = { name: 'h2', section: 'h3', heading: 'h4' };
-  for (const { kind, text } of blocks) {
+  for (const { kind, text, headerEnd } of blocks) {
     if (kind === 'bullet') {
       if (!bulletList) {
         bulletList = element('ul');
@@ -171,8 +188,10 @@ function renderPaper(target, cv, template) {
       continue;
     }
     bulletList = null;
-    const className = { title: 'cv-title', meta: 'cv-meta', contact: 'cv-meta cv-contact' }[kind];
-    output.append(element(tag[kind] || 'p', text, className));
+    const className = { title: 'cv-title', meta: 'cv-meta', contact: 'cv-meta cv-contact', portfolio: 'cv-meta cv-portfolio' }[kind];
+    const block = element(tag[kind] || 'p', text, className);
+    if (headerEnd && template.headerBorder) block.classList.add('cv-header-end');
+    output.append(block);
   }
   if (!blocks.length) output.append(element('p', 'Add your name and experience to see your CV here.', 'cv-meta'));
   target.replaceChildren(output);
@@ -259,7 +278,7 @@ function restoreDesign(design) {
 }
 
 function renderDesignPreview(cv, template) {
-  const hasContent = getBlocks(cv, template).length > 0;
+  const hasContent = cv.photo || getBlocks(cv, template).length > 0;
   byId('cv-design-caption').textContent = hasContent ? 'Your CV' : 'Fictional example. Your own details will appear here as you add them.';
   renderPaper(byId('cv-design-paper'), hasContent ? cv : template.sample, template);
 }
@@ -307,6 +326,10 @@ function restoreDraft() {
     const cv = JSON.parse(stored);
     if (!cv || typeof cv !== 'object' || Array.isArray(cv)) return;
     selectedTemplate = getTemplate(cv.template);
+    if (typeof cv.photo === 'string' && cv.photo.length <= 400000 && /^data:image\/jpeg;base64,[A-Za-z0-9+/]+=*$/.test(cv.photo)) {
+      photo = cv.photo;
+      byId('cv-remove-photo').hidden = false;
+    }
     restoreDesign(cv.design);
     for (const field of fields) field.value = controlText(cv[field.dataset.field], field.maxLength);
     for (const group of Object.keys(groups)) {
@@ -428,7 +451,7 @@ function exportCV(type) {
     return;
   }
   const template = getCustomTemplate(selectedTemplate, readDesign());
-  const url = URL.createObjectURL(createWordDocument(getBlocks(cv, template), template));
+  const url = URL.createObjectURL(createWordDocument(getBlocks(cv, template), template, cv.photo));
   const link = element('a');
   link.href = url;
   link.download = (cv.name.replace(/[^\p{L}\p{N}]+/gu, '-').replace(/^-|-$/g, '').slice(0, 75) || 'Resume') + '-CV.docx';
@@ -441,7 +464,7 @@ function exportCV(type) {
 
 form.addEventListener('submit', event => event.preventDefault());
 form.addEventListener('input', event => {
-  if (event.target !== save) update();
+  if (event.target !== save && event.target.id !== 'cv-photo') update();
 });
 form.addEventListener('click', event => {
   const button = event.target.closest('button');
@@ -462,9 +485,57 @@ form.addEventListener('click', event => {
   if (button.dataset.ai) openSuggestion(button);
 });
 save.addEventListener('change', storeDraft);
+function setPhoto(value) {
+  photo = value;
+  byId('cv-remove-photo').hidden = !photo;
+  update();
+}
+
+byId('cv-photo').addEventListener('change', async event => {
+  const field = event.target;
+  const file = field.files[0];
+  if (!file) return;
+  field.value = '';
+  const revision = ++photoRevision;
+  const status = byId('cv-photo-status');
+  if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type) || file.size > 15 * 1024 * 1024) {
+    status.textContent = 'Choose a JPEG, PNG or WebP photo under 15 MB.';
+    return;
+  }
+  const url = URL.createObjectURL(file);
+  try {
+    const image = new Image();
+    image.src = url;
+    await image.decode();
+    if (revision !== photoRevision) return;
+    const canvas = document.createElement('canvas');
+    canvas.width = canvas.height = 360;
+    const side = Math.min(image.naturalWidth, image.naturalHeight);
+    const context = canvas.getContext('2d');
+    context.fillStyle = '#ffffff';
+    context.fillRect(0, 0, 360, 360);
+    context.drawImage(image, (image.naturalWidth - side) / 2, (image.naturalHeight - side) / 2, side, side, 0, 0, 360, 360);
+    setPhoto(canvas.toDataURL('image/jpeg', .85));
+    status.textContent = 'Photo added to your CV.';
+  } catch {
+    if (revision === photoRevision) status.textContent = 'This image could not be opened. Choose another photo.';
+  } finally {
+    URL.revokeObjectURL(url);
+  }
+});
+byId('cv-remove-photo').addEventListener('click', () => {
+  photoRevision++;
+  setPhoto('');
+  byId('cv-photo-status').textContent = 'Photo removed.';
+  byId('cv-photo').focus();
+});
 byId('cv-clear').addEventListener('click', () => {
   if (!window.confirm('Clear this CV and the draft saved in this browser?')) return;
   form.reset();
+  photoRevision++;
+  photo = '';
+  byId('cv-remove-photo').hidden = true;
+  byId('cv-photo-status').textContent = '';
   selectedTemplate = undefined;
   restoreDesign();
   for (const group of Object.keys(groups)) {
