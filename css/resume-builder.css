@@ -61,6 +61,7 @@
 @media (min-width: 560px) { .cv-fields { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (min-width: 980px) {
   .cv-workspace { grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr); gap: 1.5rem; }
+  .cv-output { position: sticky; top: 6rem; max-height: calc(100vh - 7rem); overflow: auto; }
   .cv-preview-link { display: none; }
 }
 @page { size: A4; margin: 16mm; }
@@ -68,6 +69,7 @@
   .cv-page { background: white !important; color: black !important; }
   .cv-page > :not(main), .cv-hero, .cv-editor, .cv-output-head, .cv-checklist, .cv-dialog { display: none !important; }
   .cv-main, .cv-workspace, .cv-output, .cv-paper { display: block !important; margin: 0; padding: 0; border: 0; border-radius: 0; width: auto; max-width: none; min-height: 0; background: white; }
+  .cv-output { position: static; max-height: none; overflow: visible; }
   .cv-paper h2 { font-size: 25pt; }
   .cv-paper h3, .cv-paper h4 { break-after: avoid; }
   .cv-paper p, .cv-paper li { orphans: 2; widows: 2; }

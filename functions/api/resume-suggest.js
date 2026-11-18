@@ -135,7 +135,10 @@ export async function onRequestPost({ request, env, waitUntil }) {
 
   const network = request.headers.get('CF-Connecting-IP');
   const unavailable = { error: 'AI is temporarily unavailable. You can continue editing and exporting your CV.' };
-  if (!network || !env?.RESUME_USAGE || typeof env.RESUME_AI?.run !== 'function' || !(env.RESUME_QUOTA_SECRET || env.JWT_SECRET) || env.RESUME_AI_DISABLED === 'true') return reply(503, unavailable);
+  if (!network || !env?.RESUME_USAGE || typeof env.RESUME_AI?.run !== 'function' || !(env.RESUME_QUOTA_SECRET || env.JWT_SECRET) || env.RESUME_AI_DISABLED === 'true') {
+    return reply(503, unavailable, { 'X-LX-Resume-Status': 'binding' });
+  }
+  let stage = 'quota';
   try {
     const now = new Date();
     const { day, allowed } = await reserve(env, network, now);
@@ -143,20 +146,31 @@ export async function onRequestPost({ request, env, waitUntil }) {
       const reset = (day + 1) * dayMs;
       return reply(429, { error: 'The daily AI limit has been reached. Continue editing or try again tomorrow.' }, { 'Retry-After': String(Math.ceil((reset - now.getTime()) / 1000)) });
     }
-    waitUntil(env.RESUME_USAGE.prepare('DELETE FROM resume_ai_usage WHERE day < ?').bind(day).run().catch(() => {}));
-    const result = await env.RESUME_AI.run(model, {
+    stage = 'inference';
+    const inference = {
       messages: [
         { role: 'system', content: prompt + '\n' + instructions[data.mode] },
         { role: 'user', content: JSON.stringify(data) },
       ],
-      response_format: responseFormat,
       max_tokens: 300,
       temperature: 0.15,
-    });
+    };
+    let result;
+    try {
+      result = await env.RESUME_AI.run(model, { ...inference, response_format: responseFormat });
+    } catch {
+      result = await env.RESUME_AI.run(model, inference);
+    }
+    try {
+      waitUntil(env.RESUME_USAGE.prepare('DELETE FROM resume_ai_usage WHERE day < ?').bind(day).run().catch(() => {}));
+    } catch {
+      // Cleanup must not discard a generated suggestion.
+    }
     const suggestion = parseSuggestion(result?.response ?? result?.choices?.[0]?.message?.content, data);
     if (!suggestion) return reply(422, { error: 'The suggestion did not pass the wording checks. Try again with more specific evidence.' });
     return reply(200, { suggestion });
-  } catch {
-    return reply(503, unavailable);
+  } catch (error) {
+    const code = String(error?.code || '').match(/^\d{1,8}$/)?.[0];
+    return reply(503, unavailable, { 'X-LX-Resume-Status': code ? stage + '-' + code : stage });
   }
 }
