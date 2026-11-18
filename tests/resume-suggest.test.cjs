@@ -71,6 +71,23 @@ test('rejects a metric copied from the job advert instead of the candidate evide
   assert.equal((await onRequestPost(context({ run }))).status, 422);
 });
 
+test('template advice sends the application goal and accepts only existing layout IDs', async t => {
+  const body = JSON.stringify({
+    ...fixture,
+    mode: 'template',
+    target: 'First internship after my diploma. Example: private@example.com'
+  });
+  const run = t.mock.fn(async () => ({ response: { suggestion: 'graduate' } }));
+  const result = await onRequestPost(context({ body, run }));
+  assert.equal(result.status, 200);
+  assert.deepEqual(await result.json(), { suggestion: 'graduate' });
+  assert.deepEqual(JSON.parse(run.mock.calls[0].arguments[1].messages[1].content), {
+    mode: 'template', target: 'First internship after my diploma. Example: [email removed]'
+  });
+  const unsupported = await onRequestPost(context({ body, run: async () => ({ response: { suggestion: 'creative' } }) }));
+  assert.equal(unsupported.status, 422);
+});
+
 test('keeps the alternate inference route restricted to zero data retention', async t => {
   const fixtureContext = context({ run: async () => { throw Error('Primary temporarily unavailable'); } });
   fixtureContext.env.OPENROUTER_API_KEY = 'test-only-key';

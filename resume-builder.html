@@ -8,13 +8,13 @@
   <title>Free AI Résumé Builder | LX Obsidian Labs</title>
   <link rel="canonical" href="https://www.lxobsidianportal.co.za/resume-builder">
   <meta property="og:title" content="Free AI Résumé Builder | LX Obsidian Labs">
-  <meta property="og:description" content="Write, tailor and download a professional CV for your next application.">
+  <meta property="og:description" content="See three finished CV examples for first jobs, internships and experienced applicants. Choose a layout, make it your own, and export to Word or PDF for free.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.lxobsidianportal.co.za/resume-builder">
   <meta property="og:image" content="https://www.lxobsidianportal.co.za/assets/og-default.png">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/css/lx.css">
-  <link rel="stylesheet" href="/css/resume-builder.css?v=5">
+  <link rel="stylesheet" href="/css/resume-builder.css?v=6">
 </head>
 <body class="cv-page">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -44,8 +44,26 @@
   <noscript><p class="cv-noscript">Enable JavaScript to edit, preview and export a CV.</p></noscript>
   <section class="cv-templates" id="cv-templates" aria-labelledby="cv-templates-title" hidden>
     <h2 id="cv-templates-title" tabindex="-1">Choose a CV template</h2>
-    <p class="cv-note">View a finished example, select a template, then continue to add your details.</p>
-    <div class="cv-template-grid" id="cv-template-grid"></div>
+    <p class="cv-note">Tap a template to see the finished example, then continue to add your details.</p>
+    <div class="cv-template-grid" id="cv-template-grid" role="group" aria-label="CV templates"></div>
+    <details class="cv-template-help">
+      <summary>Get an AI recommendation</summary>
+      <form id="cv-template-ai">
+        <label for="cv-template-goal">What are you applying for?</label>
+        <input id="cv-template-goal" maxlength="120" required placeholder="e.g. A first internship after my diploma">
+        <p class="cv-note" id="cv-template-ai-note">We send only what you write here to Cloudflare Workers AI or OpenRouter. Leave out names and contact details.</p>
+        <button type="submit" class="cv-button">Ask AI</button>
+        <p id="cv-template-ai-status" role="status" class="cv-note"></p>
+      </form>
+    </details>
+    <div class="cv-template-sample">
+      <div class="cv-example-head">
+        <h3 id="cv-template-preview-title"></h3>
+        <button type="button" id="cv-expand-example" class="cv-button" aria-haspopup="dialog">Enlarge example</button>
+      </div>
+      <p id="cv-template-preview-description" class="cv-note"></p>
+      <article id="cv-template-paper" class="cv-paper" aria-labelledby="cv-template-preview-title"></article>
+    </div>
     <div class="cv-step-actions">
       <p id="cv-template-status" class="cv-note" role="status">Select a template to continue.</p>
       <button type="button" id="cv-continue" class="cv-button cv-button--primary" disabled>Continue</button>
@@ -248,6 +266,6 @@
     </div>
   </div>
 </footer><script src="/js/ui/mobile-nav.js" defer></script><script src="/js/ui/glass-footer.js" defer></script>
-<script type="module" src="/js/resume-builder.js?v=6"></script>
+<script type="module" src="/js/resume-builder.js?v=7"></script>
 </body>
 </html>

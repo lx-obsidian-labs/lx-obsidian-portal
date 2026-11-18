@@ -3,6 +3,7 @@ export const templates = [
   {
     id: 'classic',
     name: 'Classic',
+    useCase: 'General applications',
     description: 'A straightforward layout for most applications.',
     sections: ['skills', 'experience', 'education'],
     accent: '162033',
@@ -21,6 +22,7 @@ export const templates = [
   {
     id: 'graduate',
     name: 'Graduate',
+    useCase: 'First jobs',
     description: 'Puts qualifications first for students and recent graduates.',
     sections: ['education', 'skills', 'experience'],
     accent: '1D4B91',
@@ -40,6 +42,7 @@ export const templates = [
   {
     id: 'modern',
     name: 'Modern',
+    useCase: 'Work & projects',
     description: 'Highlights projects and experience before the skills list.',
     sections: ['experience', 'skills', 'education'],
     accent: '145B4D',

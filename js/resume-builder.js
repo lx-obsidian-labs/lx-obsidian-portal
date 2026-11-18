@@ -1,6 +1,6 @@
 // Engineering: LX Obsidian Labs | https://www.lxobsidianportal.co.za
 import { createWordDocument } from './resume-word.js?v=2';
-import { getCustomTemplate, getTemplate, templates } from './resume-templates.js?v=2';
+import { getCustomTemplate, getTemplate, templates } from './resume-templates.js?v=3';
 
 const byId = id => document.getElementById(id);
 const form = byId('cv-form');
@@ -179,34 +179,17 @@ function renderPaper(target, cv, template) {
 }
 
 function renderTemplates() {
-  const options = byId('cv-template-grid');
-  const exampleDialog = byId('cv-template-dialog');
   for (const template of templates) {
-    const card = element('div', null, 'cv-template-card');
-    const miniature = element('div', null, 'cv-paper cv-miniature');
-    miniature.setAttribute('aria-hidden', 'true');
-    renderPaper(miniature, template.sample, template);
-    const choose = element('button', 'Use ' + template.name, 'cv-button cv-template-select');
+    const choose = element('button', template.name, 'cv-button cv-template-select');
     choose.type = 'button';
-    choose.setAttribute('aria-pressed', 'false');
     choose.dataset.template = template.id;
+    choose.setAttribute('aria-controls', 'cv-template-paper');
+    choose.append(element('span', template.useCase));
     choose.addEventListener('click', () => {
       selectedTemplate = template;
       renderTemplateSelection();
     });
-    const view = element('button', 'View example', 'cv-button');
-    view.type = 'button';
-    view.setAttribute('aria-label', 'View ' + template.name + ' example');
-    view.setAttribute('aria-haspopup', 'dialog');
-    view.addEventListener('click', () => {
-      byId('cv-example-title').textContent = template.name + ' CV example';
-      renderPaper(byId('cv-example-paper'), template.sample, template);
-      exampleDialog.showModal();
-    });
-    const actions = element('div', null, 'cv-actions');
-    actions.append(choose, view);
-    card.append(miniature, element('h3', template.name), element('p', template.description, 'cv-note'), actions);
-    options.append(card);
+    byId('cv-template-grid').append(choose);
   }
 }
 
@@ -214,10 +197,45 @@ function renderTemplateSelection() {
   for (const button of byId('cv-template-grid').querySelectorAll('[data-template]')) {
     const active = button.dataset.template === selectedTemplate?.id;
     button.setAttribute('aria-pressed', String(active));
-    button.closest('.cv-template-card').classList.toggle('cv-template-card--selected', active);
   }
+  const displayed = selectedTemplate || getTemplate();
+  byId('cv-template-preview-title').textContent = displayed.name + ' · Sample CV';
+  byId('cv-template-preview-description').textContent = displayed.description;
+  renderPaper(byId('cv-template-paper'), displayed.sample, displayed);
   continueButton.disabled = !selectedTemplate;
   byId('cv-template-status').textContent = selectedTemplate ? selectedTemplate.name + ' selected' : 'Select a template to continue.';
+}
+
+async function recommendTemplate(event) {
+  event.preventDefault();
+  const goal = byId('cv-template-goal').value.trim();
+  const button = event.currentTarget.querySelector('button[type="submit"]');
+  const status = byId('cv-template-ai-status');
+  if (button.disabled) return;
+  if (goal.length < 3) {
+    status.textContent = 'Enter a role or a short application goal.';
+    return;
+  }
+  button.disabled = true;
+  status.textContent = 'Finding a template…';
+  try {
+    const response = await fetch('/api/resume-suggest', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ mode: 'template', consent: true, target: goal }),
+      signal: AbortSignal.timeout(25000)
+    });
+    const result = await response.json();
+    const recommended = templates.find(template => template.id === result.suggestion);
+    const fallback = 'You can still choose Graduate for education, Modern for experience and projects, or Classic for general applications.';
+    status.textContent = response.ok && recommended
+      ? 'Try ' + recommended.name + '. ' + recommended.description
+      : (response.status === 429 ? 'The daily AI limit has been reached. ' : 'AI advice is temporarily unavailable. ') + fallback;
+  } catch {
+    status.textContent = 'AI advice is temporarily unavailable. Choose a template from the examples.';
+  } finally {
+    button.disabled = false;
+  }
 }
 
 function showStep(editing, moveFocus = false) {
@@ -484,6 +502,13 @@ continueButton.addEventListener('click', () => {
   if (save.checked) storeDraft();
 });
 byId('cv-change-template').addEventListener('click', () => showStep(false, true));
+byId('cv-template-ai').addEventListener('submit', recommendTemplate);
+byId('cv-expand-example').addEventListener('click', () => {
+  const template = selectedTemplate || getTemplate();
+  byId('cv-example-title').textContent = template.name + ' CV example';
+  renderPaper(byId('cv-example-paper'), template.sample, template);
+  byId('cv-template-dialog').showModal();
+});
 for (const button of document.querySelectorAll('[data-customise]')) {
   button.addEventListener('click', () => {
     designDialog.showModal();
