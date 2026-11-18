@@ -46,7 +46,7 @@ if(!contactApi.includes('Untrusted origin') || !contactApi.includes('emailOK')) 
 if(!portfolio.includes('id="project-snapshots"')) throw Error('Engineering case-study snapshots missing');
 if(integrations.includes('href="#" class="integration-card"')) throw Error('Dead integration CTAs present');
 if(ai.includes('index.html#pricing')) throw Error('Invalid AI pricing link present');
-if(!/<h1\b[^>]*id="home-title"[^>]*>Websites, apps and AI<br>\s*<span>for your business\.<\/span><\/h1>/.test(home)) throw Error('Homepage positioning reverted');
+if(!/<h1\b[^>]*id="home-title"[^>]*>Website development, apps and AI<br>\s*<span>for South African businesses\.<\/span><\/h1>/.test(home)) throw Error('Homepage positioning reverted');
 console.log('Marketing verification passed: secure lead capture, honest CTAs, case study snapshots, updated positioning');
 
 // Site-wide design, navigation and link-integrity guardrails.
@@ -141,11 +141,13 @@ console.log('Company history, 14 pricing packages, quote options and public cont
 // Public ecosystem: discovery, honest availability and working contact routes.
 for (const slug of ['automation','careers','partners']) {
  const page=fs.readFileSync(path.join(dist,slug+'.html'),'utf8');
- if (!home.includes('href="/'+slug+'"') || !page.includes('https://www.lxobsidianportal.co.za/'+slug) || !page.includes('mailto:sales@lxobsidianportal.co.za?subject=')) throw Error('Ecosystem route or enquiry missing: '+slug);
+ if (!home.includes('href="/'+slug+'"') || !page.includes('https://www.lxobsidianportal.co.za/'+slug) || !page.includes('mailto:'+(slug === 'careers' ? 'careers' : 'sales')+'@lxobsidianportal.co.za?subject=')) throw Error('Ecosystem route or enquiry missing: '+slug);
  if (!fs.readFileSync(path.join(dist,'sitemap.xml'),'utf8').includes('https://www.lxobsidianportal.co.za/'+slug+'</loc>')) throw Error('Missing sitemap route: '+slug);
 }
 if (!fs.readFileSync(path.join(dist,'automation.html'),'utf8').includes('Public MCP releases are not yet available')) throw Error('MCP availability disclosure missing');
 if (!fs.readFileSync(path.join(dist,'careers.html'),'utf8').includes('No open vacancies are currently advertised')) throw Error('Career availability disclosure missing');
+const careers = fs.readFileSync(path.join(dist,'careers.html'),'utf8');
+if (!careers.includes('href="/resume-builder"') || !fs.existsSync(path.join(dist,'js/ui/resume-word.js')) || !fs.existsSync(path.join(dist,'functions/api/resume-assist.js'))) throw Error('CV builder release incomplete');
 if (/^\/partners\s+\/contact/m.test(routes)) throw Error('Partner page shadowed by legacy redirect');
 console.log('Public ecosystem checks passed');
 
@@ -163,7 +165,7 @@ const seoSitemap=fs.readFileSync(path.join(dist,'sitemap.xml'),'utf8');
 const seoOrigin='https://www.lxobsidianportal.co.za';
 const seoUrls=[...seoSitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m=>m[1]);
 if(new Set(seoUrls).size!==seoUrls.length)throw Error('Duplicate sitemap entries');
-for(const [route,file] of [['/pdf/','pdf/index.html'],['/privacy-policy','privacy-policy.html'],['/vista-terms','vista-terms.html'],['/synapse/web','synapse/web/index.html']]){const content=fs.readFileSync(path.join(dist,file),'utf8');if(!seoUrls.includes(seoOrigin+route)||!content.includes('rel="canonical" href="'+seoOrigin+route+'"'))throw Error('Canonical mismatch: '+route);}
+for(const [route,file] of [['/resume-builder','resume-builder.html'],['/pdf/','pdf/index.html'],['/privacy-policy','privacy-policy.html'],['/vista-terms','vista-terms.html'],['/synapse/web','synapse/web/index.html']]){const content=fs.readFileSync(path.join(dist,file),'utf8');if(!seoUrls.includes(seoOrigin+route)||!content.includes('rel="canonical" href="'+seoOrigin+route+'"'))throw Error('Canonical mismatch: '+route);}
 for(const route of ['/software-development-guide-south-africa','/ai-automation-guide','/obsidian-labs','/engineering-case-studies'])if(!home.includes('href="'+route+'"'))throw Error('SEO discovery link missing: '+route);
 if(!home.includes('R6,000')||!servicePage.includes('Website development, software and AI services in South Africa'))throw Error('Commercial SEO positioning missing');
 console.log('SEO canonical and discovery checks passed');

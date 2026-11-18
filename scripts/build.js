@@ -38,6 +38,18 @@ for (const name of INCLUDE) {
   }
 }
 
+// Bundle Word export locally and load it only when a visitor requests a DOCX.
+require('esbuild').buildSync({
+  entryPoints: [path.join(ROOT, 'js/ui/resume-word.js')],
+  outfile: path.join(DIST, 'js/ui/resume-word.js'),
+  bundle: true,
+  format: 'esm',
+  platform: 'browser',
+  external: ['buffer'],
+  minify: true,
+  legalComments: 'eof'
+});
+
 // Generate verified downloadable PDF and CSV resources into the deploy output.
 require('./generate-downloadables.js');
 
