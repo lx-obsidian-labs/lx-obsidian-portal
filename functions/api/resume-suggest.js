@@ -136,6 +136,7 @@ export async function onRequestPost({ request, env, waitUntil }) {
   const network = request.headers.get('CF-Connecting-IP');
   const unavailable = { error: 'AI is temporarily unavailable. You can continue editing and exporting your CV.' };
   if (!network || !env?.RESUME_USAGE || typeof env.RESUME_AI?.run !== 'function' || !(env.RESUME_QUOTA_SECRET || env.JWT_SECRET) || env.RESUME_AI_DISABLED === 'true') return reply(503, unavailable);
+  let stage = 'quota';
   try {
     const now = new Date();
     const { day, allowed } = await reserve(env, network, now);
@@ -144,19 +145,30 @@ export async function onRequestPost({ request, env, waitUntil }) {
       return reply(429, { error: 'The daily AI limit has been reached. Continue editing or try again tomorrow.' }, { 'Retry-After': String(Math.ceil((reset - now.getTime()) / 1000)) });
     }
     waitUntil(env.RESUME_USAGE.prepare('DELETE FROM resume_ai_usage WHERE day < ?').bind(day).run().catch(() => {}));
-    const result = await env.RESUME_AI.run(model, {
+    stage = 'inference';
+    const inference = {
       messages: [
         { role: 'system', content: prompt + '\n' + instructions[data.mode] },
         { role: 'user', content: JSON.stringify(data) },
       ],
-      response_format: responseFormat,
       max_tokens: 300,
       temperature: 0.15,
-    });
+    };
+    let result;
+    try {
+      result = await env.RESUME_AI.run(model, { ...inference, response_format: responseFormat });
+    } catch (error) {
+      // Some inference routes reject schema mode. Retain strict validation when retrying.
+      if (!/schema|json|format/i.test(String(error?.message || ''))) throw error;
+      result = await env.RESUME_AI.run(model, inference);
+    }
     const suggestion = parseSuggestion(result?.response ?? result?.choices?.[0]?.message?.content, data);
     if (!suggestion) return reply(422, { error: 'The suggestion did not pass the wording checks. Try again with more specific evidence.' });
     return reply(200, { suggestion });
-  } catch {
-    return reply(503, unavailable);
+  } catch (error) {
+    const code = String(error?.code ?? '').match(/^\d{3,5}$/)?.[0] ??
+      String(error?.message || '').match(/\b[13]\d{3}\b/)?.[0] ?? 'unclassified';
+    console.warn('resume_suggestion_unavailable', stage, code);
+    return reply(503, unavailable, { 'X-LX-AI-Status': stage + '-' + code });
   }
 }
