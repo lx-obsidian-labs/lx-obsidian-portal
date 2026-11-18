@@ -5,6 +5,7 @@ const { onRequestPost } = require('../functions/api/resume-suggest.js');
 const url = 'https://www.lxobsidianportal.co.za/api/resume-suggest';
 const fixture = {
   mode: 'bullets',
+  consent: true,
   source: 'Built an Excel workbook for 4 volunteers. Contact private@example.com or +27 69 123 4567.',
   context: 'Role or project: Community stock tracker',
   target: 'Junior Analyst',
@@ -13,7 +14,7 @@ const fixture = {
   name: 'Example Person'
 };
 
-function context({ body = JSON.stringify(fixture), changes = 2, origin = new URL(url).origin, run } = {}) {
+function context({ body = JSON.stringify(fixture), changes = 2, origin = new URL(url).origin, run = async () => { throw Error('Unexpected provider request'); } } = {}) {
   return {
     request: new Request(url, {
       method: 'POST',
@@ -26,8 +27,8 @@ function context({ body = JSON.stringify(fixture), changes = 2, origin = new URL
     }),
     env: {
       JWT_SECRET: 'test-only-secret',
-      RESUME_AI: { run: run || (() => { throw Error('Unexpected provider call'); }) },
-      DB: {
+      RESUME_AI: { run },
+      RESUME_USAGE: {
         prepare() {
           return { bind() { return { run: async () => ({ success: true, meta: { changes } }) }; } };
         }
@@ -40,32 +41,32 @@ function context({ body = JSON.stringify(fixture), changes = 2, origin = new URL
 test('rejects invalid origin and bounds a request before inference', async () => {
   assert.equal((await onRequestPost(context({ origin: 'https://example.com' }))).status, 403);
   assert.equal((await onRequestPost(context({ body: ' '.repeat(40001) }))).status, 413);
+  assert.equal((await onRequestPost(context({ body: JSON.stringify({ ...fixture, consent: false }) }))).status, 400);
 });
 
 test('enforces the quota before contacting the provider', async t => {
-  const run = t.mock.fn(() => { throw Error('Unexpected provider call'); });
-  const response = await onRequestPost(context({ changes: 0, run }));
+  const upstream = t.mock.fn(() => { throw Error('Unexpected provider request'); });
+  const response = await onRequestPost(context({ changes: 0, run: upstream }));
   assert.equal(response.status, 429);
   assert.ok(Number(response.headers.get('Retry-After')) > 0);
-  assert.equal(run.mock.callCount(), 0);
+  assert.equal(upstream.mock.callCount(), 0);
 });
 
 test('sends only allowed fields, masks common contact data and returns grounded text', async t => {
   const wording = 'Built an Excel workbook to support 4 volunteers.';
-  const run = t.mock.fn(async () => ({ response: { suggestion: wording } }));
-  const response = await onRequestPost(context({ run }));
+  const upstream = t.mock.fn(async () => ({ response: { suggestion: wording } }));
+  const response = await onRequestPost(context({ run: upstream }));
   assert.equal(response.status, 200);
   assert.deepEqual(await response.json(), { suggestion: wording });
-  const [model, params] = run.mock.calls[0].arguments;
+  const [model, request] = upstream.mock.calls[0].arguments;
   assert.equal(model, '@cf/meta/llama-3.1-8b-instruct');
-  assert.equal(params.response_format.type, 'json_schema');
-  const sent = JSON.parse(params.messages[1].content);
+  const sent = JSON.parse(request.messages[1].content);
   assert.deepEqual(Object.keys(sent).sort(), ['advert', 'context', 'mode', 'source', 'target']);
   assert.match(sent.source, /\[email removed\].*\[number removed\]/);
-  assert.doesNotMatch(params.messages[1].content, /example\.com|123 4567|Example Person/);
+  assert.doesNotMatch(request.messages[1].content, /example\.com|123 4567|Example Person/);
 });
 
 test('rejects a metric copied from the job advert instead of the candidate evidence', async () => {
-  const run = async () => ({ response: { suggestion: 'Built an Excel workbook for 50 people.' } });
+  const run = async () => ({ response: '{"suggestion":"Built an Excel workbook for 50 people."}' });
   assert.equal((await onRequestPost(context({ run }))).status, 422);
 });

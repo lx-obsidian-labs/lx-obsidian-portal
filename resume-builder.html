@@ -59,7 +59,7 @@
         <legend>Target role <span>Optional</span></legend>
         <label>Role title<input data-field="target" maxlength="120" placeholder="e.g. IT Support Intern"></label>
         <label>Job advert or key requirements<textarea id="cv-advert" rows="4" maxlength="4000" placeholder="Paste the parts relevant to the role."></textarea></label>
-        <p class="cv-note">Helps AI focus on relevant evidence. Advert text stays in this session and is excluded from exports.</p>
+        <p class="cv-note">Helps AI focus on relevant evidence. Advert text is cleared when you leave and excluded from exports. You can review it before sending a suggestion request.</p>
       </fieldset>
       <fieldset class="cv-panel">
         <legend>Summary and skills</legend>
@@ -85,7 +85,7 @@
         <p class="cv-note">Use this on a device you trust. Clear draft removes the saved CV from this browser.</p>
         <details>
           <summary>How AI uses your text</summary>
-          <p class="cv-note">When you request a suggestion, LX sends relevant career text and any job requirements you entered to Cloudflare Workers AI for processing. The contact fields are excluded. Keep names, ID numbers, contact details and other private information out of the text you send. LX uses short-lived request counters and does not store your CV or send it to the Careers inbox.</p>
+          <p class="cv-note">When you request a suggestion, LX sends the text you approve to Cloudflare Workers AI. You can remove any details in the review step. The contact fields are excluded. Keep names, ID numbers and other private information out of the text you send. LX uses short-lived request counters and does not store your CV or send it to the Careers inbox. <a class="cv-back" href="https://developers.cloudflare.com/workers-ai/platform/data-usage/">Cloudflare AI data usage</a></p>
         </details>
         <button type="button" id="cv-clear" class="cv-button">Clear draft</button>
         <p id="cv-draft-status" class="cv-note" role="status"></p>
@@ -111,6 +111,12 @@
   <dialog id="cv-review" class="cv-dialog" aria-labelledby="cv-review-title">
     <h2 id="cv-review-title">Review AI suggestion</h2>
     <p id="cv-review-status" role="status"></p>
+    <div id="cv-send-content" hidden>
+      <label>Current wording <textarea id="cv-send-source" rows="3" maxlength="1800"></textarea></label>
+      <label>Supporting evidence <textarea id="cv-send-context" rows="3" maxlength="3500"></textarea></label>
+      <label>Target role <input id="cv-send-target" maxlength="120"></label>
+      <label>Job requirements <textarea id="cv-send-advert" rows="3" maxlength="4000"></textarea></label>
+    </div>
     <div id="cv-review-content" hidden>
       <label>Current wording<textarea id="cv-original" rows="4" readonly></textarea></label>
       <label>Suggested wording<textarea id="cv-suggestion" rows="5" maxlength="1800"></textarea></label>

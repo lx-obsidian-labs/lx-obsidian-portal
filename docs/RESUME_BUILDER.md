@@ -1,30 +1,48 @@
-# AI Résumé Builder
+# LX AI Résumé Builder product and release plan
 
-Maintainer: LX Obsidian Labs · https://www.lxobsidianportal.co.za
+Maintainer: LX Obsidian Labs · 18 November 2026
 
-## Product goals
+## Product goal
 
-Make Careers useful between hiring rounds. A student, graduate, career changer or experienced professional should be able to turn a few real examples into a CV they can use for any employer. An expression of interest in LX remains a separate email action.
+Help a student, graduate, career changer or experienced applicant produce an accurate CV for any employer, from a phone, without signing in. Careers is the entry point. The LX expression-of-interest email remains a separate action.
 
-| Step | Experience | Acceptance criterion |
-|---|---|---|
-| Start | Follow **Build your CV** from Careers. Enter name, contact, current focus and evidence. Add employment, placements, volunteering, coursework and projects as appropriate. | Usable with a keyboard and on a narrow mobile screen. Visitors can create a draft without signing in. |
-| Tailor | Paste relevant job requirements and choose a summary or experience-bullet suggestion. | AI sees bounded career text and advert context after an explicit action. It never receives the structured name, contact fields or the full saved draft. |
-| Review | Compare the original and proposed wording. Edit, apply or dismiss the suggestion. | The text field changes only when the candidate applies a suggestion. New numbers are rejected by the API. The candidate checks non-numerical claims. |
-| Export | Review readiness checks, download editable Word, or use the browser's A4 print/PDF control. | The document is plain, single-column and text selectable. Export excludes the advert, checks and site chrome. |
-| Resume | Optionally save the draft on the current browser or clear it. | No default persistence or account sync. Clearing also removes the saved local draft. |
+## Candidate journey
 
-## Architecture and operations
+| Step | Current release | Planned improvement |
+| --- | --- | --- |
+| Start | Open the free builder from Careers. Enter a target role, or begin with education and experience. | Offer example drafts for a TVET student, recent graduate and career changer. Add on-device Word and text-PDF import with editable field mapping. |
+| Capture evidence | Add employment, placements, volunteering, freelance work, courses and projects. | Ask what the applicant did, which tools they used and what outcome they can verify. Let them reorder entries and lead with education when that is their strongest evidence. |
+| Tailor to a job | Paste relevant job requirements. Review exactly what goes to AI before requesting a summary or experience bullets. Compare, edit, apply or dismiss the result. | Map each requirement to a source entry, a follow-up question or a gap. Show the evidence next to each suggestion. Add undo and role-specific copies of one master CV. |
+| Review | Use the live preview and readiness checks. Check every claim before export. | Flag inconsistent dates, duplicated claims and unusually long entries. Explain each issue and make the relevant field easy to find. |
+| Export | Download editable Word or use the browser print dialog for a selectable-text A4 PDF. | Add direct PDF download if mobile users struggle with the print dialog. Build a parser fixture suite covering applicant names, roles, dates and section order. |
 
-- /resume-builder is a static page served by the existing Cloudflare Pages build. The Careers page keeps its canonical URL and email flow.
-- The preview and Word export share the same data model. The DOCX is an Open XML package generated locally and the PDF uses print CSS. Descriptive headings and normal text support text extraction. ATS compatibility varies by product, so fixture-based text extraction and actual upload tests should precede any parser-specific claims.
-- POST /api/resume-suggest uses the RESUME_AI Cloudflare Workers AI binding with Llama 3.1 and schema-constrained output. Requests have same-origin checks, bounded bodies, explicit modes, output validation and a 30-second browser timeout. Structured contact fields are never sent. The API masks common phone, email and link patterns in free text, which may still contain other personal information. Users review wording for facts.
-- D1 stores only an HMAC-derived daily network bucket and counts. Maximums are 12 per daily network bucket and 200 global requests per UTC day. The next successful request removes earlier buckets. A missing binding, missing table or upstream failure leaves manual editing and export available.
-- Apply only migrations/0004_resume_ai_quota.sql to the configured D1 database before enabling AI on the production deployment. Verify the exact Pages deployment and use a synthetic CV to smoke-test the route. Roll back through the existing Pages project. The isolated quota table can remain after rollback.
-- Keep CV text, adverts and contact details out of logs, analytics and test artifacts. If tracking is added later, measure aggregate starts, exports, accepted suggestions, latency and failure rates without collecting CV contents.
+## Implementation and operations
 
-## Quality gates and next iterations
+- Keep the existing Careers URL, navigation and footer. Publish the CV workspace at /resume-builder and list it in the sitemap.
+- Keep the CV in the browser. Saving a draft is opt-in. Clear Draft removes the saved CV from the browser. The job advert is session-only and excluded from exports. The preview and Word export use the same document model.
+- Use a single-column document, standard headings and contact details in the body. Test real text extraction and familiar recruiting-system imports before making parser-specific claims. Follow the employer's stated file-format instructions.
+- POST /api/resume-suggest receives only approved text. The endpoint validates explicit consent and same-origin requests, masks common contact patterns and sends only whitelisted fields to Cloudflare Workers AI. The candidate can redact other details before sending. The API rejects hallucinated numbers and malformed responses. The applicant remains responsible for verifying all claims.
+- RESUME_USAGE is an isolated D1 binding. Apply db/resume/0001_usage.sql to that database before enabling inference. Store only a keyed daily network digest and counts. Reserve both the global and per-network quota atomically. Limits are 12 requests per network bucket and 200 total per UTC day. Older buckets are cleaned after a successful reservation. Configure RESUME_QUOTA_SECRET or use the existing JWT_SECRET fallback. Cloudflare AI and quota errors leave the editor and exports available.
+- For an inference-only rollback, set RESUME_AI_DISABLED=true and redeploy. For a full rollback, use the previous successful Cloudflare Pages deployment. Keep résumé text, job ads and identifiers out of metrics, logs and test artifacts.
 
-1. Validate editing and export for three representative profiles: a TVET graduate with coursework, a career changer with transferable skills and an experienced candidate with multiple jobs. Test Unicode, long URLs, multi-page output, reloading saved drafts and approved or dismissed suggestions. Run the site build and automated tests, then exercise the live provider with synthetic text.
-2. Benchmark usefulness with volunteer candidates. Track time to first export, completion rates, accept/edit/dismiss rates, and unsupported-claim frequency across a synthetic corpus. Evaluate whether the exported text retains reading order in common parsing tools. Start with a target of a usable first draft within ten minutes and investigate repeated abandonment points.
-3. Prioritise enhancements using observed friction. Likely candidates are more section ordering controls, a master CV with role-specific variants, an evidence-to-requirement checklist, cover letters, and PDF/DOCX import with an extraction review. Test each addition for mobile complexity and privacy before enabling it.
+## Pilot and release criteria
+
+| Area | Test and target |
+| --- | --- |
+| Mobile usability | A student without employment history can export a usable first CV in 10 minutes. Test lower-end Android, iOS Safari, keyboard-only operation and 200% zoom. Test with volunteers from all three starting profiles. |
+| Document quality | Compare extracted PDF and DOCX text to the preview. Cover Unicode names, long URLs and multi-page output. Open and edit the Word export in Microsoft Word and LibreOffice. |
+| AI accuracy | Review at least 30 synthetic or anonymised cases across the target profiles. Require zero invented credentials, employers or metrics in the accepted benchmark outputs. Include misleading job requirements, sparse evidence and malformed requests. |
+| Reliability | Verify live inference and simulate unavailable AI, exhausted quota, browser storage failure and aborted requests. Manual editing and export must work in each case. |
+| Measurement | Start with aggregate editor opens, first completed exports, suggestion success, and accept/edit/dismiss rates. Ask participants where they hesitated. Prioritise by completion friction and frequency of unsupported claims. |
+
+## Delivery order
+
+1. Pilot the live editor. Fix mobile and export issues before adding new panels.
+2. Ship evidence-linked job matching and better readiness checks. Show support for each requirement and provide actionable gaps. Avoid speculative ATS scores or hiring predictions.
+3. Add local import, master CVs and application-specific copies after validating their demand and privacy design. Review retention, service agreements and applicable South African requirements before introducing cloud sync, account storage or recruiting integrations.
+
+## References
+
+- [Greenhouse guidance on résumé parsing and layout](https://support.greenhouse.io/hc/en-us/articles/200989175-Unsuccessful-resume-parse)
+- [Cloudflare Workers AI data usage](https://developers.cloudflare.com/workers-ai/platform/data-usage/)
+- [South Africa's Protection of Personal Information Act](https://www.justice.gov.za/legislation/acts/2013-004.pdf)
