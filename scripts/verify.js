@@ -46,7 +46,7 @@ if(!contactApi.includes('Untrusted origin') || !contactApi.includes('emailOK')) 
 if(!portfolio.includes('id="project-snapshots"')) throw Error('Engineering case-study snapshots missing');
 if(integrations.includes('href="#" class="integration-card"')) throw Error('Dead integration CTAs present');
 if(ai.includes('index.html#pricing')) throw Error('Invalid AI pricing link present');
-if(!/<h1\b[^>]*id="home-title"[^>]*>Websites, apps and AI<br>\s*<span>for your business\.<\/span><\/h1>/.test(home)) throw Error('Homepage positioning reverted');
+if(!/<h1\b[^>]*id="home-title"[^>]*>Website development, apps and AI<br>\s*<span>for South African businesses\.<\/span><\/h1>/.test(home)) throw Error('Homepage positioning reverted');
 console.log('Marketing verification passed: secure lead capture, honest CTAs, case study snapshots, updated positioning');
 
 // Site-wide design, navigation and link-integrity guardrails.

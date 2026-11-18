@@ -1,0 +1,74 @@
+/* Engineering: LX Obsidian Labs | https://www.lxobsidianportal.co.za */
+.cv-page { background: #0b0b0f; color: #f4f4fa; }
+.cv-page [hidden] { display: none !important; }
+.cv-main { max-width: 1280px; margin: auto; padding: clamp(6rem, 10vw, 8.5rem) clamp(1rem, 4vw, 3rem) 4rem; }
+.cv-hero { padding: 0 0 2rem; border-bottom: 1px solid #2c2e39; margin-bottom: 1.75rem; }
+.cv-hero h1 { font-size: clamp(2.4rem, 6vw, 4.8rem); line-height: 1; letter-spacing: -.055em; margin: .85rem 0; }
+.cv-hero p { max-width: 39rem; color: #c3c8d7; font-size: 1.05rem; }
+.cv-back, .cv-preview-link { color: #a9bfff; text-decoration: underline; text-underline-offset: .2em; }
+.cv-preview-link { display: inline-block; margin-top: .8rem; }
+.cv-workspace, .cv-editor, .cv-entries { display: grid; gap: 1rem; }
+.cv-workspace { align-items: start; }
+.cv-workspace > *, .cv-fields > *, .cv-panel { min-width: 0; }
+.cv-panel { margin: 0; padding: .85rem 1rem 1rem; background: #14151c; border: 1px solid #323644; border-radius: 1rem; }
+.cv-panel legend { padding: 0 .42rem; font-weight: 700; font-size: 1.05rem; }
+.cv-panel legend span { font-size: .82rem; color: #bdc3d3; font-weight: 400; margin-left: .3rem; }
+.cv-main label { color: #eaedf6; display: block; font-weight: 600; font-size: .9rem; margin: .42rem 0 .8rem; }
+.cv-fields { display: grid; gap: 0 .85rem; }
+.cv-main input:not([type=checkbox]), .cv-main textarea, .cv-main select {
+  appearance: auto; display: block; width: 100%; padding: .7rem .75rem; min-height: 44px; margin-top: .4rem; border-radius: .55rem;
+  background: #0e0f15; color: #f3f5ff; border: 1px solid #484d61; font: inherit; font-weight: 400; color-scheme: dark;
+}
+.cv-main input::placeholder, .cv-main textarea::placeholder { color: #9da5ba; opacity: 1; }
+.cv-main textarea { resize: vertical; }
+.cv-main :is(input, textarea, select, button, summary, a):focus-visible { outline: 2px solid #9ab6ff; outline-offset: 3px; }
+.cv-main .cv-check { display: flex; gap: .6rem; align-items: center; min-height: 44px; }
+.cv-check input { width: 1.15rem; height: 1.15rem; accent-color: #688dff; flex: none; }
+.cv-main summary { cursor: pointer; font-weight: 650; color: #e4ebff; }
+.cv-main details { margin-bottom: .8rem; }
+.cv-note { color: #bdc5d9; font-size: .85rem; line-height: 1.55; margin: .4rem 0 .65rem; }
+.cv-note:empty { display: none; }
+.cv-button { font: inherit; font-weight: 650; font-size: .9rem; min-height: 44px; padding: .55rem .85rem; border: 1px solid #515975; border-radius: .6rem; background: #222635; color: #eef1fc; cursor: pointer; }
+.cv-button:hover { background: #333b53; }
+.cv-button:disabled { opacity: .65; cursor: wait; }
+.cv-button--primary { background: #a9bfff; color: #0c152e; border-color: #a9bfff; }
+.cv-button--primary:hover { background: #c3d2ff; color: #0c152e; }
+.cv-ai { color: #c5d4ff; margin-bottom: .55rem; }
+.cv-entries:not(:empty) { margin-bottom: .85rem; }
+.cv-entry { background: #191c26; border: 1px solid #353b4e; border-radius: .65rem; padding: .85rem; min-width: 0; }
+.cv-entry h3 { font-size: .96rem; margin: 0; }
+.cv-entry-head, .cv-actions { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
+.cv-entry-head { justify-content: space-between; }
+.cv-output { min-width: 0; scroll-margin-top: 6rem; background: #161821; border: 1px solid #353b4e; border-radius: 1rem; padding: clamp(.65rem, 2vw, 1.15rem); }
+.cv-output-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .65rem; align-items: center; margin-bottom: .85rem; }
+.cv-output-head h2 { font-size: 1.15rem; margin: 0; }
+.cv-output-head p { width: 100%; }
+.cv-paper { color: #162033; background: #fff; padding: clamp(1.15rem, 3.5vw, 2.75rem); min-height: 22rem; border-radius: .2rem; overflow-wrap: anywhere; font: .93rem/1.5 Arial, sans-serif; }
+.cv-paper h2 { color: #101a2d; font: 700 clamp(1.55rem, 4vw, 2.45rem)/1.12 Arial, sans-serif; margin: 0 0 .25rem; letter-spacing: -.025em; }
+.cv-paper h3 { color: #162033; font: 700 .78rem/1.35 Arial, sans-serif; text-transform: uppercase; letter-spacing: .08em; border-bottom: 1px solid #a9b3c7; padding-bottom: .3rem; margin: 1.2rem 0 .45rem; }
+.cv-paper h4 { font: 700 .95rem/1.4 Arial, sans-serif; color: #18273c; margin: .65rem 0 0; }
+.cv-paper p, .cv-paper li { margin: 0 0 .3rem; color: inherit; }
+.cv-paper ul { padding-left: 1.1rem; margin: .35rem 0 .65rem; }
+.cv-paper .cv-meta { font-size: .83rem; color: #44516a; }
+.cv-paper .cv-contact { margin-top: .45rem; }
+.cv-checklist { padding-top: .8rem; }
+.cv-checklist ul { margin: .5rem 0 0; padding-left: 1.2rem; font-size: .88rem; color: #ced5e6; }
+.cv-checklist li { margin: .2rem 0; }
+.cv-dialog { width: min(38rem, calc(100% - 2rem)); max-height: calc(100% - 2rem); margin: auto; padding: 1.25rem; color: #f3f5ff; background: #1c2030; border: 1px solid #596480; border-radius: .9rem; }
+.cv-dialog::backdrop { background: rgb(3 5 12 / .78); }
+.cv-dialog h2 { margin: 0 0 .65rem; font-size: 1.25rem; }
+.cv-dialog p { margin: .5rem 0 1rem; }
+@media (min-width: 560px) { .cv-fields { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 980px) {
+  .cv-workspace { grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr); gap: 1.5rem; }
+  .cv-preview-link { display: none; }
+}
+@page { size: A4; margin: 16mm; }
+@media print {
+  .cv-page { background: white !important; color: black !important; }
+  .cv-page > :not(main), .cv-hero, .cv-editor, .cv-output-head, .cv-checklist, .cv-dialog { display: none !important; }
+  .cv-main, .cv-workspace, .cv-output, .cv-paper { display: block !important; margin: 0; padding: 0; border: 0; border-radius: 0; width: auto; max-width: none; min-height: 0; background: white; }
+  .cv-paper h2 { font-size: 25pt; }
+  .cv-paper h3, .cv-paper h4 { break-after: avoid; }
+  .cv-paper p, .cv-paper li { orphans: 2; widows: 2; }
+}

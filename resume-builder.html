@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Build an editable CV, tailor your summary and experience with AI, and export a Word document or PDF. Free from LX Obsidian Labs.">
+  <meta name="theme-color" content="#0b0b0f">
+  <title>Free AI Résumé Builder | LX Obsidian Labs</title>
+  <link rel="canonical" href="https://www.lxobsidianportal.co.za/resume-builder">
+  <meta property="og:title" content="Free AI Résumé Builder | LX Obsidian Labs">
+  <meta property="og:description" content="Write, tailor and download a professional CV for your next application.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.lxobsidianportal.co.za/resume-builder">
+  <meta property="og:image" content="https://www.lxobsidianportal.co.za/assets/og-default.png">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/lx.css">
+  <link rel="stylesheet" href="/css/resume-builder.css">
+</head>
+<body class="cv-page">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="velora-nav" id="veloraNav">
+  <div class="velora-nav__inner">
+    <a class="velora-brand" href="index.html">
+      <span class="velora-brand__mark">LX</span>
+      <span class="velora-brand__label">Obsidian Labs</span>
+    </a>
+
+    <nav class="velora-links lx-home-nav" id="veloraLinks" aria-label="Primary"><a class="velora-link" href="/services#pricing">Pricing</a><a class="velora-link" href="/services">Services</a><a class="velora-link" href="/portfolio">Our Work</a><a class="velora-link" href="/#study-tools">Tools</a><a class="velora-link" href="/downloads">Downloads</a><a class="velora-link" href="/automation">Automation</a><a class="velora-link" href="/about">Company</a></nav>
+
+    <div class="velora-actions">
+      <a class="velora-link" href="contact.html">Contact</a>
+      <a class="velora-cta" href="contact.html"><span class="velora-cta__pill">Get a Quote</span></a>
+      <button type="button" class="velora-burger" id="veloraBurger" aria-label="Open menu" aria-expanded="false" aria-controls="veloraLinks"><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+<main id="main" class="cv-main">
+  <header class="cv-hero">
+    <a class="cv-back" href="/careers">← Careers</a>
+    <h1>AI Résumé Builder</h1>
+    <p>Build a CV from your experience. Tailor it to a role, check every suggested edit, and download it when you’re ready.</p>
+    <a href="#cv-preview" class="cv-preview-link">Jump to CV preview ↓</a>
+  </header>
+  <noscript><p class="cv-noscript">Enable JavaScript to edit, preview and export a CV.</p></noscript>
+  <div class="cv-workspace">
+    <form id="cv-form" class="cv-editor" autocomplete="off" hidden>
+      <fieldset class="cv-panel">
+        <legend>Contact details</legend>
+        <div class="cv-fields">
+          <label>Full name<input id="cv-name" data-field="name" maxlength="100" autocomplete="name"></label>
+          <label>Professional title<input data-field="title" maxlength="120" placeholder="e.g. Junior Software Developer"></label>
+          <label>Email<input type="email" data-field="email" maxlength="150"></label>
+          <label>Phone<input type="tel" data-field="phone" maxlength="60"></label>
+          <label>City or region<input data-field="location" maxlength="100" placeholder="e.g. Middelburg, Mpumalanga"></label>
+          <label>Portfolio or LinkedIn URL<input type="url" data-field="link" maxlength="200" placeholder="https://"></label>
+        </div>
+      </fieldset>
+      <fieldset class="cv-panel">
+        <legend>Target role <span>Optional</span></legend>
+        <label>Role title<input data-field="target" maxlength="120" placeholder="e.g. IT Support Intern"></label>
+        <label>Job advert or key requirements<textarea id="cv-advert" rows="4" maxlength="4000" placeholder="Paste the parts relevant to the role."></textarea></label>
+        <p class="cv-note">Helps AI focus on relevant evidence. Advert text stays in this session and is excluded from exports.</p>
+      </fieldset>
+      <fieldset class="cv-panel">
+        <legend>Summary and skills</legend>
+        <label>Professional summary<textarea id="cv-summary" data-field="summary" rows="4" maxlength="1400" placeholder="Describe your focus and what you can offer."></textarea></label>
+        <button type="button" class="cv-button cv-ai" data-ai="summary">Suggest a summary</button>
+        <label>Skills<input data-field="skills" maxlength="600" placeholder="e.g. Excel, Git, customer support"></label>
+        <p class="cv-note">Use commas between skills. List skills you can demonstrate.</p>
+      </fieldset>
+      <fieldset class="cv-panel">
+        <legend>Experience and projects</legend>
+        <p class="cv-note">Include employment, internships, volunteer work, freelance work or personal projects.</p>
+        <div id="cv-experience" class="cv-entries"></div>
+        <button type="button" class="cv-button" data-add="experience">Add experience or project</button>
+      </fieldset>
+      <fieldset class="cv-panel">
+        <legend>Education and training</legend>
+        <div id="cv-education" class="cv-entries"></div>
+        <button type="button" class="cv-button" data-add="education">Add education or training</button>
+      </fieldset>
+      <fieldset class="cv-panel" id="cv-privacy">
+        <legend>Draft and privacy</legend>
+        <label class="cv-check"><input type="checkbox" id="cv-save"> Save this CV draft in this browser</label>
+        <p class="cv-note">Use this on a device you trust. Clear draft removes the saved CV from this browser.</p>
+        <details>
+          <summary>How AI uses your text</summary>
+          <p class="cv-note">When you request a suggestion, LX sends relevant career text and any job requirements you entered to NVIDIA for processing. The contact fields are excluded. Keep names, ID numbers, contact details and other private information out of the text you send. LX uses short-lived request counters and does not store your CV or send it to the Careers inbox.</p>
+        </details>
+        <button type="button" id="cv-clear" class="cv-button">Clear draft</button>
+        <p id="cv-draft-status" class="cv-note" role="status"></p>
+      </fieldset>
+    </form>
+
+    <aside id="cv-preview" class="cv-output" aria-labelledby="cv-preview-heading" tabindex="-1" hidden>
+      <div class="cv-output-head">
+        <h2 id="cv-preview-heading">CV preview</h2>
+        <div class="cv-actions">
+          <button type="button" id="cv-word" class="cv-button cv-button--primary">Download Word</button>
+          <button type="button" id="cv-print" class="cv-button">Print / save PDF</button>
+        </div>
+        <p id="cv-export-status" class="cv-note" role="status"></p>
+      </div>
+      <article id="cv-paper" class="cv-paper" aria-label="Your CV"></article>
+      <details class="cv-checklist" open>
+        <summary>Readiness check</summary>
+        <ul id="cv-checklist"></ul>
+      </details>
+    </aside>
+  </div>
+  <dialog id="cv-review" class="cv-dialog" aria-labelledby="cv-review-title">
+    <h2 id="cv-review-title">Review AI suggestion</h2>
+    <p id="cv-review-status" role="status"></p>
+    <div id="cv-review-content" hidden>
+      <label>Current wording<textarea id="cv-original" rows="4" readonly></textarea></label>
+      <label>Suggested wording<textarea id="cv-suggestion" rows="5" maxlength="1800"></textarea></label>
+      <p class="cv-note">Check employers, qualifications, dates, skills and claims against your own records.</p>
+    </div>
+    <div class="cv-actions">
+      <button type="button" id="cv-send" class="cv-button cv-button--primary" hidden>Send to AI</button>
+      <button type="button" id="cv-apply" class="cv-button cv-button--primary" hidden>Use this wording</button>
+      <button type="button" id="cv-dismiss" class="cv-button">Close</button>
+    </div>
+  </dialog>
+</main>
+<footer class="glass-footer">
+  <div class="glass-footer__inner">
+    <div class="glass-footer__top">
+      <div class="glass-footer__brand">
+        <a class="glass-brand" href="index.html">
+          <span class="glass-brand__mark">LX</span>
+          <span class="glass-brand__name">Obsidian Labs</span>
+        </a>
+        <p class="glass-footer__desc">African AI and software engineering studio. Founded in Eswatini in 2016, based in South Africa today.</p>
+      </div>
+      <div class="glass-footer__news"><p style="color:var(--saas-muted);margin:0 0 12px">Get practical business technology insights.</p><a class="saas-btn saas-btn--primary" href="/#newsletter">Join the free newsletter</a></div>
+    </div>
+    <div class="glass-footer__cols">
+      <div class="glass-col">
+        <p class="glass-col__title">Platform</p>
+        <a class="glass-link" href="ai.html">AI Platform</a>
+        <a class="glass-link" href="synapse.html">Synapse AI</a>
+        <a class="glass-link" href="vista.html">Vista Watch</a>
+        <a class="glass-link" href="marketplace.html">Marketplace</a>
+        <a class="glass-link" href="/pdf">LX PDF Studio</a><a class="glass-link" href="/automation">Automation Hub</a>
+      </div>
+      <div class="glass-col">
+        <p class="glass-col__title">Company</p>
+        <a class="glass-link" href="about.html">About</a><a class="glass-link" href="/careers">Careers</a><a class="glass-link" href="/partners">Partner with us</a>
+        <a class="glass-link" href="portfolio.html">Work</a>
+        <a class="glass-link" href="blog.html">Insights</a>
+        <a class="glass-link" href="/contact">Contact directory</a>
+        
+      </div>
+      <div class="glass-col">
+        <p class="glass-col__title">Resources</p>
+        <a class="glass-link" href="services.html">Solutions</a>
+        <a class="glass-link" href="mobile-apps.html">Mobile Apps</a>
+        <a class="glass-link" href="local-visibility.html">Local SEO</a>
+        <a class="glass-link" href="integrations.html">Integrations</a>
+        <a class="glass-link" href="/downloads">Downloads &amp; Resources</a>
+        <a class="glass-link" href="faq.html">FAQ</a>
+      </div>
+    </div>
+    <div class="glass-footer__divider"></div>
+    <section aria-labelledby="footer-contact-title">
+      <h2 id="footer-contact-title" class="glass-col__title">Contact LX Obsidian Labs</h2>
+      <div class="glass-footer__cols">
+        <div class="glass-col">
+          <p class="glass-footer__desc"><strong>Executive &amp; administration</strong></p>
+          <p class="glass-footer__desc">Founder<br><a style="text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere" href="mailto:nathan@lxobsidianportal.co.za">nathan@lxobsidianportal.co.za</a></p>
+          <p class="glass-footer__desc">Administration<br><a style="text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere" href="mailto:admin@lxobsidianportal.co.za">admin@lxobsidianportal.co.za</a></p>
+          <p class="glass-footer__desc">Accounts &amp; billing<br><a style="text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere" href="mailto:accounts@lxobsidianportal.co.za">accounts@lxobsidianportal.co.za</a></p>
+        </div>
+        <div class="glass-col">
+          <p class="glass-footer__desc"><strong>Business &amp; growth</strong></p>
+          <p class="glass-footer__desc">Sales &amp; quotations<br><a style="text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere" href="mailto:sales@lxobsidianportal.co.za">sales@lxobsidianportal.co.za</a></p>
+          <p class="glass-footer__desc">Partnerships<br><a style="text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere" href="mailto:partnerships@lxobsidianportal.co.za">partnerships@lxobsidianportal.co.za</a></p>
+          <p class="glass-footer__desc">Careers<br><a style="text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere" href="mailto:careers@lxobsidianportal.co.za">careers@lxobsidianportal.co.za</a></p>
+        </div>
+        <div class="glass-col">
+          <p class="glass-footer__desc"><strong>Customer care</strong></p>
+          <p class="glass-footer__desc">General enquiries<br><a style="text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere" href="mailto:info@lxobsidianportal.co.za">info@lxobsidianportal.co.za</a></p>
+          <p class="glass-footer__desc">Technical support<br><a style="text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere" href="mailto:support@lxobsidianportal.co.za">support@lxobsidianportal.co.za</a></p>
+          <p class="glass-footer__desc">General contact<br><a style="text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere" href="mailto:hello@lxobsidianportal.co.za">hello@lxobsidianportal.co.za</a></p>
+        </div>
+      </div>
+    </section>
+    <div class="glass-footer__divider"></div>
+    <div class="glass-footer__bottom">
+      <p class="glass-footer__copy">&copy; 2026 LX Obsidian Labs. Est. 2016. All rights reserved.</p>
+      <div class="glass-social">
+        <a href="https://github.com/lx-obsidian-labs" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 016 0C17.7 4.6 18.7 5 18.7 5c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.5-2.7 5.5-5.3 5.8.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></svg></a>
+        
+        
+        
+      </div>
+    </div>
+  </div>
+</footer><script src="/js/ui/mobile-nav.js" defer></script><script src="/js/ui/glass-footer.js" defer></script>
+<script type="module" src="/js/resume-builder.js"></script>
+</body>
+</html>
