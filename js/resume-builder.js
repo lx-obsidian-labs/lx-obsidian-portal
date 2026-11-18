@@ -242,18 +242,24 @@ function payloadFor(mode, field) {
   };
 }
 
+const sendContent = byId('cv-send-content');
+const sendFields = ['source', 'context', 'target', 'advert'];
+
 function openSuggestion(button) {
   const mode = button.dataset.ai;
   const field = mode === 'summary' ? byId('cv-summary') : button.closest('.cv-entry').querySelector('textarea');
   const payload = payloadFor(mode, field);
+  sendContent.hidden = true;
   if (mode === 'bullets' ? payload.source.length < 20 : (payload.source + payload.context).trim().length < 20) {
     reviewStatus.textContent = mode === 'bullets'
       ? 'Add a few details about what you did in this entry before asking AI for bullets.'
       : 'Add skills, experience, education or a few lines of summary before asking AI for wording.';
     send.hidden = true;
   } else {
-    reviewStatus.textContent = 'This sends the career text and role requirements for this suggestion to NVIDIA. Your contact fields stay in your browser. Remove any private information you typed into the text before continuing.';
+    reviewStatus.textContent = 'Review the exact text that will go to Cloudflare Workers AI. Edit or remove private details. These edits apply only to this request.';
     send.hidden = false;
+    sendContent.hidden = false;
+    for (const key of sendFields) byId('cv-send-' + key).value = payload[key];
   }
   pending = { field, payload };
   reviewContent.hidden = true;
@@ -265,6 +271,7 @@ function openSuggestion(button) {
 async function requestSuggestion() {
   const current = pending;
   if (!current || send.disabled) return;
+  const approved = Object.fromEntries(sendFields.map(key => [key, byId('cv-send-' + key).value.trim()]));
   const request = new AbortController();
   controller = request;
   send.disabled = true;
@@ -274,7 +281,7 @@ async function requestSuggestion() {
     const response = await fetch('/api/resume-suggest', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(current.payload),
+      body: JSON.stringify({ ...approved, mode: current.payload.mode, consent: true }),
       signal: request.signal
     });
     const result = await response.json();
@@ -287,6 +294,7 @@ async function requestSuggestion() {
     suggestion.maxLength = current.field.maxLength;
     suggestion.value = result.suggestion.slice(0, suggestion.maxLength);
     reviewStatus.textContent = 'Review the suggestion and edit anything you want to change.';
+    sendContent.hidden = true;
     reviewContent.hidden = false;
     apply.hidden = false;
     send.hidden = true;
@@ -362,6 +370,7 @@ dialog.addEventListener('close', () => {
   controller?.abort();
   byId('cv-original').value = '';
   suggestion.value = '';
+  for (const key of sendFields) byId('cv-send-' + key).value = '';
 });
 byId('cv-dismiss').addEventListener('click', () => dialog.close());
 send.addEventListener('click', requestSuggestion);

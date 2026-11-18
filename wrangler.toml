@@ -8,3 +8,12 @@ compatibility_flags = ["nodejs_compat"]
 binding = "DB"
 database_name = "lx-obsidian-db"
 database_id = "248b507f-6d16-4342-adce-9e23fac5de18"
+
+[ai]
+binding = "AI"
+
+[[d1_databases]]
+binding = "RESUME_USAGE"
+database_name = "lx-resume-usage"
+database_id = "d407678d-7b04-45da-b413-df17a30197d0"
+migrations_dir = "db/resume"
