@@ -112,6 +112,36 @@ function parseSuggestion(content, data) {
   return numbers(suggestion).every(value => evidence.has(value)) ? suggestion : null;
 }
 
+async function requestWording(env, inference) {
+  if (typeof env.RESUME_AI?.run === 'function') {
+    try {
+      const result = await env.RESUME_AI.run(model, { ...inference, response_format: responseFormat });
+      if (result?.response || result?.choices?.[0]?.message?.content) return result;
+    } catch (error) {
+      if (!env.OPENROUTER_API_KEY) throw error;
+    }
+  }
+  if (!env.OPENROUTER_API_KEY) throw new Error('No alternate inference available');
+
+  // The review dialog discloses this alternate provider before the text is sent.
+  const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+    method: 'POST',
+    signal: AbortSignal.timeout(10000),
+    headers: {
+      'Authorization': 'Bearer ' + env.OPENROUTER_API_KEY,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      ...inference,
+      models: ['nvidia/nemotron-3.5-lightning:free', 'openrouter/free'],
+      provider: { data_collection: 'deny', zdr: true },
+      reasoning: { effort: 'none' }
+    })
+  });
+  if (!response.ok) throw new Error('Alternate inference failed');
+  return response.json();
+}
+
 export async function onRequestPost({ request, env, waitUntil }) {
   if (request.headers.get('Origin') !== new URL(request.url).origin) return reply(403, { error: 'Open the LX résumé builder to use AI suggestions.' });
   if (!/^application\/json(?:\s*;|$)/i.test(request.headers.get('Content-Type') || '')) return reply(415, { error: 'Send a JSON request.' });
@@ -135,7 +165,7 @@ export async function onRequestPost({ request, env, waitUntil }) {
 
   const network = request.headers.get('CF-Connecting-IP');
   const unavailable = { error: 'AI is temporarily unavailable. You can continue editing and exporting your CV.' };
-  if (!network || !env?.RESUME_USAGE || typeof env.RESUME_AI?.run !== 'function' || !(env.RESUME_QUOTA_SECRET || env.JWT_SECRET) || env.RESUME_AI_DISABLED === 'true') {
+  if (!network || !env?.RESUME_USAGE || (typeof env.RESUME_AI?.run !== 'function' && !env.OPENROUTER_API_KEY) || !(env.RESUME_QUOTA_SECRET || env.JWT_SECRET) || env.RESUME_AI_DISABLED === 'true') {
     return reply(503, unavailable, { 'X-LX-Resume-Status': 'binding' });
   }
   let stage = 'quota';
@@ -155,12 +185,7 @@ export async function onRequestPost({ request, env, waitUntil }) {
       max_tokens: 300,
       temperature: 0.15,
     };
-    let result;
-    try {
-      result = await env.RESUME_AI.run(model, { ...inference, response_format: responseFormat });
-    } catch {
-      result = await env.RESUME_AI.run(model, inference);
-    }
+    const result = await requestWording(env, inference);
     try {
       waitUntil(env.RESUME_USAGE.prepare('DELETE FROM resume_ai_usage WHERE day < ?').bind(day).run().catch(() => {}));
     } catch {

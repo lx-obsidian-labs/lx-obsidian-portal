@@ -256,7 +256,7 @@ function openSuggestion(button) {
       : 'Add skills, experience, education or a few lines of summary before asking AI for wording.';
     send.hidden = true;
   } else {
-    reviewStatus.textContent = 'Review the exact text that will go to Cloudflare Workers AI. Edit or remove private details. These edits apply only to this request.';
+    reviewStatus.textContent = 'Review the exact text that will go to Cloudflare Workers AI or OpenRouter. Edit or remove private details. These edits apply only to this request.';
     send.hidden = false;
     sendContent.hidden = false;
     for (const key of sendFields) byId('cv-send-' + key).value = payload[key];

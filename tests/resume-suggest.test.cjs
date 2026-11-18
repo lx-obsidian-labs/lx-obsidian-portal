@@ -70,3 +70,17 @@ test('rejects a metric copied from the job advert instead of the candidate evide
   const run = async () => ({ response: '{"suggestion":"Built an Excel workbook for 50 people."}' });
   assert.equal((await onRequestPost(context({ run }))).status, 422);
 });
+
+test('keeps the alternate inference route restricted to zero data retention', async t => {
+  const fixtureContext = context({ run: async () => { throw Error('Primary temporarily unavailable'); } });
+  fixtureContext.env.OPENROUTER_API_KEY = 'test-only-key';
+  const fetchMock = t.mock.method(globalThis, 'fetch', async () => Response.json({
+    choices: [{ message: { content: '{"suggestion":"Built an Excel workbook to support 4 volunteers."}' } }]
+  }));
+  const response = await onRequestPost(fixtureContext);
+  assert.equal(response.status, 200);
+  const [url, options] = fetchMock.mock.calls[0].arguments;
+  assert.equal(url, 'https://openrouter.ai/api/v1/chat/completions');
+  assert.deepEqual(JSON.parse(options.body).provider, { data_collection: 'deny', zdr: true });
+  assert.doesNotMatch(options.body, /private@example\.com|123 4567/);
+});
