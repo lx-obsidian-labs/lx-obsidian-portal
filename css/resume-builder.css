@@ -75,8 +75,15 @@
   .cv-paper p, .cv-paper li { orphans: 2; widows: 2; }
 }
 
-.cv-templates { margin-bottom: 1.75rem; }
-.cv-templates h2 { font-size: 1.45rem; margin: 0; }
+.cv-templates { margin-bottom: 1.75rem; scroll-margin-top: 6rem; }
+.cv-templates > h2 { font-size: 1.45rem; margin: 0; }
+.cv-step-actions, .cv-editor-head { display: flex; align-items: center; justify-content: space-between; gap: .75rem; }
+.cv-step-actions { margin-top: .85rem; padding: .65rem .75rem; background: #191c26; border: 1px solid #353b4e; border-radius: .75rem; }
+.cv-step-actions .cv-note, .cv-editor-head h2 { margin: 0; }
+.cv-step-actions button:disabled { cursor: default; }
+.cv-editor-head { grid-column: 1 / -1; flex-wrap: wrap; }
+.cv-editor-head h2 { font-size: 1.45rem; }
+#cv-editor-title, #cv-templates-title { scroll-margin-top: 6rem; }
 .cv-template-grid { display: grid; gap: .85rem; margin-top: 1rem; }
 .cv-template-card {
   display: flex; flex-direction: column; min-width: 0; padding: .85rem;
@@ -100,16 +107,21 @@
 .cv-example-dialog { width: min(44rem, calc(100% - 2rem)); overflow: auto; }
 .cv-example-head { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; justify-content: space-between; }
 .cv-example-dialog .cv-example-head h2 { margin: 0; }
+.cv-design-controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr)); align-items: end; gap: .65rem; margin: .9rem 0; }
+.cv-main .cv-design-controls label { min-width: 0; margin: 0; }
+.cv-design-dialog #cv-design-caption { margin-bottom: .6rem; }
 @media (max-width: 759px) {
-  .cv-template-grid {
-    grid-auto-flow: column; grid-auto-columns: min(85%, 20rem);
-    overflow-x: auto; padding: .2rem .2rem .65rem; scroll-snap-type: x proximity;
-  }
-  .cv-template-card { scroll-snap-align: start; }
+  .cv-template-card { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); column-gap: .75rem; align-items: start; }
+  .cv-template-card .cv-miniature { grid-row: 1 / 4; align-self: stretch; max-height: 10.5rem; overflow: hidden; padding: .55rem; }
+  .cv-template-card h3 { margin-top: 0; }
+  .cv-template-card .cv-miniature h3 { margin: .4rem 0 .2rem; }
+  .cv-template-card .cv-actions .cv-button { padding-inline: .6rem; }
+  .cv-step-actions { position: sticky; bottom: .5rem; }
 }
 @media (min-width: 760px) {
   .cv-template-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 @media print {
-  .cv-templates { display: none !important; }
+  .cv-templates, .cv-editor-head { display: none !important; }
+  .cv-paper { print-color-adjust: exact; }
 }

@@ -60,3 +60,22 @@ export const templates = [
 export function getTemplate(id) {
   return templates.find(template => template.id === id) || templates[0];
 }
+
+export const accents = {
+  navy: { accent: '162033', sectionRule: 'A9B3C7' },
+  blue: { accent: '1D4B91', sectionRule: '9FB9DF' },
+  green: { accent: '145B4D', sectionRule: '92BCB0' },
+  plum: { accent: '63345E', sectionRule: 'C9AAC5' }
+};
+
+export function getCustomTemplate(template, { accent, alignment, firstSection }) {
+  const palette = Object.hasOwn(accents, accent) ? accents[accent] : {};
+  return {
+    ...template,
+    ...palette,
+    centreHeader: alignment === 'default' ? template.centreHeader : alignment === 'centre',
+    sections: template.sections.includes(firstSection)
+      ? [firstSection, ...template.sections.filter(section => section !== firstSection)]
+      : template.sections
+  };
+}

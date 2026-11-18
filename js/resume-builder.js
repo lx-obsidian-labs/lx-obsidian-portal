@@ -1,11 +1,10 @@
 // Engineering: LX Obsidian Labs | https://www.lxobsidianportal.co.za
 import { createWordDocument } from './resume-word.js?v=2';
-import { getTemplate, templates } from './resume-templates.js';
+import { getCustomTemplate, getTemplate, templates } from './resume-templates.js?v=2';
 
 const byId = id => document.getElementById(id);
 const form = byId('cv-form');
 const paper = byId('cv-paper');
-const preview = byId('cv-preview');
 const save = byId('cv-save');
 const dialog = byId('cv-review');
 const reviewStatus = byId('cv-review-status');
@@ -15,6 +14,11 @@ const apply = byId('cv-apply');
 const send = byId('cv-send');
 const draftKey = 'lx-resume-draft-v1';
 const fields = [...form.querySelectorAll('[data-field]')];
+const designDialog = byId('cv-design-dialog');
+const designFields = [...designDialog.querySelectorAll('select')];
+const gallery = byId('cv-templates');
+const workspace = byId('cv-workspace');
+const continueButton = byId('cv-continue');
 const groups = {
   experience: {
     label: 'Experience or project',
@@ -36,7 +40,7 @@ const groups = {
   }
 };
 const entryLimit = 12;
-let selectedTemplate = getTemplate();
+let selectedTemplate;
 let pending;
 let controller;
 
@@ -188,7 +192,7 @@ function renderTemplates() {
     choose.dataset.template = template.id;
     choose.addEventListener('click', () => {
       selectedTemplate = template;
-      update();
+      renderTemplateSelection();
     });
     const view = element('button', 'View example', 'cv-button');
     view.type = 'button';
@@ -204,17 +208,50 @@ function renderTemplates() {
     card.append(miniature, element('h3', template.name), element('p', template.description, 'cv-note'), actions);
     options.append(card);
   }
-  byId('cv-templates').hidden = false;
+}
+
+function renderTemplateSelection() {
+  for (const button of byId('cv-template-grid').querySelectorAll('[data-template]')) {
+    const active = button.dataset.template === selectedTemplate?.id;
+    button.setAttribute('aria-pressed', String(active));
+    button.closest('.cv-template-card').classList.toggle('cv-template-card--selected', active);
+  }
+  continueButton.disabled = !selectedTemplate;
+  byId('cv-template-status').textContent = selectedTemplate ? selectedTemplate.name + ' selected' : 'Select a template to continue.';
+}
+
+function showStep(editing, moveFocus = false) {
+  gallery.hidden = editing;
+  workspace.hidden = !editing;
+  byId('cv-preview-link').hidden = !editing;
+  renderTemplateSelection();
+  if (editing) render();
+  if (moveFocus) byId(editing ? 'cv-editor-title' : 'cv-templates-title').focus();
+}
+
+function readDesign() {
+  return Object.fromEntries(designFields.map(field => [field.name, field.value]));
+}
+
+function restoreDesign(design) {
+  for (const field of designFields) {
+    const value = design?.[field.name];
+    field.value = [...field.options].some(option => option.value === value) ? value : 'default';
+  }
+}
+
+function renderDesignPreview(cv, template) {
+  const hasContent = getBlocks(cv, template).length > 0;
+  byId('cv-design-caption').textContent = hasContent ? 'Your CV' : 'Fictional example. Your own details will appear here as you add them.';
+  renderPaper(byId('cv-design-paper'), hasContent ? cv : template.sample, template);
 }
 
 function render() {
   const cv = readCV();
-  renderPaper(paper, cv, selectedTemplate);
-  for (const button of byId('cv-template-grid').querySelectorAll('[data-template]')) {
-    const active = button.dataset.template === selectedTemplate.id;
-    button.setAttribute('aria-pressed', String(active));
-    button.closest('.cv-template-card').classList.toggle('cv-template-card--selected', active);
-  }
+  const template = getCustomTemplate(selectedTemplate, readDesign());
+  renderPaper(paper, cv, template);
+  byId('cv-preview-heading').textContent = template.name + ' CV preview';
+  if (designDialog.open) renderDesignPreview(cv, template);
 
   const checks = [
     [cv.name, 'Add your full name.'],
@@ -234,7 +271,7 @@ function storeDraft() {
   const status = byId('cv-draft-status');
   try {
     if (save.checked) {
-      localStorage.setItem(draftKey, JSON.stringify({ ...readCV(), template: selectedTemplate.id }));
+      localStorage.setItem(draftKey, JSON.stringify({ ...readCV(), template: selectedTemplate.id, design: readDesign() }));
       status.textContent = 'Draft saved in this browser.';
     } else {
       localStorage.removeItem(draftKey);
@@ -252,6 +289,7 @@ function restoreDraft() {
     const cv = JSON.parse(stored);
     if (!cv || typeof cv !== 'object' || Array.isArray(cv)) return;
     selectedTemplate = getTemplate(cv.template);
+    restoreDesign(cv.design);
     for (const field of fields) field.value = controlText(cv[field.dataset.field], field.maxLength);
     for (const group of Object.keys(groups)) {
       const entries = Array.isArray(cv[group]) ? cv[group].slice(0, entryLimit) : [];
@@ -371,7 +409,8 @@ function exportCV(type) {
     window.print();
     return;
   }
-  const url = URL.createObjectURL(createWordDocument(getBlocks(cv, selectedTemplate), selectedTemplate));
+  const template = getCustomTemplate(selectedTemplate, readDesign());
+  const url = URL.createObjectURL(createWordDocument(getBlocks(cv, template), template));
   const link = element('a');
   link.href = url;
   link.download = (cv.name.replace(/[^\p{L}\p{N}]+/gu, '-').replace(/^-|-$/g, '').slice(0, 75) || 'Resume') + '-CV.docx';
@@ -408,14 +447,14 @@ save.addEventListener('change', storeDraft);
 byId('cv-clear').addEventListener('click', () => {
   if (!window.confirm('Clear this CV and the draft saved in this browser?')) return;
   form.reset();
-  selectedTemplate = getTemplate();
+  selectedTemplate = undefined;
+  restoreDesign();
   for (const group of Object.keys(groups)) {
     groupContainer(group).replaceChildren();
     addEntry(group);
   }
   storeDraft();
-  update();
-  byId('cv-name').focus();
+  showStep(false, true);
 });
 dialog.addEventListener('close', () => {
   pending = null;
@@ -439,11 +478,26 @@ apply.addEventListener('click', () => {
 });
 byId('cv-word').addEventListener('click', () => exportCV('word'));
 byId('cv-print').addEventListener('click', () => exportCV('print'));
+continueButton.addEventListener('click', () => {
+  if (!selectedTemplate) return;
+  showStep(true, true);
+  if (save.checked) storeDraft();
+});
+byId('cv-change-template').addEventListener('click', () => showStep(false, true));
+for (const button of document.querySelectorAll('[data-customise]')) {
+  button.addEventListener('click', () => {
+    designDialog.showModal();
+    renderDesignPreview(readCV(), getCustomTemplate(selectedTemplate, readDesign()));
+  });
+}
+designDialog.addEventListener('change', update);
+byId('cv-design-reset').addEventListener('click', () => {
+  restoreDesign();
+  update();
+});
 restoreDraft();
 for (const group of Object.keys(groups)) {
   if (!groupContainer(group).children.length) addEntry(group);
 }
 renderTemplates();
-render();
-form.hidden = false;
-preview.hidden = false;
+showStep(Boolean(selectedTemplate) && location.hash !== '#cv-templates');
