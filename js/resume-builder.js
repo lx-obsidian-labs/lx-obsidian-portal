@@ -1,5 +1,6 @@
 // Engineering: LX Obsidian Labs | https://www.lxobsidianportal.co.za
-import { createWordDocument } from './resume-word.js';
+import { createWordDocument } from './resume-word.js?v=2';
+import { getTemplate, templates } from './resume-templates.js';
 
 const byId = id => document.getElementById(id);
 const form = byId('cv-form');
@@ -35,6 +36,7 @@ const groups = {
   }
 };
 const entryLimit = 12;
+let selectedTemplate = getTemplate();
 let pending;
 let controller;
 
@@ -115,7 +117,7 @@ function lines(text) {
   return text.split(/\r?\n/).map(line => line.replace(/^\s*(?:[-*•]\s+|\d+[.)]\s+)/, '').trim()).filter(Boolean);
 }
 
-function getBlocks(cv) {
+function getBlocks(cv, template) {
   const blocks = [];
   function push(kind, text) {
     if (text) blocks.push({ kind, text });
@@ -127,11 +129,14 @@ function getBlocks(cv) {
     push('section', 'Professional summary');
     cv.summary.split(/\r?\n/).map(line => line.trim()).forEach(line => push('paragraph', line));
   }
-  if (cv.skills) {
-    push('section', 'Skills');
-    push('paragraph', cv.skills);
-  }
-  for (const group of Object.keys(groups)) {
+  for (const group of template.sections) {
+    if (group === 'skills') {
+      if (cv.skills) {
+        push('section', 'Skills');
+        push('paragraph', cv.skills);
+      }
+      continue;
+    }
     const entries = cv[group].filter(nonempty);
     if (!entries.length) continue;
     push('section', group === 'experience' ? 'Experience and projects' : 'Education and training');
@@ -144,9 +149,11 @@ function getBlocks(cv) {
   return blocks;
 }
 
-function render() {
-  const cv = readCV();
-  const blocks = getBlocks(cv);
+function renderPaper(target, cv, template) {
+  const blocks = getBlocks(cv, template);
+  target.style.setProperty('--cv-accent', '#' + template.accent);
+  target.style.setProperty('--cv-rule', '#' + template.sectionRule);
+  target.classList.toggle('cv-paper--centred', Boolean(template.centreHeader));
   const output = document.createDocumentFragment();
   let bulletList;
   const tag = { name: 'h2', section: 'h3', heading: 'h4' };
@@ -160,11 +167,54 @@ function render() {
       continue;
     }
     bulletList = null;
-    const className = { meta: 'cv-meta', contact: 'cv-meta cv-contact' }[kind];
+    const className = { title: 'cv-title', meta: 'cv-meta', contact: 'cv-meta cv-contact' }[kind];
     output.append(element(tag[kind] || 'p', text, className));
   }
   if (!blocks.length) output.append(element('p', 'Add your name and experience to see your CV here.', 'cv-meta'));
-  paper.replaceChildren(output);
+  target.replaceChildren(output);
+}
+
+function renderTemplates() {
+  const options = byId('cv-template-grid');
+  const exampleDialog = byId('cv-template-dialog');
+  for (const template of templates) {
+    const card = element('div', null, 'cv-template-card');
+    const miniature = element('div', null, 'cv-paper cv-miniature');
+    miniature.setAttribute('aria-hidden', 'true');
+    renderPaper(miniature, template.sample, template);
+    const choose = element('button', 'Use ' + template.name, 'cv-button cv-template-select');
+    choose.type = 'button';
+    choose.setAttribute('aria-pressed', 'false');
+    choose.dataset.template = template.id;
+    choose.addEventListener('click', () => {
+      selectedTemplate = template;
+      update();
+    });
+    const view = element('button', 'View example', 'cv-button');
+    view.type = 'button';
+    view.setAttribute('aria-label', 'View ' + template.name + ' example');
+    view.setAttribute('aria-haspopup', 'dialog');
+    view.addEventListener('click', () => {
+      byId('cv-example-title').textContent = template.name + ' CV example';
+      renderPaper(byId('cv-example-paper'), template.sample, template);
+      exampleDialog.showModal();
+    });
+    const actions = element('div', null, 'cv-actions');
+    actions.append(choose, view);
+    card.append(miniature, element('h3', template.name), element('p', template.description, 'cv-note'), actions);
+    options.append(card);
+  }
+  byId('cv-templates').hidden = false;
+}
+
+function render() {
+  const cv = readCV();
+  renderPaper(paper, cv, selectedTemplate);
+  for (const button of byId('cv-template-grid').querySelectorAll('[data-template]')) {
+    const active = button.dataset.template === selectedTemplate.id;
+    button.setAttribute('aria-pressed', String(active));
+    button.closest('.cv-template-card').classList.toggle('cv-template-card--selected', active);
+  }
 
   const checks = [
     [cv.name, 'Add your full name.'],
@@ -184,7 +234,7 @@ function storeDraft() {
   const status = byId('cv-draft-status');
   try {
     if (save.checked) {
-      localStorage.setItem(draftKey, JSON.stringify(readCV()));
+      localStorage.setItem(draftKey, JSON.stringify({ ...readCV(), template: selectedTemplate.id }));
       status.textContent = 'Draft saved in this browser.';
     } else {
       localStorage.removeItem(draftKey);
@@ -201,6 +251,7 @@ function restoreDraft() {
     if (!stored) return;
     const cv = JSON.parse(stored);
     if (!cv || typeof cv !== 'object' || Array.isArray(cv)) return;
+    selectedTemplate = getTemplate(cv.template);
     for (const field of fields) field.value = controlText(cv[field.dataset.field], field.maxLength);
     for (const group of Object.keys(groups)) {
       const entries = Array.isArray(cv[group]) ? cv[group].slice(0, entryLimit) : [];
@@ -320,7 +371,7 @@ function exportCV(type) {
     window.print();
     return;
   }
-  const url = URL.createObjectURL(createWordDocument(getBlocks(cv)));
+  const url = URL.createObjectURL(createWordDocument(getBlocks(cv, selectedTemplate), selectedTemplate));
   const link = element('a');
   link.href = url;
   link.download = (cv.name.replace(/[^\p{L}\p{N}]+/gu, '-').replace(/^-|-$/g, '').slice(0, 75) || 'Resume') + '-CV.docx';
@@ -357,6 +408,7 @@ save.addEventListener('change', storeDraft);
 byId('cv-clear').addEventListener('click', () => {
   if (!window.confirm('Clear this CV and the draft saved in this browser?')) return;
   form.reset();
+  selectedTemplate = getTemplate();
   for (const group of Object.keys(groups)) {
     groupContainer(group).replaceChildren();
     addEntry(group);
@@ -391,6 +443,7 @@ restoreDraft();
 for (const group of Object.keys(groups)) {
   if (!groupContainer(group).children.length) addEntry(group);
 }
+renderTemplates();
 render();
 form.hidden = false;
 preview.hidden = false;

@@ -64,12 +64,15 @@ function xml(text) {
     .replace(/[&<>]/g, value => entities[value]);
 }
 
-export function createWordDocument(blocks) {
+export function createWordDocument(blocks, template) {
+  const accent = template.accent;
+  const rule = template.sectionRule;
+  const headerAlignment = template.centreHeader ? '<w:jc w:val="center"/>' : '';
   const word = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main';
   const office = 'http://schemas.openxmlformats.org/officeDocument/2006/relationships';
   const packageNs = 'http://schemas.openxmlformats.org/package/2006';
   const paragraphs = blocks.map(({ kind, text }) => {
-    const style = { name: 'Title', section: 'Heading1', heading: 'Heading2', bullet: 'CVBullet' }[kind] || 'Normal';
+    const style = { name: 'Title', title: 'CVTitle', contact: 'CVContact', section: 'Heading1', heading: 'Heading2', bullet: 'CVBullet' }[kind] || 'Normal';
     const value = kind === 'bullet' ? '• ' + text : text;
     return '<w:p><w:pPr><w:pStyle w:val="' + style + '"/></w:pPr><w:r><w:t xml:space="preserve">' + xml(value) + '</w:t></w:r></w:p>';
   }).join('');
@@ -80,8 +83,10 @@ export function createWordDocument(blocks) {
     'word/document.xml': '<w:document xmlns:w="' + word + '"><w:body>' + paragraphs + '<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="950" w:right="950" w:bottom="950" w:left="950" w:header="0" w:footer="0" w:gutter="0"/></w:sectPr></w:body></w:document>',
     'word/styles.xml': '<w:styles xmlns:w="' + word + '">' +
       '<w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/><w:pPr><w:spacing w:after="85" w:line="275" w:lineRule="auto"/></w:pPr><w:rPr><w:rFonts w:ascii="Arial" w:hAnsi="Arial"/><w:sz w:val="22"/></w:rPr></w:style>' +
-      '<w:style w:type="paragraph" w:styleId="Title"><w:name w:val="Title"/><w:basedOn w:val="Normal"/><w:pPr><w:keepNext/></w:pPr><w:rPr><w:b/><w:sz w:val="48"/></w:rPr></w:style>' +
-      '<w:style w:type="paragraph" w:styleId="Heading1"><w:name w:val="heading 1"/><w:basedOn w:val="Normal"/><w:pPr><w:keepNext/><w:spacing w:before="230" w:after="90"/><w:outlineLvl w:val="0"/></w:pPr><w:rPr><w:b/><w:sz w:val="24"/></w:rPr></w:style>' +
+      '<w:style w:type="paragraph" w:styleId="Title"><w:name w:val="Title"/><w:basedOn w:val="Normal"/><w:pPr><w:keepNext/>' + headerAlignment + '</w:pPr><w:rPr><w:b/><w:color w:val="' + accent + '"/><w:sz w:val="48"/></w:rPr></w:style>' +
+      '<w:style w:type="paragraph" w:styleId="CVTitle"><w:name w:val="CV Role"/><w:basedOn w:val="Normal"/><w:pPr><w:keepNext/>' + headerAlignment + '</w:pPr></w:style>' +
+      '<w:style w:type="paragraph" w:styleId="CVContact"><w:name w:val="CV Contact"/><w:basedOn w:val="Normal"/><w:pPr>' + headerAlignment + '</w:pPr><w:rPr><w:color w:val="44516A"/><w:sz w:val="20"/></w:rPr></w:style>' +
+      '<w:style w:type="paragraph" w:styleId="Heading1"><w:name w:val="heading 1"/><w:basedOn w:val="Normal"/><w:pPr><w:keepNext/><w:pBdr><w:bottom w:val="single" w:sz="4" w:space="3" w:color="' + rule + '"/></w:pBdr><w:spacing w:before="230" w:after="90"/><w:outlineLvl w:val="0"/></w:pPr><w:rPr><w:b/><w:color w:val="' + accent + '"/><w:sz w:val="24"/></w:rPr></w:style>' +
       '<w:style w:type="paragraph" w:styleId="Heading2"><w:name w:val="heading 2"/><w:basedOn w:val="Normal"/><w:pPr><w:keepNext/><w:spacing w:before="105" w:after="45"/><w:outlineLvl w:val="1"/></w:pPr><w:rPr><w:b/></w:rPr></w:style>' +
       '<w:style w:type="paragraph" w:styleId="CVBullet"><w:name w:val="CV Bullet"/><w:basedOn w:val="Normal"/><w:pPr><w:ind w:left="260" w:hanging="160"/></w:pPr></w:style></w:styles>'
   });

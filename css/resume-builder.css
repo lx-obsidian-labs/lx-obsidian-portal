@@ -74,3 +74,42 @@
   .cv-paper h3, .cv-paper h4 { break-after: avoid; }
   .cv-paper p, .cv-paper li { orphans: 2; widows: 2; }
 }
+
+.cv-templates { margin-bottom: 1.75rem; }
+.cv-templates h2 { font-size: 1.45rem; margin: 0; }
+.cv-template-grid { display: grid; gap: .85rem; margin-top: 1rem; }
+.cv-template-card {
+  display: flex; flex-direction: column; min-width: 0; padding: .85rem;
+  background: #14151c; border: 1px solid #353b4e; border-radius: .85rem;
+}
+.cv-template-card--selected { border-color: #a9bfff; }
+.cv-template-card h3 { margin: .75rem 0 0; font-size: 1.05rem; }
+.cv-template-card .cv-note { flex: 1; }
+.cv-template-select[aria-pressed="true"] { background: #a9bfff; color: #0c152e; border-color: #a9bfff; }
+.cv-template-select[aria-pressed="true"]::after { content: " ✓"; }
+.cv-paper h2, .cv-paper h3 { color: var(--cv-accent, #162033); }
+.cv-paper h3 { border-color: var(--cv-rule, #a9b3c7); }
+.cv-paper--centred :is(h2, .cv-title, .cv-contact) { text-align: center; }
+.cv-miniature { min-height: 0; padding: .85rem 1rem; font-size: .65rem; line-height: 1.3; }
+.cv-miniature h2 { font-size: 1rem; }
+.cv-miniature h3 { font-size: .56rem; margin: .5rem 0 .24rem; padding-bottom: .15rem; }
+.cv-miniature h4 { font-size: .66rem; margin-top: .3rem; }
+.cv-miniature .cv-meta { font-size: .59rem; }
+.cv-miniature .cv-contact, .cv-miniature ul { margin-top: .2rem; }
+.cv-miniature p, .cv-miniature li { margin-bottom: .15rem; }
+.cv-example-dialog { width: min(44rem, calc(100% - 2rem)); overflow: auto; }
+.cv-example-head { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; justify-content: space-between; }
+.cv-example-dialog .cv-example-head h2 { margin: 0; }
+@media (max-width: 759px) {
+  .cv-template-grid {
+    grid-auto-flow: column; grid-auto-columns: min(85%, 20rem);
+    overflow-x: auto; padding: .2rem .2rem .65rem; scroll-snap-type: x proximity;
+  }
+  .cv-template-card { scroll-snap-align: start; }
+}
+@media (min-width: 760px) {
+  .cv-template-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media print {
+  .cv-templates { display: none !important; }
+}
