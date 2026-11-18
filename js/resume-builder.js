@@ -252,7 +252,7 @@ function openSuggestion(button) {
       : 'Add skills, experience, education or a few lines of summary before asking AI for wording.';
     send.hidden = true;
   } else {
-    reviewStatus.textContent = 'This sends the career text and role requirements for this suggestion to NVIDIA. Your contact fields stay in your browser. Remove any private information you typed into the text before continuing.';
+    reviewStatus.textContent = 'This sends the career text and role requirements for this suggestion to Cloudflare Workers AI. Your contact fields stay in your browser. Remove any private information you typed into the text before continuing.';
     send.hidden = false;
   }
   pending = { field, payload };

@@ -8,3 +8,6 @@ compatibility_flags = ["nodejs_compat"]
 binding = "DB"
 database_name = "lx-obsidian-db"
 database_id = "248b507f-6d16-4342-adce-9e23fac5de18"
+
+[ai]
+binding = "RESUME_AI"

@@ -1,11 +1,18 @@
 // Engineering: LX Obsidian Labs | https://www.lxobsidianportal.co.za
-import { callAI } from './chat.js';
-
 const limits = { source: 1800, context: 3500, target: 120, advert: 4000 };
 const maxBodyBytes = 40000;
 const encoder = new TextEncoder();
 const dailyLimit = 200;
 const networkLimit = 12;
+const model = '@cf/meta/llama-3.1-8b-instruct';
+const responseFormat = {
+  type: 'json_schema',
+  json_schema: {
+    type: 'object',
+    properties: { suggestion: { type: 'string' } },
+    required: ['suggestion']
+  }
+};
 
 const reserveSql = `
   INSERT INTO resume_ai_quota (day, bucket, used)
@@ -80,13 +87,16 @@ function numbers(text) {
   return (text.match(/\d+(?:[.,]\d+)*/g) || []).map(value => value.replace(/,/g, ''));
 }
 
-function parseSuggestion(content, data) {
-  const raw = content.trim().replace(/^```(?:json)?\s*|\s*```$/gi, '');
-  let answer;
-  try {
-    answer = JSON.parse(raw);
-  } catch {
-    return null;
+function parseSuggestion(result, data) {
+  const content = result?.response ?? result?.choices?.[0]?.message?.content;
+  let answer = content;
+  if (typeof content === 'string') {
+    const raw = content.trim().replace(/^```(?:json)?\s*|\s*```$/gi, '');
+    try {
+      answer = JSON.parse(raw);
+    } catch {
+      return null;
+    }
   }
   if (!answer || typeof answer.suggestion !== 'string') return null;
   const suggestion = answer.suggestion.trim();
@@ -119,7 +129,7 @@ export async function onRequestPost({ request, env, waitUntil }) {
 
   const network = request.headers.get('CF-Connecting-IP');
   const unavailable = { error: 'AI is temporarily unavailable. You can continue editing and exporting your CV.' };
-  if (!network || !env?.DB || !env.JWT_SECRET || !env.NVIDIA_API_KEY) return reply(503, unavailable);
+  if (!network || !env?.DB || !env.JWT_SECRET || typeof env.RESUME_AI?.run !== 'function') return reply(503, unavailable);
   try {
     const now = new Date();
     const { day, allowed } = await reserve(env, network, now);
@@ -128,13 +138,16 @@ export async function onRequestPost({ request, env, waitUntil }) {
       return reply(429, { error: 'The daily AI limit has been reached. Continue editing or try again tomorrow.' }, { 'Retry-After': String(Math.ceil((reset - now.getTime()) / 1000)) });
     }
     waitUntil(env.DB.prepare('DELETE FROM resume_ai_quota WHERE day < ?').bind(day).run().catch(() => {}));
-    // Pass only the disclosed provider's credential to the shared inference transport.
-    const result = await callAI([
-      { role: 'system', content: prompt },
-      { role: 'user', content: JSON.stringify(data) }
-    ], { NVIDIA_API_KEY: env.NVIDIA_API_KEY }, 'nvidia', undefined, 700, 0.2);
-    if (!result) return reply(503, unavailable);
-    const suggestion = parseSuggestion(result.content, data);
+    const result = await env.RESUME_AI.run(model, {
+      messages: [
+        { role: 'system', content: prompt },
+        { role: 'user', content: JSON.stringify(data) }
+      ],
+      response_format: responseFormat,
+      max_tokens: 420,
+      temperature: 0.2
+    });
+    const suggestion = parseSuggestion(result, data);
     if (!suggestion) return reply(422, { error: 'The suggestion did not pass the wording checks. Try again with more specific evidence.' });
     return reply(200, { suggestion });
   } catch {
