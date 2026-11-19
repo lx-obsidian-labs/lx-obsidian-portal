@@ -222,3 +222,7 @@ for(const route of ['/course-business-technology','/learn-library-business'])if(
 if(!courseCatalogue.includes('id="how-it-works"')||!courseCatalogue.includes('ol-student-photo')||!courseCatalogue.includes('id="libraries"'))throw Error('School journey or imagery missing');
 if(/href="[^"]+\.(pdf|pptx|zip)(?:[?#][^"]*)?"/i.test(businessCourse.match(/<main[\s\S]*?<\/main>/)[0]+businessLibrary.match(/<main[\s\S]*?<\/main>/)[0]))throw Error('Private course materials exposed');
 console.log('Two-programme school, learner journey and business course guardrails passed');
+
+if((courseCatalogue.match(/data-programme-category="/g)||[]).length!==6||!courseCatalogue.includes('id="ol-course-grid"')||!courseCatalogue.includes('id="ol-programme-search"'))throw Error('Six-course catalogue grid missing');
+for(const [slug,n] of [["course-ai-literacy",5],["course-digital-entrepreneurship",5],["course-cybersecurity-foundations",5],["course-data-analytics",6]]){const page=fs.readFileSync(path.join(dist,slug+'.html'),'utf8');if((page.match(/data-track-module="/g)||[]).length!==n||!page.includes('class="ol-track-quiz"')||!page.includes('Full books and PowerPoints have not yet been produced')||!courseCatalogue.includes('href="/'+slug+'"')||!courseSitemap.includes('https://www.lxobsidianportal.co.za/'+slug+'</loc>'))throw Error('Track preview incomplete: '+slug);}
+console.log('Six-programme searchable catalogue grid and curriculum previews passed');

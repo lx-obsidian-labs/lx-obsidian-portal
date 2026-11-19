@@ -1,0 +1,238 @@
+{
+  "status": "four curriculum previews, not completed learning packs",
+  "programmes": [
+    {
+      "n": "03",
+      "code": "OL-AI-003",
+      "slug": "course-ai-literacy",
+      "title": "AI Literacy & Prompt Engineering",
+      "category": "ai",
+      "weeks": 8,
+      "hours": "3–5",
+      "skills": "Prompt design, fact-checking, privacy, responsible AI",
+      "goal": "Use generative AI effectively and verify its output.",
+      "audience": "Students, professionals and educators. No coding required.",
+      "cap": "Produce a verified AI-assisted research portfolio with a prompt log, evidence matrix and risk register.",
+      "icon": "AI",
+      "color": "#7955cd",
+      "modules": [
+        [
+          "AI fundamentals",
+          "Distinguish generative AI, search and conventional software.",
+          "Compare a search result and AI answer; explain limitations."
+        ],
+        [
+          "Prompt design",
+          "Construct clear instructions and evaluate improvements.",
+          "Create three progressively improved prompts and compare results."
+        ],
+        [
+          "Research and verification",
+          "Verify factual claims against primary sources.",
+          "Check five AI-generated claims using a source matrix."
+        ],
+        [
+          "Privacy and responsible use",
+          "Identify unsafe disclosure, bias and misuse.",
+          "Review a fictional workplace AI policy and recommend safeguards."
+        ],
+        [
+          "Practical AI workflows",
+          "Design a repeatable human-reviewed workflow.",
+          "Submit a workflow, before/after outputs and independent quality check."
+        ]
+      ],
+      "sample": [
+        "An AI assistant gives you a convincing statistic but no source.",
+        "What should you do?",
+        [
+          "Publish it immediately",
+          "Verify it against a reliable primary source",
+          "Ask it to sound more confident"
+        ],
+        1,
+        "Verify original evidence before publishing. If you cannot confirm the claim, remove it or disclose uncertainty."
+      ],
+      "source": [
+        "UNESCO AI competency framework",
+        "https://www.unesco.org/en/articles/ai-competency-framework-students"
+      ]
+    },
+    {
+      "n": "04",
+      "code": "OL-EB-004",
+      "slug": "course-digital-entrepreneurship",
+      "title": "Digital Entrepreneurship & Business Launch",
+      "category": "business",
+      "weeks": 10,
+      "hours": "4–6",
+      "skills": "Market research, pricing, cash flow, digital marketing, sales",
+      "goal": "Validate a business idea and build an evidence-based launch plan.",
+      "audience": "Aspiring founders, freelancers and small-business owners. Basic spreadsheet literacy helpful.",
+      "cap": "Create a fictional digital business launch portfolio with customer evidence, pricing, cash forecast, marketing plan and pitch.",
+      "icon": "BIZ",
+      "color": "#0f897b",
+      "modules": [
+        [
+          "Problem discovery",
+          "Identify a customer problem and test a hypothesis.",
+          "Document a problem hypothesis using customer research or simulated interviews."
+        ],
+        [
+          "Market research and positioning",
+          "Analyse competitors and define a target market.",
+          "Create a competitor matrix and value proposition."
+        ],
+        [
+          "Business models and pricing",
+          "Calculate contribution margin and break-even.",
+          "Build a pricing workbook with three scenarios."
+        ],
+        [
+          "Digital marketing and sales",
+          "Design a measurable ethical acquisition funnel.",
+          "Produce a campaign brief, landing page sketch and metrics plan."
+        ],
+        [
+          "Finance and launch readiness",
+          "Forecast cash and identify operational risks.",
+          "Submit a cash forecast and launch checklist."
+        ]
+      ],
+      "sample": [
+        "A service sells for R500, variable cost is R200 and monthly fixed costs are R3,000.",
+        "How many sales cover fixed costs?",
+        [
+          "6 sales",
+          "10 sales",
+          "15 sales"
+        ],
+        1,
+        "Contribution is R300 per sale. R3,000 ÷ R300 = 10 sales, assuming costs remain constant."
+      ],
+      "source": [
+        "SBA business planning resources",
+        "https://www.sba.gov/business-guide/plan-your-business"
+      ]
+    },
+    {
+      "n": "05",
+      "code": "OL-CS-005",
+      "slug": "course-cybersecurity-foundations",
+      "title": "Cybersecurity & Digital Safety Foundations",
+      "category": "security",
+      "weeks": 10,
+      "hours": "4–6",
+      "skills": "Access control, phishing defence, networks, backups, incident response",
+      "goal": "Recognise common threats and protect everyday digital systems.",
+      "audience": "Beginners and small-business staff. Practical work uses fictional or authorised local environments only.",
+      "cap": "Create a defensive security plan with asset inventory, access controls, backup test and incident-response tabletop exercise.",
+      "icon": "SAFE",
+      "color": "#b65e24",
+      "modules": [
+        [
+          "Security principles",
+          "Explain confidentiality, integrity and availability.",
+          "Map assets and risks in a fictional business."
+        ],
+        [
+          "Accounts and access control",
+          "Apply strong authentication and least privilege.",
+          "Create an access matrix and recovery checklist."
+        ],
+        [
+          "Phishing defence",
+          "Recognise suspicious requests and verify communications.",
+          "Analyse five simulated messages and design a reporting procedure."
+        ],
+        [
+          "Networks and endpoints",
+          "Explain trust boundaries and safe configuration.",
+          "Review an authorised local device checklist."
+        ],
+        [
+          "Incident response and recovery",
+          "Design recovery and escalation procedures.",
+          "Complete a tabletop incident exercise and backup restoration test."
+        ]
+      ],
+      "sample": [
+        "A message claiming to be from your manager asks for urgent payment to a new account.",
+        "What should you do first?",
+        [
+          "Pay immediately",
+          "Send your banking password",
+          "Verify via a known independent channel"
+        ],
+        2,
+        "Verify through an existing trusted number or approved workflow before paying. Report the suspicious request."
+      ],
+      "source": [
+        "CISA Secure Our World",
+        "https://www.cisa.gov/secure-our-world"
+      ]
+    },
+    {
+      "n": "06",
+      "code": "OL-DA-006",
+      "slug": "course-data-analytics",
+      "title": "Data Analytics & Business Intelligence",
+      "category": "data",
+      "weeks": 12,
+      "hours": "5–7",
+      "skills": "Spreadsheets, SQL, data cleaning, statistics, dashboards",
+      "goal": "Turn raw data into reliable, explainable business insights.",
+      "audience": "Aspiring analysts and office professionals. Basic spreadsheet skills recommended.",
+      "cap": "Build a reproducible business dashboard with fictional data, a data-quality report, queries, visualisations and recommendations.",
+      "icon": "DATA",
+      "color": "#207db2",
+      "modules": [
+        [
+          "Data literacy",
+          "Translate decisions into measurable analytical questions.",
+          "Write an analysis brief and define metrics."
+        ],
+        [
+          "Data preparation",
+          "Clean missing values and duplicates reproducibly.",
+          "Submit cleaned data and transformation log."
+        ],
+        [
+          "Spreadsheet analysis and statistics",
+          "Calculate descriptive statistics and interpret outliers.",
+          "Build a sales summary workbook."
+        ],
+        [
+          "SQL and relational analysis",
+          "Filter, group and join structured data.",
+          "Submit SQL queries and validation evidence."
+        ],
+        [
+          "Visualisation and dashboards",
+          "Select accurate charts and define KPIs.",
+          "Create an accessible dashboard."
+        ],
+        [
+          "Communicating insights",
+          "Explain findings, limitations and reproducibility.",
+          "Submit a decision memo and reproducible analysis."
+        ]
+      ],
+      "sample": [
+        "Daily sales are R100, R120, R130, R150 and R1,000. The mean is R300 and the median is R130.",
+        "Which measure best represents a typical day in this skewed dataset?",
+        [
+          "Median, R130",
+          "Maximum, R1,000",
+          "Mean, R300 without explanation"
+        ],
+        0,
+        "The median is less influenced by an extreme value. Report both when useful and explain the outlier."
+      ],
+      "source": [
+        "Microsoft Learn: data analytics fundamentals",
+        "https://learn.microsoft.com/en-us/training/modules/get-started-data-analytics/"
+      ]
+    }
+  ]
+}
