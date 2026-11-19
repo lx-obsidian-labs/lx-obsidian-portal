@@ -6,7 +6,7 @@
     4,
     6
   ],
-  "status": "offline compact drafts; moderation and secure delivery pending",
+  "status": "professional study extensions generated offline; moderation and secure delivery pending",
   "books": [
     {
       "number": 1,
@@ -42,8 +42,9 @@
           "marks": 15
         }
       ],
-      "pages": 10,
-      "slides": 15
+      "pages": 16,
+      "slides": 24,
+      "advancedLessons": 3
     },
     {
       "number": 2,
@@ -79,8 +80,9 @@
           "marks": 15
         }
       ],
-      "pages": 10,
-      "slides": 15
+      "pages": 16,
+      "slides": 24,
+      "advancedLessons": 3
     },
     {
       "number": 3,
@@ -116,8 +118,9 @@
           "marks": 10
         }
       ],
-      "pages": 10,
-      "slides": 15
+      "pages": 16,
+      "slides": 24,
+      "advancedLessons": 3
     },
     {
       "number": 4,
@@ -153,8 +156,9 @@
           "marks": 10
         }
       ],
-      "pages": 10,
-      "slides": 15
+      "pages": 16,
+      "slides": 24,
+      "advancedLessons": 3
     },
     {
       "number": 5,
@@ -190,8 +194,9 @@
           "marks": 10
         }
       ],
-      "pages": 10,
-      "slides": 15
+      "pages": 16,
+      "slides": 24,
+      "advancedLessons": 3
     },
     {
       "number": 6,
@@ -227,8 +232,9 @@
           "marks": 10
         }
       ],
-      "pages": 10,
-      "slides": 15
+      "pages": 16,
+      "slides": 24,
+      "advancedLessons": 3
     }
   ],
   "assessment": {
@@ -239,9 +245,9 @@
   },
   "materials": {
     "pdfs": 6,
-    "pages": 60,
+    "pages": 96,
     "pptx": 6,
-    "slides": 90,
+    "slides": 144,
     "assessmentGuide": true,
     "practiceDatasets": 2
   },
