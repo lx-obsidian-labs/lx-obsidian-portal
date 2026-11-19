@@ -1,0 +1,9 @@
+# Protected publication library — release record
+
+Programme OL-SD-001. The 13 textbook PDF and 13 lecturer PPTX files were generated offline. Book 01 retains its existing 50-page illustrated edition. Books 02–04 are 23-page compact study drafts (29 slides each); books 05–13 are 21-page compact drafts (26 slides each). Totals: 308 textbook pages, 347 slides. These are not the original planned 55–90-page editions; expansion and independent moderation remain outstanding. All 13 include original teaching material and worked examples, exercises, draft assignment and marking rubric, and primary references. Lecturer notes contain formative answers and must remain private.
+
+## Storage contract
+Do not put textbook or lecturer binaries in assets/, dist/, public GitHub releases, or publicly readable buckets. Upload to a private object store under versioned keys; use server-authorised delivery after authentication and entitlement checks. Instructor decks require staff role. Learner resources require paid enrolment and release approval. The manifest in docs/obsidian-learn-programme.json records proposed object keys; these are not live objects or URLs. Verify object hashes and record actual storage IDs before enabling any downloads. Use short-lived access or authenticated streaming, private no-store headers and audit events. No temporary Adobe links in public HTML. No payment collection before integration and testing.
+
+## Release checks
+Independently review code examples and curriculum against source documentation, complete full-length manuscript expansion, moderate assessment instruments and answer guides, verify accessibility and rendering of each file, prepare video lessons, complete protected LMS access, complete privacy/legal review and pilot. Do not imply accreditation or completed videos. Public catalogue is a preview only.

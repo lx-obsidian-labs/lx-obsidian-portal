@@ -15,8 +15,15 @@
       "outcome": "Build and explain a local-first Study Tracker using guided HTML, CSS and JavaScript.",
       "assignment": "Submit a working Study Tracker, screenshots, a test log and a 3-minute explanation.",
       "id": "A01",
-      "status": "Prepared",
-      "targetPages": 50
+      "status": "Prepared — illustrated edition",
+      "targetPages": 50,
+      "pages": 50,
+      "slides": 26,
+      "lessons": 40,
+      "videoStatus": "planned",
+      "releaseStatus": "private materials; enrolment not open",
+      "storageKey": "OL-SD-001/B01/OL-B01-Textbook.pdf",
+      "instructorKey": "OL-SD-001/B01/OL-B01-Lecturer.pptx"
     },
     {
       "number": 2,
@@ -25,8 +32,15 @@
       "outcome": "Trace algorithms, decompose problems and implement decisions, loops and functions.",
       "assignment": "Solve five logic problems; submit flowcharts, pseudocode, runnable solutions and edge-case tests.",
       "id": "A02",
-      "status": "Planned",
-      "targetPages": 60
+      "status": "First-study draft prepared",
+      "targetPages": 60,
+      "pages": 23,
+      "slides": 29,
+      "lessons": 8,
+      "videoStatus": "planned",
+      "releaseStatus": "private materials; enrolment not open",
+      "storageKey": "OL-SD-001/B02/OL-B02-Textbook.pdf",
+      "instructorKey": "OL-SD-001/B02/OL-B02-Lecturer.pptx"
     },
     {
       "number": 3,
@@ -35,8 +49,15 @@
       "outcome": "Create semantic, keyboard-accessible pages and correctly labelled forms.",
       "assignment": "Build a three-page personal website; submit source, HTML validation and keyboard checks.",
       "id": "A03",
-      "status": "Planned",
-      "targetPages": 65
+      "status": "First-study draft prepared",
+      "targetPages": 65,
+      "pages": 23,
+      "slides": 29,
+      "lessons": 8,
+      "videoStatus": "planned",
+      "releaseStatus": "private materials; enrolment not open",
+      "storageKey": "OL-SD-001/B03/OL-B03-Textbook.pdf",
+      "instructorKey": "OL-SD-001/B03/OL-B03-Lecturer.pptx"
     },
     {
       "number": 4,
@@ -45,8 +66,15 @@
       "outcome": "Translate a wireframe into a responsive, readable interface using layout and design principles.",
       "assignment": "Build a responsive landing page from a wireframe; submit 320px and desktop screenshots and contrast checks.",
       "id": "A04",
-      "status": "Planned",
-      "targetPages": 75
+      "status": "First-study draft prepared",
+      "targetPages": 75,
+      "pages": 23,
+      "slides": 29,
+      "lessons": 8,
+      "videoStatus": "planned",
+      "releaseStatus": "private materials; enrolment not open",
+      "storageKey": "OL-SD-001/B04/OL-B04-Textbook.pdf",
+      "instructorKey": "OL-SD-001/B04/OL-B04-Lecturer.pptx"
     },
     {
       "number": 5,
@@ -55,8 +83,15 @@
       "outcome": "Implement events, state, functions, data structures, asynchronous operations and error handling.",
       "assignment": "Build an interactive expense tracker with validation, persistence and a test log.",
       "id": "A05",
-      "status": "Planned",
-      "targetPages": 90
+      "status": "First-study draft prepared",
+      "targetPages": 90,
+      "pages": 21,
+      "slides": 26,
+      "lessons": 7,
+      "videoStatus": "planned",
+      "releaseStatus": "private materials; enrolment not open",
+      "storageKey": "OL-SD-001/B05/OL-B05-Textbook.pdf",
+      "instructorKey": "OL-SD-001/B05/OL-B05-Lecturer.pptx"
     },
     {
       "number": 6,
@@ -65,8 +100,15 @@
       "outcome": "Manage changes using commits, branches, pull requests, reviews and documentation.",
       "assignment": "Submit a repository with meaningful commits, a feature branch, a reviewed pull request and README.",
       "id": "A06",
-      "status": "Planned",
-      "targetPages": 55
+      "status": "First-study draft prepared",
+      "targetPages": 55,
+      "pages": 21,
+      "slides": 26,
+      "lessons": 7,
+      "videoStatus": "planned",
+      "releaseStatus": "private materials; enrolment not open",
+      "storageKey": "OL-SD-001/B06/OL-B06-Textbook.pdf",
+      "instructorKey": "OL-SD-001/B06/OL-B06-Lecturer.pptx"
     },
     {
       "number": 7,
@@ -75,8 +117,15 @@
       "outcome": "Write and test Python programs using functions, collections, files and exceptions.",
       "assignment": "Create a CSV-based study or expense reporting tool with input validation and automated tests.",
       "id": "A07",
-      "status": "Planned",
-      "targetPages": 85
+      "status": "First-study draft prepared",
+      "targetPages": 85,
+      "pages": 21,
+      "slides": 26,
+      "lessons": 7,
+      "videoStatus": "planned",
+      "releaseStatus": "private materials; enrolment not open",
+      "storageKey": "OL-SD-001/B07/OL-B07-Textbook.pdf",
+      "instructorKey": "OL-SD-001/B07/OL-B07-Lecturer.pptx"
     },
     {
       "number": 8,
@@ -85,8 +134,15 @@
       "outcome": "Explain HTTP and JSON; implement validated server endpoints and consume an API safely.",
       "assignment": "Build a small task API and client; submit API documentation, error cases and tests.",
       "id": "A08",
-      "status": "Planned",
-      "targetPages": 85
+      "status": "First-study draft prepared",
+      "targetPages": 85,
+      "pages": 21,
+      "slides": 26,
+      "lessons": 7,
+      "videoStatus": "planned",
+      "releaseStatus": "private materials; enrolment not open",
+      "storageKey": "OL-SD-001/B08/OL-B08-Textbook.pdf",
+      "instructorKey": "OL-SD-001/B08/OL-B08-Lecturer.pptx"
     },
     {
       "number": 9,
@@ -95,8 +151,15 @@
       "outcome": "Model relational data, query using SQL and enforce constraints with parameterised operations.",
       "assignment": "Design a study database, write CRUD and join queries, and demonstrate a safe API integration.",
       "id": "A09",
-      "status": "Planned",
-      "targetPages": 75
+      "status": "First-study draft prepared",
+      "targetPages": 75,
+      "pages": 21,
+      "slides": 26,
+      "lessons": 7,
+      "videoStatus": "planned",
+      "releaseStatus": "private materials; enrolment not open",
+      "storageKey": "OL-SD-001/B09/OL-B09-Textbook.pdf",
+      "instructorKey": "OL-SD-001/B09/OL-B09-Lecturer.pptx"
     },
     {
       "number": 10,
@@ -105,8 +168,15 @@
       "outcome": "Test a web app, identify common vulnerabilities and deploy a secure small project.",
       "assignment": "Deploy a tested app; submit a release checklist, threat model, regression tests and live URL.",
       "id": "A10",
-      "status": "Planned",
-      "targetPages": 75
+      "status": "First-study draft prepared",
+      "targetPages": 75,
+      "pages": 21,
+      "slides": 26,
+      "lessons": 7,
+      "videoStatus": "planned",
+      "releaseStatus": "private materials; enrolment not open",
+      "storageKey": "OL-SD-001/B10/OL-B10-Textbook.pdf",
+      "instructorKey": "OL-SD-001/B10/OL-B10-Lecturer.pptx"
     },
     {
       "number": 11,
@@ -115,8 +185,15 @@
       "outcome": "Distinguish ML, neural networks, LLMs and generative AI; evaluate accuracy, bias, privacy and limitations.",
       "assignment": "Compare AI outputs on a controlled dataset; submit an evaluation matrix and ethical risk analysis.",
       "id": "A11",
-      "status": "Planned",
-      "targetPages": 75
+      "status": "First-study draft prepared",
+      "targetPages": 75,
+      "pages": 21,
+      "slides": 26,
+      "lessons": 7,
+      "videoStatus": "planned",
+      "releaseStatus": "private materials; enrolment not open",
+      "storageKey": "OL-SD-001/B11/OL-B11-Textbook.pdf",
+      "instructorKey": "OL-SD-001/B11/OL-B11-Lecturer.pptx"
     },
     {
       "number": 12,
@@ -125,8 +202,15 @@
       "outcome": "Use AI to plan, implement and review code while independently verifying every critical claim.",
       "assignment": "Repair a buggy application with and without AI; submit diffs, tests, prompt log and reasoning.",
       "id": "A12",
-      "status": "Planned",
-      "targetPages": 70
+      "status": "First-study draft prepared",
+      "targetPages": 70,
+      "pages": 21,
+      "slides": 26,
+      "lessons": 7,
+      "videoStatus": "planned",
+      "releaseStatus": "private materials; enrolment not open",
+      "storageKey": "OL-SD-001/B12/OL-B12-Textbook.pdf",
+      "instructorKey": "OL-SD-001/B12/OL-B12-Lecturer.pptx"
     },
     {
       "number": 13,
@@ -135,8 +219,15 @@
       "outcome": "Design an AI application using model APIs, retrieval, constrained tools, evaluation and human approval.",
       "assignment": "Build and defend a study assistant using grounded sources, evaluation cases and safety controls.",
       "id": "A13",
-      "status": "Planned",
-      "targetPages": 90
+      "status": "First-study draft prepared",
+      "targetPages": 90,
+      "pages": 21,
+      "slides": 26,
+      "lessons": 7,
+      "videoStatus": "planned",
+      "releaseStatus": "private materials; enrolment not open",
+      "storageKey": "OL-SD-001/B13/OL-B13-Textbook.pdf",
+      "instructorKey": "OL-SD-001/B13/OL-B13-Lecturer.pptx"
     }
   ],
   "assessment": {
@@ -173,7 +264,8 @@
         25,
         40
       ],
-      "status": "planned"
+      "status": "first-draft teaching packs prepared offline; instructor access pending",
+      "prepared": 13
     },
     "integrity": {
       "status": "planned",
@@ -194,5 +286,13 @@
       "https://popia.co.za/section-71-automated-decision-making/",
       "https://help.turnitin.com/nl/integrity/docenten/microsoft-teams/het-similarity-report/interpreting-the-similarity-score.htm"
     ]
+  },
+  "materials": {
+    "textbooks": 13,
+    "lecturerPacks": 13,
+    "totalPdfPages": 308,
+    "totalSlides": 347,
+    "edition": "12 compact first-study drafts + existing illustrated Book 01; expanded target lengths outstanding",
+    "status": "generated offline; private storage and academic release pending"
   }
 }

@@ -189,5 +189,14 @@ if(!courseCatalogue.includes('13 books')||!firstCourse.includes('Book 01 prepare
 console.log('Consolidated navigation and 13-book outcomes curriculum passed');
 
 for(const id of ['academic-quality','academic-integrity']) if(!firstCourse.includes('id="'+id+'"')) throw Error('Academic framework missing: '+id);
-if(!firstCourse.includes('not accredited')||!firstCourse.includes('not operational yet')||!firstCourse.includes('13 packs planned')||!firstCourse.includes('automatically determine grades or sanctions')) throw Error('Academic claims or human oversight guard missing');
+if(!firstCourse.includes('not accredited')||!firstCourse.includes('not operational yet')||!firstCourse.includes('13 packs prepared')||!firstCourse.includes('automatically determine grades or sanctions')) throw Error('Academic claims or human oversight guard missing');
 console.log('Academic quality and integrity preview guardrails passed');
+
+// Publication catalogue: every book is represented and all paid materials stay outside public dist.
+const publicationLibrary=fs.readFileSync(path.join(dist,'learn-library.html'),'utf8');
+const libraryMain=publicationLibrary.match(/<main[\s\S]*?<\/main>/)[0];
+for(let i=1;i<=13;i++){const n=String(i).padStart(2,'0');if(!libraryMain.includes('id="book-'+n+'"')||!firstCourse.includes('id="book-'+n+'"')||!fs.existsSync(path.join(dist,'assets','learn','books','b'+n+'.svg')))throw Error('Missing book '+n);}
+if(!libraryMain.includes('308')||!libraryMain.includes('347')||!libraryMain.includes('Paid access and videos are not yet available'))throw Error('Library metadata/availability incorrect');
+if(/href="[^"]+\.(pdf|pptx|zip)(?:[?#][^"]*)?"/i.test(libraryMain))throw Error('Private learning file exposed');
+if(!canonicalNavigation.includes('href="/learn-library"')||!courseSitemap.includes('https://www.lxobsidianportal.co.za/learn-library</loc>'))throw Error('Library discovery missing');
+console.log('13-book library preview and access guardrails passed');
