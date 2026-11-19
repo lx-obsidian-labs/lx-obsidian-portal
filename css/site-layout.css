@@ -178,3 +178,70 @@
  .velora-nav .velora-nav__inner:has(.lx-grouped-nav) .velora-actions{flex:0 0 auto}
 }
 @media(max-width:1100px){body>.lx-grouped-nav.velora-mobile-portal .lx-group-panel{grid-template-columns:1fr!important;gap:12px!important}}
+
+/* LX layout system v2 — shared, last-loaded, scoped to presentation surfaces.
+   Preserve functional workspaces and page-specific brand accents. */
+@media screen{
+ :root{--lx-page-width:72rem;--lx-page-gutter:clamp(1rem,3.5vw,2.5rem);--lx-section-space:clamp(2.35rem,5vw,4.75rem);--lx-hero-top:clamp(6.5rem,8.5vw,8.25rem);--lx-hero-bottom:clamp(2rem,4vw,3.75rem);--lx-card-gap:clamp(.85rem,1.65vw,1.25rem);--lx-card-radius:16px}
+ main :is(.saas-wrap,.lx-home-wrap,.lx-eco-wrap,.dl-wrap,.vista-clean__wrap,.syn-clean__wrap,.learn-wrap,.store-hero__grid){width:min(var(--lx-page-width),calc(100% - 2 * var(--lx-page-gutter)));margin-inline:auto}
+ main :is(.lx-sales-hero,.vista-clean__hero,.syn-clean__hero,.dl-hero,.learn-hero){padding-block:var(--lx-hero-top) var(--lx-hero-bottom)}
+ main.lx-eco{padding-top:0}main.lx-eco .lx-eco-hero{padding-block:var(--lx-hero-top) var(--lx-hero-bottom)}
+ main[id="main"][style*="padding-top:64px"]{padding-top:0!important}
+ main[id="main"][style*="padding-top:64px"]>section.saas-section:first-child{padding-block:var(--lx-hero-top) var(--lx-hero-bottom)!important}
+ main.store-shell{padding-top:0}main.store-shell .store-hero{padding-block:var(--lx-hero-top) var(--lx-hero-bottom)}
+ main :is(.lx-home-hero,.vista-clean__hero,.syn-clean__hero,.dl-hero,.learn-hero,.lx-eco-hero,.store-hero) h1,main[id="main"]>section.saas-section:first-child h1.saas-heading{font-size:clamp(2.2rem,4.7vw,4.4rem);line-height:1.08;letter-spacing:-.045em;text-wrap:balance;max-inline-size:22ch;overflow-wrap:break-word}
+ main.lx-home .lx-sales-hero h1{font-size:clamp(2.05rem,4.4vw,4rem);max-inline-size:26ch;line-height:1.08;letter-spacing:-.045em}
+ main :is(.lx-home-intro,.lx-eco-lead,.dl-intro,.learn-intro,.saas-section__head p){font-size:clamp(.98rem,1.2vw,1.1rem);line-height:1.7;max-inline-size:68ch}
+ main :is(.saas-section,.lx-studio-section,.lx-home-products,.lx-home-services,.lx-eco-section,.learn-section){padding-block:var(--lx-section-space)}
+ main :is(.saas-section__head,.lx-home-section-head,.dl-grouphead,.learn-section-head){margin-block-end:clamp(1.1rem,2.5vw,2rem)}
+ main :is(.saas-section__head,.lx-home-section-head,.dl-grouphead,.learn-section-head) h2,main .learn-section h2{font-size:clamp(1.6rem,3vw,2.6rem);line-height:1.16;letter-spacing:-.035em;text-wrap:balance}
+ main :is(.saas-card,.lx-studio-card,.lx-home-card,.lx-eco-card,.dl-card,.learn-card,.work-card,.lx-rate){min-inline-size:0;border-radius:var(--lx-card-radius);overflow-wrap:break-word}
+ main :is(.saas-card,.lx-studio-card,.lx-home-card,.lx-eco-card,.dl-card,.learn-card,.work-card,.lx-rate) :is(p,li){line-height:1.65}
+ main :is(.saas-grid,.saas-grid-2,.saas-grid-3,.lx-rate-grid,.work-grid,.lx-eco-grid,.dl-grid,.learn-grid,.lx-studio-grid,.lx-home-cards)>*{min-inline-size:0}
+ main .work-grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+ main :is(.saas-btn,.lx-home-button,.dl-button,.learn-button,.vista-clean__button,.syn-clean__button,.lx-eco-actions a){min-block-size:44px;max-inline-size:100%;white-space:normal;text-align:center;overflow-wrap:break-word}
+ main :is(.lx-home-actions,.dl-quick,.learn-row,.vista-clean__actions,.syn-clean__actions,.lx-eco-actions){gap:10px;flex-wrap:wrap}
+ main :where(input:not([type=checkbox]):not([type=radio]),select,textarea){max-inline-size:100%;min-inline-size:0}
+ main :where(a,button,summary):focus-visible{outline:2px solid #a9c4ff;outline-offset:3px}
+ .lx-home-paths{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--lx-card-gap);margin:22px 0}
+ .lx-home-paths a{display:flex;flex-direction:column;gap:3px;padding:16px;border:1px solid #4b4f57;border-radius:12px;background:#181b22;color:#f4f6fa;text-decoration:none;min-width:0}
+ .lx-home-paths a:hover,.lx-home-paths a:focus-visible{background:#252a34;border-color:#a9c4ff}
+ .lx-home-paths strong{font-size:.98rem;line-height:1.3}.lx-home-paths span{font-size:.82rem;line-height:1.45;color:#c2c9d6}
+ .lx-home .lx-sale-grid{gap:12px}.lx-home .lx-sale-card{padding:15px}.lx-home .lx-sale-card h2{font-size:.96rem}.lx-home .lx-sale-card small{font-size:.78rem;line-height:1.4}
+ .glass-footer{width:min(var(--lx-page-width),calc(100% - 2 * var(--lx-page-gutter)));margin:var(--lx-section-space) auto 24px;padding:1px;border:1px solid #383b43;border-radius:20px;background:#101217!important;box-shadow:none}
+ .glass-footer .glass-footer__inner{background:#13161c!important;color:#e7eaf0;border-radius:19px;padding:clamp(1rem,3vw,2rem);gap:20px;box-shadow:none}
+ .glass-footer :is(.glass-footer__desc,.glass-footer__copy,.glass-col__title,.glass-brand__name,.glass-footer__news p){color:#c5cbd7!important}
+ .glass-footer .glass-link,.glass-footer a:not(.saas-btn){color:#e0e5ef!important}
+ .glass-footer .glass-brand__mark{color:#101217!important;background:#f4f6fa!important}
+ .glass-footer .glass-footer__divider{background:#393d46}
+ .glass-footer .glass-footer__top{align-items:flex-start;gap:20px}
+ .glass-footer .glass-footer__brand{gap:12px}.glass-footer .glass-footer__news{align-items:flex-start}
+ .glass-footer .lx-footer-links{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+ .glass-footer .glass-link{min-block-size:30px;font-size:.86rem;line-height:1.4}
+ .glass-footer .lx-footer-directory{border:1px solid #3b414e;border-radius:12px;padding:0 14px;background:#171b23}
+ .glass-footer .lx-footer-directory summary{display:flex;align-items:center;gap:8px;justify-content:space-between;min-height:48px;cursor:pointer;font-weight:650;color:#f3f5fa;list-style:none}
+ .glass-footer .lx-footer-directory summary::-webkit-details-marker{display:none}
+ .glass-footer .lx-footer-directory summary:after{content:"+";font-size:1.25rem;margin-left:auto;color:#a9c4ff}
+ .glass-footer .lx-footer-directory[open] summary:after{content:"−"}
+ .glass-footer .lx-footer-directory summary small{font-weight:400;font-size:.75rem;color:#aeb8c8}
+ .glass-footer .lx-footer-directory>section{padding:0 0 14px}
+ .glass-footer .glass-footer__bottom{flex-wrap:wrap;align-items:center;gap:12px}
+ .glass-footer .glass-footer__bottom nav{gap:8px!important}
+ .glass-footer .glass-footer__bottom .glass-link{font-size:.76rem;min-height:28px}
+ @media(max-width:900px){main :is(.vista-clean__grid,.syn-clean__grid,.store-hero__grid){grid-template-columns:1fr;gap:26px}.glass-footer .lx-footer-links{grid-template-columns:repeat(2,minmax(0,1fr))}}
+ @media(max-width:600px){:root{--lx-hero-top:6rem;--lx-hero-bottom:2rem;--lx-section-space:2.5rem}
+  main :is(.lx-home-hero,.vista-clean__hero,.syn-clean__hero,.dl-hero,.learn-hero,.lx-eco-hero,.store-hero) h1,main[id="main"]>section.saas-section:first-child h1.saas-heading{font-size:clamp(2.1rem,8.4vw,3rem)}
+  main.lx-home .lx-sales-hero h1{font-size:clamp(1.9rem,7.6vw,2.7rem)}
+  .lx-home-paths{grid-template-columns:1fr;gap:8px;margin:16px 0}.lx-home-paths a{padding:12px;min-height:60px}
+  .lx-home .lx-sale-card{padding:11px}.lx-home .lx-sale-card h2{font-size:.87rem}.lx-home .lx-sale-card small{font-size:.72rem}
+  .lx-home .lx-sales-hero .lx-home-actions .lx-home-button{min-height:44px;padding:0 12px;font-size:.8rem}
+  main :is(.saas-grid-2,.saas-grid-3,.lx-studio-grid,.dl-grid,.learn-grid){grid-template-columns:minmax(0,1fr)}
+  .glass-footer .glass-footer__top{flex-direction:column}.glass-footer .glass-footer__brand{max-width:100%}.glass-footer .glass-footer__inner{gap:16px}
+  .glass-footer .lx-footer-links{gap:12px}.glass-footer .glass-link{min-block-size:34px;font-size:.82rem}
+  .glass-footer .lx-footer-directory summary small{display:none}
+  .glass-footer .lx-footer-directory>section .glass-footer__cols{grid-template-columns:1fr}
+  .glass-footer .glass-footer__bottom{align-items:flex-start;flex-direction:column}
+ }
+ @media(max-width:360px){.lx-home .lx-sale-grid{grid-template-columns:1fr}.glass-footer .lx-footer-links{grid-template-columns:1fr 1fr}}
+ @media(prefers-reduced-motion:reduce){.lx-home-paths a,.lx-library-card{transition:none!important}}
+}

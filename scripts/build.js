@@ -169,7 +169,7 @@ for (const file of ROOT_HTML) {
   html = html.replace(/(<a\b[^>]*href=["']\/?contact(?:\.html)?["'][^>]*>)\s*Login\s*(<\/a>)/gi, '$1Contact$2');
   html = html.replace(/(<span class=["']velora-cta__pill["']>)Get Started(<\/span>)/g, '$1Start a Project$2');
   // Page styles load first so shared responsive refinements can target each layout.
-  html = html.replace(/<\/head>/i, '<link rel="stylesheet" href="/css/site-layout.css?v=1">\n</head>');
+  html = html.replace(/<\/head>/i, '<link rel="stylesheet" href="/css/site-layout.css?v=20261119-2">\n</head>');
   fs.writeFileSync(output, html);
 }
 

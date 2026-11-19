@@ -200,3 +200,10 @@ if(!libraryMain.includes('308')||!libraryMain.includes('347')||!libraryMain.incl
 if(/href="[^"]+\.(pdf|pptx|zip)(?:[?#][^"]*)?"/i.test(libraryMain))throw Error('Private learning file exposed');
 if(!canonicalNavigation.includes('href="/learn-library"')||!courseSitemap.includes('https://www.lxobsidianportal.co.za/learn-library</loc>'))throw Error('Library discovery missing');
 console.log('13-book library preview and access guardrails passed');
+
+const layoutCss=fs.readFileSync(path.join(dist,'css','site-layout.css'),'utf8');
+for(const page of htmlFiles){const html=fs.readFileSync(path.join(dist,page),'utf8');if(!html.includes('/css/site-layout.css?v=20261119-2'))throw Error('Shared layout version missing: '+page);}
+if(!currentFooter.includes('class="lx-footer-directory"')||!currentFooter.includes('lx-footer-links')||!home.includes('class="lx-home-paths"'))throw Error('Shared layout navigation/footer regression');
+if((libraryMain.match(/class="learn-book-card lx-library-card"/g)||[]).length!==13||!libraryMain.includes('class="lx-book-preview"')||!firstCourse.includes('lx-course-jumps'))throw Error('Compact learning layout missing');
+if(!layoutCss.includes('--lx-hero-top')||!layoutCss.includes('minmax(min(100%,300px),1fr)'))throw Error('Responsive layout rules missing');
+console.log('Site-wide layout v2, compact library and footer disclosure checks passed');
