@@ -157,5 +157,24 @@
   }
 }
 
-/* Preserve every navigation link while fitting the new course entry on desktop. */
-@media(min-width:1101px){.velora-nav .velora-links.lx-home-nav{gap:2px!important;flex-shrink:1!important}.velora-nav .velora-links.lx-home-nav>.velora-link{padding-inline:7px!important;font-size:.76rem!important}.velora-nav .velora-nav__inner{gap:10px!important}}
+
+/* LX Obsidian Labs: four destination disclosure navigation */
+.lx-grouped-nav .velora-card__title,.lx-grouped-nav .velora-card__desc{white-space:normal;overflow:visible;text-overflow:clip}
+.lx-grouped-nav .velora-card__body{flex:1;gap:4px}.lx-grouped-nav .lx-nav-arrow{flex:none;font-size:.86rem;opacity:.65}
+.lx-grouped-nav .velora-menu__head{font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin:0 0 5px;padding:0 12px}
+.lx-grouped-nav .velora-menu__col{gap:5px}.lx-grouped-nav .velora-card{min-height:54px;padding:10px 12px;align-items:center}
+.lx-grouped-nav .velora-card[aria-current="page"]{box-shadow:inset 2px 0 currentColor}
+.lx-grouped-nav .velora-item.is-current>.velora-link{font-weight:650;text-decoration:underline;text-underline-offset:5px}
+@media(min-width:1101px){
+ .velora-nav .velora-nav__inner:has(.lx-grouped-nav){position:relative;gap:24px!important;overflow:visible}
+ .velora-nav .lx-grouped-nav{flex:1 1 auto!important;justify-content:center;gap:clamp(4px,1vw,14px)!important}
+ .velora-nav .lx-grouped-nav .velora-item{position:static}
+ .velora-nav .lx-grouped-nav .velora-link.has-chevron{font-size:.9rem;padding:0 10px 0 16px;height:44px;font-weight:500}
+ .velora-nav .lx-grouped-nav .lx-group-panel{width:min(690px,calc(100vw - 64px));max-width:calc(100vw - 64px);left:50%;top:100%;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;padding:22px;max-height:calc(100dvh - 120px);border:1px solid #3e4148;border-radius:18px;background:#17191e;color:#f5f6fa;box-shadow:0 22px 70px #0009;overflow-y:auto}
+ .velora-nav .lx-grouped-nav .velora-menu__head{color:#aab3c2}.velora-nav .lx-grouped-nav .velora-card{background:#202329;color:#f2f4f8;border:1px solid transparent}
+ .velora-nav .lx-grouped-nav .velora-card:hover,.velora-nav .lx-grouped-nav .velora-card:focus-visible{background:#30343b;border-color:#626a79}
+ .velora-nav .lx-grouped-nav .velora-card__title{color:#f4f6fa}.velora-nav .lx-grouped-nav .velora-card__desc{color:#bcc4d1}
+ .velora-nav .lx-grouped-nav .velora-card:focus-visible{outline:2px solid #9ebcff;outline-offset:2px}
+ .velora-nav .velora-nav__inner:has(.lx-grouped-nav) .velora-actions{flex:0 0 auto}
+}
+@media(max-width:1100px){body>.lx-grouped-nav.velora-mobile-portal .lx-group-panel{grid-template-columns:1fr!important;gap:12px!important}}

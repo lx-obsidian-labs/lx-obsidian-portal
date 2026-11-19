@@ -1,0 +1,157 @@
+{
+  "programme": "OL-SD-001",
+  "title": "Junior Developer: Coding & Modern AI",
+  "status": "planned paid enrolment",
+  "estimatedWeeks": 26,
+  "hoursPerWeek": [
+    6,
+    8
+  ],
+  "books": [
+    {
+      "number": 1,
+      "title": "The Junior Developer’s First Project",
+      "stage": "Orientation",
+      "outcome": "Build and explain a local-first Study Tracker using guided HTML, CSS and JavaScript.",
+      "assignment": "Submit a working Study Tracker, screenshots, a test log and a 3-minute explanation.",
+      "id": "A01",
+      "status": "Prepared",
+      "targetPages": 50
+    },
+    {
+      "number": 2,
+      "title": "Programming Logic & Computational Thinking",
+      "stage": "Foundations",
+      "outcome": "Trace algorithms, decompose problems and implement decisions, loops and functions.",
+      "assignment": "Solve five logic problems; submit flowcharts, pseudocode, runnable solutions and edge-case tests.",
+      "id": "A02",
+      "status": "Planned",
+      "targetPages": 60
+    },
+    {
+      "number": 3,
+      "title": "HTML: The Foundations of the Web",
+      "stage": "Foundations",
+      "outcome": "Create semantic, keyboard-accessible pages and correctly labelled forms.",
+      "assignment": "Build a three-page personal website; submit source, HTML validation and keyboard checks.",
+      "id": "A03",
+      "status": "Planned",
+      "targetPages": 65
+    },
+    {
+      "number": 4,
+      "title": "CSS, UI/UX & Responsive Design",
+      "stage": "Foundations",
+      "outcome": "Translate a wireframe into a responsive, readable interface using layout and design principles.",
+      "assignment": "Build a responsive landing page from a wireframe; submit 320px and desktop screenshots and contrast checks.",
+      "id": "A04",
+      "status": "Planned",
+      "targetPages": 75
+    },
+    {
+      "number": 5,
+      "title": "JavaScript: From Zero to Interactive Apps",
+      "stage": "Application engineering",
+      "outcome": "Implement events, state, functions, data structures, asynchronous operations and error handling.",
+      "assignment": "Build an interactive expense tracker with validation, persistence and a test log.",
+      "id": "A05",
+      "status": "Planned",
+      "targetPages": 90
+    },
+    {
+      "number": 6,
+      "title": "Git, GitHub & Developer Workflows",
+      "stage": "Application engineering",
+      "outcome": "Manage changes using commits, branches, pull requests, reviews and documentation.",
+      "assignment": "Submit a repository with meaningful commits, a feature branch, a reviewed pull request and README.",
+      "id": "A06",
+      "status": "Planned",
+      "targetPages": 55
+    },
+    {
+      "number": 7,
+      "title": "Python for Absolute Beginners",
+      "stage": "Application engineering",
+      "outcome": "Write and test Python programs using functions, collections, files and exceptions.",
+      "assignment": "Create a CSV-based study or expense reporting tool with input validation and automated tests.",
+      "id": "A07",
+      "status": "Planned",
+      "targetPages": 85
+    },
+    {
+      "number": 8,
+      "title": "APIs, Backend Development & the Internet",
+      "stage": "Application engineering",
+      "outcome": "Explain HTTP and JSON; implement validated server endpoints and consume an API safely.",
+      "assignment": "Build a small task API and client; submit API documentation, error cases and tests.",
+      "id": "A08",
+      "status": "Planned",
+      "targetPages": 85
+    },
+    {
+      "number": 9,
+      "title": "Databases, SQL & Data Management",
+      "stage": "Application engineering",
+      "outcome": "Model relational data, query using SQL and enforce constraints with parameterised operations.",
+      "assignment": "Design a study database, write CRUD and join queries, and demonstrate a safe API integration.",
+      "id": "A09",
+      "status": "Planned",
+      "targetPages": 75
+    },
+    {
+      "number": 10,
+      "title": "Testing, Security & Cloud Deployment",
+      "stage": "Application engineering",
+      "outcome": "Test a web app, identify common vulnerabilities and deploy a secure small project.",
+      "assignment": "Deploy a tested app; submit a release checklist, threat model, regression tests and live URL.",
+      "id": "A10",
+      "status": "Planned",
+      "targetPages": 75
+    },
+    {
+      "number": 11,
+      "title": "Understanding Modern Artificial Intelligence",
+      "stage": "AI engineering",
+      "outcome": "Distinguish ML, neural networks, LLMs and generative AI; evaluate accuracy, bias, privacy and limitations.",
+      "assignment": "Compare AI outputs on a controlled dataset; submit an evaluation matrix and ethical risk analysis.",
+      "id": "A11",
+      "status": "Planned",
+      "targetPages": 75
+    },
+    {
+      "number": 12,
+      "title": "AI-Assisted Software Development",
+      "stage": "AI engineering",
+      "outcome": "Use AI to plan, implement and review code while independently verifying every critical claim.",
+      "assignment": "Repair a buggy application with and without AI; submit diffs, tests, prompt log and reasoning.",
+      "id": "A12",
+      "status": "Planned",
+      "targetPages": 70
+    },
+    {
+      "number": 13,
+      "title": "Building AI Applications & Agents",
+      "stage": "AI engineering",
+      "outcome": "Design an AI application using model APIs, retrieval, constrained tools, evaluation and human approval.",
+      "assignment": "Build and defend a study assistant using grounded sources, evaluation cases and safety controls.",
+      "id": "A13",
+      "status": "Planned",
+      "targetPages": 90
+    }
+  ],
+  "assessment": {
+    "assignments": 40,
+    "checkpoints": 20,
+    "knowledgeChecks": 10,
+    "capstone": 30,
+    "overallPass": 70,
+    "minimumAssignmentAndCheckpoint": 60,
+    "capstonePass": 70
+  },
+  "references": [
+    "https://developer.mozilla.org/en-US/curriculum/",
+    "https://cs50.harvard.edu/x/",
+    "https://www.unesco.org/en/articles/ai-competency-framework-students",
+    "https://www.cmu.edu/teaching/assessment/basics/alignment.html"
+  ]
+}

@@ -179,3 +179,11 @@ const courseSitemap=fs.readFileSync(path.join(dist,'sitemap.xml'),'utf8');
 for(const route of ['/courses','/course-junior-developer']) if(!courseSitemap.includes('https://www.lxobsidianportal.co.za'+route+'</loc>')) throw Error('Course sitemap missing '+route);
 if(!fs.existsSync(path.join(dist,'assets','learn-developer-001.svg'))) throw Error('Course artwork missing');
 console.log('Obsidian Learn course discovery, syllabus and paid-preview guardrails passed');
+
+const navGroups=[...canonicalNavigation.matchAll(/data-nav-group="([^"]+)"/g)].map(x=>x[1]);
+if(navGroups.join(',')!=='solutions,apps,learn,company') throw Error('Navigation must have exactly four destinations');
+for(const route of ['/services#pricing','/portfolio','/downloads','/marketplace','/courses','/course-junior-developer','/#study-tools','/contact']) if(!canonicalNavigation.includes('href="'+route+'"')) throw Error('Grouped nav lost route '+route);
+const bookIDs=[...firstCourse.matchAll(/data-book-id="(A\d{2})"/g)].map(m=>m[1]);
+if(bookIDs.length!==13 || new Set(bookIDs).size!==13 || !firstCourse.includes('id="assessment"')) throw Error('13-book curriculum or assessment missing');
+if(!courseCatalogue.includes('13 books')||!firstCourse.includes('Book 01 prepared')) throw Error('Programme material status missing');
+console.log('Consolidated navigation and 13-book outcomes curriculum passed');

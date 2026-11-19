@@ -3,7 +3,7 @@
  *
  * Accessibility: disclosure pattern (not role="menu") — each trigger is a
  * <button> with aria-expanded + aria-controls pointing at its panel.
- *   - Desktop: hover or click/Enter/Space opens a panel; ArrowDown/ArrowUp open
+ *   - Desktop: click/Enter/Space opens a panel; ArrowDown/ArrowUp open
  *     and move focus into it; Escape closes and restores focus to the trigger;
  *     Tab out or an outside click closes it.
  *   - Mobile (<=1100px): burger toggles a full-screen panel + backdrop with body
@@ -93,22 +93,6 @@ void (function () {
   items.forEach(function (item) {
     var btn = triggerOf(item);
     if (!btn) return;
-    var timer = null;
-
-    item.addEventListener('mouseenter', function () {
-      if (!isDesktop()) return;
-      clearTimeout(timer);
-      openMenu(item);
-    });
-
-    item.addEventListener('mouseleave', function () {
-      if (!isDesktop()) return;
-      clearTimeout(timer);
-      timer = setTimeout(function () {
-        closeMenu(item);
-      }, 140);
-    });
-
     btn.addEventListener('click', function (e) {
       e.preventDefault();
       if (item.classList.contains('is-open')) closeMenu(item);
@@ -226,7 +210,7 @@ void (function () {
     try {
       var url = new URL(a.getAttribute('href'), location.href);
       if (url.origin !== location.origin || url.hash) return;
-      if (normalizePath(url.pathname) === currentPath) a.setAttribute('aria-current', 'page');
+      if (normalizePath(url.pathname) === currentPath) { a.setAttribute('aria-current', 'page'); var group = a.closest('.velora-item'); if (group) group.classList.add('is-current'); }
     } catch (_) {}
   });
 
