@@ -63,6 +63,60 @@
         "slides": 65,
         "lessons": 25,
         "status": "compact first-study edition prepared offline; not approved for paid release"
+      },
+      "practicalAssessmentPack": {
+        "version": "1.0",
+        "status": "prepared offline; independent moderation pending",
+        "learnerWorkbookPages": 15,
+        "staffMemorandumPages": 8,
+        "syntheticFiles": [
+          "approved-source-corpus.txt",
+          "transactions.csv"
+        ],
+        "assignments": [
+          {
+            "id": "AI-A01",
+            "title": "Choose and evaluate the right technology",
+            "evidence": "Decision matrix, precision/recall/accuracy calculations and six-case evaluation plan.",
+            "marks": 100
+          },
+          {
+            "id": "AI-A02",
+            "title": "Design and compare prompts",
+            "evidence": "Three prompt variants, twelve scored outputs, structured-output contract and limitations.",
+            "marks": 100
+          },
+          {
+            "id": "AI-A03",
+            "title": "Verify research and financial claims",
+            "evidence": "Five-claim evidence matrix, independent arithmetic and corrected management summary.",
+            "marks": 100
+          },
+          {
+            "id": "AI-A04",
+            "title": "Manage AI privacy and risk",
+            "evidence": "Data classification, risk register, safe workflow and review notice.",
+            "marks": 100
+          },
+          {
+            "id": "AI-A05",
+            "title": "Build a repeatable AI-assisted workflow",
+            "evidence": "Workflow map, contracts, eight evaluation cases and handover record.",
+            "marks": 100
+          }
+        ],
+        "capstone": {
+          "title": "Deliver a verified business research portfolio",
+          "evidence": "Integrated management report, evidence log, FAQ responses, risk controls and independent defence.",
+          "marks": 100
+        },
+        "pending": [
+          "knowledge checks",
+          "checkpoint instrument",
+          "moderation",
+          "secure delivery"
+        ],
+        "publicPreview": "/course-ai-literacy#practical-work"
       }
     },
     {

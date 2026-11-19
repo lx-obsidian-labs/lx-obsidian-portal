@@ -237,3 +237,8 @@ console.log('Six professional study libraries and protected file guardrails pass
 for(const [slug,n] of [["course-junior-developer","01"],["course-business-technology","02"],["course-ai-literacy","03"],["course-digital-entrepreneurship","04"],["course-cybersecurity-foundations","05"],["course-data-analytics","06"]]){const page=fs.readFileSync(path.join(dist,slug+'.html'),'utf8');if(!page.includes('id="visual-project"')||!page.includes('class="ol-student-photo ol-subject-photo"')||!page.includes('/assets/learn/project-'+n+'.svg')||!fs.existsSync(path.join(dist,'assets','learn','project-'+n+'.svg')))throw Error('Visual project missing '+slug);}
 if((courseCatalogue.match(/class="ol-photo-credit"/g)||[]).length!==6)throw Error('Catalogue photo attribution missing');
 console.log('Six subject photo cards and project diagrams verified');
+
+const aiPractical=fs.readFileSync(path.join(dist,'course-ai-literacy.html'),'utf8');
+for(const x of ['id="practical-work"','AI-A01','AI-A02','AI-A03','AI-A04','AI-A05','CAPSTONE','15-page learner workbook','8-page restricted staff memorandum','Knowledge checks, checkpoint instrument and moderation remain pending'])if(!aiPractical.includes(x))throw Error('AI practical pack preview missing: '+x);
+if(!fs.readFileSync(path.join(dist,'learn-library-ai.html'),'utf8').includes('/course-ai-literacy#practical-work'))throw Error('AI practical pack discovery missing');
+console.log('AI practical assessment pack public preview and restricted material guardrails passed');
