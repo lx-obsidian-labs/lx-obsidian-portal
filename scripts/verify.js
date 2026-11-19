@@ -208,7 +208,7 @@ if((libraryMain.match(/class="learn-book-card lx-library-card"/g)||[]).length!==
 if(!layoutCss.includes('--lx-hero-top')||!layoutCss.includes('minmax(min(100%,300px),1fr)'))throw Error('Responsive layout rules missing');
 console.log('Site-wide layout v2, compact library and footer disclosure checks passed');
 
-for(const page of [courseCatalogue,firstCourse,publicationLibrary]){if(!page.includes('ol-international')||!page.includes('/css/learn-international.css?v=20261119-2')||!page.includes('aria-label="Obsidian Learn navigation"'))throw Error('School design system missing');}
+for(const page of [courseCatalogue,firstCourse,publicationLibrary]){if(!page.includes('ol-international')||!page.includes('/css/learn-international.css?v=20261119-3')||!page.includes('aria-label="Obsidian Learn navigation"'))throw Error('School design system missing');}
 if(!firstCourse.includes('id="sample-lesson"')||!firstCourse.includes('id="ol-sample-form"')||!firstCourse.includes('ol-enrol-card')||(firstCourse.match(/class="ol-module-group"/g)||[]).length!==4)throw Error('Programme structure or sample missing');
 if((libraryMain.match(/data-library-book="/g)||[]).length!==13||!libraryMain.includes('id="ol-book-search"')||!libraryMain.includes('id="ol-stage-filter"'))throw Error('Library filtering missing');
 if(!home.includes('id="ol-home-title"'))throw Error('School home discovery missing');
@@ -232,3 +232,8 @@ if(!courseCatalogue.includes('id="ol-mobile-filters"')||!fs.readFileSync(path.jo
 for(const [slug,lib,n] of [["course-junior-developer","learn-library",13],["course-business-technology","learn-library-business",6],["course-ai-literacy","learn-library-ai",5],["course-digital-entrepreneurship","learn-library-entrepreneurship",5],["course-cybersecurity-foundations","learn-library-cybersecurity",5],["course-data-analytics","learn-library-data-analytics",6]]){const c=fs.readFileSync(path.join(dist,slug+'.html'),'utf8'),l=fs.readFileSync(path.join(dist,lib+'.html'),'utf8'),m=l.match(/<main[\s\S]*?<\/main>/)[0];if((m.match(/data-library-book="/g)||[]).length!==n||!courseCatalogue.includes('href="/'+lib+'"')||!courseSitemap.includes('https://www.lxobsidianportal.co.za/'+lib+'</loc>'))throw Error('Professional library incomplete '+lib);if(/href="[^"]+\.(pdf|pptx|zip)(?:[?#][^"]*)?"/i.test(m+c.match(/<main[\s\S]*?<\/main>/)[0]))throw Error('Protected learning file exposed');}
 if(!courseCatalogue.includes('650 pages and 881 slides')||!courseCatalogue.includes('40 textbook PDFs'))throw Error('Professional edition inventory missing');
 console.log('Six professional study libraries and protected file guardrails passed');
+
+// Verify each programme has subject photography and an original project diagram.
+for(const [slug,n] of [["course-junior-developer","01"],["course-business-technology","02"],["course-ai-literacy","03"],["course-digital-entrepreneurship","04"],["course-cybersecurity-foundations","05"],["course-data-analytics","06"]]){const page=fs.readFileSync(path.join(dist,slug+'.html'),'utf8');if(!page.includes('id="visual-project"')||!page.includes('class="ol-student-photo ol-subject-photo"')||!page.includes('/assets/learn/project-'+n+'.svg')||!fs.existsSync(path.join(dist,'assets','learn','project-'+n+'.svg')))throw Error('Visual project missing '+slug);}
+if((courseCatalogue.match(/class="ol-photo-credit"/g)||[]).length!==6)throw Error('Catalogue photo attribution missing');
+console.log('Six subject photo cards and project diagrams verified');
