@@ -202,8 +202,15 @@ if(!canonicalNavigation.includes('href="/learn-library"')||!courseSitemap.includ
 console.log('13-book library preview and access guardrails passed');
 
 const layoutCss=fs.readFileSync(path.join(dist,'css','site-layout.css'),'utf8');
-for(const page of htmlFiles){const html=fs.readFileSync(path.join(dist,page),'utf8');if(!html.includes('/css/site-layout.css?v=20261119-2'))throw Error('Shared layout version missing: '+page);}
+for(const page of htmlFiles){const html=fs.readFileSync(path.join(dist,page),'utf8');if(!html.includes('/css/site-layout.css?v=20261119-3'))throw Error('Shared layout version missing: '+page);}
 if(!currentFooter.includes('class="lx-footer-directory"')||!currentFooter.includes('lx-footer-links')||!home.includes('class="lx-home-paths"'))throw Error('Shared layout navigation/footer regression');
 if((libraryMain.match(/class="learn-book-card lx-library-card"/g)||[]).length!==13||!libraryMain.includes('class="lx-book-preview"')||!firstCourse.includes('lx-course-jumps'))throw Error('Compact learning layout missing');
 if(!layoutCss.includes('--lx-hero-top')||!layoutCss.includes('minmax(min(100%,300px),1fr)'))throw Error('Responsive layout rules missing');
 console.log('Site-wide layout v2, compact library and footer disclosure checks passed');
+
+for(const page of [courseCatalogue,firstCourse,publicationLibrary]){if(!page.includes('ol-international')||!page.includes('/css/learn-international.css?v=20261119-1')||!page.includes('aria-label="Obsidian Learn navigation"'))throw Error('School design system missing');}
+if(!firstCourse.includes('id="sample-lesson"')||!firstCourse.includes('id="ol-sample-form"')||!firstCourse.includes('ol-enrol-card')||(firstCourse.match(/class="ol-module-group"/g)||[]).length!==4)throw Error('Programme structure or sample missing');
+if((libraryMain.match(/data-library-book="/g)||[]).length!==13||!libraryMain.includes('id="ol-book-search"')||!libraryMain.includes('id="ol-stage-filter"'))throw Error('Library filtering missing');
+if(!home.includes('id="ol-home-title"'))throw Error('School home discovery missing');
+for(const file of ['css/learn-international.css','js/ui/learn-international.js'])if(!fs.existsSync(path.join(dist,file)))throw Error('School asset missing '+file);
+console.log('International school layout, searchable library and sample lesson guardrails passed');

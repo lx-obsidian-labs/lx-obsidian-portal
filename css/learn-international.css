@@ -1,0 +1,87 @@
+/* LX Obsidian Labs / Obsidian Learn — international academic design system. */
+.learn-page.ol-international{--ol-ink:#142238;--ol-muted:#475569;--ol-border:#dce3ed;--ol-blue:#194dc5;--ol-paper:#fff;--ol-bg:#f5f7fa;background:var(--ol-bg);color:var(--ol-ink);font:400 1rem/1.65 Inter,system-ui,sans-serif;padding-top:88px}
+.ol-international [hidden]{display:none!important}
+.ol-international .learn-wrap{width:min(1160px,calc(100% - 2 * var(--lx-page-gutter,24px)));margin-inline:auto}
+.ol-international h1,.ol-international h2,.ol-international h3{color:var(--ol-ink);font-family:Inter,system-ui,sans-serif;letter-spacing:-.035em;font-weight:730}
+.ol-international p{color:var(--ol-muted)}
+.ol-international .learn-eyebrow,.ol-international .ol-kicker{color:#31549a;font-size:.73rem;letter-spacing:.09em;font-weight:700;text-transform:uppercase}
+.ol-international .learn-muted{color:#526178!important}
+.ol-international .learn-button{background:#fff;border:1px solid #a9bad4;color:#19438d;min-height:46px;font-size:.91rem;border-radius:8px;gap:10px;box-shadow:none}
+.ol-international .learn-button:hover{background:#edf3ff;color:#153c88}
+.ol-international .learn-button.primary{background:#194dc5;border-color:#194dc5;color:#fff}
+.ol-international .learn-button.primary:hover{background:#153ca2}
+.ol-international :is(a,button,summary,input,select):focus-visible{outline:3px solid #1762db;outline-offset:3px}
+.ol-school-nav{background:#fff;border-top:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0}
+.ol-school-nav .learn-wrap{display:flex;gap:24px;align-items:center;justify-content:space-between;min-height:63px;padding-block:8px}
+.ol-wordmark{display:inline-flex;align-items:center;gap:9px;color:#142238;font-weight:750;font-size:1rem;white-space:nowrap;text-decoration:none}
+.ol-wordmark>span{display:grid;place-items:center;background:#183a80;color:white;width:32px;height:32px;border-radius:7px;font-size:.77rem;letter-spacing:.04em}
+.ol-school-nav .learn-wrap>div{display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+.ol-school-nav .learn-wrap>div a,.ol-nav-contact{padding:10px 12px;text-decoration:none;color:#34445d;font-size:.85rem;font-weight:600;border-radius:7px;min-height:44px;display:inline-flex;align-items:center}
+.ol-school-nav a[aria-current="page"]{color:#1745b2;background:#eaf0ff}
+.ol-school-nav .ol-nav-contact{color:#1745b2;white-space:nowrap}
+main.ol-international .learn-hero{padding:clamp(42px,6vw,72px) 0 36px;background:#101e37;color:#fff;border:0;position:relative}
+.ol-international .learn-hero h1{font-size:clamp(2.45rem,5vw,4.25rem);line-height:1.08;color:#fff;letter-spacing:-.055em;max-width:22ch}
+.ol-international .learn-hero h1 span{color:#b7d0ff}
+.ol-international .learn-hero :is(.learn-intro,.ol-hero-note,.learn-muted){color:#c9d5e7!important}
+.ol-international .learn-hero .learn-eyebrow{color:#b7d0ff}
+.ol-international .learn-hero .learn-button:not(.primary){background:transparent;color:white;border-color:#7c91b4}
+.ol-international .learn-hero .learn-button:not(.primary):hover{background:#233b60}
+.ol-international .learn-hero .learn-button.primary{background:#3065e7;border-color:#3065e7;color:#fff}
+.ol-hero-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,.8fr);gap:clamp(24px,5vw,70px);align-items:center}
+.ol-hero-note{font-size:.85rem;line-height:1.5;margin-top:15px}
+.ol-hero-visual{border:1px solid #526784;border-radius:16px;overflow:hidden;background:#162946}
+.ol-hero-visual img{display:block;width:100%;height:auto;object-fit:contain}
+.ol-visual-top,.ol-visual-bottom{display:flex;justify-content:space-between;gap:12px;padding:16px 18px;color:#c9d8ed;font-size:.72rem;letter-spacing:.055em}
+.ol-visual-bottom{flex-direction:column;gap:4px;letter-spacing:0}.ol-visual-bottom strong{color:#fff;font-size:1.1rem}
+.ol-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid #405577;border-radius:12px;margin-top:32px;overflow:hidden;background:#172944}
+.ol-metrics>div{display:flex;flex-direction:column;padding:18px 22px;gap:4px;min-width:0}
+.ol-metrics>div+div{border-left:1px solid #405577}.ol-metrics strong{font-size:1.8rem;line-height:1.1;color:#fff;letter-spacing:-.04em}.ol-metrics span{font-size:.83rem;color:#c8d5e9}
+.ol-international .learn-breadcrumb,.ol-international .learn-breadcrumb a{color:#c4d7ff}
+.ol-enrol-card{background:#fff;color:#142238;border-radius:15px;padding:24px;min-width:0;box-shadow:0 12px 35px #02081440}
+.ol-international .ol-enrol-card h2{font-size:1.5rem;color:#142238}.ol-international .ol-enrol-card p{color:#526178!important;font-size:.84rem}
+.ol-fact-list{margin:16px 0;display:grid;gap:0}.ol-fact-list>div{display:flex;justify-content:space-between;gap:12px;align-items:baseline;border-bottom:1px solid #e0e6ef;padding:10px 0;font-size:.85rem}.ol-fact-list span{color:#53637a}.ol-fact-list strong{text-align:right;color:#142238}
+.ol-international .learn-hero .ol-enrol-card .learn-button{display:flex;width:100%;margin:8px 0}
+.ol-international .learn-hero .ol-enrol-card .learn-button:not(.primary){background:#fff;color:#19438d;border-color:#a9bad4}.ol-international .learn-hero .ol-enrol-card .learn-button:not(.primary):hover{background:#eef3ff}
+.ol-skill-chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:20px}.ol-skill-chips span{font-size:.78rem;color:#e1eaff;border:1px solid #647a9c;border-radius:5px;padding:5px 9px}
+.ol-international .learn-section{border-color:#dce3ed;padding-block:clamp(34px,5vw,58px)}
+.ol-international .learn-section h2{font-size:clamp(1.65rem,3vw,2.45rem);line-height:1.16}
+.ol-international .learn-section h3{font-size:1.14rem;line-height:1.35}
+.ol-international .learn-card,.ol-international .learn-book-card,.ol-international .learn-stage,.ol-international .learn-modules details{background:#fff;border:1px solid #dce3ed;border-radius:13px;box-shadow:0 2px 8px #162b4c08;color:#142238}
+.ol-international .learn-card{padding:clamp(20px,3vw,30px)}
+.ol-international .learn-feature{gap:30px;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr)}
+.ol-international .learn-art{border-color:#dce3ed}
+.ol-international .learn-chip,.ol-international .learn-book-status{background:#eef3fb;color:#274776;border-color:#d6e1f1;font-size:.75rem;border-radius:5px}
+.ol-international .learn-status{color:#1845a1;background:#e9f0ff;border-color:#bfcef0}
+.ol-international .learn-stats>div{background:white;border:1px solid #dce3ed;box-shadow:0 1px 4px #14223808}
+.ol-international .learn-stats strong{color:#194dc5}.ol-international .learn-stats span{color:#526178}
+.ol-international .learn-hero .learn-stats>div{background:#172944;border-color:#405577}.ol-international .learn-hero .learn-stats strong{color:#fff}.ol-international .learn-hero .learn-stats span{color:#c8d5e9}
+.ol-international .learn-book-card a:not(.learn-button),.ol-international .learn-muted a,.ol-international .learn-list a,.ol-pathway a{color:#194dc5;font-weight:600}
+.ol-international .learn-list{color:#34445d}.ol-international .learn-list li{line-height:1.6}
+.ol-international .learn-stage span{color:#31549a}.ol-international .learn-stage:after{color:#194dc5}
+.ol-international .learn-notice{background:#eef4ff;border:1px solid #c4d6fb}.ol-international .learn-notice strong{color:#163979}
+.ol-international .learn-bar-track{background:#e2e8f0}.ol-international .learn-bar-track span{background:#3065e7}
+.ol-international .learn-rubric>div{border-color:#dce3ed;color:#34445d}
+.ol-international .learn-modules summary{color:#142238;padding:4px 0;min-height:44px}
+.ol-international .learn-book-number{color:#194dc5}
+.ol-international .learn-book-detail{grid-template-columns:84px minmax(0,1fr)}
+.ol-pathway{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:24px}
+.ol-pathway article{background:#fff;border:1px solid #dce3ed;border-radius:13px;padding:20px;position:relative;min-width:0}
+.ol-step{display:grid;place-items:center;width:38px;height:38px;background:#e9f0ff;color:#194dc5;font-weight:750;border-radius:9px;margin-bottom:16px}
+.ol-pathway .ol-kicker{font-size:.66rem;margin:0 0 7px;letter-spacing:.04em}.ol-pathway a{display:inline-flex;align-items:center;gap:6px;min-height:44px;font-size:.84rem;text-decoration:none}
+.ol-module-group{margin-top:26px;padding:0 0 9px}.ol-module-heading{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:4px 12px;padding:14px 18px;background:#e8eef8;border-radius:10px;color:#20385f}
+.ol-module-heading>span{font-size:.68rem;font-weight:700;color:#31549a;letter-spacing:.07em}.ol-module-heading h3{margin:0}.ol-module-heading p{grid-column:2;margin:0;font-size:.8rem}
+.ol-international .lx-course-jumps{border-color:#dce3ed;padding-top:15px}
+.ol-international .learn-stage-nav{gap:8px}
+.ol-faq details{background:white;border:1px solid #dce3ed;border-radius:10px;padding:14px 18px;margin:10px 0}
+.ol-faq summary{cursor:pointer;min-height:44px;display:list-item;font-weight:650;padding:10px 0}
+.ol-final-cta{background:#e8effc;border-radius:15px;padding-inline:24px;margin-block:24px}
+.ol-international .lx-library-card .lx-book-preview{border-color:#dce3ed}.ol-international .lx-book-preview summary{color:#19438d}
+.ol-library-toolbar{display:grid;grid-template-columns:minmax(0,1fr) minmax(180px,.5fr) auto;align-items:end;gap:12px;background:#fff;border:1px solid #dce3ed;border-radius:12px;padding:18px;margin-top:24px}
+.ol-library-toolbar label{display:block;color:#34445d;font-weight:650;font-size:.85rem;margin-bottom:5px}.ol-library-toolbar :is(input,select){display:block;width:100%;max-width:100%;min-width:0;min-height:46px;border:1px solid #9cacc4;border-radius:8px;background:#fff;color:#142238;padding:10px 12px;font:inherit;font-size:.9rem}
+.ol-library-toolbar p{grid-column:1/-1;margin:0;font-size:.84rem}.ol-no-results{background:#fff;padding:20px;border:1px solid #dce3ed;border-radius:12px}
+.ol-sample-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:22px}.ol-flow-mini{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:18px 0}.ol-flow-mini>div{display:flex;flex-direction:column;background:#e9f0ff;border:1px solid #d5e0f5;border-radius:8px;padding:12px;flex:1;min-width:100px;color:#244680}.ol-flow-mini>div span{font-size:.8rem}.ol-flow-mini>span{color:#194dc5;font-weight:750}
+#ol-sample-form fieldset{border:0;padding:0;margin:12px 0;display:flex;gap:10px;flex-wrap:wrap}#ol-sample-form label{display:flex;gap:8px;align-items:center;border:1px solid #becbe0;border-radius:8px;padding:10px 14px;min-height:44px;cursor:pointer}#ol-sample-form input{accent-color:#194dc5}#ol-sample-result{min-height:1.5em;font-weight:600;color:#244680}
+.ol-code-card pre{background:#101e37;color:#e4edff;border-radius:9px;padding:16px;overflow:auto;max-width:100%;font-size:.85rem;line-height:1.7}
+@media(max-width:920px){.ol-international .ol-hero-grid{grid-template-columns:1fr;gap:26px}.ol-hero-visual{max-width:540px}.ol-enrol-card{max-width:620px}.ol-pathway{grid-template-columns:repeat(2,minmax(0,1fr))}.ol-school-nav .learn-wrap{gap:8px;flex-wrap:wrap}}
+@media(max-width:600px){.learn-page.ol-international{padding-top:76px}.ol-school-nav .learn-wrap{display:flex;flex-wrap:wrap;justify-content:space-between;padding-block:8px}.ol-school-nav .learn-wrap>div{order:3;width:100%;gap:3px;border-top:1px solid #e2e8f0;padding-top:5px}.ol-school-nav .learn-wrap>div a{flex:1;justify-content:center;padding:8px 4px;font-size:.79rem}.ol-nav-contact{font-size:.8rem;min-height:40px;padding:6px}.ol-international .learn-hero h1{font-size:clamp(2.05rem,9vw,3rem)}main.ol-international .learn-hero{padding-block:30px}.ol-metrics{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:22px}.ol-metrics>div{padding:14px}.ol-metrics>div:nth-child(3){border-left:0}.ol-metrics>div:nth-child(n+3){border-top:1px solid #405577}.ol-metrics strong{font-size:1.55rem}.ol-metrics span{font-size:.75rem}.ol-international .learn-feature,.ol-sample-grid{grid-template-columns:1fr}.ol-pathway{grid-template-columns:1fr}.ol-enrol-card{padding:18px}.ol-fact-list>div{font-size:.8rem;flex-wrap:wrap}.ol-fact-list strong{text-align:left}.ol-library-toolbar{grid-template-columns:1fr}.ol-library-toolbar p{grid-column:auto}.ol-international .learn-book-detail{grid-template-columns:64px minmax(0,1fr)}.ol-module-heading{grid-template-columns:1fr}.ol-module-heading p{grid-column:auto}.ol-flow-mini>div{min-width:75px;padding:8px}.ol-hero-visual{max-width:100%}}
+@media(prefers-reduced-motion:reduce){.ol-international *{scroll-behavior:auto!important;transition:none!important}}
