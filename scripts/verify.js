@@ -223,7 +223,7 @@ if(!courseCatalogue.includes('id="how-it-works"')||!courseCatalogue.includes('ol
 if(/href="[^"]+\.(pdf|pptx|zip)(?:[?#][^"]*)?"/i.test(businessCourse.match(/<main[\s\S]*?<\/main>/)[0]+businessLibrary.match(/<main[\s\S]*?<\/main>/)[0]))throw Error('Private course materials exposed');
 console.log('Two-programme school, learner journey and business course guardrails passed');
 
-if((courseCatalogue.match(/data-programme-category="/g)||[]).length!==6||!courseCatalogue.includes('id="ol-course-grid"')||!courseCatalogue.includes('id="ol-programme-search"'))throw Error('Six-course catalogue grid missing');
+if((courseCatalogue.match(/data-programme-category="/g)||[]).length!==12||!courseCatalogue.includes('id="ol-course-grid"')||!courseCatalogue.includes('id="ol-programme-search"'))throw Error('Twelve-course catalogue grid missing');
 for(const [slug,n] of [["course-ai-literacy",5],["course-digital-entrepreneurship",5],["course-cybersecurity-foundations",5],["course-data-analytics",6]]){const page=fs.readFileSync(path.join(dist,slug+'.html'),'utf8');if((page.match(/data-track-module="/g)||[]).length!==n||!page.includes('class="ol-track-quiz"')||!page.includes('Compact first-study editions prepared offline')||!courseCatalogue.includes('href="/'+slug+'"')||!courseSitemap.includes('https://www.lxobsidianportal.co.za/'+slug+'</loc>'))throw Error('Track preview incomplete: '+slug);}
 console.log('Six-programme searchable catalogue grid and curriculum previews passed');
 
@@ -242,3 +242,8 @@ const aiPractical=fs.readFileSync(path.join(dist,'course-ai-literacy.html'),'utf
 for(const x of ['id="practical-work"','AI-A01','AI-A02','AI-A03','AI-A04','AI-A05','CAPSTONE','15-page learner workbook','8-page restricted staff memorandum','Knowledge checks, checkpoint instrument and moderation remain pending'])if(!aiPractical.includes(x))throw Error('AI practical pack preview missing: '+x);
 if(!fs.readFileSync(path.join(dist,'learn-library-ai.html'),'utf8').includes('/course-ai-literacy#practical-work'))throw Error('AI practical pack discovery missing');
 console.log('AI practical assessment pack public preview and restricted material guardrails passed');
+
+const expansionTracks=[["course-cloud-devops",6,"07"],["course-financial-bookkeeping",6,"08"],["course-digital-marketing",5,"09"],["course-project-management",5,"10"],["course-advanced-ai-automation",6,"11"],["course-crm-sales",5,"12"]];let plannedTitles=0;
+for(const [slug,n,num] of expansionTracks){const page=fs.readFileSync(path.join(dist,slug+'.html'),'utf8'),main=page.match(/<main[\s\S]*?<\/main>/)[0];if((main.match(/data-expansion-module="/g)||[]).length!==n||!main.includes('class="ol-track-quiz"')||!main.includes('Full books and slides have not been produced')||!courseCatalogue.includes('href="/'+slug+'"')||!courseSitemap.includes('https://www.lxobsidianportal.co.za/'+slug+'</loc>')||!fs.existsSync(path.join(dist,'assets','learn','track-'+num+'.svg')))throw Error('Expansion preview missing '+slug);if(/href="[^"]+\.(pdf|pptx|zip)(?:[?#][^"]*)?"/i.test(main))throw Error('Private file exposed');plannedTitles+=n;}
+if(plannedTitles!==33||!courseCatalogue.includes('total planned catalogue to 73 titles'))throw Error('Expansion inventory mismatch');
+console.log('Twelve programme catalogue and 33 new planned textbook titles verified');

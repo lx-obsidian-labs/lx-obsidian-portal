@@ -1,0 +1,415 @@
+{
+  "status": "curriculum preview; textbooks and decks not yet produced",
+  "preparedTitles": 40,
+  "plannedAdditionalTitles": 33,
+  "totalPlannedTitles": 73,
+  "programmes": [
+    {
+      "n": "07",
+      "code": "OL-CD-007",
+      "slug": "course-cloud-devops",
+      "title": "Cloud Computing & DevOps",
+      "cat": "cloud",
+      "weeks": 12,
+      "hours": "5–7",
+      "level": "Intermediate",
+      "skills": "Linux, networking, Docker, CI/CD, infrastructure as code, reliability",
+      "goal": "Deploy and operate a reproducible, secure cloud application.",
+      "audience": "Junior developers and IT support learners. Basic Git and command-line familiarity recommended; use the coding programme first if needed.",
+      "color": "#2455c5",
+      "icon": "CLOUD",
+      "modules": [
+        [
+          "Cloud Computing Fundamentals",
+          "Compare service models and select a cost-aware deployment architecture.",
+          "Design a cloud architecture for a fictional application, with cost assumptions and a teardown checklist."
+        ],
+        [
+          "Linux and Networking",
+          "Explain processes, permissions, DNS, HTTP and network boundaries.",
+          "Set up a local Linux lab, document least-privilege permissions and troubleshoot a local service."
+        ],
+        [
+          "Containers and Docker",
+          "Build a reproducible, non-root container and verify its behaviour.",
+          "Containerise a sample web application, add health checks and document image dependencies."
+        ],
+        [
+          "CI/CD and GitHub Actions",
+          "Design a gated pipeline for repeatable testing and deployment.",
+          "Create a workflow that tests, builds and validates a sample application without exposing credentials."
+        ],
+        [
+          "Infrastructure as Code",
+          "Describe declarative infrastructure, review changes and manage state safely.",
+          "Create a reviewed local or sandbox infrastructure plan with variables, cost limits and cleanup instructions."
+        ],
+        [
+          "Cloud Security and Reliability",
+          "Define service indicators, recovery objectives, monitoring and security controls.",
+          "Run a controlled failure exercise, document recovery and propose an alerting and access policy."
+        ]
+      ],
+      "cap": "Deploy a sample application using containers and a gated CI/CD pipeline, infrastructure plan, monitoring, threat model, rollback and cost controls.",
+      "sample": [
+        "A new application version fails its health check after deployment.",
+        "What should the pipeline do?",
+        [
+          "Ignore the health check",
+          "Stop or roll back the release using the documented recovery procedure",
+          "Remove all monitoring"
+        ],
+        1,
+        "A failed health check should prevent an unhealthy release from becoming the normal production version. Follow the tested rollback or recovery procedure."
+      ],
+      "refs": [
+        [
+          "Docker documentation",
+          "https://docs.docker.com/"
+        ],
+        [
+          "GitHub Actions documentation",
+          "https://docs.github.com/en/actions"
+        ],
+        [
+          "AWS Well-Architected Framework",
+          "https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html"
+        ]
+      ]
+    },
+    {
+      "n": "08",
+      "code": "OL-FA-008",
+      "slug": "course-financial-bookkeeping",
+      "title": "Financial Accounting & Digital Bookkeeping",
+      "cat": "finance",
+      "weeks": 12,
+      "hours": "4–6",
+      "level": "Beginner",
+      "skills": "Double-entry, journals, ledgers, reconciliation, payroll concepts, financial statements",
+      "goal": "Maintain accurate business books and interpret basic financial reports.",
+      "audience": "Students, administrative staff, entrepreneurs and aspiring bookkeepers. Basic arithmetic and spreadsheet access recommended.",
+      "color": "#0f897b",
+      "icon": "FINANCE",
+      "modules": [
+        [
+          "Accounting Fundamentals",
+          "Classify assets, liabilities, equity, income and expenses using the accounting equation.",
+          "Analyse ten fictional business transactions and explain their effect on the accounting equation."
+        ],
+        [
+          "Journals, Ledgers and Trial Balance",
+          "Post double-entry transactions and reconcile a trial balance.",
+          "Prepare journals, ledgers and an adjusted trial balance from a synthetic transaction set."
+        ],
+        [
+          "Digital Bookkeeping Systems",
+          "Design a chart of accounts, source-document register and audit trail.",
+          "Create a simulated bookkeeping file with customer and supplier records, reference numbers and posting controls."
+        ],
+        [
+          "Bank Reconciliation and Financial Controls",
+          "Reconcile cashbook and bank balances and identify exceptions.",
+          "Prepare a bank reconciliation with outstanding items, corrections and documented approval."
+        ],
+        [
+          "Payroll and Tax Administration",
+          "Explain gross-to-net payroll, record controls and statutory obligations without assuming fixed tax rates.",
+          "Prepare an illustrative payroll register using explicitly provided hypothetical deductions; identify official sources for current statutory rates."
+        ],
+        [
+          "Financial Statements and Analysis",
+          "Prepare basic financial statements from adjusted records and interpret key ratios.",
+          "Produce an income statement, statement of financial position and management commentary with reconciled balances."
+        ]
+      ],
+      "cap": "Complete a fictional month-end bookkeeping cycle, including reconciled journals, ledger, trial balance, payroll simulation, financial statements and a control report.",
+      "sample": [
+        "A business receives R5,000 cash from a customer who previously owed it R5,000.",
+        "Which accounts change?",
+        [
+          "Cash increases and accounts receivable decreases",
+          "Revenue increases again",
+          "Cash decreases and expenses increase"
+        ],
+        0,
+        "Debit cash and credit accounts receivable. The collection does not create revenue a second time."
+      ],
+      "refs": [
+        [
+          "SARS official guidance",
+          "https://www.sars.gov.za/"
+        ],
+        [
+          "IFRS Foundation education resources",
+          "https://www.ifrs.org/"
+        ]
+      ]
+    },
+    {
+      "n": "09",
+      "code": "OL-DM-009",
+      "slug": "course-digital-marketing",
+      "title": "Digital Marketing & E-commerce",
+      "cat": "marketing",
+      "weeks": 10,
+      "hours": "4–6",
+      "level": "Beginner",
+      "skills": "Marketing strategy, content, SEO, advertising, conversion, e-commerce",
+      "goal": "Plan and evaluate an ethical digital customer-acquisition strategy.",
+      "audience": "Small-business owners, aspiring marketers and freelancers. No advertising spend required.",
+      "color": "#b65e24",
+      "icon": "MARKET",
+      "modules": [
+        [
+          "Marketing Fundamentals",
+          "Identify audiences, customer needs and measurable marketing objectives.",
+          "Create a target audience profile, value proposition and campaign objective."
+        ],
+        [
+          "Social Media and Content Strategy",
+          "Plan audience-relevant content and measure engagement responsibly.",
+          "Create a two-week content calendar with creative briefs, accessibility checks and consent considerations."
+        ],
+        [
+          "SEO and Search Marketing",
+          "Explain search intent, crawlability, on-page SEO and measurement.",
+          "Audit a fictional landing page and create an additive SEO improvement plan."
+        ],
+        [
+          "Paid Advertising and Analytics",
+          "Calculate campaign metrics, compare hypotheses and respect budget limits.",
+          "Evaluate a synthetic campaign dataset and propose a budget allocation without launching ads."
+        ],
+        [
+          "E-commerce Operations and Conversion",
+          "Map checkout, fulfilment, returns and conversion barriers.",
+          "Design a store journey, test checklist and privacy-conscious measurement plan."
+        ]
+      ],
+      "cap": "Build a digital campaign portfolio for a fictional online store, including SEO audit, content calendar, simulated advertising analysis, conversion plan and reporting dashboard.",
+      "sample": [
+        "A campaign receives 2,000 impressions and 100 clicks.",
+        "What is its click-through rate?",
+        [
+          "2%",
+          "5%",
+          "20%"
+        ],
+        1,
+        "CTR = clicks ÷ impressions × 100 = 100 ÷ 2,000 × 100 = 5%. CTR alone does not prove profitability."
+      ],
+      "refs": [
+        [
+          "Google Search Central",
+          "https://developers.google.com/search/docs"
+        ],
+        [
+          "Google Skillshop",
+          "https://skillshop.withgoogle.com/"
+        ]
+      ]
+    },
+    {
+      "n": "10",
+      "code": "OL-PM-010",
+      "slug": "course-project-management",
+      "title": "Project Management & Agile Delivery",
+      "cat": "project",
+      "weeks": 10,
+      "hours": "4–6",
+      "level": "Beginner",
+      "skills": "Scope, schedules, budgets, Scrum, risks, stakeholders, quality",
+      "goal": "Plan, deliver and evaluate a project using appropriate delivery methods.",
+      "audience": "Aspiring project coordinators, team leaders and business students.",
+      "color": "#7955cd",
+      "icon": "PROJECT",
+      "modules": [
+        [
+          "Project Management Fundamentals",
+          "Define objectives, scope, deliverables, roles and success criteria.",
+          "Produce a project charter and stakeholder register for a fictional project."
+        ],
+        [
+          "Planning, Scheduling and Budgeting",
+          "Estimate effort, dependencies, milestones and costs.",
+          "Build a schedule, dependency map and baseline budget with contingency assumptions."
+        ],
+        [
+          "Agile and Scrum",
+          "Explain iterative delivery and appropriate Scrum accountabilities and events.",
+          "Create a prioritised backlog, sprint goal and simulated sprint review."
+        ],
+        [
+          "Risk and Stakeholder Management",
+          "Assess risks, plan responses and communicate changes.",
+          "Maintain a risk register, communications matrix and approved change request."
+        ],
+        [
+          "Project Delivery and Quality Assurance",
+          "Verify deliverables, manage acceptance and close a project.",
+          "Create a quality checklist, acceptance report, lessons learned and handover package."
+        ]
+      ],
+      "cap": "Manage a simulated product launch from charter to closure, including plan, budget, backlog, risk register, status reports and acceptance evidence.",
+      "sample": [
+        "A stakeholder requests an extra feature after scope is agreed.",
+        "What is the best next step?",
+        [
+          "Add it without informing the team",
+          "Assess impact and follow the agreed change process",
+          "Cancel the project"
+        ],
+        1,
+        "Evaluate impact on scope, cost, schedule and quality, then obtain the appropriate decision before changing the baseline."
+      ],
+      "refs": [
+        [
+          "Scrum Guide",
+          "https://scrumguides.org/"
+        ],
+        [
+          "Project Management Institute",
+          "https://www.pmi.org/"
+        ]
+      ]
+    },
+    {
+      "n": "11",
+      "code": "OL-AA-011",
+      "slug": "course-advanced-ai-automation",
+      "title": "Advanced AI Automation & Agents",
+      "cat": "ai",
+      "weeks": 12,
+      "hours": "6–8",
+      "level": "Intermediate",
+      "skills": "LLM APIs, structured outputs, RAG, MCP, agents, evaluation, deployment",
+      "goal": "Build constrained, testable AI automation systems with human oversight.",
+      "audience": "Developers with basic Python or JavaScript, APIs and Git experience. AI literacy and coding foundations recommended.",
+      "color": "#5168c9",
+      "icon": "AGENTS",
+      "modules": [
+        [
+          "Applied Large Language Models",
+          "Select models and explain context, latency, cost and reliability trade-offs.",
+          "Create a model comparison and evaluation matrix using synthetic tasks and explicit budgets."
+        ],
+        [
+          "AI APIs and Structured Outputs",
+          "Validate structured responses, handle errors and protect credentials.",
+          "Implement a local mock API client with schema validation, retry limits and test cases."
+        ],
+        [
+          "Retrieval-Augmented Generation",
+          "Design document retrieval, citations, abstention and evaluation.",
+          "Build a small local retrieval system using an approved fictional corpus and labelled test questions."
+        ],
+        [
+          "Agent Architecture and MCP",
+          "Describe tool contracts, trust boundaries and explicit permissions.",
+          "Implement a read-only tool interface with allowlisted operations and malicious-input tests."
+        ],
+        [
+          "Multi-Agent Workflow Automation",
+          "Coordinate bounded steps, state and human approvals.",
+          "Design a workflow with deterministic handoffs, timeouts, an audit log and simulated approvals."
+        ],
+        [
+          "AI Security, Evaluation and Deployment",
+          "Evaluate prompt injection, unsafe tool calls, privacy and operational failure.",
+          "Run an evaluation suite and document mitigations, cost limits, deployment and rollback."
+        ]
+      ],
+      "cap": "Build a constrained research or administrative agent using synthetic data, citations, typed tool contracts, human approval, security tests and reproducible deployment.",
+      "sample": [
+        "An agent retrieves a document containing instructions to send private files elsewhere.",
+        "How should the system treat those instructions?",
+        [
+          "As authorised commands",
+          "As untrusted document content that cannot grant permissions",
+          "As a reason to expose all credentials"
+        ],
+        1,
+        "Retrieved content is data, not authority. Tool permissions and human approvals must be enforced independently of model-generated instructions."
+      ],
+      "refs": [
+        [
+          "Model Context Protocol documentation",
+          "https://modelcontextprotocol.io/"
+        ],
+        [
+          "NIST AI Risk Management Framework",
+          "https://www.nist.gov/itl/ai-risk-management-framework"
+        ],
+        [
+          "OWASP GenAI Security Project",
+          "https://genai.owasp.org/"
+        ]
+      ]
+    },
+    {
+      "n": "12",
+      "code": "OL-CRM-012",
+      "slug": "course-crm-sales",
+      "title": "CRM, Sales & Customer Success",
+      "cat": "sales",
+      "weeks": 10,
+      "hours": "4–6",
+      "level": "Beginner",
+      "skills": "Sales discovery, CRM, pipeline, ethical prospecting, negotiation, retention",
+      "goal": "Manage a customer pipeline and improve service outcomes using structured records.",
+      "audience": "Sales representatives, entrepreneurs, customer support staff and job seekers.",
+      "color": "#207db2",
+      "icon": "CRM",
+      "modules": [
+        [
+          "Professional Selling",
+          "Conduct needs discovery and map solutions to customer requirements.",
+          "Create a discovery script, qualification notes and value-based proposal."
+        ],
+        [
+          "CRM Systems and Pipeline Management",
+          "Define lifecycle stages, ownership, data quality and pipeline metrics.",
+          "Build a fictional CRM dataset with stage definitions, next actions and forecast assumptions."
+        ],
+        [
+          "Customer Acquisition and Lead Generation",
+          "Plan permission-aware prospecting and measure acquisition.",
+          "Create a synthetic lead list and compliant outreach sequence with opt-out handling; no live bulk messaging."
+        ],
+        [
+          "Negotiation and Communication",
+          "Prepare an ethical negotiation with clear objectives and boundaries.",
+          "Role-play a client negotiation and document agreed next steps and concessions."
+        ],
+        [
+          "Customer Retention and Success",
+          "Track onboarding, customer health, feedback and renewal risks.",
+          "Create a customer success plan, health-score rationale and escalation workflow."
+        ]
+      ],
+      "cap": "Develop a complete simulated customer lifecycle portfolio from discovery to renewal, including CRM records, pipeline dashboard, proposal, onboarding and retention plan.",
+      "sample": [
+        "A prospect asks not to receive further marketing messages.",
+        "What should happen?",
+        [
+          "Add them to another campaign",
+          "Respect the request and update the suppression record",
+          "Delete the request and continue contacting them"
+        ],
+        1,
+        "Respect the opt-out, record it in the appropriate suppression workflow and follow applicable privacy and marketing requirements."
+      ],
+      "refs": [
+        [
+          "Salesforce Trailhead",
+          "https://trailhead.salesforce.com/"
+        ],
+        [
+          "Information Regulator South Africa",
+          "https://inforegulator.org.za/"
+        ]
+      ]
+    }
+  ]
+}
