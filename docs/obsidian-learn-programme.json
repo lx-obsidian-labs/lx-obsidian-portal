@@ -153,5 +153,46 @@
     "https://cs50.harvard.edu/x/",
     "https://www.unesco.org/en/articles/ai-competency-framework-students",
     "https://www.cmu.edu/teaching/assessment/basics/alignment.html"
-  ]
+  ],
+  "academicQuality": {
+    "status": "planned; not accredited",
+    "assessmentPackage": [
+      "candidate brief",
+      "outcome blueprint",
+      "memo",
+      "analytic rubric",
+      "assessor guide",
+      "pre/post moderation",
+      "alternate reassessment",
+      "portfolio of evidence"
+    ],
+    "slidePacks": {
+      "planned": 13,
+      "format": "PPTX",
+      "targetSlides": [
+        25,
+        40
+      ],
+      "status": "planned"
+    },
+    "integrity": {
+      "status": "planned",
+      "onEverySubmission": true,
+      "humanFinalDecision": true,
+      "checks": [
+        "text similarity",
+        "code similarity",
+        "sandbox tests",
+        "evidence review"
+      ],
+      "appeal": true
+    },
+    "references": [
+      "https://saqa.org.za/national-policy-and-criteria-for-designing-and-implementing-assessment-for-nqf-qualifications-and-part-qualifications-and-professional-designations-in-south-africa/",
+      "https://qcto.org.za/for-skills-development-providers.html",
+      "https://www.che.ac.za/focus-areas/programme-accreditation",
+      "https://popia.co.za/section-71-automated-decision-making/",
+      "https://help.turnitin.com/nl/integrity/docenten/microsoft-teams/het-similarity-report/interpreting-the-similarity-score.htm"
+    ]
+  }
 }

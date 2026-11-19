@@ -187,3 +187,7 @@ const bookIDs=[...firstCourse.matchAll(/data-book-id="(A\d{2})"/g)].map(m=>m[1])
 if(bookIDs.length!==13 || new Set(bookIDs).size!==13 || !firstCourse.includes('id="assessment"')) throw Error('13-book curriculum or assessment missing');
 if(!courseCatalogue.includes('13 books')||!firstCourse.includes('Book 01 prepared')) throw Error('Programme material status missing');
 console.log('Consolidated navigation and 13-book outcomes curriculum passed');
+
+for(const id of ['academic-quality','academic-integrity']) if(!firstCourse.includes('id="'+id+'"')) throw Error('Academic framework missing: '+id);
+if(!firstCourse.includes('not accredited')||!firstCourse.includes('not operational yet')||!firstCourse.includes('13 packs planned')||!firstCourse.includes('automatically determine grades or sanctions')) throw Error('Academic claims or human oversight guard missing');
+console.log('Academic quality and integrity preview guardrails passed');
