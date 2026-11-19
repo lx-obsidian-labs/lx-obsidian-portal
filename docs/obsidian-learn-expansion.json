@@ -1,5 +1,5 @@
 {
-  "status": "four curriculum previews, not completed learning packs",
+  "status": "four new compact study-edition packs generated offline; full expansion and moderation pending",
   "programmes": [
     {
       "n": "03",
@@ -56,7 +56,14 @@
       "source": [
         "UNESCO AI competency framework",
         "https://www.unesco.org/en/articles/ai-competency-framework-students"
-      ]
+      ],
+      "materials": {
+        "books": 5,
+        "pages": 40,
+        "slides": 65,
+        "lessons": 25,
+        "status": "compact first-study edition prepared offline; not approved for paid release"
+      }
     },
     {
       "n": "04",
@@ -113,7 +120,14 @@
       "source": [
         "SBA business planning resources",
         "https://www.sba.gov/business-guide/plan-your-business"
-      ]
+      ],
+      "materials": {
+        "books": 5,
+        "pages": 40,
+        "slides": 65,
+        "lessons": 25,
+        "status": "compact first-study edition prepared offline; not approved for paid release"
+      }
     },
     {
       "n": "05",
@@ -170,7 +184,14 @@
       "source": [
         "CISA Secure Our World",
         "https://www.cisa.gov/secure-our-world"
-      ]
+      ],
+      "materials": {
+        "books": 5,
+        "pages": 40,
+        "slides": 65,
+        "lessons": 25,
+        "status": "compact first-study edition prepared offline; not approved for paid release"
+      }
     },
     {
       "n": "06",
@@ -232,7 +253,14 @@
       "source": [
         "Microsoft Learn: data analytics fundamentals",
         "https://learn.microsoft.com/en-us/training/modules/get-started-data-analytics/"
-      ]
+      ],
+      "materials": {
+        "books": 6,
+        "pages": 48,
+        "slides": 78,
+        "lessons": 30,
+        "status": "compact first-study edition prepared offline; not approved for paid release"
+      }
     }
   ]
 }
