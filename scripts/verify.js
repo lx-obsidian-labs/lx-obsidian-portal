@@ -208,7 +208,7 @@ if((libraryMain.match(/class="learn-book-card lx-library-card"/g)||[]).length!==
 if(!layoutCss.includes('--lx-hero-top')||!layoutCss.includes('minmax(min(100%,300px),1fr)'))throw Error('Responsive layout rules missing');
 console.log('Site-wide layout v2, compact library and footer disclosure checks passed');
 
-for(const page of [courseCatalogue,firstCourse,publicationLibrary]){if(!page.includes('ol-international')||!page.includes('/css/learn-international.css?v=20261119-1')||!page.includes('aria-label="Obsidian Learn navigation"'))throw Error('School design system missing');}
+for(const page of [courseCatalogue,firstCourse,publicationLibrary]){if(!page.includes('ol-international')||!page.includes('/css/learn-international.css?v=20261119-2')||!page.includes('aria-label="Obsidian Learn navigation"'))throw Error('School design system missing');}
 if(!firstCourse.includes('id="sample-lesson"')||!firstCourse.includes('id="ol-sample-form"')||!firstCourse.includes('ol-enrol-card')||(firstCourse.match(/class="ol-module-group"/g)||[]).length!==4)throw Error('Programme structure or sample missing');
 if((libraryMain.match(/data-library-book="/g)||[]).length!==13||!libraryMain.includes('id="ol-book-search"')||!libraryMain.includes('id="ol-stage-filter"'))throw Error('Library filtering missing');
 if(!home.includes('id="ol-home-title"'))throw Error('School home discovery missing');
@@ -226,3 +226,5 @@ console.log('Two-programme school, learner journey and business course guardrail
 if((courseCatalogue.match(/data-programme-category="/g)||[]).length!==6||!courseCatalogue.includes('id="ol-course-grid"')||!courseCatalogue.includes('id="ol-programme-search"'))throw Error('Six-course catalogue grid missing');
 for(const [slug,n] of [["course-ai-literacy",5],["course-digital-entrepreneurship",5],["course-cybersecurity-foundations",5],["course-data-analytics",6]]){const page=fs.readFileSync(path.join(dist,slug+'.html'),'utf8');if((page.match(/data-track-module="/g)||[]).length!==n||!page.includes('class="ol-track-quiz"')||!page.includes('Full books and PowerPoints have not yet been produced')||!courseCatalogue.includes('href="/'+slug+'"')||!courseSitemap.includes('https://www.lxobsidianportal.co.za/'+slug+'</loc>'))throw Error('Track preview incomplete: '+slug);}
 console.log('Six-programme searchable catalogue grid and curriculum previews passed');
+
+if(!courseCatalogue.includes('id="ol-mobile-filters"')||!fs.readFileSync(path.join(dist,'css','learn-international.css'),'utf8').includes('#ol-course-grid.ol-programme-grid'))throw Error('Catalogue responsive grid guard missing');

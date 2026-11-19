@@ -144,3 +144,10 @@ main.ol-international .learn-hero{padding:clamp(42px,6vw,72px) 0 36px;background
 @media(max-width:760px){.ol-catalogue-shell{grid-template-columns:1fr}.ol-catalogue-sidebar{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px}.ol-filter-head{grid-column:1/-1}.ol-catalogue-sidebar fieldset{margin:0}.ol-explore-intro{grid-template-columns:1fr;gap:10px}.ol-explore-intro .ol-student-photo{display:none}.ol-explore-hero{padding:20px 0}.ol-catalogue-results .ol-programme-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:520px){.ol-catalogue-results .ol-programme-grid{grid-template-columns:1fr}.ol-catalogue-sidebar{grid-template-columns:1fr}.ol-catalogue-sidebar fieldset{display:flex;flex-wrap:wrap;gap:6px 12px}.ol-catalogue-sidebar label{min-height:32px}.ol-catalogue-card .ol-tile-actions .learn-button{flex:0 1 auto}.ol-catalogue-card>.ol-card-content{padding:12px 6px 6px}.ol-card-skills{min-height:0}.ol-explore-search input{font-size:.86rem}.ol-explore-search button{padding-inline:12px}}
 @media(prefers-reduced-motion:reduce){.ol-catalogue-card{transition:none}}
+
+/* Explicit grid priority and mobile filter disclosure. Cache-busted across school routes. */
+#ol-course-grid.ol-programme-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:0}
+.ol-mobile-filters{display:none!important}
+@media(max-width:1050px){#ol-course-grid.ol-programme-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){.ol-mobile-filters:not([hidden]){display:inline-flex!important;justify-self:start}.ol-catalogue-sidebar.is-collapsed{display:none}.ol-catalogue-shell{gap:14px}}
+@media(max-width:520px){#ol-course-grid.ol-programme-grid{grid-template-columns:minmax(0,1fr)}}
