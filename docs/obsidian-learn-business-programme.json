@@ -1,0 +1,260 @@
+{
+  "programme": "OL-BT-002",
+  "title": "Digital Productivity & Business Technology",
+  "weeks": 12,
+  "hoursPerWeek": [
+    4,
+    6
+  ],
+  "status": "offline compact drafts; moderation and secure delivery pending",
+  "books": [
+    {
+      "number": 1,
+      "title": "Digital Literacy & Cyber Safety",
+      "outcome": "Organise digital files, evaluate information and protect a simulated workplace.",
+      "assignment": "Secure a new office workstation and create a handover register.",
+      "lessons": [
+        "Digital workplace",
+        "Files and versions",
+        "Search and evidence",
+        "Passwords and phishing",
+        "Privacy and recovery"
+      ],
+      "rubric": [
+        {
+          "criterion": "Organisation",
+          "marks": 20
+        },
+        {
+          "criterion": "Information evaluation",
+          "marks": 20
+        },
+        {
+          "criterion": "Security decisions",
+          "marks": 25
+        },
+        {
+          "criterion": "Backup and recovery",
+          "marks": 20
+        },
+        {
+          "criterion": "Handover and privacy",
+          "marks": 15
+        }
+      ],
+      "pages": 10,
+      "slides": 15
+    },
+    {
+      "number": 2,
+      "title": "Professional Documents & Communication",
+      "outcome": "Create accessible business documents, merge records and communicate clearly.",
+      "assignment": "Prepare client correspondence, a proposal and meeting minutes.",
+      "lessons": [
+        "Styles and structure",
+        "Tables and accessibility",
+        "Business email",
+        "Mail merge and templates",
+        "Minutes and version control"
+      ],
+      "rubric": [
+        {
+          "criterion": "Proposal",
+          "marks": 25
+        },
+        {
+          "criterion": "Quotation",
+          "marks": 20
+        },
+        {
+          "criterion": "Correspondence and merge",
+          "marks": 25
+        },
+        {
+          "criterion": "Minutes",
+          "marks": 15
+        },
+        {
+          "criterion": "Accessibility",
+          "marks": 15
+        }
+      ],
+      "pages": 10,
+      "slides": 15
+    },
+    {
+      "number": 3,
+      "title": "Excel & Business Analytics",
+      "outcome": "Create validated spreadsheets, calculate conditional totals and interpret reports.",
+      "assignment": "Build a sales and expense workbook from the fictional transaction data.",
+      "lessons": [
+        "Clean data",
+        "Formulas and references",
+        "Conditional totals",
+        "Sorting and validation",
+        "PivotTables and charts"
+      ],
+      "rubric": [
+        {
+          "criterion": "Data quality",
+          "marks": 20
+        },
+        {
+          "criterion": "Formulas",
+          "marks": 35
+        },
+        {
+          "criterion": "Formatting",
+          "marks": 15
+        },
+        {
+          "criterion": "Summary and chart",
+          "marks": 20
+        },
+        {
+          "criterion": "Audit",
+          "marks": 10
+        }
+      ],
+      "pages": 10,
+      "slides": 15
+    },
+    {
+      "number": 4,
+      "title": "Business Data & Digital Operations",
+      "outcome": "Design controlled business records with identifiers, validation and auditable workflows.",
+      "assignment": "Create a client and invoice register with an approval process.",
+      "lessons": [
+        "Records and data models",
+        "Relationships and validation",
+        "Workflow ownership",
+        "Reconciliation",
+        "Permissions and retention"
+      ],
+      "rubric": [
+        {
+          "criterion": "Data model",
+          "marks": 25
+        },
+        {
+          "criterion": "Validation",
+          "marks": 20
+        },
+        {
+          "criterion": "Workflow",
+          "marks": 25
+        },
+        {
+          "criterion": "Reconciliation",
+          "marks": 20
+        },
+        {
+          "criterion": "Privacy",
+          "marks": 10
+        }
+      ],
+      "pages": 10,
+      "slides": 15
+    },
+    {
+      "number": 5,
+      "title": "PowerPoint & Business Presentations",
+      "outcome": "Communicate accurate evidence through readable slides and a concise presentation.",
+      "assignment": "Present business performance to a simulated management panel.",
+      "lessons": [
+        "Audience and storyline",
+        "Layout and hierarchy",
+        "Charts and evidence",
+        "Accessibility and media",
+        "Delivery and feedback"
+      ],
+      "rubric": [
+        {
+          "criterion": "Storyline",
+          "marks": 20
+        },
+        {
+          "criterion": "Evidence",
+          "marks": 30
+        },
+        {
+          "criterion": "Layout",
+          "marks": 20
+        },
+        {
+          "criterion": "Delivery",
+          "marks": 20
+        },
+        {
+          "criterion": "Sources",
+          "marks": 10
+        }
+      ],
+      "pages": 10,
+      "slides": 15
+    },
+    {
+      "number": 6,
+      "title": "AI for Workplace Productivity",
+      "outcome": "Use generative AI responsibly, verify its outputs and defend an integrated portfolio.",
+      "assignment": "Complete the management portfolio with an AI-use register and verified output.",
+      "lessons": [
+        "AI capabilities and limits",
+        "Prompt design",
+        "Verification",
+        "Privacy and copyright",
+        "Portfolio and reflection"
+      ],
+      "rubric": [
+        {
+          "criterion": "Prompt design",
+          "marks": 20
+        },
+        {
+          "criterion": "Verification",
+          "marks": 30
+        },
+        {
+          "criterion": "Responsible use",
+          "marks": 20
+        },
+        {
+          "criterion": "Portfolio",
+          "marks": 20
+        },
+        {
+          "criterion": "Reflection",
+          "marks": 10
+        }
+      ],
+      "pages": 10,
+      "slides": 15
+    }
+  ],
+  "assessment": {
+    "assignments": 45,
+    "knowledgeChecks": 10,
+    "checkpoints": 15,
+    "capstone": 30
+  },
+  "materials": {
+    "pdfs": 6,
+    "pages": 60,
+    "pptx": 6,
+    "slides": 90,
+    "assessmentGuide": true,
+    "practiceDatasets": 2
+  },
+  "photos": [
+    {
+      "credit": "Desola Lanre-Ologun",
+      "source": "https://unsplash.com/photos/woman-and-man-sitting-in-front-of-monitor-IgUR1iX0mqM",
+      "license": "Unsplash License; illustrative, not enrolled students"
+    },
+    {
+      "credit": "Ashutosh Gupta",
+      "source": "https://unsplash.com/photos/focused-student-studying-at-a-library-table-with-a-laptop-NASjMHJ9OhI",
+      "license": "Unsplash License; illustrative, not enrolled students"
+    }
+  ]
+}

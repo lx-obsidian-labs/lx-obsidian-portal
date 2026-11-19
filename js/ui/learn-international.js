@@ -17,7 +17,7 @@
         });
         section.hidden=shown===0;
       });
-      count.textContent=visible+' of 13 books shown';empty.hidden=visible!==0;
+      count.textContent=visible+' of '+document.querySelectorAll('[data-library-book]').length+' books shown';empty.hidden=visible!==0;
     }
     search.addEventListener('input',filter);stage.addEventListener('change',filter);
     document.getElementById('ol-clear-filter').addEventListener('click',()=>{search.value='';stage.value='all';filter();search.focus()});
@@ -26,6 +26,7 @@
   }
   const form=document.getElementById('ol-sample-form'),result=document.getElementById('ol-sample-result');
   if(form&&result){form.addEventListener('submit',e=>{e.preventDefault();const selected=form.querySelector('input[name="answer"]:checked');result.textContent=!selected?'Choose an answer first.':selected.value==='60'?'Correct: 3 ÷ 5 × 100 = 60%.':'Try again. Divide the completed tasks by the total tasks, then multiply by 100.';});}
-  function openBook(){const id=location.hash.slice(1);if(!/^book-\d{2}$/.test(id))return;const target=document.getElementById(id);if(target&&target.tagName==='DETAILS'){target.open=true;target.scrollIntoView({block:'start'});}}
+  function openBook(){const id=location.hash.slice(1);if(!/^(book-\d{2}|bt-book-[1-6])$/.test(id))return;const target=document.getElementById(id);if(target&&target.tagName==='DETAILS'){target.open=true;target.scrollIntoView({block:'start'});}}
+  const bf=document.getElementById('ol-bt-sample'),br=document.getElementById('ol-bt-result');if(bf&&br)bf.addEventListener('submit',e=>{e.preventDefault();const v=bf.querySelector('input[name="answer"]:checked');br.textContent=!v?'Choose an answer first.':v.value==='1900'?'Correct: R4,000 − R2,100 = R1,900.':'Try again: use paid sales, not all invoiced sales.';});
   openBook();window.addEventListener('hashchange',openBook);
 })();

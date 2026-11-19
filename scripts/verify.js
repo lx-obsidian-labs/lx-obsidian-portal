@@ -214,3 +214,11 @@ if((libraryMain.match(/data-library-book="/g)||[]).length!==13||!libraryMain.inc
 if(!home.includes('id="ol-home-title"'))throw Error('School home discovery missing');
 for(const file of ['css/learn-international.css','js/ui/learn-international.js'])if(!fs.existsSync(path.join(dist,file)))throw Error('School asset missing '+file);
 console.log('International school layout, searchable library and sample lesson guardrails passed');
+
+const businessCourse=fs.readFileSync(path.join(dist,'course-business-technology.html'),'utf8');
+const businessLibrary=fs.readFileSync(path.join(dist,'learn-library-business.html'),'utf8');
+if((businessCourse.match(/data-business-book="/g)||[]).length!==6||(businessLibrary.match(/data-library-book="/g)||[]).length!==6)throw Error('Business programme missing six books');
+for(const route of ['/course-business-technology','/learn-library-business'])if(!courseCatalogue.includes('href="'+route+'"')||!courseSitemap.includes('https://www.lxobsidianportal.co.za'+route+'</loc>'))throw Error('Programme discovery missing '+route);
+if(!courseCatalogue.includes('id="how-it-works"')||!courseCatalogue.includes('ol-student-photo')||!courseCatalogue.includes('id="libraries"'))throw Error('School journey or imagery missing');
+if(/href="[^"]+\.(pdf|pptx|zip)(?:[?#][^"]*)?"/i.test(businessCourse.match(/<main[\s\S]*?<\/main>/)[0]+businessLibrary.match(/<main[\s\S]*?<\/main>/)[0]))throw Error('Private course materials exposed');
+console.log('Two-programme school, learner journey and business course guardrails passed');
