@@ -250,3 +250,16 @@
 .ol-home-card{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:clamp(20px,4vw,52px);align-items:center;padding:clamp(20px,4vw,44px);border:1px solid #354765;border-radius:18px;background:#101e37;color:#f4f7fe}.ol-home-card h2{font-size:clamp(1.75rem,4vw,3rem);line-height:1.12;letter-spacing:-.035em;color:white}.ol-home-card p{color:#c4d1e5;max-width:62ch}.ol-home-card small{display:block;color:#b6c6dd;margin-top:16px}.ol-home-card img{width:100%;height:auto;border:1px solid #405577;border-radius:11px}.ol-home-card .lx-home-actions{margin-top:20px}@media(max-width:760px){.ol-home-card{grid-template-columns:1fr}.ol-home-card img{max-width:420px}}
 /* Academic page hero specificity: after shared global style loading. */
 main.ol-international .learn-hero h1{max-inline-size:22ch;font-size:clamp(2.45rem,5vw,4.25rem);line-height:1.08;letter-spacing:-.055em}main.ol-international .learn-hero{padding-block:clamp(42px,6vw,72px) 36px}main.ol-international .learn-section{padding-block:clamp(34px,5vw,58px)}@media(max-width:600px){main.ol-international .learn-hero h1{font-size:clamp(2.05rem,9vw,3rem)}main.ol-international .learn-hero{padding-block:30px}}
+
+/* LX Obsidian Labs — mobile search landing refinements, Nov 2026. */
+@media screen and (max-width:600px){
+ main :is(.vista-clean__actions,.syn-clean__actions) > a{flex:1 1 100%;justify-content:center;min-height:48px}
+ main :is(.vista-clean__wrap,.syn-clean__wrap) :is(h1,h2,p){overflow-wrap:break-word}
+ .studio-main .tool{min-width:0;overflow-wrap:break-word}
+ .studio-main .tool small{line-height:1.5}
+ .studio-main .workspace .actions > button{min-height:44px;max-width:100%;white-space:normal}
+ .glass-footer .lx-footer-links .glass-link{min-block-size:44px;display:flex;align-items:center}
+}
+@media screen and (prefers-reduced-motion:reduce){
+ main :is(.vista-clean__button,.syn-clean__button),.studio-main .tool{transition:none!important}
+}
