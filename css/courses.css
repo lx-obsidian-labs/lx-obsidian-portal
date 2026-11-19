@@ -1,0 +1,34 @@
+/* Engineering: LX Obsidian Labs | Obsidian Learn */
+.learn-page{background:#08090c;color:#f5f6fa;min-height:100vh;font:400 1rem/1.7 Inter,system-ui,sans-serif}
+.learn-wrap{width:min(1120px,calc(100% - 40px));margin:auto}
+.learn-hero{padding:clamp(112px,13vw,158px) 0 54px;border-bottom:1px solid #292c34;background:radial-gradient(ellipse at 85% 20%,#172b58 0%,transparent 54%)}
+.learn-eyebrow{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:#a9c4ff;font-weight:700;margin:0 0 12px}
+.learn-page h1,.learn-page h2,.learn-page h3{font-family:'Space Grotesk',Inter,system-ui,sans-serif;color:#f6f7fb;letter-spacing:-.045em;line-height:1.12;margin:0}
+.learn-page h1{font-size:clamp(2.5rem,5.9vw,5.2rem);max-width:880px}
+.learn-page h2{font-size:clamp(1.65rem,3.2vw,2.6rem)}
+.learn-page h3{font-size:1.3rem;letter-spacing:-.025em}
+.learn-page p{color:#bdc3d0;margin:12px 0}
+.learn-intro{font-size:clamp(1rem,1.7vw,1.2rem);max-width:710px}
+.learn-row{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:22px 0}
+.learn-chip{font-size:.78rem;font-weight:600;border:1px solid #48526b;color:#dce4f4;border-radius:99px;padding:5px 12px}
+.learn-status{color:#bcd2ff;background:#142443;border-color:#355493}
+.learn-button{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:11px 20px;border:1px solid #65718a;border-radius:10px;color:#f4f6fb;text-decoration:none;font-weight:650;font-size:.94rem}
+.learn-button.primary{background:#326af3;color:#fff;border-color:#326af3}
+.learn-button:hover{background:#253653;color:white}.learn-button.primary:hover{background:#2454cf}
+.learn-page a:focus-visible,.learn-page summary:focus-visible{outline:3px solid #a9c4ff;outline-offset:4px}
+.learn-section{padding:46px 0}.learn-section+.learn-section{border-top:1px solid #292c34}
+.learn-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:20px}
+.learn-card{background:#11151e;border:1px solid #30394c;border-radius:20px;padding:clamp(21px,3vw,33px);min-width:0}
+.learn-feature{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:30px;align-items:center}
+.learn-art{display:block;width:100%;max-width:480px;height:auto;border-radius:18px;border:1px solid #3b4f77;background:#101a30}
+.learn-list{padding-left:1.3rem;color:#d2d7e0;margin:15px 0}.learn-list li{padding:4px 0}
+.learn-muted{font-size:.88rem;color:#b0b8c8!important}
+.learn-notice{background:#121e32;border:1px solid #38517b;border-radius:15px;padding:20px;margin-top:25px}
+.learn-notice strong{color:#e1eaff}
+.learn-breadcrumb{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:.84rem;margin-bottom:24px;color:#bbc5d8}
+.learn-breadcrumb a{color:#a9c4ff;text-decoration:underline}
+.learn-modules{margin-top:24px}.learn-modules details{border:1px solid #30394c;border-radius:12px;margin:10px 0;background:#10151e;padding:16px 20px}.learn-modules summary{cursor:pointer;color:#f4f6fb;font-weight:650}.learn-modules details p{margin:12px 0 0}
+.learn-project{padding:20px;border:1px solid #3b4967;border-radius:16px;background:#0c1220}.learn-project .mock{background:#f5f7fc;color:#172033;border-radius:12px;padding:18px;margin:12px 0}.learn-project .mock p{color:#34425b;margin:6px 0}.learn-project .mock-row{border-top:1px solid #cbd4e5;padding:9px 0;font-size:.9rem}.learn-project .mock-title{font-weight:700;font-size:1.2rem}.learn-project .mock-add{border:1px solid #a8b4c8;padding:8px;border-radius:7px;font-size:.85rem}.learn-project .mock-add b{color:#1e4fbd;float:right}
+.learn-page .learn-faq details{border-top:1px solid #353b49;padding:15px 0}.learn-faq summary{cursor:pointer;font-weight:600}
+@media(max-width:720px){.learn-wrap{width:calc(100% - 32px)}.learn-feature,.learn-grid{grid-template-columns:1fr}.learn-hero{padding-top:100px}.learn-section{padding:34px 0}.learn-art{max-width:100%}.learn-row .learn-button{flex:1 1 100%}}
+@media(prefers-reduced-motion:reduce){.learn-page *{scroll-behavior:auto!important;transition:none!important}}

@@ -156,3 +156,6 @@
     .studio-main .studio-topbar .studio-account { flex: 0 0 auto; }
   }
 }
+
+/* Preserve every navigation link while fitting the new course entry on desktop. */
+@media(min-width:1101px){.velora-nav .velora-links.lx-home-nav{gap:2px!important;flex-shrink:1!important}.velora-nav .velora-links.lx-home-nav>.velora-link{padding-inline:7px!important;font-size:.76rem!important}.velora-nav .velora-nav__inner{gap:10px!important}}

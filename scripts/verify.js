@@ -167,3 +167,15 @@ for(const [route,file] of [['/pdf/','pdf/index.html'],['/privacy-policy','privac
 for(const route of ['/software-development-guide-south-africa','/ai-automation-guide','/obsidian-labs','/engineering-case-studies'])if(!home.includes('href="'+route+'"'))throw Error('SEO discovery link missing: '+route);
 if(!home.includes('R6,000')||!servicePage.includes('Website development, software and AI services in South Africa'))throw Error('Commercial SEO positioning missing');
 console.log('SEO canonical and discovery checks passed');
+
+// Obsidian Learn: public previews must not expose private paid course materials.
+const courseCatalogue=fs.readFileSync(path.join(dist,'courses.html'),'utf8');
+const firstCourse=fs.readFileSync(path.join(dist,'course-junior-developer.html'),'utf8');
+if(!home.includes('href="/courses"')||!downloads.includes('href="/courses"')||!courseCatalogue.includes('href="/course-junior-developer"')) throw Error('Course discovery regression');
+if(!firstCourse.includes('Paid enrolment') && !firstCourse.includes('paid enrolment')) throw Error('Missing enrolment disclosure');
+if(!firstCourse.includes('id="curriculum"')||!firstCourse.includes('Video lessons')&&!firstCourse.includes('video lessons')) throw Error('Course syllabus or video status missing');
+if(/href="[^"]+\.(pdf|zip)(?:[?#][^"]*)?"/i.test(firstCourse.match(/<main[\s\S]*?<\/main>/)[0])) throw Error('Private course materials linked publicly');
+const courseSitemap=fs.readFileSync(path.join(dist,'sitemap.xml'),'utf8');
+for(const route of ['/courses','/course-junior-developer']) if(!courseSitemap.includes('https://www.lxobsidianportal.co.za'+route+'</loc>')) throw Error('Course sitemap missing '+route);
+if(!fs.existsSync(path.join(dist,'assets','learn-developer-001.svg'))) throw Error('Course artwork missing');
+console.log('Obsidian Learn course discovery, syllabus and paid-preview guardrails passed');
