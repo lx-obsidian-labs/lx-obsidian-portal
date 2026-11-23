@@ -41,14 +41,15 @@ class ShareMilestoneViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val stats: WatchStats = WatchStatsCalculator.compute(historyRepository.getWatchHistory().first())
-            _uiState.value = ShareMilestoneUiState(
-                isLoading = false,
-                milestone = MilestoneEngine.resolve(milestoneId, stats)
-            )
-            // Consume the allowance slot for showing this screen. Idempotent, so a milestone that
-            // already cost a slot as a notification is not counted twice.
-            coordinator.markShown(milestoneId)
+            try {
+                val stats: WatchStats = WatchStatsCalculator.compute(historyRepository.getWatchHistory().first())
+                val milestone = MilestoneEngine.resolve(milestoneId, stats)
+                _uiState.value = ShareMilestoneUiState(isLoading = false, milestone = milestone)
+                // Consume the allowance slot only when the milestone resolved successfully.
+                runCatching { coordinator.markShown(milestoneId) }
+            } catch (_: Exception) {
+                _uiState.value = ShareMilestoneUiState(isLoading = false, milestone = null)
+            }
         }
     }
 

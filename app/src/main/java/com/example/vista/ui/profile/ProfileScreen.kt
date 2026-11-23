@@ -47,6 +47,7 @@ fun ProfileScreen(
     var showEditProfileDialog by remember { mutableStateOf(false) }
     var showPasswordResetDialog by remember { mutableStateOf(false) }
     var showSignOutDialog by remember { mutableStateOf(false) }
+    var showAvatarPicker by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         viewModel.profileSaved.collect { success ->
@@ -92,7 +93,7 @@ fun ProfileScreen(
         ) {
             Spacer(modifier = Modifier.height(64.dp))
 
-            ProfileHeader(uiState.viewer)
+            ProfileHeader(uiState.viewer, onEditAvatar = { showAvatarPicker = true })
 
             Spacer(modifier = Modifier.height(24.dp))
 
@@ -108,6 +109,12 @@ fun ProfileScreen(
             Spacer(modifier = Modifier.height(32.dp))
 
             ProfileSection("PREFERENCES") {
+                ProfileMenuItem(
+                    icon = Icons.Outlined.AutoAwesome,
+                    title = "Your watching companion",
+                    subtitle = "Chat, discover, or start hands-free voice",
+                    onClick = { navController.navigate(Screen.AiAssistant.route) }
+                )
                 ProfileMenuItem(
                     icon = Icons.Outlined.Settings,
                     title = "Settings",
@@ -129,7 +136,7 @@ fun ProfileScreen(
                 ProfileMenuItem(
                     icon = Icons.Outlined.Notifications,
                     title = "Notifications",
-                    subtitle = "New episodes and releases",
+                    subtitle = "Team announcements and release updates",
                     onClick = { navController.navigate(Screen.Settings.createRoute("NOTIFICATIONS")) }
                 )
                 ProfileMenuItem(
@@ -144,9 +151,17 @@ fun ProfileScreen(
                     subtitle = "Theme and visual style",
                     onClick = { navController.navigate(Screen.Settings.createRoute("APPEARANCE")) }
                 )
+                ProfileMenuItem(
+                    icon = Icons.Outlined.FamilyRestroom,
+                    title = "Family & Age",
+                    subtitle = "${uiState.settings.ageBand.displayName} · ${if (uiState.settings.kidsMode) "Kids mode on" else "Kids mode off"}",
+                    onClick = { navController.navigate(Screen.Settings.createRoute("FAMILY")) }
+                )
             }
 
             ProfileSection("ACCOUNT") {
+                ProfileMenuItem(icon = Icons.Outlined.Face, title = "Edit Avatar", subtitle = "Make your profile your own",
+                    onClick = { showAvatarPicker = true })
                 ProfileMenuItem(
                     icon = Icons.Outlined.AccountCircle,
                     title = "Edit Profile",
@@ -167,11 +182,34 @@ fun ProfileScreen(
 
             Spacer(modifier = Modifier.height(32.dp))
 
+            Surface(
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp),
+                color = CardSurface,
+                shape = RoundedCornerShape(20.dp),
+                border = BorderStroke(1.dp, Accent.copy(alpha = 0.2f))
+            ) {
+                Column(Modifier.padding(20.dp)) {
+                    Text("FAMILY & AGE", color = Accent, style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Bold)
+                    Spacer(Modifier.height(8.dp))
+                    Text("Vista Kids is ready", color = PrimaryText, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                    Spacer(Modifier.height(6.dp))
+                    Text("${uiState.settings.ageBand.displayName} profile · ${uiState.settings.ageBand.description}. Restricted titles are hidden from suggestions and the assistant.", color = SecondaryText, style = MaterialTheme.typography.bodyMedium)
+                    Spacer(Modifier.height(12.dp))
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        Button(onClick = { navController.navigate(Screen.Kids.route) }) { Text("Open Kids mode") }
+                        OutlinedButton(onClick = { navController.navigate(Screen.Settings.createRoute("FAMILY")) }) { Text("Age controls") }
+                    }
+                }
+            }
+            Spacer(modifier = Modifier.height(24.dp))
+
             BrandAttribution()
 
             Spacer(modifier = Modifier.height(48.dp))
         }
     }
+
+    if (showAvatarPicker) com.example.vista.artwork.VistaAvatarPicker(onDismiss = { showAvatarPicker = false })
 
     if (showEditProfileDialog) {
         EditProfileDialog(
@@ -323,31 +361,13 @@ private fun PasswordResetDialog(
 }
 
 @Composable
-private fun ProfileHeader(viewer: com.example.vista.domain.model.Viewer?) {
+private fun ProfileHeader(viewer: com.example.vista.domain.model.Viewer?, onEditAvatar: () -> Unit) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxWidth()
     ) {
-        Box(contentAlignment = Alignment.BottomEnd) {
-            Box(
-                modifier = Modifier
-                    .size(110.dp)
-                    .clip(CircleShape)
-                    .background(
-                        Brush.linearGradient(
-                            colors = listOf(Accent, AmbientPurple)
-                        )
-                    )
-                    .border(3.dp, Color.White.copy(alpha = 0.2f), CircleShape),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    imageVector = Icons.Outlined.Person,
-                    contentDescription = "Profile",
-                    tint = Color.White,
-                    modifier = Modifier.size(56.dp)
-                )
-            }
+        Box(contentAlignment = Alignment.BottomEnd, modifier = Modifier.clickable(onClickLabel = "Edit avatar", onClick = onEditAvatar)) {
+            com.example.vista.artwork.CurrentUserAvatar(size = 110.dp)
 
             Surface(
                 color = Color.White,

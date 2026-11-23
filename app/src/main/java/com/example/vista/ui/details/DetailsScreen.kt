@@ -191,6 +191,9 @@ SeriesDetailsContent(
                                 navController.navigate(target)
                             }
                         },
+                        onEpisodeDownload = { episode -> navController.navigate(Screen.Downloads.createRoute(
+                            series.id, series.title, MediaType.SERIES, episode.seasonNumber, episode.episodeNumber
+                        )) },
                         onTrailerClick = { videoKey, title ->
                             navController.navigate(Screen.Trailer.createRoute(videoKey, title))
                         },
@@ -207,6 +210,13 @@ SeriesDetailsContent(
     }
         val companionId = uiState.movie?.id ?: uiState.series?.id
         if (companionId != null) {
+            if (uiState.movie != null) {
+                ExtendedFloatingActionButton(
+                    onClick = { navController.navigate(Screen.Downloads.createRoute(companionId, uiState.movie?.title.orEmpty(), MediaType.MOVIE)) },
+                    modifier = Modifier.align(Alignment.BottomStart).padding(16.dp),
+                    icon = { Icon(Icons.Outlined.Download, null) }, text = { Text("Download") }
+                )
+            }
             ExtendedFloatingActionButton(
                 onClick = { navController.navigate(Screen.AiAssistant.companion(companionId, if (uiState.series != null) "series" else "movie")) },
                 modifier = Modifier.align(Alignment.BottomEnd).padding(16.dp),
@@ -711,6 +721,7 @@ private fun SeriesDetailsContent(
     onWatchlistClick: () -> Unit,
     onSeasonSelect: (Int) -> Unit,
     onEpisodeClick: (String, Int, Int) -> Unit,
+    onEpisodeDownload: (Episode) -> Unit,
     onRefresh: () -> Unit = {},
     onTrailerClick: (String, String) -> Unit,
     onCastClick: (String) -> Unit,
@@ -1138,7 +1149,8 @@ private fun SeriesDetailsContent(
                         val key = "${episode.seasonNumber}:${episode.episodeNumber}"
                         EpisodeCard(
                             episode = episode,
-                            onClick = { onEpisodeClick(series.id, episode.seasonNumber, episode.episodeNumber) }
+                            onClick = { onEpisodeClick(series.id, episode.seasonNumber, episode.episodeNumber) },
+                            onDownload = { onEpisodeDownload(episode) }
                         )
                     }
 
@@ -1187,7 +1199,8 @@ private fun SeriesDetailsContent(
 @Composable
 private fun EpisodeCard(
     episode: Episode,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    onDownload: () -> Unit
 ) {
     val haptic = androidx.compose.ui.platform.LocalHapticFeedback.current
     Row(
@@ -1270,6 +1283,11 @@ private fun EpisodeCard(
                     overflow = TextOverflow.Ellipsis,
                     lineHeight = 16.sp
                 )
+            }
+            TextButton(onClick = onDownload) {
+                Icon(Icons.Outlined.Download, null, modifier = Modifier.size(18.dp))
+                Spacer(Modifier.width(6.dp))
+                Text("Download episode")
             }
         }
     }

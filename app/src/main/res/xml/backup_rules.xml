@@ -11,6 +11,13 @@
   a cloud backup. That is the safer direction for the mistake to fail in.
 -->
 <full-backup-content>
+    <exclude domain="sharedpref" path="vista_feedback.xml" />
+    <exclude domain="sharedpref" path="offline_positions.xml" />
+    <exclude domain="sharedpref" path="vista_bell_inbox.xml" />
+    <exclude domain="sharedpref" path="vista_update_prefs.xml" />
     <include domain="sharedpref" path="." />
     <include domain="database" path="." />
+    <exclude domain="database" path="exoplayer_internal.db" />
+    <exclude domain="database" path="exoplayer_internal.db-wal" />
+    <exclude domain="database" path="exoplayer_internal.db-shm" />
 </full-backup-content>

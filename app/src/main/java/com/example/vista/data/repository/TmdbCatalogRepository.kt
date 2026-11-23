@@ -10,6 +10,7 @@ import android.util.Log
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.supervisorScope
+import kotlinx.coroutines.CancellationException
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -94,10 +95,15 @@ class TmdbCatalogRepository @Inject constructor(
 
                 // Blend TVMaze hits into the popular series row
                 CatalogSection.POPULAR_SERIES -> {
-                    val tmdb = apiService.getPopularTvShows(page).results?.map { it.toMediaItem() }.orEmpty()
+                    var tmdbFailure: Exception? = null
+                    val tmdb = try {
+                        apiService.getPopularTvShows(page).results?.map { it.toMediaItem() }.orEmpty()
+                    } catch (e: CancellationException) { throw e }
+                    catch (e: Exception) { tmdbFailure = e; emptyList() }
                     val tvmaze = if (page == 1) {
                         tvmazeRepository.searchSeries("trending").map { it.toMediaItem() }
                     } else emptyList()
+                    if (tmdb.isEmpty() && tvmaze.isEmpty()) tmdbFailure?.let { throw it }
                     (tmdb + tvmaze).dedupeTitles()
                 }
 
@@ -129,9 +135,11 @@ class TmdbCatalogRepository @Inject constructor(
                     apiService.discoverTvShows("18", page).results?.map { it.toMediaItem() }.orEmpty()
             }
             items.dedupeTitles().take(20)
-        } catch (e: Exception) {
-            Log.e("TmdbCatalog", "Error loading section ${section.id}: ${e.message}")
-            emptyList()
+        } catch (e: CancellationException) { throw e }
+        catch (e: Exception) {
+            Log.e("TmdbCatalog", "Section ${section.id} failed: ${e.javaClass.simpleName}" +
+                if (e is retrofit2.HttpException) " HTTP ${e.code()}" else "")
+            throw CatalogLoadException.from(e)
         }
     }
 
@@ -139,9 +147,15 @@ class TmdbCatalogRepository @Inject constructor(
         return supervisorScope {
             // Every declared row is fetched concurrently and independently: one failing endpoint
             // drops that row only instead of emptying the whole home screen.
-            val loaded: Map<CatalogSection, List<MediaItem>> = CatalogSection.entries
-                .map { section -> async { section to getSection(section) } }
+            val results = CatalogSection.entries
+                .map { section -> async {
+                    val result = try { Result.success(getSection(section)) }
+                    catch (e: CancellationException) { throw e }
+                    catch (e: Exception) { Result.failure<List<MediaItem>>(e) }
+                    section to result
+                } }
                 .associate { it.await() }
+            val loaded = results.mapValues { it.value.getOrDefault(emptyList()) }
 
             val sections = mutableListOf<HomeSection>()
 
@@ -166,6 +180,9 @@ class TmdbCatalogRepository @Inject constructor(
                 }
             }
 
+            if (sections.isEmpty()) {
+                results.values.firstNotNullOfOrNull { it.exceptionOrNull() }?.let { throw it }
+            }
             sections
         }
     }
@@ -195,22 +212,27 @@ class TmdbCatalogRepository @Inject constructor(
     }
 
     override suspend fun getPopularMovies(page: Int): List<Movie> {
+        var tmdbFailure: Exception? = null
         val tmdbMovies = try {
             apiService.getPopularMovies(page).results?.map { it.toDomainMovie() } ?: emptyList()
-        } catch (e: Exception) {
-            Log.e("TmdbCatalog", "Error fetching popular TMDB movies: ${e.message}")
+        } catch (e: CancellationException) { throw e }
+        catch (e: Exception) {
+            tmdbFailure = e
             emptyList()
         }
 
         val shoofaflamMovies = try {
             shoofaflamRepository.getPopularMovies(20)
-        } catch (e: Exception) {
+        } catch (e: CancellationException) { throw e }
+        catch (e: Exception) {
             Log.e("TmdbCatalog", "Error fetching popular Shoofaflam movies: ${e.message}")
             emptyList()
         }
 
         // TMDB first, then local extras, deduplicated by title (the two sources share no id space).
-        return (tmdbMovies.dedupeTitles() + shoofaflamMovies).dedupeTitles()
+        val movies = (tmdbMovies.dedupeTitles() + shoofaflamMovies).dedupeTitles()
+        if (movies.isEmpty()) tmdbFailure?.let { throw CatalogLoadException.from(it) }
+        return movies
     }
 
     override suspend fun getPopularSeries(page: Int): List<Series> {
@@ -241,7 +263,8 @@ class TmdbCatalogRepository @Inject constructor(
 
                 movie.toDomainMovie().copy(
                     id = id,
-                    cast = credits?.cast?.map { it.toDomainPerson() } ?: emptyList()
+                    cast = credits?.cast?.map { it.toDomainPerson() } ?: emptyList(),
+                    director = credits?.crew?.filter { it.job == "Director" }?.mapNotNull { it.name }?.distinct()?.joinToString()?.takeIf { it.isNotBlank() }
                 )
             } else {
                 // Try IMDB search as fallback

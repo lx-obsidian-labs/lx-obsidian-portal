@@ -48,6 +48,22 @@ class VistaApp : Application(), ImageLoaderFactory, Configuration.Provider {
         setupMessaging()
         scheduleMovieOfTheDay()
         scheduleCacheMaintenance()
+        retireObsoleteReleaseNotifications()
+    }
+
+    private fun retireObsoleteReleaseNotifications() {
+        appScope.launch(Dispatchers.IO) {
+            runCatching {
+                val notifications = getSystemService(android.app.NotificationManager::class.java)
+                notifications.activeNotifications.forEach { posted ->
+                    val extras = posted.notification.extras
+                    if (com.example.vista.util.AnnouncementPolicy.obsoleteRelease(
+                            extras.getCharSequence(android.app.Notification.EXTRA_TITLE)?.toString().orEmpty(),
+                            extras.getCharSequence(android.app.Notification.EXTRA_TEXT)?.toString().orEmpty(),
+                            BuildConfig.VERSION_NAME)) notifications.cancel(posted.tag, posted.id)
+                }
+            }
+        }
     }
 
     private fun scheduleCacheMaintenance() {
@@ -95,10 +111,10 @@ class VistaApp : Application(), ImageLoaderFactory, Configuration.Provider {
                 getSystemService(android.app.NotificationManager::class.java)
                     ?.createNotificationChannel(
                         android.app.NotificationChannel(
-                            com.example.vista.data.remote.firebase.VistaMessagingService.CHANNEL_ID,
+                            com.example.vista.data.remote.firebase.VistaMessagingService.CHANNEL_ID_UPDATES,
                             "Updates",
                             android.app.NotificationManager.IMPORTANCE_HIGH
-                        ).apply { description = "New Vista Cinema releases and announcements" }
+                        ).apply { description = "New Vista Watch releases and announcements" }
                     )
             }
             com.google.firebase.messaging.FirebaseMessaging.getInstance()

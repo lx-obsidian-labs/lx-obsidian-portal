@@ -6,6 +6,7 @@ import com.example.vista.domain.repository.CatalogRepository
 import java.util.concurrent.ConcurrentHashMap
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlinx.coroutines.CancellationException
 
 /**
  * Secondary catalog source using TVMaze. Used primarily for Series metadata fallback.
@@ -29,8 +30,11 @@ class TvmazeCatalogRepository @Inject constructor(
         if (cached != null && now - cached.first < SEARCH_TTL_MS) return cached.second
         val result = try {
             apiService.searchShows(sanitized).mapNotNull { it.show?.toDomainSeries() }
-        } catch (e: Exception) {
-            emptyList()
+        } catch (e: CancellationException) { throw e }
+        catch (e: Exception) {
+            // A failed lookup is not an empty successful result. Never poison the five-minute
+            // search cache after a transient network failure; retain last-known titles if any.
+            return cached?.second.orEmpty()
         }
         searchCache[sanitized] = now to result
         return result

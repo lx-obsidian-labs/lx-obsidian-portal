@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en-ZA"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LX Insider — Testing Feedback | LX Obsidian Labs</title>
+<meta name="description" content="Submit LX Pocket Business beta testing feedback and bug reports to LX Obsidian Labs.">
+<meta name="robots" content="noindex,follow"><link rel="canonical" href="https://www.lxobsidianportal.co.za/insider-feedback">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2310120e'/%3E%3Cpath d='M12 20h40M12 32h28M12 44h34' stroke='%23c6ff45' stroke-width='7' stroke-linecap='round'/%3E%3C/svg%3E"><meta name="theme-color" content="#10120e">
+<style>
+*{box-sizing:border-box}body{margin:0;background:#10120e;color:#f6f7f2;font:16px/1.65 system-ui,sans-serif}a{color:inherit}a:focus-visible{outline:3px solid #c6ff45;outline-offset:4px}header,main,footer{max-width:900px;margin:auto;padding:24px clamp(20px,5vw,64px)}header{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid #34392e}header a{text-decoration:none}h1,h2,h3,p{margin:0 0 16px}h1{font-size:clamp(32px,5vw,52px);line-height:1.08;letter-spacing:-.04em}p,li{color:#c2c8b9}.eyebrow{color:#c6ff45;font-size:13px;font-weight:750;letter-spacing:.12em;text-transform:uppercase}.btn{display:inline-block;background:#c6ff45;color:#151a0b;padding:14px 22px;border-radius:12px;font-weight:750;text-decoration:none;border:0;font-size:16px;cursor:pointer;margin:8px 8px 8px 0}.secondary{background:transparent;color:#f6f7f2;border:1px solid #68715b}.notice{border-left:3px solid #c6ff45;padding:18px 24px;background:#1b2016;border-radius:0 12px 12px 0;margin-bottom:24px}form{display:grid;grid-template-columns:1fr 1fr;gap:16px}label{display:block;font-weight:700;font-size:14px;margin-bottom:6px}input,select,textarea{width:100%;background:#10120e;border:1px solid #68715b;color:#f6f7f2;border-radius:10px;padding:12px;font:inherit}textarea{min-height:96px;resize:vertical}input:focus,select:focus,textarea:focus{outline:2px solid #c6ff45}.full{grid-column:1/-1}.consent{display:flex;gap:10px;align-items:flex-start;font-weight:400;color:#c2c8b9;font-size:14px}.consent input{width:auto;margin-top:4px}.error{color:#ffb4a2;font-size:14px;display:none}.done{display:none;border:1px solid #c6ff45;border-radius:16px;padding:24px;background:#1b2016;margin-top:16px}footer{border-top:1px solid #34392e;color:#c2c8b9;display:flex;flex-wrap:wrap;gap:20px}@media(max-width:760px){form{grid-template-columns:1fr}.btn{display:block;text-align:center;margin-right:0}}
+</style></head>
+<body><header><a href="/"><strong>LX Obsidian Labs</strong></a><a href="https://www.lxobsidianportal.co.za/insider">LX Insider</a></header>
+<main>
+<p class="eyebrow" style="margin-top:24px">LX Insider · Tester feedback</p>
+<h1>Report it like we can reproduce it.</h1>
+<p>One form per issue or assignment. Screenshots make reports dramatically more useful — attach them in your email app before sending. Use fictional business records only; never include real customer or financial data.</p>
+<div class="notice"><strong>What earns points</strong><p>Completed assignments, reproducible bugs and useful usability feedback. Never reviews or ratings. See the programme page for how rewards work.</p></div>
+<form id="feedback" novalidate>
+<div><label for="name">Your name (as registered) *</label><input id="name" required></div>
+<div><label for="email">Google Play email (as registered) *</label><input id="email" type="email" required></div>
+<div><label for="assignment">Assignment / challenge *</label><select id="assignment" required><option value="">Choose…</option><option>A1 Install & onboarding</option><option>A2 Navigation & usability</option><option>A3 Income & expenses</option><option>A4 Customer management</option><option>A5 Debt tracking</option><option>A6 Invoices & quotations</option><option>A7 Offline functionality</option><option>A8 Backup & restore</option><option>A9 Performance</option><option>A10 Accessibility</option><option>A11 Error handling & stability</option><option>A12 Regression re-test</option><option>Weekly challenge</option><option>Other / spontaneous finding</option></select></div>
+<div><label for="type">Report type *</label><select id="type" required><option value="">Choose…</option><option>Bug</option><option>Usability feedback</option><option>Performance problem</option><option>Accessibility problem</option><option>Question</option><option>Assignment completion (no issues)</option></select></div>
+<div><label for="device">Device model *</label><input id="device" required></div>
+<div><label for="android">Android version *</label><input id="android" placeholder="e.g. 14" required></div>
+<div><label for="severity">Severity</label><select id="severity"><option>Low — cosmetic</option><option>Medium — annoying but usable</option><option>High — blocks a task</option><option>Critical — crash or data loss</option></select></div>
+<div><label for="repro">Reproducible?</label><select id="repro"><option>Yes, every time</option><option>Sometimes</option><option>Only once so far</option><option>Not applicable</option></select></div>
+<div class="full"><label for="summary">Summary (one line) *</label><input id="summary" maxlength="120" required></div>
+<div class="full"><label for="steps">Steps to reproduce *</label><textarea id="steps" placeholder="1. Open… 2. Tap… 3. Enter…" required></textarea></div>
+<div><label for="expected">Expected result *</label><textarea id="expected" required></textarea></div>
+<div><label for="actual">Actual result *</label><textarea id="actual" required></textarea></div>
+<div class="full"><label class="consent"><input type="checkbox" id="screens">I will attach screenshots (and a screen recording if useful) in my email app before sending.</label></div>
+<div class="full"><label class="consent"><input type="checkbox" id="followup">You may contact me for more detail about this report.</label></div>
+<p class="error full" id="formError">Please complete all required fields.</p>
+<div class="full"><button class="btn" type="submit">Send report</button><button class="btn secondary" type="button" id="copyReport">Copy report text</button></div>
+</form>
+<div class="done" id="done"><h3>Almost there</h3><p>Your email app should open with the report addressed to <strong>support@lxobsidianportal.co.za</strong>. Attach your screenshots, then press send. If nothing opened, copy the report text and email it manually. Thank you — verified reports are what move the programme forward.</p></div>
+</main>
+<footer><a href="https://www.lxobsidianportal.co.za/insider">LX Insider</a><a href="https://www.lxobsidianportal.co.za/pocket-business">LX Pocket Business</a><a href="mailto:info@lxobsidianportal.co.za">Programme contact</a><span>© 2026 LX Obsidian Labs</span></footer>
+<script>
+(function () {
+  var form = document.getElementById('feedback');
+  var error = document.getElementById('formError');
+  var done = document.getElementById('done');
+  function value(id) { return document.getElementById(id).value.trim(); }
+  function reportText() {
+    return [
+      'LX INSIDER FEEDBACK — LX Pocket Business',
+      'Tester: ' + value('name'),
+      'Registered Play email: ' + value('email'),
+      'Assignment: ' + value('assignment'),
+      'Type: ' + value('type'),
+      'Device: ' + value('device') + ' · Android ' + value('android'),
+      'Severity: ' + value('severity'),
+      'Reproducible: ' + value('repro'),
+      'Summary: ' + value('summary'),
+      '',
+      'Steps to reproduce:',
+      value('steps'),
+      '',
+      'Expected: ' + value('expected'),
+      'Actual: ' + value('actual'),
+      '',
+      'Screenshots attached: ' + (document.getElementById('screens').checked ? 'YES' : 'NO'),
+      'Follow-up contact allowed: ' + (document.getElementById('followup').checked ? 'YES' : 'NO')
+    ].join('\n');
+  }
+  function valid() {
+    var required = ['name', 'email', 'assignment', 'type', 'device', 'android', 'summary', 'steps', 'expected', 'actual'];
+    var ok = required.every(function (id) { return value(id) !== ''; });
+    return ok && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value('email'));
+  }
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+    if (!valid()) { error.style.display = 'block'; return; }
+    error.style.display = 'none';
+    var subject = '[LX Insider Feedback] ' + value('assignment').split(' ')[0] + ' — ' + value('summary');
+    window.location.href = 'mailto:support@lxobsidianportal.co.za?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(reportText());
+    done.style.display = 'block';
+    done.scrollIntoView({ behavior: 'smooth' });
+  });
+  document.getElementById('copyReport').addEventListener('click', function () {
+    if (!valid()) { error.style.display = 'block'; return; }
+    error.style.display = 'none';
+    var text = reportText();
+    var button = this;
+    function fallback() { window.prompt('Copy your report text:', text); }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { button.textContent = 'Copied — email it to support@lxobsidianportal.co.za'; }, fallback);
+    } else { fallback(); }
+  });
+})();
+</script>
+</body></html>

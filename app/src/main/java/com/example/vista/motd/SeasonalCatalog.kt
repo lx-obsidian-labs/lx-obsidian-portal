@@ -93,7 +93,7 @@ object SeasonalCatalog {
             label = "Valentine's pick",
             matches = { between(it, 2 to 7, 2 to 15) },
             movies = listOf(
-                christmas(111, "Love Actually", 2004, "Ten stories, one Heathrow, and a very public confession."),
+                christmas(508, "Love Actually", 2003, "Ten stories, one Heathrow, and a very public confession."),
                 christmas(11036, "The Notebook", 2004, "For the people who still believe in the rain scene."),
                 christmas(769, "Goodfellas", 1990, "Technically not romance. Undoubtedly a great night in.")
             )
@@ -185,12 +185,7 @@ object SeasonalCatalog {
             name = "festive",
             label = "Festive pick",
             matches = { between(it, 12 to 1, 12 to 25) },
-            movies = listOf(
-                christmas(771, "Home Alone", 1990, "Still the answer, and it will be again."),
-                christmas(354912, "Coco", 2017, "Bright, musical, and about being remembered."),
-                christmas(10193, "Toy Story 3", 2010, "The one that made grown-ups cry in a cinema full of children."),
-                christmas(508442, "Soul", 2020, "A jazz musician, a pizza, and a very good dog.")
-            )
+            movies = FestiveSeason.collections.flatMap { it.movies }.distinctBy { it.tmdbId }
         ),
         SeasonalEvent(
             name = "summer",

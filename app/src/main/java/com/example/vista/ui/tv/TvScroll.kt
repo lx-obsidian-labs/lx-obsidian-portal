@@ -1,84 +1,77 @@
 package com.example.vista.ui.tv
 
 import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.SpringSpec
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.border
+import androidx.compose.foundation.gestures.BringIntoViewSpec
+import androidx.compose.foundation.gestures.LocalBringIntoViewSpec
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.launch
+import com.example.vista.ui.theme.Accent
+import com.example.vista.util.LocalTvConfiguration
 
-/**
- * A horizontal row that scrolls itself to whatever has focus.
- *
- * A plain [androidx.compose.foundation.lazy.LazyRow] on TV is the wrong tool: D-pad focus moves
- * instantly while the list scrolls afterwards, so the focused card arrives at the screen edge with
- * no warning and the row reads as jumping. Driving the scroll from focus means the motion and the
- * highlight happen together, which is what a viewer expects.
- */
-class TvRowScroller internal constructor(
-    val state: LazyListState,
-    private val focusTo: (Int) -> Unit
-) {
-    /** Call from an item's `onFocusChanged` when it gains focus. */
-    fun onItemFocused(index: Int) = focusTo(index)
+/** One focus-scroll owner: Foundation lazy layouts drive motion, not per-key coroutines. */
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun TvFocusScrolling(content: @Composable () -> Unit) {
+    val spec = remember {
+        object : BringIntoViewSpec {
+            override fun calculateScrollDistance(offset: Float, size: Float, containerSize: Float): Float =
+                TvFocusScrollPolicy.distance(offset, size, containerSize)
+        }
+    }
+    CompositionLocalProvider(LocalBringIntoViewSpec provides spec, content = content)
 }
 
-/** How far a focused row is pulled back from the left edge, so its neighbour stays visible. */
-private val RowLeadIn: Dp = 96.dp
-
-/**
- * Creates a [TvRowScroller] for a row of [itemCount] cards.
- *
- * The focused card is scrolled to one slot in from the left rather than flush against it, so the
- * viewer can see what they just came from. Near the start of the row that offset is dropped,
- * because there is nothing before it to reveal.
- */
-@Composable
-fun rememberTvRowScroller(itemCount: Int): TvRowScroller {
-    val state = rememberLazyListState()
-    val scope = rememberCoroutineScope()
-    val leadInPx = with(LocalDensity.current) { RowLeadIn.toPx() }.toInt()
-
-    return remember(state, scope, itemCount, leadInPx) {
-        TvRowScroller(state) { index ->
-            if (itemCount > 0) {
-                val lastIndex = itemCount - 1
-                val target = (index - 1).coerceIn(0, lastIndex)
-                val offset = if (target == 0) 0 else -leadInPx
-                scope.launch {
-                    state.animateScrollToItem(target, offset)
-                }
-            }
-        }
+/** Keep focus near the leading third, and keep the trailing edge of a fitting card visible. */
+object TvFocusScrollPolicy {
+    fun distance(offset: Float, size: Float, containerSize: Float): Float {
+        if (!offset.isFinite() || !size.isFinite() || !containerSize.isFinite() || size <= 0f || containerSize <= 0f) return 0f
+        val pivot = containerSize * 0.3f
+        val target = if (size <= containerSize) minOf(pivot, containerSize - size) else 0f
+        return offset - target
     }
 }
 
-/** Spring used for focus scale on cards. Snappy on the way in, settled on the way out. */
-internal val TvFocusScaleSpring: SpringSpec<Float> = spring(
-    dampingRatio = Spring.DampingRatioMediumBouncy,
-    stiffness = Spring.StiffnessLow
+/** No overshoot: focus should settle quickly when a remote direction is held down. */
+internal val TvFocusScaleSpring = spring<Float>(
+    dampingRatio = Spring.DampingRatioNoBouncy,
+    stiffness = Spring.StiffnessMedium
 )
 
-/**
- * Animates a card's scale on focus.
- *
- * TV Material's own [androidx.tv.material3.Surface] focus treatment is subtle on a dark background
- * at viewing distance; the scale is what actually tells the viewer which card the D-pad is on.
- */
 @Composable
-internal fun tvFocusScale(isFocused: Boolean): Float {
+fun tvFocusScale(isFocused: Boolean): Float {
+    val tvConfig = LocalTvConfiguration.current
     val scale by animateFloatAsState(
-        targetValue = if (isFocused) 1.08f else 1f,
-        animationSpec = TvFocusScaleSpring,
-        label = "tvFocusScale"
+        targetValue = if (isFocused) tvConfig.focusScaleOnHover else 1f,
+        animationSpec = TvFocusScaleSpring, label = "tvFocusScale"
     )
     return scale
+}
+
+@Composable
+fun Modifier.tvOverscanPadding(): Modifier {
+    val tvConfig = LocalTvConfiguration.current
+    return if (tvConfig.isTv) padding(horizontal = tvConfig.overscanPaddingHorizontal,
+        vertical = tvConfig.overscanPaddingVertical) else this
+}
+
+@Composable
+fun Modifier.tvFocusHighlight(isFocused: Boolean, focusedBorderColor: Color = Accent, cornerRadius: Dp = 12.dp): Modifier {
+    val tvConfig = LocalTvConfiguration.current
+    return scale(tvFocusScale(isFocused)).then(
+        if (isFocused && tvConfig.isTv) Modifier.border(2.5.dp, focusedBorderColor, RoundedCornerShape(cornerRadius))
+        else Modifier
+    )
 }

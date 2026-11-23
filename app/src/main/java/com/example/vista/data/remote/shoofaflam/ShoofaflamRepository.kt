@@ -4,6 +4,7 @@ import com.example.vista.domain.model.*
 import com.example.vista.domain.repository.CatalogRepository
 import android.util.Log
 import kotlinx.coroutines.sync.withLock
+import kotlinx.coroutines.CancellationException
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -24,7 +25,8 @@ class ShoofaflamRepository @Inject constructor(
                 val titles = apiService.getAllTitles().filter { it.posterPath != null }
                 cachedTitles = titles
                 titles
-            } catch (e: Exception) {
+            } catch (e: CancellationException) { throw e }
+            catch (e: Exception) {
                 Log.e(TAG, "Error fetching titles: ${e.message}")
                 emptyList()
             }

@@ -112,7 +112,7 @@ fun SplashScreen(onSplashComplete: () -> Unit) {
                         scaleY = scale.value
                     }
                     .size(120.dp),
-                color = Color.White,
+                color = Color(0xFF141414),
                 shape = RoundedCornerShape(28.dp),
                 shadowElevation = 16.dp,
                 border = androidx.compose.foundation.BorderStroke(1.dp, Color.White.copy(alpha = 0.2f))
@@ -120,19 +120,15 @@ fun SplashScreen(onSplashComplete: () -> Unit) {
                 Box(
                     modifier = Modifier.background(
                         Brush.linearGradient(
-                            colors = listOf(Color.White, Color(0xFFF5F5F5))
+                            colors = listOf(Color(0xFF141414), Color(0xFF0A0A0A))
                         )
                     ),
                     contentAlignment = Alignment.Center
                 ) {
-                    Text(
-                        text = "V",
-                        style = MaterialTheme.typography.displayLarge.copy(
-                            fontSize = 64.sp,
-                            fontWeight = FontWeight.Black,
-                            letterSpacing = (-4).sp
-                        ),
-                        color = Accent
+                    androidx.compose.foundation.Image(
+                        painter = androidx.compose.ui.res.painterResource(com.example.vista.R.drawable.ic_launcher_foreground),
+                        contentDescription = "Vista Watch",
+                        modifier = Modifier.fillMaxSize()
                     )
                 }
             }
@@ -152,7 +148,7 @@ fun SplashScreen(onSplashComplete: () -> Unit) {
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = "CINEMA",
+                text = "WATCH",
                 style = MaterialTheme.typography.titleMedium.copy(
                     letterSpacing = 8.sp,
                     fontWeight = FontWeight.Bold

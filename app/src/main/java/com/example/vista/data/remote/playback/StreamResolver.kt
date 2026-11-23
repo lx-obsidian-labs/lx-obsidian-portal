@@ -6,9 +6,16 @@ import com.example.vista.domain.model.StreamSource
 import com.example.vista.domain.model.StreamType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.suspendCancellableCoroutine
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.Response
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.util.concurrent.TimeUnit
+import java.io.IOException
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 import javax.inject.Inject
 import javax.inject.Named
 import javax.inject.Singleton
@@ -44,6 +51,13 @@ import javax.inject.Singleton
 class StreamResolver @Inject constructor(
     @Named("shared") private val client: OkHttpClient
 ) {
+    // Reuse DNS, sockets and dispatcher; never persist expiring provider pages in metadata cache.
+    private val resolverClient = client.newBuilder()
+        .cache(null)
+        .connectTimeout(6, TimeUnit.SECONDS)
+        .readTimeout(8, TimeUnit.SECONDS)
+        .callTimeout(10, TimeUnit.SECONDS)
+        .build()
 
     /**
      * Resolves [embedUrl] to the single best playable source, or returns `null` when the page cannot
@@ -113,30 +127,38 @@ class StreamResolver @Inject constructor(
         }
 
     /**
-     * Fetches the embed page. Uses its own short-lived client rather than the injected one: the
-     * shared client carries a 50MB disk cache and 20s timeouts, which are wrong for a one-shot
-     * page fetch that runs on the path to playback.
+     * Fetches with a reusable cache-free client. Parent cancellation closes the request socket.
      */
-    private fun fetchHtml(url: String): String? {
-        val scratchClient = OkHttpClient.Builder()
-            .connectTimeout(8, TimeUnit.SECONDS)
-            .readTimeout(12, TimeUnit.SECONDS)
-            .followRedirects(true)
-            .build()
+    private suspend fun fetchHtml(url: String): String? {
         return try {
-            scratchClient.newCall(
+            val call = resolverClient.newCall(
                 Request.Builder()
                     .url(url)
                     .header("User-Agent", DESKTOP_UA)
                     .header("Accept", "text/html,application/xhtml+xml")
                     .build()
-            ).execute().use { response ->
-                if (!response.isSuccessful) {
-                    Log.d(TAG, "Embed fetch failed HTTP ${response.code} for $url")
-                    return null
-                }
-                response.body?.string()
+            )
+            // Cancellation closes the real socket, including while the response body is read.
+            suspendCancellableCoroutine { continuation ->
+                continuation.invokeOnCancellation { call.cancel() }
+                call.enqueue(object : Callback {
+                    override fun onFailure(call: Call, e: IOException) {
+                        continuation.resumeWithException(e)
+                    }
+
+                    override fun onResponse(call: Call, response: Response) {
+                        response.use {
+                            try {
+                                val html = if (response.isSuccessful) response.body?.string() else null
+                                continuation.resume(html)
+                            } catch (e: IOException) {
+                                continuation.resumeWithException(e)
+                            }
+                        }
+                    }
+                })
             }
+        } catch (e: kotlinx.coroutines.CancellationException) { throw e
         } catch (e: Exception) {
             // Provider unreachable, TLS failure, malformed URL - all mean "no resolution", never
             // an error the user should see.
@@ -227,6 +249,7 @@ class StreamResolver @Inject constructor(
      * returns an ad or a tracking URL, and the player then fails with a far less obvious error.
      */
     private fun looksLikeMedia(url: String): Boolean {
+        if (EmbedAdPolicy.blocks(url)) return false
         val lower = url.lowercase()
         val host = lower.substringAfter("//", "").substringBefore('/')
         if (BLOCKED_HOSTS.any { host.contains(it) }) return false

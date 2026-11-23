@@ -28,11 +28,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import com.example.vista.domain.model.AgeBand
 import com.example.vista.domain.model.AppTheme
 import com.example.vista.domain.model.CellularStreamingSetting
 import com.example.vista.navigation.Screen
@@ -51,10 +53,14 @@ internal fun settingsPageFromRoute(page: String?): SettingsPage = when (page?.up
     "PLAYBACK" -> SettingsPage.PLAYBACK
     "AUDIO_SUBTITLES", "SUBTITLES" -> SettingsPage.AUDIO_SUBTITLES
     "NOTIFICATIONS" -> SettingsPage.NOTIFICATIONS
-    "DATA_STORAGE", "DOWNLOADS", "DATA_USAGE" -> SettingsPage.DATA_STORAGE
+    "DATA_STORAGE", "DATA_USAGE" -> SettingsPage.DATA_STORAGE
+    "DOWNLOADS", "DOWNLOAD_SETTINGS" -> SettingsPage.DOWNLOADS
+    "AI_VOICE", "AI", "VOICE" -> SettingsPage.AI_VOICE
+    "FAMILY", "KIDS", "AGE", "AGE_RESTRICTION" -> SettingsPage.FAMILY
     "APPEARANCE" -> SettingsPage.APPEARANCE
     "PRIVACY_HISTORY", "PRIVACY" -> SettingsPage.PRIVACY_HISTORY
     "ABOUT" -> SettingsPage.ABOUT
+    "SUPPORT", "HELP", "HELP_SUPPORT" -> SettingsPage.SUPPORT
     else -> SettingsPage.MAIN
 }
 
@@ -86,9 +92,13 @@ fun SettingsScreen(
         SettingsPage.AUDIO_SUBTITLES -> "Audio & Subtitles"
         SettingsPage.NOTIFICATIONS -> "Notifications"
         SettingsPage.DATA_STORAGE -> "Data & Storage"
+        SettingsPage.FAMILY -> "Family & Age"
         SettingsPage.APPEARANCE -> "Appearance"
         SettingsPage.PRIVACY_HISTORY -> "Privacy & History"
-        SettingsPage.ABOUT -> "About Vista Cinema"
+        SettingsPage.ABOUT -> "About Vista Watch"
+        SettingsPage.DOWNLOADS -> "Downloads"
+        SettingsPage.AI_VOICE -> "AI & Voice"
+        SettingsPage.SUPPORT -> "Help & Support"
     }
 
     Column(
@@ -143,15 +153,19 @@ fun SettingsScreen(
                     .padding(bottom = 32.dp)
             ) {
                 when (page) {
-                    SettingsPage.MAIN -> MainSettingsPage(viewModel, uiState)
+                    SettingsPage.MAIN -> MainSettingsPage(viewModel, uiState, navController)
+                    SettingsPage.DOWNLOADS -> DownloadSettingsPage(viewModel, uiState, navController)
+                    SettingsPage.AI_VOICE -> AdvancedAiPage(viewModel, uiState)
                     SettingsPage.ACCOUNT -> AccountSettingsPage(viewModel, uiState, navController)
                     SettingsPage.PLAYBACK -> PlaybackSettingsPage(viewModel, uiState)
                     SettingsPage.AUDIO_SUBTITLES -> AudioSubtitlesPage(viewModel, uiState)
                     SettingsPage.NOTIFICATIONS -> NotificationsPage(viewModel, uiState)
                     SettingsPage.DATA_STORAGE -> DataStoragePage(viewModel, uiState, navController)
+                    SettingsPage.FAMILY -> FamilySettingsPage(viewModel, uiState, navController)
                     SettingsPage.APPEARANCE -> AppearancePage(viewModel, uiState)
                     SettingsPage.PRIVACY_HISTORY -> PrivacyHistoryPage(viewModel, uiState)
                     SettingsPage.ABOUT -> AboutPage(viewModel, uiState, navController)
+                    SettingsPage.SUPPORT -> com.example.vista.support.SupportContent()
                 }
             }
         }
@@ -161,7 +175,27 @@ fun SettingsScreen(
 // ── Main ──
 
 @Composable
-private fun MainSettingsPage(viewModel: SettingsViewModel, uiState: SettingsUiState) {
+private fun MainSettingsPage(viewModel: SettingsViewModel, uiState: SettingsUiState, navController: NavController) {
+    val context = LocalContext.current
+    val messenger = rememberVistaMessenger()
+    val scope = rememberCoroutineScope()
+    var query by androidx.compose.runtime.saveable.rememberSaveable { mutableStateOf("") }
+    OutlinedTextField(value = query, onValueChange = { query = it.take(100) }, singleLine = true,
+        label = { Text("Search settings") }, placeholder = { Text("Downloads, AI, subtitles, privacy…") },
+        leadingIcon = { Icon(Icons.Outlined.Search, null) },
+        trailingIcon = { if (query.isNotBlank()) IconButton(onClick = { query = "" }) { Icon(Icons.Outlined.Close, "Clear settings search") } },
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp), shape = RoundedCornerShape(16.dp))
+    if (query.isNotBlank()) {
+        val found = SettingsDirectory.search(query)
+        SettingsHeader("${found.size} MATCHING ${if (found.size == 1) "SECTION" else "SECTIONS"}")
+        SettingsGroup {
+            found.forEach { item -> SettingsNavRow(Icons.Outlined.Settings, Accent, item.title, item.description) {
+                query = ""; viewModel.navigateTo(item.page)
+            } }
+        }
+        if (found.isEmpty()) Text("No settings match. Try ‘offline’, ‘voice’ or ‘quality’.", color = SecondaryText, modifier = Modifier.padding(24.dp))
+        return
+    }
     // Profile banner
     Surface(
         modifier = Modifier
@@ -186,7 +220,7 @@ private fun MainSettingsPage(viewModel: SettingsViewModel, uiState: SettingsUiSt
                     .border(2.dp, Color.White.copy(alpha = 0.2f), CircleShape),
                 contentAlignment = Alignment.Center
             ) {
-                Icon(Icons.Outlined.Person, contentDescription = null, tint = Color.White, modifier = Modifier.size(28.dp))
+                com.example.vista.artwork.CurrentUserAvatar(size = 56.dp)
             }
             Spacer(modifier = Modifier.width(16.dp))
             Column(modifier = Modifier.weight(1f)) {
@@ -214,6 +248,43 @@ private fun MainSettingsPage(viewModel: SettingsViewModel, uiState: SettingsUiSt
         }
     }
 
+    com.example.vista.feedback.FeedbackPollCard(alwaysShow = true, onSignIn = { navController.navigate(Screen.Auth.route) })
+
+    SettingsHeader("QUICK OVERVIEW")
+    SettingsGroup {
+        SettingsTextRow("Streaming quality", if (uiState.dataSaverMode) "Data Saver · 480p preference" else uiState.preferredQuality)
+        SettingsTextRow("Mobile data", uiState.cellularStreaming.displayName)
+        SettingsTextRow("Free device storage", uiState.freeStorage)
+    }
+    SettingsHeader("AI & VOICE")
+    SettingsGroup {
+        SettingsNavRow(Icons.Outlined.AutoAwesome, Accent, "Assistant control centre", "Taste, tool actions, voice and personalization") {
+            viewModel.navigateTo(SettingsPage.AI_VOICE)
+        }
+        SettingsSwitchRow(
+            title = "Vista AI",
+            subtitle = "Cloud-powered movie conversations and discovery",
+            checked = uiState.aiEnabled,
+            onCheckedChange = viewModel::updateAiEnabled
+        )
+        SettingsSwitchRow(
+            title = "AI chat",
+            subtitle = "Send questions and recent conversation to our AI service. Sign-in required.",
+            checked = uiState.aiChatEnabled,
+            onCheckedChange = viewModel::updateAiChatEnabled
+        )
+        SettingsNavRow(
+            icon = Icons.Outlined.RecordVoiceOver,
+            iconBackground = Accent,
+            title = "Voice quality & language",
+            subtitle = "Choose or download a natural voice in Android. Tap the chat mic for hands-free turns.",
+            onClick = {
+                try { context.startActivity(Intent("com.android.settings.TTS_SETTINGS")) }
+                catch (_: Exception) { scope.launch { messenger?.show("Open Android Settings → Text-to-speech to manage voices.", VistaMessageKind.INFO) } }
+            }
+        )
+    }
+
     SettingsHeader("PLAYBACK")
     SettingsGroup {
         SettingsNavRow(
@@ -239,6 +310,13 @@ private fun MainSettingsPage(viewModel: SettingsViewModel, uiState: SettingsUiSt
 
     SettingsHeader("CONNECTIVITY & CONTENT")
     SettingsGroup {
+        SettingsNavRow(Icons.Outlined.FamilyRestroom, Accent, "Family & Age", "${uiState.ageBand.displayName} · ${if (uiState.kidsMode) "Kids mode on" else "Kids mode off"}") {
+            viewModel.navigateTo(SettingsPage.FAMILY)
+        }
+        Divider(color = Color.White.copy(alpha = 0.06f), modifier = Modifier.padding(start = 56.dp))
+        SettingsNavRow(Icons.Outlined.DownloadForOffline, Accent, "Downloads", "${uiState.readyDownloads} ready · ${uiState.downloadedSize} on this profile") {
+            viewModel.navigateTo(SettingsPage.DOWNLOADS)
+        }
         SettingsNavRow(
             icon = Icons.Outlined.Notifications,
             iconBackground = Accent,
@@ -258,6 +336,9 @@ private fun MainSettingsPage(viewModel: SettingsViewModel, uiState: SettingsUiSt
 
     SettingsHeader("APP")
     SettingsGroup {
+        SettingsNavRow(Icons.Outlined.HelpOutline, Accent, "Help & Support", "Report a problem, account help and official contacts") {
+            viewModel.navigateTo(SettingsPage.SUPPORT)
+        }
         SettingsNavRow(
             icon = Icons.Outlined.DarkMode,
             iconBackground = Accent,
@@ -277,14 +358,159 @@ private fun MainSettingsPage(viewModel: SettingsViewModel, uiState: SettingsUiSt
         SettingsNavRow(
             icon = Icons.Outlined.Info,
             iconBackground = AmbientPurple,
-            title = "About Vista Cinema",
+            title = "About Vista Watch",
             subtitle = "Version ${com.example.vista.BuildConfig.VERSION_NAME}",
             onClick = { viewModel.navigateTo(SettingsPage.ABOUT) }
         )
     }
 }
 
+// ── Family & Age ──
+
+@Composable
+private fun FamilySettingsPage(viewModel: SettingsViewModel, uiState: SettingsUiState, navController: NavController) {
+    var pin by remember { mutableStateOf("") }
+    SettingsHeader("AGE RATING")
+    SettingsGroup {
+        SettingsSelectRow("Profile age band", uiState.ageBand.displayName, AgeBand.values().map { it.displayName }) { selected ->
+            viewModel.requestAgeBand(AgeBand.values().first { it.displayName == selected })
+        }
+        SettingsTextRow("Applies to", uiState.ageBand.description)
+        SettingsSwitchRow("Mature titles", "Allow 18+ and adult catalog entries", uiState.showAdultContent,
+            enabled = uiState.ageBand == AgeBand.ADULT && !uiState.kidsMode,
+            onCheckedChange = viewModel::requestShowAdultContent)
+    }
+    SettingsHeader("KIDS MODE")
+    SettingsGroup {
+        SettingsSwitchRow("Kids mode", "Simple home with family-friendly titles only", uiState.kidsMode,
+            onCheckedChange = viewModel::requestKidsMode)
+        SettingsActionRow("Open Kids mode") { navController.navigate(com.example.vista.navigation.Screen.Kids.route) }
+        SettingsTextRow("Switching back", if (uiState.hasParentalPin) "Requires your parental PIN" else "No PIN set — anyone can switch back")
+    }
+    SettingsHeader("PARENTAL PIN")
+    SettingsGroup {
+        OutlinedTextField(
+            value = pin,
+            onValueChange = { pin = it.filter(Char::isDigit).take(6) },
+            label = { Text("4–6 digit PIN") },
+            singleLine = true,
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
+            shape = RoundedCornerShape(14.dp)
+        )
+        SettingsActionRow(if (uiState.hasParentalPin) "Change PIN" else "Set PIN") {
+            if (pin.length in 4..6) { viewModel.requestParentalPin(pin); pin = "" }
+        }
+        if (uiState.hasParentalPin) SettingsActionRow("Remove PIN") { viewModel.requestParentalPin("") }
+    }
+    Text("Age limits filter catalog metadata, AI suggestions and Kids mode. Playback providers are third-party and can change; supervise younger viewers.",
+        color = SecondaryText, style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(24.dp))
+
+    val pinTitle = when (uiState.familyPinAction) {
+        FamilyPinAction.DISABLE_KIDS -> "Leave Kids mode?"
+        FamilyPinAction.LOOSEN_AGE -> "Change age band?"
+        FamilyPinAction.ENABLE_ADULT_CONTENT -> "Allow mature titles?"
+        FamilyPinAction.CHANGE_PIN -> "Change parental PIN?"
+        null -> null
+    }
+    if (pinTitle != null) {
+        AlertDialog(
+            onDismissRequest = viewModel::cancelFamilyPin,
+            title = { Text(pinTitle) },
+            text = {
+                Column {
+                    Text("Enter your parental PIN to confirm this change.", color = SecondaryText)
+                    Spacer(Modifier.height(12.dp))
+                    OutlinedTextField(
+                        value = uiState.familyPinInput,
+                        onValueChange = viewModel::updateFamilyPinInput,
+                        label = { Text("Parental PIN") },
+                        singleLine = true,
+                        visualTransformation = PasswordVisualTransformation(),
+                        isError = uiState.familyPinError != null,
+                        shape = RoundedCornerShape(14.dp)
+                    )
+                    uiState.familyPinError?.let { Text(it, color = ErrorAccent, style = MaterialTheme.typography.bodySmall) }
+                }
+            },
+            confirmButton = { TextButton(onClick = viewModel::confirmFamilyPin) { Text("Confirm", color = Accent) } },
+            dismissButton = { TextButton(onClick = viewModel::cancelFamilyPin) { Text("Cancel") } },
+            containerColor = RaisedSurface
+        )
+    }
+}
+
 // ── Account ──
+
+@Composable
+private fun DownloadSettingsPage(viewModel: SettingsViewModel, uiState: SettingsUiState, navController: NavController) {
+    LaunchedEffect(Unit) { viewModel.refreshSizes() }
+    SettingsHeader("OFFLINE LIBRARY")
+    SettingsGroup {
+        SettingsTextRow("Ready on this profile", uiState.readyDownloads.toString())
+        SettingsTextRow("Downloaded media", uiState.downloadedSize)
+        SettingsTextRow("Free device storage", uiState.freeStorage)
+        SettingsNavRow(Icons.Outlined.DownloadForOffline, Accent, "Manage downloads", "Progress, pause, resume, retry, delete and play offline") {
+            navController.navigate(Screen.Downloads.route)
+        }
+    }
+    SettingsHeader("DOWNLOAD DEFAULTS")
+    SettingsGroup {
+        val labels = mapOf(480 to "Saver · prefer up to 480p", 720 to "Balanced · prefer up to 720p", Int.MAX_VALUE to "Best compatible quality")
+        SettingsSelectRow("Default quality", labels[uiState.downloadMaxHeight] ?: labels.getValue(720), labels.values.toList()) { selected ->
+            viewModel.updateDownloadQuality(labels.entries.first { it.value == selected }.key)
+        }
+        SettingsTextRow("Connection policy", "Unmetered only")
+        SettingsTextRow("Roaming", "Paused")
+        SettingsTextRow("Simultaneous downloads", "1")
+    }
+    Text("Quality is selected from the source's actual compatible tracks. Sizes can be unknown for adaptive streams. Downloads and their index are separate from temporary cache; use Manage downloads to remove them.",
+        color = SecondaryText, style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(24.dp))
+}
+
+@Composable
+@OptIn(ExperimentalLayoutApi::class)
+private fun AdvancedAiPage(viewModel: SettingsViewModel, uiState: SettingsUiState) {
+    val context = LocalContext.current
+    val messenger = rememberVistaMessenger()
+    val scope = rememberCoroutineScope()
+    var reset by remember { mutableStateOf(false) }
+    SettingsHeader("ASSISTANT")
+    SettingsGroup {
+        SettingsSwitchRow("Vista AI", "Enable assistant and AI discovery features", uiState.aiEnabled, onCheckedChange = viewModel::updateAiEnabled)
+        SettingsSwitchRow("Conversation & actions", "Search, compare, library, resume and download-review actions", uiState.aiChatEnabled,
+            enabled = uiState.aiEnabled, onCheckedChange = viewModel::updateAiChatEnabled)
+        SettingsTextRow("Cloud setup", if (com.example.vista.BuildConfig.VISTA_AI_BASE_URL.isBlank()) "Local catalog mode" else "Backend configured · sign-in required")
+    }
+    SettingsHeader("YOUR TASTE")
+    SettingsGroup {
+        SettingsSwitchRow("Personalized suggestions", "Use explicit genres and meaningful viewing on this profile", uiState.taste.enabled,
+            onCheckedChange = viewModel::enablePersonalization)
+        FlowRow(Modifier.padding(horizontal = 16.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            listOf("Action", "Comedy", "Drama", "Science Fiction", "Romance", "Horror", "Animation").forEach { genre ->
+                FilterChip(selected = genre in uiState.taste.genres, onClick = { viewModel.toggleTasteGenre(genre) },
+                    label = { Text(genre) }, enabled = uiState.taste.enabled)
+            }
+        }
+        SettingsTextRow("Titles marked Not for me", uiState.taste.disliked.size.toString())
+        SettingsActionRow("Reset taste & feedback") { reset = true }
+    }
+    SettingsHeader("VOICE & DEVICE")
+    SettingsGroup {
+        SettingsActionRow("Voice engine, quality & language") {
+            try { context.startActivity(Intent("com.android.settings.TTS_SETTINGS")) }
+            catch (_: Exception) { scope.launch { messenger?.show("Open Android Settings → Text-to-speech to manage installed voices.") } }
+        }
+        SettingsActionRow("Microphone & app permissions") {
+            context.startActivity(Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:${context.packageName}")))
+        }
+    }
+    Text("Actions use catalog-backed titles, not arbitrary commands. Save/remove actions need confirmation; downloads open source and quality review. Spoiler and read-aloud controls are available in chat. Device voices vary by installed engine.",
+        color = SecondaryText, style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(24.dp))
+    if (reset) AlertDialog(onDismissRequest = { reset = false }, title = { Text("Reset your taste?") },
+        text = { Text("Clear selected genres, recommendation feedback and inferred-taste history cutoff. Your watch list, downloads and viewing history are kept.") },
+        confirmButton = { TextButton(onClick = { viewModel.resetPersonalization(); reset = false }) { Text("Reset taste") } },
+        dismissButton = { TextButton(onClick = { reset = false }) { Text("Cancel") } })
+}
 
 @Composable
 private fun AccountSettingsPage(
@@ -293,6 +519,14 @@ private fun AccountSettingsPage(
     navController: NavController
 ) {
     var showSignOutDialog by remember { mutableStateOf(false) }
+    var showAvatarPicker by remember { mutableStateOf(false) }
+
+    Row(Modifier.fillMaxWidth().padding(20.dp), verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+        com.example.vista.artwork.CurrentUserAvatar(size = 60.dp)
+        OutlinedButton(onClick = { showAvatarPicker = true }) { Text("Edit Avatar", color = PrimaryText) }
+    }
+    if (showAvatarPicker) com.example.vista.artwork.VistaAvatarPicker(onDismiss = { showAvatarPicker = false })
 
     if (uiState.viewer?.uid != null) {
         SettingsHeader("PROFILE")
@@ -376,7 +610,7 @@ private fun PlaybackSettingsPage(viewModel: SettingsViewModel, uiState: Settings
         SettingsSelectRow(
             title = "Preferred video quality",
             value = uiState.preferredQuality,
-            options = listOf("Auto", "Best Available", "High (1080p)", "Standard (720p)", "Data Saver (480p)"),
+            options = listOf("Auto", "1080p", "720p", "480p", "360p"),
             onSelect = { viewModel.updatePreferredQuality(it) }
         )
         Divider(color = Color.White.copy(alpha = 0.06f), modifier = Modifier.padding(start = 16.dp))
@@ -413,6 +647,8 @@ private val SubtitleColors = listOf(
 
 @Composable
 private fun AudioSubtitlesPage(viewModel: SettingsViewModel, uiState: SettingsUiState) {
+    Text("These preferences apply to compatible native streams. Embedded providers control their own audio and subtitles; a missing language cannot be created by changing a preference.",
+        color = SecondaryText, style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(16.dp))
     SettingsHeader("AUDIO")
     SettingsGroup {
         SettingsSelectRow(
@@ -571,11 +807,20 @@ private fun SubtitlePreview(uiState: SettingsUiState) {
 
 @Composable
 private fun NotificationsPage(viewModel: SettingsViewModel, uiState: SettingsUiState) {
+    val context = LocalContext.current
+    SettingsHeader("ANDROID DELIVERY")
+    SettingsGroup {
+        SettingsTextRow("App permission", if (androidx.core.app.NotificationManagerCompat.from(context).areNotificationsEnabled()) "Allowed in Android" else "Blocked in Android")
+        SettingsActionRow("Manage Android notification channels") {
+            context.startActivity(Intent(android.provider.Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+                .putExtra(android.provider.Settings.EXTRA_APP_PACKAGE, context.packageName))
+        }
+    }
     SettingsHeader("MASTER CONTROL")
     SettingsGroup {
         SettingsSwitchRow(
-            title = "Enable notifications",
-            subtitle = "Master switch for all in-app alerts",
+            title = "Recommendations & announcements",
+            subtitle = "Allow nonessential push messages and reminder delivery",
             checked = uiState.notificationsEnabled,
             onCheckedChange = { viewModel.updateNotificationsEnabled(it) }
         )
@@ -584,8 +829,8 @@ private fun NotificationsPage(viewModel: SettingsViewModel, uiState: SettingsUiS
     SettingsHeader("ANNOUNCEMENTS")
     SettingsGroup {
         SettingsSwitchRow(
-            title = "Updates & releases",
-            subtitle = "New Vista Cinema releases and special announcements",
+            title = "Feature news & festive greetings",
+            subtitle = "Optional announcements about Vista and seasonal events",
             checked = uiState.notificationsEnabled && uiState.notificationReleases,
             enabled = uiState.notificationsEnabled,
             onCheckedChange = { viewModel.updateNotificationReleases(it) }
@@ -601,7 +846,6 @@ private fun NotificationsPage(viewModel: SettingsViewModel, uiState: SettingsUiS
             title = "Share your wins",
             subtitle = "Occasionally invite a friend after a real achievement",
             checked = uiState.sharePromptsEnabled,
-            enabled = uiState.notificationsEnabled,
             onCheckedChange = { viewModel.updateSharePromptsEnabled(it) }
         )
     }
@@ -610,9 +854,8 @@ private fun NotificationsPage(viewModel: SettingsViewModel, uiState: SettingsUiS
     SettingsGroup {
         SettingsSwitchRow(
             title = "Daily film suggestion",
-            subtitle = "A free film picked for you each day, plus a reminder",
-            checked = uiState.movieOfTheDayEnabled && uiState.notificationsEnabled,
-            enabled = uiState.notificationsEnabled,
+            subtitle = "Home suggestion; reminders follow your notification preferences",
+            checked = uiState.movieOfTheDayEnabled,
             onCheckedChange = { viewModel.updateMovieOfTheDay(it) }
         )
     }
@@ -621,31 +864,31 @@ private fun NotificationsPage(viewModel: SettingsViewModel, uiState: SettingsUiS
     SettingsGroup {
         SettingsSwitchRow(
             title = "New episodes",
-            subtitle = "New episodes of shows in your list",
+            subtitle = "Automatic scheduling is not available yet",
             checked = uiState.notificationsEnabled && uiState.notificationNewEpisodes,
-            enabled = uiState.notificationsEnabled,
+            enabled = false,
             onCheckedChange = { viewModel.updateNotificationNewEpisodes(it) }
         )
         Divider(color = Color.White.copy(alpha = 0.06f), modifier = Modifier.padding(start = 16.dp))
         SettingsSwitchRow(
             title = "New seasons",
-            subtitle = "When a new season of a show you follow arrives",
+            subtitle = "Automatic scheduling is not available yet",
             checked = uiState.notificationsEnabled && uiState.notificationNewSeasons,
-            enabled = uiState.notificationsEnabled,
+            enabled = false,
             onCheckedChange = { viewModel.updateNotificationNewSeasons(it) }
         )
         Divider(color = Color.White.copy(alpha = 0.06f), modifier = Modifier.padding(start = 16.dp))
         SettingsSwitchRow(
             title = "TV guide reminders",
-            subtitle = "Reminders for scheduled premieres",
+            subtitle = "Automatic scheduling is not available yet",
             checked = uiState.notificationsEnabled && uiState.notificationTvGuideReminders,
-            enabled = uiState.notificationsEnabled,
+            enabled = false,
             onCheckedChange = { viewModel.updateNotificationTvGuideReminders(it) }
         )
     }
 
     Text(
-        "Release announcements always reach you even when notifications are paused — they are how the app tells you about new versions.",
+        "Essential release/security messages use a separate Android channel. Android permission and channel settings still control delivery. Automatic episode and premiere reminder scheduling is not available yet.",
         style = MaterialTheme.typography.labelSmall,
         color = MutedText,
         modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp)
@@ -682,8 +925,11 @@ private fun DataStoragePage(viewModel: SettingsViewModel, uiState: SettingsUiSta
 
     SettingsHeader("STORAGE & CACHE")
     SettingsGroup {
-        SettingsTextRow(title = "App & watch history", value = uiState.storageUsed)
+        SettingsTextRow(title = "Total app storage", value = uiState.storageUsed)
         SettingsTextRow(title = "Cache size", value = uiState.cacheSize)
+        SettingsTextRow(title = "Downloads on this profile", value = uiState.downloadedSize)
+        SettingsTextRow(title = "Free device storage", value = uiState.freeStorage)
+        SettingsActionRow("Refresh storage figures") { viewModel.refreshSizes() }
         Divider(color = Color.White.copy(alpha = 0.06f), modifier = Modifier.padding(start = 16.dp))
         SettingsSelectRow(
             title = "Cache size limit",
@@ -701,7 +947,6 @@ private fun DataStoragePage(viewModel: SettingsViewModel, uiState: SettingsUiSta
         })
         SettingsActionRow(title = "Clear image & app cache", onClick = {
             viewModel.clearCache()
-            scope.launch { messenger?.show("All cache cleared", VistaMessageKind.SUCCESS) }
         })
         SettingsActionRow(title = "Watch history", onClick = {
             navController.navigate(Screen.WatchHistory.route)
@@ -734,6 +979,13 @@ private fun AppearancePage(viewModel: SettingsViewModel, uiState: SettingsUiStat
             }
         }
     }
+    SettingsHeader("SEASONAL DISCOVERY")
+    SettingsGroup {
+        val date = java.time.LocalDate.now()
+        val year = com.example.vista.motd.FestiveSeason.moment(date)?.seasonYear ?: date.year
+        SettingsSwitchRow("Festive collections", "Curated Home picks and Christmas countdown, November–early January",
+            uiState.hiddenFestiveSeason != year, onCheckedChange = viewModel::setFestiveEnabled)
+    }
     Spacer(modifier = Modifier.height(24.dp))
 }
 
@@ -763,6 +1015,10 @@ private fun PrivacyHistoryPage(viewModel: SettingsViewModel, uiState: SettingsUi
         )
     }
 
+    Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        com.example.vista.support.PrivacyLegalContent()
+    }
+
     if (showClearHistoryDialog) {
         AlertDialog(
             onDismissRequest = { showClearHistoryDialog = false },
@@ -772,7 +1028,6 @@ private fun PrivacyHistoryPage(viewModel: SettingsViewModel, uiState: SettingsUi
                 TextButton(onClick = {
                     viewModel.clearHistory()
                     showClearHistoryDialog = false
-                    scope.launch { messenger?.show("Watch history cleared", VistaMessageKind.SUCCESS) }
                 }) {
                     Text("Clear History", color = Accent)
                 }
@@ -795,7 +1050,6 @@ private fun PrivacyHistoryPage(viewModel: SettingsViewModel, uiState: SettingsUi
                 TextButton(onClick = {
                     viewModel.clearSearchHistory()
                     showClearSearchDialog = false
-                    scope.launch { messenger?.show("Search history cleared", VistaMessageKind.SUCCESS) }
                 }) {
                     Text("Clear Searches", color = Accent)
                 }
@@ -822,6 +1076,11 @@ private fun AboutPage(
     val messenger = rememberVistaMessenger()
     val scope = rememberCoroutineScope()
     val appVersion = com.example.vista.BuildConfig.VERSION_NAME
+    SettingsGroup {
+        SettingsNavRow(Icons.Outlined.Slideshow, Accent, "Replay introduction", "Review what Vista can do and how offline features work") {
+            navController.navigate(Screen.OnboardingReplay.route)
+        }
+    }
     val buildCode = com.example.vista.BuildConfig.VERSION_CODE
     val updateState by InAppUpdateManager.updateState.collectAsStateWithLifecycle()
     var lastSeenChecking by remember { mutableStateOf(false) }
@@ -830,7 +1089,7 @@ private fun AboutPage(
         val checkFinished = lastSeenChecking && updateState is UpdateState.Idle
         lastSeenChecking = updateState is UpdateState.Checking
         if (checkFinished) {
-            scope.launch { messenger?.show("Vista Cinema is up to date", VistaMessageKind.SUCCESS) }
+            scope.launch { messenger?.show("Vista Watch is up to date", VistaMessageKind.SUCCESS) }
         }
     }
 
@@ -855,7 +1114,7 @@ private fun AboutPage(
         }
         Spacer(modifier = Modifier.height(12.dp))
         Text(
-            text = "Vista Cinema",
+            text = "Vista Watch",
             style = MaterialTheme.typography.headlineSmall,
             color = PrimaryText,
             fontWeight = FontWeight.Black
@@ -889,38 +1148,8 @@ private fun AboutPage(
         SettingsTextRow(title = "Developer", value = "LX Obsidian Labs")
     }
 
-    SettingsHeader("LINKS")
-    SettingsGroup {
-        SettingsNavRow(title = "Official Site", onClick = {
-            try {
-                context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://www.lxobsidianportal.co.za")))
-            } catch (_: Exception) {
-                scope.launch { messenger?.show("Unable to open link", VistaMessageKind.ERROR) }
-            }
-        })
-        Divider(color = Color.White.copy(alpha = 0.06f), modifier = Modifier.padding(start = 56.dp))
-        SettingsNavRow(title = "Privacy Policy", onClick = {
-            try {
-                context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://www.lxobsidianportal.co.za/privacy-policy.html")))
-            } catch (_: Exception) {
-                scope.launch { messenger?.show("Unable to open link", VistaMessageKind.ERROR) }
-            }
-        })
-        Divider(color = Color.White.copy(alpha = 0.06f), modifier = Modifier.padding(start = 56.dp))
-        SettingsNavRow(title = "Contact Support", onClick = {
-            try {
-                val intent = Intent(Intent.ACTION_SENDTO).apply {
-                    data = Uri.parse("mailto:")
-                    putExtra(Intent.EXTRA_SUBJECT, "Vista Cinema Support")
-                }
-                context.startActivity(intent)
-            } catch (_: Exception) {
-                scope.launch { messenger?.show("No email app found", VistaMessageKind.ERROR) }
-            }
-        })
-    }
-
     Spacer(modifier = Modifier.height(24.dp))
+    com.example.vista.support.AboutContactContent(onOpenSupport = { viewModel.navigateTo(SettingsPage.SUPPORT) })
     SettingsHeader("DATA SOURCES")
     TmdbAttribution(modifier = Modifier.padding(16.dp))
     BrandAttribution()

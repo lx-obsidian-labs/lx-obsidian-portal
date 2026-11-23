@@ -25,7 +25,7 @@ data class PlaybackErrorRecord(
 )
 
 /**
- * Player Health Monitor for Vista Cinema.
+ * Player Health Monitor for Vista Watch.
  *
  * Records playback errors, tracks failure frequencies per stream/host, and detects recurring issues
  * to trigger automatic recovery strategies and populate diagnostic tools.

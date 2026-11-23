@@ -57,7 +57,7 @@ object ViewUtils {
      * slightly different blurbs across channels is how marketing copy ends up inconsistent.
      */
     fun buildShareMessage(title: String): String =
-        "You're watching this for free? Try Vista Cinema.\n\n" +
+        "You're watching this for free? Try Vista Watch.\n\n" +
             "\"$title\" and thousands more movies and series - all free for now, no subscription needed.\n\n" +
             SITE_URL
 

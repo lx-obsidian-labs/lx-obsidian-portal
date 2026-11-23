@@ -65,7 +65,7 @@ class SharingMilestoneNotifier @Inject constructor(
             .setContentTitle("${milestone.emoji} ${milestone.headline}")
             .setContentText("Tap to share it - message already written")
             .setStyle(NotificationCompat.BigTextStyle().bigText(milestone.shareBody))
-            .setSubText("Vista Cinema")
+            .setSubText("Vista Watch")
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
             .build()

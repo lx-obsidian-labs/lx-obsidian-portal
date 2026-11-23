@@ -1,0 +1,52 @@
+{
+  "researchDate": "2026-10-29",
+  "commercialCostsVerified": false,
+  "unknownCosts": ["NVIDIA production permission and price", "Commercial catalogue licence", "Any content distribution rights/cost", "Actual company tax treatment"],
+  "sources": {
+    "processor": "https://payfast.io/fees/",
+    "inference": "https://developers.cloudflare.com/workers-ai/platform/pricing/",
+    "workers": "https://developers.cloudflare.com/workers/platform/pricing/",
+    "tax": "https://www.sars.gov.za/types-of-tax/value-added-tax/"
+  },
+  "defaults": {
+    "priceZar": 20,
+    "vatRegistered": false,
+    "outputVatRate": 0.15,
+    "processorRate": 0.032,
+    "processorFixedZar": 2,
+    "feeVatRate": 0.15,
+    "feeVatRecoverable": false,
+    "refundReserveRate": 0.02,
+    "supportPerMemberZar": 2,
+    "turnsPerMember": 150,
+    "combinedInputTokensPerTurn": 6000,
+    "combinedOutputTokensPerTurn": 600,
+    "inputUsdPerMillion": 0.293,
+    "outputUsdPerMillion": 2.253,
+    "inferenceRetryMultiplier": 1,
+    "newTrialAccountsPerMonth": 0,
+    "trialTurnsPerAccount": 10,
+    "fxZarPerUsd": 18,
+    "workersFixedUsd": 5,
+    "otherFixedZar": 210,
+    "payoutsPerMonth": 4,
+    "payoutFeeExVatZar": 8.7,
+    "licenceFixedZar": 0,
+    "licencePerMemberZar": 0,
+    "cloudVoiceReplies": 0,
+    "charactersPerVoiceReply": 500,
+    "voiceUsdPerThousandCharacters": 0.03
+  },
+  "scenarios": [
+    {"name": "22 accounts, 25 percent conversion (illustrative)", "registeredAccounts": 22, "conversionRate": 0.25},
+    {"name": "All 22 pay (not a forecast)", "payingMembers": 22},
+    {"name": "Base 100 paying members", "payingMembers": 100},
+    {"name": "Capacity 500 paying members", "payingMembers": 500},
+    {"name": "VAT registered, no assumed fee VAT recovery", "payingMembers": 100, "overrides": {"vatRegistered": true}},
+    {"name": "Heavy inference stress", "payingMembers": 100, "overrides": {"turnsPerMember": 300, "combinedInputTokensPerTurn": 12000, "combinedOutputTokensPerTurn": 1000, "inferenceRetryMultiplier": 1.25}},
+    {"name": "Cloud voice stress", "payingMembers": 100, "overrides": {"cloudVoiceReplies": 150}},
+    {"name": "500 new free trials consume full allowance", "payingMembers": 100, "overrides": {"newTrialAccountsPerMonth": 500}},
+    {"name": "Illustrative unquoted licence allocation", "payingMembers": 100, "overrides": {"licenceFixedZar": 500, "licencePerMemberZar": 2}},
+    {"name": "FX and support stress", "payingMembers": 100, "overrides": {"fxZarPerUsd": 25, "supportPerMemberZar": 5, "inferenceRetryMultiplier": 1.2}}
+  ]
+}

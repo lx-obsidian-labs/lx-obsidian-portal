@@ -144,7 +144,8 @@ data class TmdbMovieDetail(
     val genres: List<TmdbGenre>? = null,
     val status: String? = null,
     @SerializedName("imdb_id") val imdbId: String? = null,
-    @SerializedName("production_companies") val productionCompanies: List<TmdbCompany>? = null
+    @SerializedName("production_companies") val productionCompanies: List<TmdbCompany>? = null,
+    val adult: Boolean = false
 ) {
     fun toDomainMovie(): com.example.vista.domain.model.Movie {
         return com.example.vista.domain.model.Movie(
@@ -161,8 +162,9 @@ data class TmdbMovieDetail(
             voteCount = voteCount ?: 0,
             genres = genres?.map { it.toDomainGenre() } ?: emptyList(),
             cast = emptyList(), // Will be populated separately
-            director = productionCompanies?.firstOrNull()?.name,
-            ageRating = status
+            director = null, // Director comes from credits, never a production-company name.
+            ageRating = null, // Release status is not a regional age certification.
+            isAdult = adult
         )
     }
 }
@@ -240,8 +242,11 @@ data class TmdbCreator(
 // Cast/Credits
 data class TmdbCastResponse(
     val id: Int,
-    val cast: List<TmdbCastMember>? = null
+    val cast: List<TmdbCastMember>? = null,
+    val crew: List<TmdbCrewMember>? = null
 )
+
+data class TmdbCrewMember(val id: Int, val name: String?, val job: String?)
 
 data class TmdbCastMember(
     val id: Int,

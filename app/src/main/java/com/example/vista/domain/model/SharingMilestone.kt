@@ -93,7 +93,7 @@ object MilestoneEngine {
         id = "busy_week",
         emoji = "🔥",
         headline = "$titles titles in one week",
-        shareBody = "I've watched $titles different things in a week on Vista Cinema. " +
+        shareBody = "I've watched $titles different things in a week on Vista Watch. " +
             "That's my kind of weekend - challenge me to do better."
     )
 
@@ -116,7 +116,7 @@ object MilestoneEngine {
         id = "streak_$days",
         emoji = "🔥",
         headline = "$days day streak",
-        shareBody = "I've watched something on Vista Cinema $days days in a row. " +
+        shareBody = "I've watched something on Vista Watch $days days in a row. " +
             "Not going to let a streak die - come beat it."
     )
 
@@ -124,7 +124,7 @@ object MilestoneEngine {
         id = "completed_$titles",
         emoji = "🏆",
         headline = "$titles titles finished",
-        shareBody = "Just finished my ${titles}th title on Vista Cinema. " +
+        shareBody = "Just finished my ${titles}th title on Vista Watch. " +
             "The recommendations are dangerously accurate. What's your count?"
     )
 }

@@ -31,14 +31,23 @@ import java.util.Locale
 /**
  * Premium transition announcement for 1.0.5.
  *
- * Vista Cinema becomes a R20/month premium product on 1 January 2027 (local time). A live
+ * Vista Watch premium planning information. A live
  * countdown runs everywhere the announcement appears so the change always feels current and
  * intentional rather than a wall of copy.
  */
+enum class LaunchStatus {
+    PLANNED,
+    LIVE,
+    PAUSED
+}
+
 object PremiumPlan {
 
     const val PRICE_PER_MONTH_ZAR = 20
     const val CURRENCY = "R"
+
+    /** Server launch status override. Default PLANNED until verified server activation. */
+    var serverLaunchStatus: LaunchStatus = LaunchStatus.PLANNED
 
     fun launchMillis(): Long = run {
         val c = Calendar.getInstance()
@@ -61,6 +70,10 @@ object PremiumPlan {
             minutes = (totalSeconds % 3_600L) / 60L,
             seconds = totalSeconds % 60L
         )
+    }
+
+    fun isLive(): Boolean {
+        return serverLaunchStatus == LaunchStatus.LIVE
     }
 
     fun priceLabel(): String = "$CURRENCY$PRICE_PER_MONTH_ZAR / month"
@@ -97,7 +110,7 @@ fun PremiumPromptDialog(
         },
         title = {
             Text(
-                text = "Vista Cinema is going Premium",
+                text = "Vista Watch is going Premium",
                 color = PrimaryText,
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Black,
@@ -107,6 +120,11 @@ fun PremiumPromptDialog(
         },
         text = {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                if (com.example.vista.artwork.rememberArtworkResource(com.example.vista.artwork.VistaArtwork.PREMIUM) != null) {
+                    com.example.vista.artwork.VistaHeroBackground(com.example.vista.artwork.VistaArtwork.PREMIUM,
+                        Modifier.fillMaxWidth().height(160.dp))
+                    Spacer(Modifier.height(16.dp))
+                }
                 Text(
                     text = "From 1 January 2027, Vista becomes ${PremiumPlan.priceLabel()}. We're building a quieter, faster, richer experience for the stories you love.",
                     color = SecondaryText,
@@ -117,7 +135,7 @@ fun PremiumPromptDialog(
 
                 Spacer(modifier = Modifier.height(20.dp))
 
-                if (remaining.isZero) {
+                if (PremiumPlan.isLive()) {
                     Text(
                         text = "Premium is live — welcome to the next chapter.",
                         color = Accent,
@@ -227,7 +245,7 @@ fun PremiumCard(
                     Spacer(modifier = Modifier.width(12.dp))
                     Column {
                         Text(
-                            text = "Vista Cinema is going Premium",
+                            text = "Vista Watch is going Premium",
                             style = MaterialTheme.typography.titleSmall,
                             color = PrimaryText,
                             fontWeight = FontWeight.Bold
@@ -246,7 +264,7 @@ fun PremiumCard(
                     )
                 }
 
-                if (!remaining.isZero) {
+                if (!PremiumPlan.isLive()) {
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
                         text = "Premium launches in",

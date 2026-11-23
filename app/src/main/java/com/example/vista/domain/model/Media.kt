@@ -26,7 +26,9 @@ data class AppSettings(
     val showAdultContent: Boolean = false,
     val dataSaverMode: Boolean = false,
     val autoResume: Boolean = true,
-    val cacheLimitMb: Int = 500
+    val cacheLimitMb: Int = 500,
+    val ageBand: AgeBand = AgeBand.ADULT,
+    val kidsMode: Boolean = false
 )
 
 data class Viewer(
@@ -41,6 +43,12 @@ data class Viewer(
     val personalizationEnabled: Boolean = true,
     val moderationStatus: String = "approved"
 )
+
+enum class AgeBand(val displayName: String, val description: String) {
+    CHILD("Kids", "Under 13 — only family-friendly titles"),
+    TEEN("Teen", "13–17 — no adult or 18+ titles"),
+    ADULT("Adult", "18+ — full catalog")
+}
 
 enum class AppTheme(val displayName: String) {
     DARK("Dark"),
@@ -237,7 +245,9 @@ data class HomeSection(
     val id: String,
     val title: String,
     val type: HomeSectionType,
-    val items: List<MediaItem>
+    val items: List<MediaItem>,
+    val isSavedCatalog: Boolean = false,
+    val catalogSavedAt: Long? = null
 )
 
 enum class HomeSectionType {
@@ -267,7 +277,8 @@ sealed class MediaItem {
         val year: Int?,
         val duration: String?,
         val backdropUrl: String?,
-        val ageRating: String? = null
+        val ageRating: String? = null,
+        val isAdult: Boolean = false
     ) : MediaItem()
 
     data class SeriesItem(
@@ -332,7 +343,8 @@ fun Movie.toMediaItem(): MediaItem.MovieItem {
         year = releaseYear,
         duration = runtimeMinutes?.let { "${it}m" },
         backdropUrl = backdropUrl,
-        ageRating = ageRating
+        ageRating = ageRating,
+        isAdult = isAdult
     )
 }
 

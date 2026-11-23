@@ -3,6 +3,7 @@ package com.example.vista.ui.seeall
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.vista.data.local.PreferencesManager
 import com.example.vista.domain.model.*
 import com.example.vista.domain.repository.CatalogRepository
 import com.example.vista.domain.repository.WatchlistRepository
@@ -25,9 +26,11 @@ data class SeeAllUiState(
 class SeeAllViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val catalogRepository: CatalogRepository,
-    private val watchlistRepository: WatchlistRepository
+    private val watchlistRepository: WatchlistRepository,
+    private val preferencesManager: PreferencesManager
 ) : ViewModel() {
 
+    private var contentAccessSettings = AppSettings()
     private val sectionId: String = savedStateHandle["sectionId"] ?: ""
     private val title: String = savedStateHandle["title"] ?: ""
 
@@ -35,11 +38,24 @@ class SeeAllViewModel @Inject constructor(
     val uiState: StateFlow<SeeAllUiState> = _uiState.asStateFlow()
 
     private val _watchlistKeys = MutableStateFlow<Set<String>>(emptySet())
+    private var loadJob: kotlinx.coroutines.Job? = null
     val watchlistKeys: StateFlow<Set<String>> = _watchlistKeys.asStateFlow()
 
     init {
         loadContent(page = 1, isInitial = true)
         observeWatchlist()
+        observeContentAccess()
+    }
+
+    private fun observeContentAccess() {
+        viewModelScope.launch {
+            preferencesManager.settings.distinctUntilChanged().collect { settings ->
+                contentAccessSettings = settings
+                _uiState.update { state ->
+                    state.copy(items = state.items.filter { item -> ContentAccessPolicy.allows(settings, item) })
+                }
+            }
+        }
     }
 
     private fun observeWatchlist() {
@@ -61,7 +77,8 @@ class SeeAllViewModel @Inject constructor(
     }
 
     private fun loadContent(page: Int = 1, isInitial: Boolean = true) {
-        viewModelScope.launch {
+        if (loadJob?.isActive == true) return
+        loadJob = viewModelScope.launch {
             if (isInitial) {
                 _uiState.update { it.copy(
                     isLoading = true,
@@ -71,13 +88,15 @@ class SeeAllViewModel @Inject constructor(
                     hasMore = true
                 ) }
             } else {
-                _uiState.update { it.copy(isLoadingMore = true) }
+                _uiState.update { it.copy(isLoadingMore = true, error = null) }
             }
             try {
                 // Resolved from the shared section registry instead of a private id map, so a row
                 // renamed on the home screen can never open an empty "See All" page here.
                 val section = CatalogSection.fromId(sectionId)
-                val content = section?.let { catalogRepository.getSection(it, page) }.orEmpty()
+                val content = section?.let { catalogRepository.getSection(it, page) }
+                    ?.filter { item -> ContentAccessPolicy.allows(contentAccessSettings, item) }
+                    .orEmpty()
                 if (section == null) {
                     _uiState.update {
                         it.copy(
@@ -107,12 +126,13 @@ class SeeAllViewModel @Inject constructor(
                         )
                     }
                 }
-            } catch (e: Exception) {
+            } catch (e: kotlinx.coroutines.CancellationException) { throw e }
+            catch (e: Exception) {
                 _uiState.update {
                     it.copy(
                         isLoading = false,
                         isLoadingMore = false,
-                        error = if (isInitial) e.message ?: "Failed to load content" else it.error
+                        error = e.message ?: "Please check your connection and try again."
                     )
                 }
             }
@@ -120,11 +140,16 @@ class SeeAllViewModel @Inject constructor(
     }
 
     fun loadMore() {
-        if (_uiState.value.isLoadingMore || !_uiState.value.hasMore) return
+        if (_uiState.value.isLoading || _uiState.value.isLoadingMore || !_uiState.value.hasMore || _uiState.value.error != null) return
         loadContent(page = _uiState.value.currentPage + 1, isInitial = false)
     }
 
     fun retry() {
         loadContent(page = 1, isInitial = true)
+    }
+
+    fun retryLoadMore() {
+        if (_uiState.value.isLoading || _uiState.value.isLoadingMore || !_uiState.value.hasMore) return
+        loadContent(page = _uiState.value.currentPage + 1, isInitial = false)
     }
 }

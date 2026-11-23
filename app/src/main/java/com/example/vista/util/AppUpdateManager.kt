@@ -52,6 +52,7 @@ object InAppUpdateManager {
     private const val APK_FILE_NAME = "VistaCinema-update.apk"
     private const val PREFS_NAME = "vista_update_prefs"
     private const val KEY_DISMISSED_CODE = "dismissed_version_code"
+    private const val TEN_MINUTES_MS = 10L * 60 * 1000
 
     private val _updateState = MutableStateFlow<UpdateState>(UpdateState.Idle)
     val updateState: StateFlow<UpdateState> = _updateState.asStateFlow()
@@ -70,6 +71,12 @@ object InAppUpdateManager {
     // launch; one network check is enough for all of them.
     private const val RECENT_CHECK_WINDOW_MS = 30_000L
 
+    private suspend fun clearCheckingState() {
+        withContext(Dispatchers.Main) {
+            if (_updateState.value is UpdateState.Checking) _updateState.value = UpdateState.Idle
+        }
+    }
+
     /**
      * Each operation gets a fresh scope so destroying an Activity can never
      * permanently cancel the singleton's coroutines.
@@ -77,7 +84,9 @@ object InAppUpdateManager {
     fun checkForUpdates(context: Context, force: Boolean = false) {
         if (!force && System.currentTimeMillis() - lastCheckStartedAt < RECENT_CHECK_WINDOW_MS) return
         if (_updateState.value is UpdateState.Checking ||
-            _updateState.value is UpdateState.Downloading
+            _updateState.value is UpdateState.Downloading ||
+            _updateState.value is UpdateState.DownloadComplete ||
+            _updateState.value is UpdateState.UpdateAvailable
         ) return
         lastCheckStartedAt = System.currentTimeMillis()
         _updateState.value = UpdateState.Checking
@@ -93,11 +102,11 @@ object InAppUpdateManager {
 
                 client.newCall(request).execute().use { response ->
                     if (!response.isSuccessful) {
-                        withContext(Dispatchers.Main) { _updateState.value = UpdateState.Idle }
+                        clearCheckingState()
                         return@launch
                     }
                     val body = response.body?.string() ?: run {
-                        withContext(Dispatchers.Main) { _updateState.value = UpdateState.Idle }
+                        clearCheckingState()
                         return@launch
                     }
                     val json = JSONObject(body)
@@ -129,13 +138,19 @@ object InAppUpdateManager {
                     withContext(Dispatchers.Main) { _updateState.value = result }
                 }
             } catch (e: Exception) {
-                withContext(Dispatchers.Main) { _updateState.value = UpdateState.Idle }
+                clearCheckingState()
             }
         }
     }
 
     /** Downloads the latest APK via [DownloadManager], reporting progress. */
     fun downloadUpdate(context: Context, downloadUrl: String) {
+        val uri = runCatching { Uri.parse(downloadUrl) }.getOrNull()
+        val expectedHost = Uri.parse(BASE_URL).host
+        if (uri?.scheme != "https" || uri.host != expectedHost) {
+            _updateState.value = UpdateState.Failed("Update source is not trusted")
+            return
+        }
         _updateState.value = UpdateState.Downloading(0)
 
         val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
@@ -145,7 +160,7 @@ object InAppUpdateManager {
         if (targetFile.exists()) targetFile.delete()
 
         val request = DownloadManager.Request(Uri.parse(downloadUrl))
-            .setTitle("Updating Vista Cinema")
+            .setTitle("Updating Vista Watch")
             .setDescription("Downloading latest version...")
             .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
             .setDestinationUri(Uri.fromFile(targetFile))
@@ -158,10 +173,18 @@ object InAppUpdateManager {
 
         CoroutineScope(Dispatchers.IO + SupervisorJob()).launch {
             var downloading = true
+            val deadline = System.currentTimeMillis() + TEN_MINUTES_MS
             while (downloading) {
+                if (System.currentTimeMillis() > deadline) {
+                    downloading = false
+                    withContext(Dispatchers.Main) { _updateState.value = UpdateState.Failed("Download timed out") }
+                    break
+                }
+                var sawRow = false
                 val cursor: Cursor = downloadManager.query(query)
                 try {
                     if (cursor.moveToFirst()) {
+                        sawRow = true
                         val status = cursor.getInt(
                             cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_STATUS)
                         )
@@ -195,8 +218,15 @@ object InAppUpdateManager {
                             }
                         }
                     }
+                } catch (_: Exception) {
+                    downloading = false
+                    withContext(Dispatchers.Main) { _updateState.value = UpdateState.Failed("Download interrupted") }
                 } finally {
                     cursor.close()
+                }
+                if (downloading && !sawRow) {
+                    downloading = false
+                    withContext(Dispatchers.Main) { _updateState.value = UpdateState.Failed("Download was cancelled") }
                 }
                 if (downloading) delay(1000)
             }

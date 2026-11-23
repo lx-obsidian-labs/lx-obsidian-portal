@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
+@file:OptIn(ExperimentalMaterial3Api::class, androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
 
 package com.example.vista.ui.player
 
@@ -10,6 +10,7 @@ import android.webkit.WebViewClient
 import android.widget.FrameLayout
 import androidx.compose.foundation.BorderStroke
 import com.example.vista.data.remote.playback.EmbedOrigins
+import com.example.vista.data.remote.playback.EmbedAdPolicy
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -28,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -111,9 +113,52 @@ fun PlayerScreen(
     val context = LocalContext.current
     val activity = context as? android.app.Activity
     val lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+    val lifecycleState by lifecycleOwner.lifecycle.currentStateFlow.collectAsStateWithLifecycle()
+    val isTv = com.example.vista.util.LocalTvConfiguration.current.isTv
 
     var exoPlayer by remember { mutableStateOf<ExoPlayer?>(null) }
+    var nativePlayerView by remember { mutableStateOf<PlayerView?>(null) }
+    var embeddedPlayerView by remember { mutableStateOf<WebView?>(null) }
+    var showPlaybackSettings by remember { mutableStateOf(false) }
+    var autoplayCancelled by remember(uiState.mediaId, uiState.seasonNumber, uiState.episodeNumber) { mutableStateOf(false) }
+    var autoplayRemaining by remember { mutableStateOf<Int?>(null) }
+    var showTvHint by remember(uiState.selectedSource?.url, uiState.sourceGeneration) { mutableStateOf(true) }
+    var playbackEnded by remember(uiState.selectedSource?.url, uiState.sourceGeneration) { mutableStateOf(false) }
     var isPipMode by remember { mutableStateOf(false) }
+
+    fun playNextEpisode() {
+        val next = uiState.nextEpisode ?: return
+        if (uiState.guestLimitReached || uiState.needsDataConsent) return
+        val currentPlayer = navController.currentDestination?.id ?: return
+        autoplayCancelled = true
+        navController.navigate(Screen.Player.createRoute(
+            mediaId = uiState.mediaId, title = uiState.title,
+            mediaType = com.example.vista.domain.model.MediaType.SERIES,
+            season = next.seasonNumber, episode = next.episodeNumber, poster = next.thumbnailUrl
+        )) { popUpTo(currentPlayer) { inclusive = true }; launchSingleTop = true }
+    }
+
+    // Autoplay belongs to the playback lifecycle, not the visibility of the controls overlay.
+    LaunchedEffect(playbackEnded, uiState.autoplayNext, uiState.nextEpisode, lifecycleState, autoplayCancelled,
+        uiState.guestLimitReached, uiState.needsDataConsent, uiState.error, uiState.isRecovering) {
+        autoplayRemaining = null
+        if (!autoplayCancelled && com.example.vista.data.playback.PlaybackUiPolicy.canAutoplay(
+                playbackEnded, uiState.autoplayNext, uiState.nextEpisode != null,
+                lifecycleState.isAtLeast(androidx.lifecycle.Lifecycle.State.RESUMED),
+                uiState.guestLimitReached, uiState.needsDataConsent, uiState.error != null, uiState.isRecovering)) {
+            for (seconds in 3 downTo 1) { autoplayRemaining = seconds; delay(1_000) }
+            autoplayRemaining = null
+            playNextEpisode()
+        }
+    }
+
+    LaunchedEffect(showTvHint) { if (showTvHint) { delay(4_000); showTvHint = false } }
+    LaunchedEffect(uiState.showControls, uiState.isPlaying, uiState.selectedSource, uiState.sourceGeneration) {
+        if (uiState.showControls && uiState.isPlaying && (!isTv || uiState.selectedSource?.type == StreamType.OTHER)) {
+            delay(3_000)
+            viewModel.hideControls()
+        }
+    }
 
     // ---- Playback brightness (accessibility) ------------------------------------------------
     // The window brightness override is per-activity, so it is applied here and reset on exit
@@ -189,7 +234,12 @@ fun PlayerScreen(
     }
 
     androidx.activity.compose.BackHandler {
-        navController.popBackStack()
+        when {
+            showPlaybackSettings -> { showPlaybackSettings = false; embeddedPlayerView?.requestFocus() }
+            autoplayRemaining != null -> { autoplayCancelled = true; autoplayRemaining = null }
+            isTv && uiState.showControls -> { nativePlayerView?.hideController(); viewModel.hideControls(); embeddedPlayerView?.requestFocus() }
+            else -> navController.popBackStack()
+        }
     }
 
     if (uiState.guestLimitReached) {
@@ -203,6 +253,26 @@ fun PlayerScreen(
         )
     }
 
+    if (uiState.needsDataConsent) {
+        AlertDialog(
+            onDismissRequest = { navController.popBackStack() },
+            title = { Text("Use mobile or metered data?") },
+            text = { Text("Streaming video can use a lot of data. Allow it for this viewing session? You can reduce quality or enable Data Saver in Settings.") },
+            confirmButton = { TextButton(onClick = viewModel::allowMeteredPlayback) { Text("Use data") } },
+            dismissButton = { TextButton(onClick = { navController.popBackStack() }) { Text("Go back") } }
+        )
+    }
+
+    if (isTv && showPlaybackSettings) TvPlaybackOptions(
+        sources = uiState.streamSources, selected = uiState.selectedSource, autoplay = uiState.autoplayNext,
+        hasNextEpisode = uiState.nextEpisode != null,
+        onSelect = { viewModel.onSourceChange(it); showPlaybackSettings = false },
+        onAutoplayChange = viewModel::setAutoplayNext,
+        onNextEpisode = { showPlaybackSettings = false; playNextEpisode() },
+        onHelp = { showPlaybackSettings = false; exoPlayer?.pause(); navController.navigate(Screen.Support.route) },
+        onDismiss = { showPlaybackSettings = false; embeddedPlayerView?.requestFocus() }
+    )
+
     // Keep the real player in step with the transport controls: the play/pause toggle and speed
     // changes previously updated the UI state only, leaving the player untouched.
     LaunchedEffect(uiState.isPlaying, exoPlayer) {
@@ -212,6 +282,18 @@ fun PlayerScreen(
 
     LaunchedEffect(uiState.playbackSpeed, exoPlayer) {
         exoPlayer?.setPlaybackSpeed(uiState.playbackSpeed)
+    }
+
+    LaunchedEffect(uiState.selectedQuality, uiState.subtitleEnabled, uiState.subtitleLanguage, uiState.audioLanguage, exoPlayer) {
+        val player = exoPlayer ?: return@LaunchedEffect
+        val maxHeight = com.example.vista.domain.model.PlaybackPreferencesPolicy.maxHeight(uiState.selectedQuality)
+        player.trackSelectionParameters = player.trackSelectionParameters.buildUpon()
+            .setMaxVideoSize(Int.MAX_VALUE, maxHeight)
+            .setTrackTypeDisabled(androidx.media3.common.C.TRACK_TYPE_TEXT, !uiState.subtitleEnabled)
+            .setPreferredTextLanguage(com.example.vista.domain.model.PlaybackPreferencesPolicy.language(uiState.subtitleLanguage))
+            .setSelectUndeterminedTextLanguage(uiState.subtitleEnabled)
+            .setPreferredAudioLanguage(com.example.vista.domain.model.PlaybackPreferencesPolicy.language(uiState.audioLanguage))
+            .build()
     }
 
     /**
@@ -252,6 +334,14 @@ fun PlayerScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
+            .onPreviewKeyEvent { event ->
+                val key = event.nativeKeyEvent
+                if (isTv && com.example.vista.data.playback.PlaybackUiPolicy.opensTvOptions(
+                        key.keyCode, key.action == android.view.KeyEvent.ACTION_DOWN, key.isLongPress)) {
+                    showPlaybackSettings = true
+                    true
+                } else false
+            }
     ) {
         // Brightness panel: an explicit, labelled control rather than a hidden gesture, so it is
         // reachable by screen readers as well as by touch.
@@ -312,15 +402,18 @@ fun PlayerScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 CircularProgressIndicator(color = Accent)
-                if (uiState.isRecovering) {
-                    Spacer(modifier = Modifier.height(12.dp))
-                    Text("Verifying stream & recovering playback...", color = SecondaryText, style = MaterialTheme.typography.bodySmall)
-                }
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(if (uiState.isRecovering) "Getting you back to the story" else "Finding your stream",
+                    color = PrimaryText, style = MaterialTheme.typography.titleMedium)
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(if (uiState.isRecovering) "Checking this source and restoring playback…" else "Checking available playback sources…",
+                    color = SecondaryText, style = MaterialTheme.typography.bodySmall)
             }
         } else if (uiState.error != null) {
             Column(
                 modifier = Modifier
                     .align(Alignment.Center)
+                    .widthIn(max = 560.dp)
                     .padding(24.dp)
                     .background(CardSurface, RoundedCornerShape(16.dp))
                     .padding(24.dp),
@@ -333,6 +426,9 @@ fun PlayerScreen(
                     modifier = Modifier.size(40.dp)
                 )
                 Spacer(modifier = Modifier.height(12.dp))
+                Text("Let's get playback working", color = PrimaryText,
+                    style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
+                Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = ViewUtils.formatError(uiState.error),
                     color = PrimaryText,
@@ -340,9 +436,9 @@ fun PlayerScreen(
                     textAlign = androidx.compose.ui.text.style.TextAlign.Center
                 )
                 Spacer(modifier = Modifier.height(16.dp))
-                Row(
+                FlowRow(
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     if (uiState.canRepairManually) Button(
                         onClick = {
@@ -365,9 +461,24 @@ fun PlayerScreen(
                         ) {
                             Text("Switch Server", color = PrimaryText)
                         }
+                    } else if (uiState.streamSources.isEmpty()) {
+                        OutlinedButton(
+                            onClick = {
+                                viewModel.clearError()
+                                navController.navigate(Screen.Search.createRoute(uiState.title)) {
+                                    popUpTo(Screen.Home.route)
+                                }
+                            },
+                            shape = RoundedCornerShape(10.dp)
+                        ) {
+                            Text("Find Alternatives", color = PrimaryText)
+                        }
                     }
-                    TextButton(onClick = { viewModel.clearError() }) {
-                        Text("Dismiss", color = MutedText)
+                    TextButton(onClick = {
+                        viewModel.clearError()
+                        navController.popBackStack()
+                    }) {
+                        Text("Go Back", color = MutedText)
                     }
                 }
             }
@@ -384,41 +495,49 @@ fun PlayerScreen(
                     AndroidView(
                         factory = { ctx ->
                             WebView(ctx).apply {
+                                embeddedPlayerView = this
+                                isFocusable = true
+                                isFocusableInTouchMode = true
                                 layoutParams = ViewGroup.LayoutParams(
                                     ViewGroup.LayoutParams.MATCH_PARENT,
                                     ViewGroup.LayoutParams.MATCH_PARENT
                                 )
                                 webViewClient = object : WebViewClient() {
-                                    /**
-                                     * Advertising and analytics hosts, refused so they neither load nor
-                                     * track. Not a security control - see [isTopLevelNavigationAllowed]
-                                     * for that.
-                                     */
-                                    private val adDomains = listOf(
-                                        "doubleclick.net", "googleadservices.com", "googlesyndication.com",
-                                        "moatads.com", "popads.net", "propellerads.com", "adsterra.com",
-                                        "exoclick.com", "juicyads.com", "onclickads.net", "adnxs.com",
-                                        "adnuntius.com", "taboola.com", "outbrain.com", "histats.com",
-                                        "popcash.net", "revcontent.com", "mgid.com", "zedo.com"
-                                    )
+                                    override fun onPageCommitVisible(view: WebView?, url: String?) {
+                                        super.onPageCommitVisible(view, url)
+                                        view?.evaluateJavascript(EmbedAdPolicy.cleanupScript, null)
+                                    }
+
+                                    override fun onPageFinished(view: WebView?, url: String?) {
+                                        super.onPageFinished(view, url)
+                                        view?.evaluateJavascript(EmbedAdPolicy.cleanupScript, null)
+                                        if (isTv) { viewModel.setControlsVisible(false, uiState.sourceGeneration); view?.requestFocus() }
+                                    }
+
+                                    override fun onPageStarted(view: WebView?, url: String?, favicon: android.graphics.Bitmap?) {
+                                        if (url != null && url != "about:blank" && !EmbedOrigins.allowsTopLevel(url)) {
+                                            view?.stopLoading()
+                                            return
+                                        }
+                                        super.onPageStarted(view, url, favicon)
+                                    }
 
                                     /**
                                      * True when a main-frame navigation stays on the provider host that
                                      * the app itself asked for. See [EmbedOrigins] for why only the
                                      * main frame is restricted.
                                      */
-                                    private fun isTopLevelNavigationAllowed(url: String): Boolean =
-                                        EmbedOrigins.allowsTopLevel(url)
+                                    @Suppress("DEPRECATION")
+                                    override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean =
+                                        com.example.vista.data.remote.playback.EmbedNavigationPolicy.blocks(url.orEmpty(), mainFrame = true)
 
                                     override fun shouldOverrideUrlLoading(
                                         view: WebView?,
                                         request: android.webkit.WebResourceRequest?
                                     ): Boolean {
                                         val url = request?.url?.toString().orEmpty()
-                                        if (request?.isForMainFrame == true) {
-                                            return !isTopLevelNavigationAllowed(url)
-                                        }
-                                        return adDomains.any { url.contains(it) }
+                                        return com.example.vista.data.remote.playback.EmbedNavigationPolicy.blocks(url,
+                                            mainFrame = request?.isForMainFrame != false)
                                     }
 
                                     override fun shouldInterceptRequest(
@@ -426,7 +545,7 @@ fun PlayerScreen(
                                         request: android.webkit.WebResourceRequest?
                                     ): android.webkit.WebResourceResponse? {
                                         val url = request?.url?.toString().orEmpty()
-                                        if (adDomains.any { url.contains(it) }) {
+                                        if (com.example.vista.data.remote.playback.EmbedNavigationPolicy.blocks(url, request?.isForMainFrame == true)) {
                                             return android.webkit.WebResourceResponse("text/plain", "UTF-8", null)
                                         }
                                         // Belt and braces alongside the network security config: refuse a
@@ -435,6 +554,7 @@ fun PlayerScreen(
                                         if (EmbedOrigins.isCleartext(url)) {
                                             return android.webkit.WebResourceResponse("text/plain", "UTF-8", null)
                                         }
+                                        if (request != null) viewModel.onEmbeddedMedia(source.url, uiState.sourceGeneration, url, request.requestHeaders)
                                         return super.shouldInterceptRequest(view, request)
                                     }
 
@@ -486,11 +606,37 @@ fun PlayerScreen(
                                     setGeolocationEnabled(false)
                                     userAgentString = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36"
                                 }
+                                // Provider download/app-install ads never launch an external downloader/browser.
+                                setDownloadListener { _, _, _, _, _ -> }
+                                setOnTouchListener { _, event ->
+                                    if (!isTv && event.action == android.view.MotionEvent.ACTION_DOWN) viewModel.setControlsVisible(true)
+                                    false
+                                }
+                                setOnKeyListener { _, code, event ->
+                                    if (isTv && com.example.vista.data.playback.PlaybackUiPolicy.opensTvOptions(
+                                            code, event.action == android.view.KeyEvent.ACTION_DOWN, event.isLongPress)) {
+                                        showPlaybackSettings = true
+                                        true
+                                    } else false
+                                }
+                                post { if (isTv) requestFocus() }
+                                // Runs before provider scripts, including in cross-origin player
+                                // frames. Older WebViews retain the page-callback fallback above.
+                                if (androidx.webkit.WebViewFeature.isFeatureSupported(
+                                        androidx.webkit.WebViewFeature.DOCUMENT_START_SCRIPT
+                                    )) {
+                                    androidx.webkit.WebViewCompat.addDocumentStartJavaScript(
+                                        this, EmbedAdPolicy.cleanupScript, setOf("*")
+                                    )
+                                }
                                 loadUrl(source.url)
                             }
                         },
                         modifier = Modifier.fillMaxSize(),
-                        onRelease = { webView ->
+                         onRelease = { webView ->
+                            if (embeddedPlayerView == webView) embeddedPlayerView = null
+                            webView.webViewClient = WebViewClient()
+                            webView.webChromeClient = null
                             webView.stopLoading()
                             webView.loadUrl("about:blank")
                             webView.clearHistory()
@@ -507,8 +653,20 @@ fun PlayerScreen(
                                     ViewGroup.LayoutParams.MATCH_PARENT,
                                     ViewGroup.LayoutParams.MATCH_PARENT
                                 )
-                                useController = true
+                                nativePlayerView = this
+                                useController = isTv
                                 controllerShowTimeoutMs = 3000
+                                controllerAutoShow = true
+                                controllerHideOnTouch = true
+                                if (isTv) {
+                                    setControllerVisibilityListener(PlayerView.ControllerVisibilityListener { visibility ->
+                                        viewModel.setControlsVisible(visibility == android.view.View.VISIBLE, uiState.sourceGeneration)
+                                    })
+                                    requestFocus()
+                                } else setOnTouchListener { _, event ->
+                                    if (event.action == android.view.MotionEvent.ACTION_UP) viewModel.setControlsVisible(true)
+                                    true
+                                }
 
                                 val http = androidx.media3.datasource.DefaultHttpDataSource.Factory()
                                     .setDefaultRequestProperties(source.headers)
@@ -518,6 +676,9 @@ fun PlayerScreen(
                                     .setMediaSourceFactory(androidx.media3.exoplayer.source.DefaultMediaSourceFactory(http))
                                     .build()
                                 player.addListener(object : androidx.media3.common.Player.Listener {
+                                    override fun onPlaybackStateChanged(playbackState: Int) {
+                                        playbackEnded = playbackState == androidx.media3.common.Player.STATE_ENDED
+                                    }
                                     override fun onPlayerError(error: androidx.media3.common.PlaybackException) {
                                         viewModel.onPlayerException(error)
                                     }
@@ -545,10 +706,26 @@ fun PlayerScreen(
                             }
                         },
                         modifier = Modifier.fillMaxSize(),
-                        onRelease = { playerView ->
+                         onRelease = { playerView ->
+                            playerView.setControllerVisibilityListener(null as PlayerView.ControllerVisibilityListener?)
+                            if (nativePlayerView == playerView) nativePlayerView = null
                             playerView.player?.release()
                             if (exoPlayer == playerView.player) {
                                 exoPlayer = null
+                            }
+                        },
+                        update = { playerView ->
+                            val color = when (uiState.subtitleColor.lowercase()) {
+                                "yellow" -> android.graphics.Color.YELLOW; "cyan" -> android.graphics.Color.CYAN
+                                "green" -> android.graphics.Color.GREEN; "pink" -> 0xFFFF80AB.toInt()
+                                "red" -> android.graphics.Color.RED; else -> android.graphics.Color.WHITE
+                            }
+                            playerView.subtitleView?.apply {
+                                setApplyEmbeddedStyles(false)
+                                setFixedTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, uiState.subtitleSize)
+                                setStyle(androidx.media3.ui.CaptionStyleCompat(color, android.graphics.Color.TRANSPARENT,
+                                    android.graphics.Color.TRANSPARENT, androidx.media3.ui.CaptionStyleCompat.EDGE_TYPE_OUTLINE,
+                                    android.graphics.Color.BLACK, null))
                             }
                         }
                     )
@@ -558,7 +735,7 @@ fun PlayerScreen(
             }
 
             // Custom Video Controls Overlay - Aesthetic & Functional
-            if (uiState.showControls) {
+            if (!isTv && !isPipMode && uiState.showControls && uiState.selectedSource?.type != StreamType.OTHER) {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
@@ -603,16 +780,7 @@ fun PlayerScreen(
                         val nextEpisode = uiState.nextEpisode
                         if (nextEpisode != null) {
                             IconButton(onClick = {
-                                navController.navigate(Screen.Player.createRoute(
-                                    mediaId = uiState.mediaId,
-                                    title = uiState.title,
-                                    mediaType = com.example.vista.domain.model.MediaType.SERIES,
-                                    season = nextEpisode.seasonNumber,
-                                    episode = nextEpisode.episodeNumber,
-                                    poster = nextEpisode.thumbnailUrl
-                                )) {
-                                    popUpTo(Screen.Home.route) { saveState = true }
-                                }
+                                playNextEpisode()
                             }) {
                                 Icon(Icons.Outlined.SkipNext, contentDescription = "Next Episode", tint = Color.White, modifier = Modifier.size(48.dp))
                             }
@@ -638,27 +806,6 @@ fun PlayerScreen(
                     val nearEpisodeEnd = nextEpisode != null && observedProgress.duration > 0 &&
                         observedProgress.currentPosition > observedProgress.duration - 20_000L
 
-                    // "Autoplay next" setting: jump to the following episode a few seconds before
-                    // the current one ends. The manual Play Now button below always remains.
-                    val shouldAutoPlay = nearEpisodeEnd && uiState.autoplayNext && uiState.isPlaying
-                    LaunchedEffect(shouldAutoPlay) {
-                        if (shouldAutoPlay) {
-                            delay(3000)
-                            navController.navigate(
-                                Screen.Player.createRoute(
-                                    mediaId = uiState.mediaId,
-                                    title = uiState.title,
-                                    mediaType = com.example.vista.domain.model.MediaType.SERIES,
-                                    season = nextEpisode.seasonNumber,
-                                    episode = nextEpisode.episodeNumber,
-                                    poster = nextEpisode.thumbnailUrl
-                                )
-                            ) {
-                                popUpTo(Screen.Home.route) { saveState = true }
-                            }
-                        }
-                    }
-
                     if (nearEpisodeEnd) {
                         Surface(
                             modifier = Modifier
@@ -671,7 +818,7 @@ fun PlayerScreen(
                         ) {
                             Column(modifier = Modifier.padding(16.dp)) {
                                 Text(
-                                    text = if (uiState.autoplayNext) "Next Episode starting…" else "Next Episode",
+                                    text = if (uiState.autoplayNext && playbackEnded) "Next Episode starting…" else "Up next",
                                     style = MaterialTheme.typography.labelMedium,
                                     color = Accent
                                 )
@@ -692,16 +839,7 @@ fun PlayerScreen(
                                 Spacer(modifier = Modifier.height(12.dp))
                                 Button(
                                     onClick = {
-                                        navController.navigate(Screen.Player.createRoute(
-                                            mediaId = uiState.mediaId,
-                                            title = uiState.title,
-                                            mediaType = com.example.vista.domain.model.MediaType.SERIES,
-                                            season = nextEpisode.seasonNumber,
-                                            episode = nextEpisode.episodeNumber,
-                                            poster = nextEpisode.thumbnailUrl
-                                        )) {
-                                            popUpTo(Screen.Home.route) { saveState = true }
-                                        }
+                                        playNextEpisode()
                                     },
                                     modifier = Modifier.fillMaxWidth().height(36.dp),
                                     colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = Color.Black),
@@ -756,6 +894,8 @@ fun PlayerScreen(
                 }
             }
 
+                        // Native Media3 controls own TV input; no Vista chrome sits over provider controls.
+                        if (!isTv && !isPipMode && (uiState.showControls || showPlaybackSettings)) {
                         // Top bar
                         Row(
                             modifier = Modifier
@@ -776,6 +916,12 @@ fun PlayerScreen(
                                 fontWeight = FontWeight.Bold,
                                 modifier = Modifier.weight(1f).padding(horizontal = 12.dp)
                             )
+
+                            IconButton(onClick = {
+                                navController.navigate(Screen.Downloads.createRoute(uiState.mediaId, uiState.title,
+                                    if (uiState.isSeries) com.example.vista.domain.model.MediaType.SERIES else com.example.vista.domain.model.MediaType.MOVIE,
+                                    uiState.seasonNumber ?: 0, uiState.episodeNumber ?: 0))
+                            }) { Icon(Icons.Outlined.Download, "Download this movie or episode", tint = PrimaryText) }
 
                             IconButton(onClick = {
                                 exoPlayer?.pause()
@@ -800,8 +946,6 @@ fun PlayerScreen(
                                 Icon(Icons.Outlined.PictureInPicture, contentDescription = "PiP", tint = PrimaryText)
                             }
 
-                            var showPlaybackSettings by remember { mutableStateOf(false) }
-
                             IconButton(onClick = { showPlaybackSettings = true }) {
                                 Icon(Icons.Outlined.Settings, contentDescription = "Settings", tint = PrimaryText)
                             }
@@ -817,6 +961,9 @@ fun PlayerScreen(
                             
                             // Source Selection
                             Text("Source", style = MaterialTheme.typography.labelLarge, color = Accent)
+                            Text("Direct sources use Vista's player. Embedded sources use the provider's player and controls.",
+                                color = SecondaryText, style = MaterialTheme.typography.bodySmall,
+                                modifier = Modifier.padding(top = 6.dp))
                             LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(vertical = 12.dp)) {
                                 items(uiState.streamSources) { source ->
                                     FilterChip(
@@ -830,7 +977,8 @@ fun PlayerScreen(
 
                             HorizontalDivider(color = Color.White.copy(alpha = 0.1f), modifier = Modifier.padding(vertical = 8.dp))
 
-                            // Quality Selection
+                             // Embedded providers own their quality/speed controls.
+                             if (uiState.selectedSource?.type != StreamType.OTHER) {
                             Text("Quality", style = MaterialTheme.typography.labelLarge, color = Accent)
                             LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(vertical = 12.dp)) {
                                 items(uiState.availableQualities) { quality ->
@@ -858,10 +1006,59 @@ fun PlayerScreen(
                                     )
                                 }
                             }
+
+                            if (uiState.subtitles.isNotEmpty()) {
+                                HorizontalDivider(color = Color.White.copy(alpha = 0.1f), modifier = Modifier.padding(vertical = 8.dp))
+                                Text("Subtitles", style = MaterialTheme.typography.labelLarge, color = Accent)
+                                LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(vertical = 12.dp)) {
+                                    items(uiState.subtitles) { subtitle ->
+                                        FilterChip(
+                                            selected = (subtitle == uiState.subtitles.firstOrNull()),
+                                            onClick = { viewModel.onSubtitleSelected(subtitle) },
+                                            label = { Text(subtitle.label.ifBlank { subtitle.language }) },
+                                            colors = FilterChipDefaults.filterChipColors(selectedContainerColor = Accent)
+                                        )
+                                    }
+                                }
+                            }
+
+                            if (uiState.audioTracks.isNotEmpty()) {
+                                HorizontalDivider(color = Color.White.copy(alpha = 0.1f), modifier = Modifier.padding(vertical = 8.dp))
+                                Text("Audio Track", style = MaterialTheme.typography.labelLarge, color = Accent)
+                                LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(vertical = 12.dp)) {
+                                    items(uiState.audioTracks) { track ->
+                                        FilterChip(
+                                            selected = (track == uiState.audioTracks.firstOrNull()),
+                                            onClick = { viewModel.onAudioTrackSelected(track) },
+                                            label = { Text(track.label.ifBlank { track.language }) },
+                                            colors = FilterChipDefaults.filterChipColors(selectedContainerColor = Accent)
+                                        )
+                                    }
+                                }
+                            }
+                            } else {
+                                Text("Use the embedded player's controls for quality, speed and seeking.", color = SecondaryText)
+                            }
                             
                             Spacer(modifier = Modifier.height(32.dp))
                         }
                     }
+                }
+            }
+                        }
+        }
+        if (isTv && showTvHint && !uiState.isLoading && uiState.error == null) {
+            Text("Menu or hold OK: playback sources", color = PrimaryText,
+                style = MaterialTheme.typography.labelMedium,
+                modifier = Modifier.align(Alignment.BottomCenter).padding(16.dp)
+                    .background(Color.Black.copy(alpha = 0.7f), RoundedCornerShape(8.dp)).padding(12.dp))
+        }
+        autoplayRemaining?.let { seconds ->
+            Surface(color = CardSurface, shape = RoundedCornerShape(16.dp),
+                modifier = Modifier.align(Alignment.BottomEnd).padding(24.dp)) {
+                Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                    Text("Next episode in $seconds…", color = PrimaryText, fontWeight = FontWeight.Bold)
+                    Button(onClick = { autoplayCancelled = true; autoplayRemaining = null }) { Text("Cancel autoplay") }
                 }
             }
         }

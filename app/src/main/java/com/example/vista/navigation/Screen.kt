@@ -22,12 +22,17 @@ sealed class Screen(val route: String) {
     object Schedule : Screen("schedule")
     object Saved : Screen("saved")
     object Profile : Screen("profile")
+    object Kids : Screen("kids")
 
     // Other screens
     object Splash : Screen("splash")
     object Auth : Screen("auth")
     object SetupProfile : Screen("setup_profile")
-    object Search : Screen("search")
+    object Search : Screen("search") {
+        const val PATTERN = "search?query={query}"
+        fun createRoute(query: String) = "search?query=${android.net.Uri.encode(query)}"
+    }
+    object Support : Screen("support")
     object MovieDetails : Screen("movie_details/{movieId}") {
         fun createRoute(movieId: String) = "movie_details/$movieId"
     }
@@ -68,6 +73,7 @@ sealed class Screen(val route: String) {
             if (page.isNullOrBlank()) "settings?page=" else "settings?page=$page"
     }
     object Onboarding : Screen("onboarding")
+    object OnboardingReplay : Screen("onboarding_replay")
     object WatchHistory : Screen("watch_history")
     object Trailer : Screen("trailer/{videoKey}/{title}") {
         fun createRoute(videoKey: String, title: String) =
@@ -77,6 +83,14 @@ sealed class Screen(val route: String) {
         fun createRoute(personId: String) = "cast_details/$personId"
     }
     object Library : Screen("library")
+    object Downloads : Screen("downloads") {
+        const val PATTERN = "downloads?mediaId={downloadMediaId}&title={downloadTitle}&type={downloadType}&season={downloadSeason}&episode={downloadEpisode}"
+        fun createRoute(mediaId: String, title: String, type: MediaType, season: Int = 0, episode: Int = 0) =
+            "downloads?mediaId=${android.net.Uri.encode(mediaId)}&title=${android.net.Uri.encode(title)}&type=${type.name.lowercase()}&season=$season&episode=$episode"
+    }
+    object OfflinePlayer : Screen("offline_player/{downloadId}") {
+        fun createRoute(downloadId: String) = "offline_player/${android.net.Uri.encode(downloadId)}"
+    }
     object Stats : Screen("stats")
 
     /**

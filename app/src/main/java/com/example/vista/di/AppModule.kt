@@ -86,6 +86,11 @@ abstract class RepositoryModule {
 
     @Binds
     @Singleton
+    abstract fun bindCatalogSnapshotStore(impl: com.example.vista.data.local.catalog.DiskCatalogSnapshotStore):
+        com.example.vista.data.local.catalog.CatalogSnapshotStore
+
+    @Binds
+    @Singleton
     abstract fun bindCatalogRepository(impl: TmdbCatalogRepository): CatalogRepository
 
     companion object {

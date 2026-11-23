@@ -45,13 +45,16 @@ import kotlinx.coroutines.launch
 @Composable
 fun OnboardingScreen(
     navController: NavController,
-    viewModel: OnboardingViewModel = hiltViewModel()
+    viewModel: OnboardingViewModel = hiltViewModel(),
+    forceTour: Boolean = false
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val isWelcomeBack = uiState.isWelcomeBack
 
     // Divided pager with animated hero + feature slides.
-    if (!isWelcomeBack) {
+    if (uiState.isLoading) {
+        Box(Modifier.fillMaxSize().background(Background), contentAlignment = Alignment.Center) { CircularProgressIndicator(color = Accent) }
+    } else if (!isWelcomeBack || forceTour) {
         WelcomeSequence(navController, viewModel, uiState)
     } else {
         WelcomeBackScreen(navController, viewModel, uiState)
@@ -66,8 +69,8 @@ private fun WelcomeSequence(
     viewModel: OnboardingViewModel,
     uiState: OnboardingUiState
 ) {
-    var step by remember { mutableStateOf(0) }
-    var name by remember { mutableStateOf(uiState.suggestedName) }
+    var step by androidx.compose.runtime.saveable.rememberSaveable { mutableStateOf(0) }
+    var name by androidx.compose.runtime.saveable.rememberSaveable { mutableStateOf(uiState.suggestedName) }
     val transition = remember { MutableTransitionState(initialState = false) }
     transition.targetState = true
 
@@ -75,7 +78,13 @@ private fun WelcomeSequence(
         modifier = Modifier
             .fillMaxSize()
             .background(Background)
+            .imePadding()
     ) {
+        val artwork = if (step == 1) com.example.vista.artwork.VistaArtwork.ONBOARDING_ALT else com.example.vista.artwork.VistaArtwork.ONBOARDING
+        val available = com.example.vista.artwork.rememberArtworkResource(artwork) != null
+        if (step == 0 || (step == 1 && available)) {
+            com.example.vista.artwork.VistaHeroBackground(artwork, Modifier.fillMaxSize(), alignment = Alignment.TopCenter)
+        }
         // Ambient cinematic glow that intensifies on the final step.
         val glowAlpha by animateFloatAsState(
             targetValue = if (step == 2) 0.5f else 0.22f,
@@ -98,6 +107,7 @@ private fun WelcomeSequence(
 
         AnimatedContent(
             targetState = step,
+            modifier = Modifier.fillMaxSize().statusBarsPadding().padding(bottom = 160.dp),
             transitionSpec = {
                 (fadeIn(tween(450)) + slideInHorizontally { it / 4 }).togetherWith(
                     fadeOut(tween(300)) + slideOutHorizontally { -it / 4 }
@@ -114,7 +124,8 @@ private fun WelcomeSequence(
 
         // Skip affordance (only for the first-time flow; name is the last step anyway).
         TextButton(
-            onClick = { viewModel.finish(name); navController.navigateToHome() },
+            onClick = { viewModel.finish(name) { navController.navigateToHome() } },
+            enabled = !uiState.isFinishing,
             modifier = Modifier
                 .align(Alignment.TopEnd)
                 .statusBarsPadding()
@@ -137,6 +148,7 @@ private fun WelcomeSequence(
                 .padding(horizontal = 32.dp, vertical = 24.dp)
         ) {
             ProgressDots(current = step, total = 3)
+            uiState.error?.let { Text(it, color = ErrorAccent, modifier = Modifier.padding(vertical = 8.dp)) }
 
             Spacer(modifier = Modifier.height(20.dp))
 
@@ -145,11 +157,10 @@ private fun WelcomeSequence(
                     if (currentStepContinue(step)) {
                         step++
                     } else {
-                        viewModel.finish(name)
-                        navController.navigateToHome()
+                        viewModel.finish(name) { navController.navigateToHome() }
                     }
                 },
-                enabled = step != 2 || name.isNotBlank(),
+                enabled = !uiState.isFinishing,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Accent,
                     contentColor = PrimaryText,
@@ -163,9 +174,9 @@ private fun WelcomeSequence(
             ) {
                 Text(
                     text = when (step) {
-                        0 -> "Begin"
+                        0 -> "Get Started"
                         1 -> "Next"
-                        else -> "Open Vista Cinema"
+                        else -> "Open Vista Watch"
                     },
                     style = MaterialTheme.typography.titleMedium.copy(
                         fontWeight = FontWeight.Black,
@@ -187,7 +198,7 @@ private fun ActOneBrand(uiState: OnboardingUiState) {
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .padding(horizontal = 32.dp),
+            .padding(horizontal = 32.dp, vertical = 24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -203,13 +214,13 @@ private fun ActOneBrand(uiState: OnboardingUiState) {
                     letterSpacing = 14.sp,
                     fontSize = 52.sp
                 ),
-                color = PrimaryText
+                color = Accent
             )
         }
 
         AnimatedTextEntry(delay = 250) {
             Text(
-                text = "C I N E M A",
+                text = "W A T C H",
                 style = MaterialTheme.typography.titleMedium.copy(
                     fontWeight = FontWeight.Bold,
                     letterSpacing = 10.sp
@@ -222,7 +233,7 @@ private fun ActOneBrand(uiState: OnboardingUiState) {
 
         AnimatedTextEntry(delay = 500) {
             Text(
-                text = "Every great story deserves\nan extraordinary stage.",
+                text = "Your next story starts here.",
                 style = MaterialTheme.typography.bodyLarge.copy(
                     lineHeight = 26.sp,
                     fontWeight = FontWeight.Medium
@@ -236,7 +247,7 @@ private fun ActOneBrand(uiState: OnboardingUiState) {
 
         AnimatedTextEntry(delay = 700) {
             Text(
-                text = "Welcome to the screen built for the stories\nthat stay with you.",
+                text = "Discover movies, explore new favourites and personalise your entertainment experience.",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MutedText,
                 textAlign = TextAlign.Center,
@@ -250,8 +261,7 @@ private fun ActOneBrand(uiState: OnboardingUiState) {
 
 @Composable
 private fun AnimatedLogo(
-    size: Int = 120,
-    accent: Color = Accent
+    size: Int = 120
 ) {
     val scale = remember { Animatable(0.7f) }
     val alpha = remember { Animatable(0f) }
@@ -272,22 +282,18 @@ private fun AnimatedLogo(
                 this.alpha = alpha.value
             }
             .size(size.dp),
-        color = Color.White,
+        color = Color(0xFF141414),
         shape = RoundedCornerShape(28.dp),
         shadowElevation = 20.dp
     ) {
         Box(
-            modifier = Modifier.background(Brush.linearGradient(listOf(Color.White, Color(0xFFF1F1F1)))),
+            modifier = Modifier.background(Brush.linearGradient(listOf(Color(0xFF141414), Color(0xFF0A0A0A)))),
             contentAlignment = Alignment.Center
         ) {
-            Text(
-                text = "V",
-                style = MaterialTheme.typography.displayLarge.copy(
-                    fontWeight = FontWeight.Black,
-                    letterSpacing = (-4).sp,
-                    fontSize = (size - 40).sp
-                ),
-                color = accent
+            androidx.compose.foundation.Image(
+                painter = androidx.compose.ui.res.painterResource(com.example.vista.R.drawable.ic_launcher_foreground),
+                contentDescription = "Vista Watch",
+                modifier = Modifier.fillMaxSize()
             )
         }
     }
@@ -320,23 +326,15 @@ private data class OnboardingFeature(
     val detail: String
 )
 
-private val VistaFeatures = listOf(
-    OnboardingFeature(
-        icon = Icons.Outlined.Theaters,
-        title = "A curated catalogue",
-        detail = "Films and series drawn from the world's best libraries, presented with care."
-    ),
-    OnboardingFeature(
-        icon = Icons.Outlined.AutoAwesome,
-        title = "Recommendations that learn you",
-        detail = "Every watch sharpens your personal home screen. No noise, just what you'll love."
-    ),
-    OnboardingFeature(
-        icon = Icons.Outlined.Favorite,
-        title = "Your list, your place",
-        detail = "Watchlists and Continue Watching follow you anywhere, precisely where you left off."
-    )
-)
+private val VistaFeatures = OnboardingContent.capabilities.map { capability ->
+    OnboardingFeature(when (capability.id) {
+        "catalog" -> Icons.Outlined.Theaters
+        "downloads" -> Icons.Outlined.DownloadForOffline
+        "library" -> Icons.Outlined.Favorite
+        "controls" -> Icons.Outlined.Tune
+        else -> Icons.Outlined.AutoAwesome
+    }, capability.title, capability.detail)
+}
 
 @Composable
 private fun ActTwoWhyVista(uiState: OnboardingUiState) {
@@ -351,7 +349,7 @@ private fun ActTwoWhyVista(uiState: OnboardingUiState) {
     ) {
         AnimatedTextEntry {
             Text(
-                text = "Why Vista Cinema",
+                text = "Why Vista Watch",
                 style = MaterialTheme.typography.headlineMedium.copy(
                     fontWeight = FontWeight.Black,
                     letterSpacing = (-0.5).sp
@@ -378,7 +376,7 @@ private fun ActTwoWhyVista(uiState: OnboardingUiState) {
             Spacer(modifier = Modifier.height(20.dp))
         }
 
-        Spacer(modifier = Modifier.height(40.dp))
+        Spacer(modifier = Modifier.height(190.dp))
     }
 }
 
@@ -494,13 +492,13 @@ private fun ActThreePersonalName(
 
         AnimatedTextEntry(delay = 450) {
             Text(
-                text = "We'll greet you by name, every time you open Vista.",
+                text = "Your name is optional. You can change it later in Profile.",
                 style = MaterialTheme.typography.labelMedium,
                 color = MutedText
             )
         }
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(190.dp))
     }
 }
 
@@ -561,11 +559,7 @@ private fun WelcomeBackScreen(
 
             AnimatedTextEntry(delay = 200) {
                 Text(
-                    text = if (uiState.daysAway > 0) {
-                        "It's been ${uiState.daysAway} day${if (uiState.daysAway > 1) "s" else ""}. The screen kept your seat warm."
-                    } else {
-                        "Good to have you back on the big screen."
-                    },
+                    text = "Good to have you back. Ready for another movie night?",
                     style = MaterialTheme.typography.bodyLarge,
                     color = SecondaryText,
                     textAlign = TextAlign.Center,
@@ -577,7 +571,7 @@ private fun WelcomeBackScreen(
 
             AnimatedTextEntry(delay = 350) {
                 Text(
-                    text = "Continue Watching is exactly where you left it.",
+                    text = "Your saved titles and supported playback progress are in Library on this device.",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MutedText,
                     textAlign = TextAlign.Center
@@ -589,13 +583,13 @@ private fun WelcomeBackScreen(
             AnimatedTextEntry(delay = 500) {
                 Button(
                     onClick = {
-                        viewModel.finish(uiState.suggestedName)
-                        navController.navigateToHome()
+                        viewModel.finish(uiState.suggestedName) { navController.navigateToHome() }
                     },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Accent,
                         contentColor = PrimaryText
                     ),
+                    enabled = !uiState.isFinishing,
                     shape = RoundedCornerShape(14.dp),
                     modifier = Modifier
                         .fillMaxWidth()
@@ -660,7 +654,9 @@ private fun deriveTimeGreeting(): State<String> {
 }
 
 private fun NavController.navigateToHome() {
+    val onboardingId = currentBackStackEntry?.destination?.id ?: return
     navigate(Screen.Home.route) {
-        popUpTo(Screen.Splash.route) { inclusive = true }
+        popUpTo(onboardingId) { inclusive = true }
+        launchSingleTop = true
     }
 }

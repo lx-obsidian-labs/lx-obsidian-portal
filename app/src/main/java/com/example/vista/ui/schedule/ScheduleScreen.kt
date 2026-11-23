@@ -125,7 +125,7 @@ fun ScheduleScreen(
                     }
                     uiState.error != null -> {
                         ScheduleErrorContent(
-                            message = uiState.error!!,
+                            message = uiState.error ?: "Something went wrong",
                             onRetry = { viewModel.refresh() }
                         )
                     }

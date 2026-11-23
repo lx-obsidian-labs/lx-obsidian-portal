@@ -215,4 +215,4 @@ private fun SharingMilestone.fullShareText(): String =
     "$shareBody\n\n$SHARE_FOOTER"
 
 private const val SHARE_FOOTER =
-    "Get Vista Cinema - it's free, no card needed:\n${ViewUtils.SITE_URL}"
+    "Get Vista Watch - it's free, no card needed:\n${ViewUtils.SITE_URL}"

@@ -51,6 +51,7 @@ object NetworkModule {
     fun provideOkHttpClient(authInterceptor: Interceptor, httpCache: Cache): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(authInterceptor)
+            .addInterceptor(com.example.vista.data.remote.MetadataCacheInterceptor())
             .cache(httpCache)
             .apply {
                 if (BuildConfig.DEBUG) {
@@ -60,6 +61,7 @@ object NetworkModule {
             .connectTimeout(10, TimeUnit.SECONDS)
             .readTimeout(20, TimeUnit.SECONDS)
             .writeTimeout(20, TimeUnit.SECONDS)
+            .callTimeout(25, TimeUnit.SECONDS)
             .build()
     }
 
@@ -86,6 +88,7 @@ object NetworkModule {
     @Named("shared")
     fun provideSharedOkHttpClient(httpCache: Cache): OkHttpClient {
         return OkHttpClient.Builder()
+            .addInterceptor(com.example.vista.data.remote.MetadataCacheInterceptor())
             .cache(httpCache)
             .apply {
                 if (BuildConfig.DEBUG) {
@@ -95,6 +98,7 @@ object NetworkModule {
             .connectTimeout(10, TimeUnit.SECONDS)
             .readTimeout(20, TimeUnit.SECONDS)
             .writeTimeout(20, TimeUnit.SECONDS)
+            .callTimeout(25, TimeUnit.SECONDS)
             .build()
     }
 

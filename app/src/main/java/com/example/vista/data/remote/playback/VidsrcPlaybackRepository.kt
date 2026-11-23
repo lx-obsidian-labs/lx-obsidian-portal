@@ -1,11 +1,16 @@
 package com.example.vista.data.remote.playback
 
+import com.example.vista.BuildConfig
 import com.example.vista.data.remote.tmdb.TmdbApiService
 import com.example.vista.domain.model.*
 import com.example.vista.domain.repository.PlaybackRepository
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.withTimeoutOrNull
+import kotlinx.coroutines.sync.Semaphore
+import kotlinx.coroutines.sync.withPermit
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -28,6 +33,7 @@ class VidsrcPlaybackRepository @Inject constructor(
     private val tvmazeApiService: com.example.vista.data.remote.tvmaze.TvmazeApiService,
     private val streamResolver: StreamResolver
 ) : PlaybackRepository {
+    private val probePermits = Semaphore(2)
 
     /** The identifiers we managed to resolve for a title, out of the namespaces providers accept. */
     private data class MediaRef(
@@ -109,7 +115,12 @@ class VidsrcPlaybackRepository @Inject constructor(
         episode: Int?,
         titleHint: String?
     ): List<StreamSource> {
-        val ref = resolveMediaRef(mediaId, mediaType, titleHint)
+        val ref = withTimeoutOrNull(6_000) { resolveMediaRef(mediaId, mediaType, titleHint) }
+            ?: when {
+                mediaId.toIntOrNull() != null -> MediaRef(tmdbId = mediaId)
+                mediaId.startsWith("tt") -> MediaRef(imdbId = mediaId)
+                else -> return emptyList()
+            }
         val seasonNumber = season ?: 1
         val episodeNumber = episode ?: 1
 
@@ -118,13 +129,14 @@ class VidsrcPlaybackRepository @Inject constructor(
             provider to url
         }
 
-        // All providers are probed concurrently, not one after another. Each resolution is a network
-        // round trip with its own connect and read timeout, so resolving six providers in sequence
-        // put up to two minutes of stall in front of a download button the user had just tapped.
-        // Coroutine scope, not supervisorScope: `async` already isolates failures per child, and a
-        // cancelled parent must still cancel every in-flight request.
+        // Bound fan-out on mobile data. Each probe's deadline includes permit wait, so a slow
+        // provider cannot hold all the others (or the foreground screen) indefinitely.
         val resolved = coroutineScope {
-            embeds.map { async { streamResolver.resolveAll(it.second, it.first.name) } }
+            embeds.map { (provider, url) -> async {
+                withTimeoutOrNull(12_000) {
+                    probePermits.withPermit { streamResolver.resolveAll(url, provider.name) }
+                }.orEmpty()
+            } }
                 .awaitAll()
                 .flatten()
         }
@@ -132,17 +144,9 @@ class VidsrcPlaybackRepository @Inject constructor(
         // No HLS variant probing here. It existed only to find a progressive rendition for the
         // download worker, which no longer exists; leaving it would add a network round trip per
         // HLS source on every title for no consumer.
-        val claimedUrls = resolved.map { it.url }.toSet()
-
-        // Every embed that could not be resolved stays available as an OTHER source. This is the
-        // behaviour the app had before resolution existed and it must remain intact: when
-        // resolution fails for every provider, playback continues through the WebView.
-        //
-        // Compared against the embed URLs rather than the resolved ones. An embed page and the
-        // manifest it hands out are never equal, so the previous comparison never removed anything
-        // and duplicate multiembed entries survived into the player's source list.
+        // Keep an explicitly labelled embedded option even when extraction succeeds: a CDN can
+        // reject a direct request while the provider's own player still works with its cookies.
         val fallbacks = embeds
-            .filterNot { (_, url) -> url in claimedUrls }
             .distinctBy { (_, url) -> url }
             .map { (provider, url) ->
                 StreamSource(
@@ -150,13 +154,15 @@ class VidsrcPlaybackRepository @Inject constructor(
                     type = StreamType.OTHER,
                     quality = "Auto",
                     bitrate = null,
-                    name = provider.name
+                    name = "${provider.name} (embedded)"
                 )
             }
 
         // Playback wants the manifest first: it is the better source for streaming, and it is what
         // the player has always landed on. Unresolved embeds follow as WebView fallbacks.
-        return resolved + fallbacks
+        // Keep the authenticated embed last, outside extraction probes and their HTTP logging.
+        val backup = BackupMovieSource.create(ref.tmdbId, mediaType, BuildConfig.BACKUP_MOVIES_API_KEY)
+        return resolved + fallbacks + listOfNotNull(backup)
     }
 
     /**
@@ -177,7 +183,8 @@ class VidsrcPlaybackRepository @Inject constructor(
                         // Recurse to resolve the IMDb ID to TMDB ID as well
                         return resolveMediaRef(imdbId, mediaType, titleHint)
                     }
-                } catch (_: Exception) {}
+                } catch (e: CancellationException) { throw e }
+                catch (_: Exception) {}
             }
         }
 
@@ -190,7 +197,8 @@ class VidsrcPlaybackRepository @Inject constructor(
                 } else {
                     found.tvResults.firstOrNull()?.id
                 }
-            } catch (_: Exception) {
+            } catch (e: CancellationException) { throw e }
+            catch (_: Exception) {
                 null
             }
             return MediaRef(tmdbId = tmdbId?.toString(), imdbId = id)
@@ -204,7 +212,8 @@ class VidsrcPlaybackRepository @Inject constructor(
                 } else {
                     tmdbApiService.getTvShowDetails(id.toInt()).externalIds?.imdbId
                 }
-            } catch (_: Exception) {
+            } catch (e: CancellationException) { throw e }
+            catch (_: Exception) {
                 null
             }
             return MediaRef(tmdbId = id, imdbId = imdbId)
@@ -218,7 +227,8 @@ class VidsrcPlaybackRepository @Inject constructor(
             } else {
                 tmdbApiService.searchTvShows(query, 1).results?.firstOrNull()?.id
             }
-        } catch (_: Exception) {
+        } catch (e: CancellationException) { throw e }
+        catch (_: Exception) {
             null
         }
 
@@ -235,9 +245,11 @@ class VidsrcPlaybackRepository @Inject constructor(
                 if (imdbId != null) {
                     tmdbId = try {
                         tmdbApiService.findByExternalId(imdbId).tvResults.firstOrNull()?.id
-                    } catch (_: Exception) { null }
+                    } catch (e: CancellationException) { throw e }
+                    catch (_: Exception) { null }
                 }
-            } catch (_: Exception) {}
+            } catch (e: CancellationException) { throw e }
+            catch (_: Exception) {}
         }
 
         return MediaRef(tmdbId = tmdbId?.toString(), imdbId = imdbId)

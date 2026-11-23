@@ -2,6 +2,8 @@
 
 Date: 2026-10-23. Status: in progress; build verification blocked by symbol-processing timeouts.
 
+> Historical audit snapshot. Later verification established successful debug/release builds, Room v6 owner isolation, the deployed NVIDIA assistant and release/FCM publication. See `BUILD_REPORT.md` for release evidence and [`docs/premium-2027/02-CRITICAL-ASSESSMENT.md`](docs/premium-2027/02-CRITICAL-ASSESSMENT.md) for the current next-version critique. Findings below must not be treated as automatically current.
+
 ## Firebase CLI
 
 - `firebase --version`: 15.28.1.

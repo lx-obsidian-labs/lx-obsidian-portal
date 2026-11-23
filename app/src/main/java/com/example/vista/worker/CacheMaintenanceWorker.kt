@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.first
 import java.util.concurrent.TimeUnit
 
 /**
- * Background WorkManager worker for Vista Cinema cache maintenance.
+ * Background WorkManager worker for Vista Watch cache maintenance.
  *
  * Runs periodically to enforce user's configured cache size limits and purge stale player
  * temporary files (>24 hours) without affecting active playback sessions.

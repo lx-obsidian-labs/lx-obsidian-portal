@@ -76,7 +76,7 @@ fun BrandAttribution(
         Spacer(modifier = Modifier.height(12.dp))
         
         Text(
-            text = "© 2026 Vista Cinema. All rights reserved.",
+            text = "© 2026 LX Obsidian Labs. All rights reserved.",
             style = MaterialTheme.typography.labelSmall,
             color = MutedText,
             textAlign = TextAlign.Center

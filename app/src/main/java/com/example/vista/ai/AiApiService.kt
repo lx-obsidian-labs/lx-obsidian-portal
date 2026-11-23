@@ -1,4 +1,4 @@
 package com.example.vista.ai
 
-/** UI conversation item. Backend request/tool contracts are defined in milestone 1. */
+/** Bounded conversation turn sent to the authenticated Cloudflare assistant. */
 data class ChatMessage(val role: String, val content: String)

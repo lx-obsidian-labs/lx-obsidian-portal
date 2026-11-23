@@ -3,6 +3,7 @@ package com.example.vista.ui.details
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.vista.data.local.PreferencesManager
 import com.example.vista.data.remote.watchmode.WatchmodeRepository
 import com.example.vista.data.remote.watchmode.WatchmodeSource
 import com.example.vista.domain.model.*
@@ -45,7 +46,8 @@ class DetailsViewModel @Inject constructor(
     private val catalogRepository: CatalogRepository,
     private val watchlistRepository: WatchlistRepository,
     private val historyRepository: HistoryRepository,
-    private val watchmodeRepository: WatchmodeRepository
+    private val watchmodeRepository: WatchmodeRepository,
+    private val preferencesManager: PreferencesManager
 ) : ViewModel() {
 
     /**
@@ -70,12 +72,33 @@ class DetailsViewModel @Inject constructor(
     val uiState: StateFlow<DetailsUiState> = _uiState.asStateFlow()
 
     init {
+        observeContentAccess()
         if (mediaId.isNotEmpty()) {
             loadDetails()
         } else {
             _uiState.update { it.copy(isLoading = false, error = "No media ID provided") }
         }
     }
+
+    private fun observeContentAccess() {
+        viewModelScope.launch {
+            preferencesManager.settings.distinctUntilChanged().collect { settings ->
+                val state = _uiState.value
+                val movie = state.movie
+                val series = state.series
+                val allowed = when {
+                    movie != null -> ContentAccessPolicy.allows(settings, movie.ageRating, movie.isAdult)
+                    series != null -> ContentAccessPolicy.allows(settings, series.ageRating, false)
+                    else -> true
+                }
+                if (!allowed) {
+                    _uiState.update { it.copy(error = "This title is restricted by your age or content settings.") }
+                }
+            }
+        }
+    }
+
+    private suspend fun accessSettings(): AppSettings = preferencesManager.settings.first()
 
     private fun loadDetails() {
         viewModelScope.launch {
@@ -96,10 +119,18 @@ class DetailsViewModel @Inject constructor(
             _uiState.update { it.copy(isLoading = false, error = "Content not found") }
             return
         }
+        val settings = accessSettings()
+        if (!ContentAccessPolicy.allows(settings, movie.ageRating, movie.isAdult)) {
+            _uiState.update { it.copy(isLoading = false, error = "This title is restricted by your age or content settings.") }
+            return
+        }
         coroutineScope {
             val castDeferred = async { movie.cast.ifEmpty { catalogRepository.getCast(mediaId, MediaType.MOVIE) } }
             val videosDeferred = async { catalogRepository.getMovieVideos(mediaId) }
-            val similarDeferred = async { catalogRepository.getSimilarMovies(mediaId) }
+            val similarDeferred = async {
+                catalogRepository.getSimilarMovies(mediaId)
+                    .filter { item -> ContentAccessPolicy.allows(settings, item.ageRating, item.isAdult) }
+            }
             val watchlistDeferred = async { watchlistRepository.isInWatchlist(mediaId, "movie") }
             val progressDeferred = async { historyRepository.getProgress(mediaId, MediaType.MOVIE) }
             val sourcesDeferred = async { watchmodeRepository.getStreamingSources(mediaId, "movie") }
@@ -127,13 +158,21 @@ class DetailsViewModel @Inject constructor(
             _uiState.update { it.copy(isLoading = false, error = "Content not found") }
             return
         }
+        val settings = accessSettings()
+        if (!ContentAccessPolicy.allows(settings, series.ageRating, false)) {
+            _uiState.update { it.copy(isLoading = false, error = "This title is restricted by your age or content settings.") }
+            return
+        }
 
         val initialSeason = firstAvailableSeason(series)
         coroutineScope {
             val castDeferred = async { series.cast.ifEmpty { catalogRepository.getCast(mediaId, MediaType.SERIES) } }
             val episodesDeferred = async { catalogRepository.getEpisodes(mediaId, initialSeason) }
             val videosDeferred = async { catalogRepository.getTvShowVideos(mediaId) }
-            val similarDeferred = async { catalogRepository.getSimilarSeries(mediaId) }
+            val similarDeferred = async {
+                catalogRepository.getSimilarSeries(mediaId)
+                    .filter { item -> ContentAccessPolicy.allows(settings, item.ageRating, false) }
+            }
             val watchlistDeferred = async { watchlistRepository.isInWatchlist(mediaId, "series") }
             val progressDeferred = async { historyRepository.getProgress(mediaId, MediaType.SERIES) }
             val sourcesDeferred = async { watchmodeRepository.getStreamingSources(mediaId, "tv") }
@@ -234,10 +273,18 @@ class DetailsViewModel @Inject constructor(
             _uiState.update { it.copy(isRefreshing = false, error = "Content not found") }
             return
         }
+        val settings = accessSettings()
+        if (!ContentAccessPolicy.allows(settings, movie.ageRating, movie.isAdult)) {
+            _uiState.update { it.copy(isRefreshing = false, error = "This title is restricted by your age or content settings.") }
+            return
+        }
         coroutineScope {
             val castDeferred = async { movie.cast.ifEmpty { catalogRepository.getCast(mediaId, MediaType.MOVIE) } }
             val videosDeferred = async { catalogRepository.getMovieVideos(mediaId) }
-            val similarDeferred = async { catalogRepository.getSimilarMovies(mediaId) }
+            val similarDeferred = async {
+                catalogRepository.getSimilarMovies(mediaId)
+                    .filter { item -> ContentAccessPolicy.allows(settings, item.ageRating, item.isAdult) }
+            }
             val watchlistDeferred = async { watchlistRepository.isInWatchlist(mediaId, "movie") }
             val progressDeferred = async { historyRepository.getProgress(mediaId, MediaType.MOVIE) }
             val sourcesDeferred = async { watchmodeRepository.getStreamingSources(mediaId, "movie") }
@@ -263,11 +310,19 @@ class DetailsViewModel @Inject constructor(
             _uiState.update { it.copy(isRefreshing = false, error = "Content not found") }
             return
         }
+        val settings = accessSettings()
+        if (!ContentAccessPolicy.allows(settings, series.ageRating, false)) {
+            _uiState.update { it.copy(isRefreshing = false, error = "This title is restricted by your age or content settings.") }
+            return
+        }
         coroutineScope {
             val castDeferred = async { series.cast.ifEmpty { catalogRepository.getCast(mediaId, MediaType.SERIES) } }
             val episodesDeferred = async { catalogRepository.getEpisodes(mediaId, _uiState.value.selectedSeason) }
             val videosDeferred = async { catalogRepository.getTvShowVideos(mediaId) }
-            val similarDeferred = async { catalogRepository.getSimilarSeries(mediaId) }
+            val similarDeferred = async {
+                catalogRepository.getSimilarSeries(mediaId)
+                    .filter { item -> ContentAccessPolicy.allows(settings, item.ageRating, false) }
+            }
             val watchlistDeferred = async { watchlistRepository.isInWatchlist(mediaId, "series") }
             val progressDeferred = async { historyRepository.getProgress(mediaId, MediaType.SERIES) }
             val sourcesDeferred = async { watchmodeRepository.getStreamingSources(mediaId, "tv") }

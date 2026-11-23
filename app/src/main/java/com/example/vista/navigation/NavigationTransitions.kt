@@ -10,7 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 
 /**
- * Custom navigation transitions for Vista Cinema app.
+ * Custom navigation transitions for Vista Watch app.
  * 
  * Transitions:
  * - Main tabs (Home, Discover, Saved, Search): Cross-fade with slight scale

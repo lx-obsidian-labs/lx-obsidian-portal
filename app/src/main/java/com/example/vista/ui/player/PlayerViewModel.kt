@@ -18,6 +18,7 @@ import javax.inject.Inject
 
 data class PlayerUiState(
     val isLoading: Boolean = true,
+    val needsDataConsent: Boolean = false,
     val mediaId: String = "",
     val title: String = "",
     val streamSources: List<StreamSource> = emptyList(),
@@ -47,7 +48,12 @@ data class PlayerUiState(
     // Playback settings, honored while playing
     val autoplayNext: Boolean = true,
     val autoResume: Boolean = true,
-    val doubleTapToSeekSeconds: Int = 10
+    val doubleTapToSeekSeconds: Int = 10,
+    val subtitleEnabled: Boolean = false,
+    val subtitleLanguage: String = "Off",
+    val subtitleSize: Float = 16f,
+    val subtitleColor: String = "White",
+    val audioLanguage: String = "Original"
 )
 
 /**
@@ -76,7 +82,8 @@ class PlayerViewModel @Inject constructor(
     private val playbackRecoveryManager: com.example.vista.data.playback.PlaybackRecoveryManager,
     private val playerHealthMonitor: com.example.vista.data.playback.PlayerHealthMonitor,
     private val playbackAccess: com.example.vista.data.playback.PlaybackAccess,
-    private val sessionManager: com.example.vista.data.session.SessionManager
+    private val sessionManager: com.example.vista.data.session.SessionManager,
+    private val playbackCaptures: com.example.vista.downloads.PlaybackCaptureStore
 ) : ViewModel() {
 
     private val playbackSessionId = "${savedStateHandle.get<String>("mediaId") ?: "session"}_${System.currentTimeMillis()}"
@@ -117,6 +124,7 @@ class PlayerViewModel @Inject constructor(
     private var progressSaveJob: kotlinx.coroutines.Job? = null
     private val recoveryBudget = com.example.vista.data.playback.RecoveryBudget()
     private var recoveryJob: kotlinx.coroutines.Job? = null
+    private var meteredConsent = false
 
     // Owned by the ViewModel: onCleared() must still persist playback, but by then viewModelScope
     // is already cancelled, so the exit save launches on this scope instead.
@@ -183,7 +191,12 @@ class PlayerViewModel @Inject constructor(
                         selectedQuality = if (settings.dataSaverMode) "480p" else settings.preferredQuality,
                         autoplayNext = settings.autoplayNext,
                         autoResume = settings.autoResume,
-                        doubleTapToSeekSeconds = settings.doubleTapToSeekSeconds
+                        doubleTapToSeekSeconds = settings.doubleTapToSeekSeconds,
+                        subtitleEnabled = settings.subtitleEnabled,
+                        subtitleLanguage = settings.subtitleLanguage,
+                        subtitleSize = settings.subtitleSize,
+                        subtitleColor = settings.subtitleColor,
+                        audioLanguage = settings.audioLanguage
                     )
                 }
             }
@@ -194,7 +207,7 @@ class PlayerViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
             try {
-                playbackAccess.requireAccess()
+                playbackAccess.requireAccess(meteredConsent)
                 // A series with no episode defaults to the season premiere rather than falling back
                 // to a movie lookup.
                 val sNum = season?.toIntOrNull() ?: if (mediaType == MediaType.SERIES) 1 else null
@@ -223,16 +236,6 @@ class PlayerViewModel @Inject constructor(
                 // delivered them yet, and the resume decision is made right here.
                 val settings = settingsRepository.getSettings().first()
 
-                // Fetch next episode info if it's a series
-                var nextEp: Episode? = null
-                if (mediaType == MediaType.SERIES && sNum != null && eNum != null) {
-                    try {
-                        val episodes = catalogRepository.getEpisodes(mediaId, sNum)
-                        nextEp = episodes.find { it.episodeNumber == eNum + 1 }
-                        // If not found in current season, try next season (optional, but good)
-                    } catch (e: Exception) { /* Ignore */ }
-                }
-
 _uiState.update {
                     it.copy(
                         isLoading = false,
@@ -240,6 +243,7 @@ _uiState.update {
                         selectedSource = streams.firstOrNull(),
                         subtitles = subtitles,
                         audioTracks = audioTracks,
+                        nextEpisode = null,
                         // "Auto-resume" only restores the saved position if the setting is on.
                         isSeries = mediaType == MediaType.SERIES,
                         seasonNumber = sNum,
@@ -249,14 +253,28 @@ _uiState.update {
                     )
                 }
                 _progress.value = PlayerProgress(
-                    currentPosition = if (settings.autoResume) progress?.currentPosition ?: 0L else 0L,
+                    currentPosition = if (settings.autoResume &&
+                        (mediaType == MediaType.MOVIE || (progress?.seasonNumber == sNum && progress?.episodeNumber == eNum))) {
+                        progress?.currentPosition ?: 0L
+                    } else 0L,
                     duration = 0L
                 )
+                // Next-episode metadata must not hold up starting the current movie/episode.
+                if (mediaType == MediaType.SERIES && sNum != null && eNum != null) viewModelScope.launch {
+                    val next = kotlinx.coroutines.withTimeoutOrNull(8_000) {
+                        com.example.vista.data.playback.NextEpisodeResolver.resolve(catalogRepository, mediaId, sNum, eNum)
+                    }
+                    if (_uiState.value.seasonNumber == sNum && _uiState.value.episodeNumber == eNum) {
+                        _uiState.update { it.copy(nextEpisode = next) }
+                    }
+                }
                 vistaAnalytics.track(
                     "playback_started",
                     properties = mapOf("mediaType" to if (mediaType == MediaType.SERIES) "series" else "movie"),
                     isGuest = _uiState.value.isGuest
                 )
+            } catch (_: com.example.vista.data.playback.MeteredPlaybackConsentRequired) {
+                _uiState.update { it.copy(isLoading = false, needsDataConsent = true, isPlaying = false) }
             } catch (e: kotlinx.coroutines.CancellationException) { throw e }
             catch (e: Exception) {
                 _uiState.update {
@@ -271,6 +289,12 @@ _uiState.update {
 
     fun onPlayPauseToggle() {
         _uiState.update { it.copy(isPlaying = !it.isPlaying) }
+    }
+
+    fun allowMeteredPlayback() {
+        meteredConsent = true
+        _uiState.update { it.copy(needsDataConsent = false, isPlaying = true, error = null) }
+        loadPlaybackData()
     }
 
     /**
@@ -331,7 +355,6 @@ _uiState.update {
 
     fun onQualityChange(quality: String) {
         _uiState.update { it.copy(selectedQuality = quality) }
-        // In a real app, this would trigger a player reload with different quality
     }
 
     fun onFullscreenToggle() {
@@ -346,19 +369,47 @@ _uiState.update {
         _uiState.update { it.copy(showControls = false) }
     }
 
+    fun setControlsVisible(visible: Boolean, expectedGeneration: Int? = null) {
+        _uiState.update { if (expectedGeneration == null || expectedGeneration == it.sourceGeneration) it.copy(showControls = visible) else it }
+    }
+
+    fun setAutoplayNext(enabled: Boolean) {
+        val previous = _uiState.value.autoplayNext
+        _uiState.update { it.copy(autoplayNext = enabled) }
+        viewModelScope.launch {
+            try { settingsRepository.updateAutoplayNext(enabled) }
+            catch (e: kotlinx.coroutines.CancellationException) { throw e }
+            catch (_: Exception) { _uiState.update { it.copy(autoplayNext = previous) } }
+        }
+    }
+
     fun onSubtitleSelected(subtitle: SubtitleTrack?) {
-        _uiState.update { it.copy(subtitles = _uiState.value.subtitles.map { s ->
-            s.copy(/* Update selected state */)
-        }) }
+        val enabled = subtitle != null
+        val lang = subtitle?.language ?: "Off"
+        _uiState.update { it.copy(subtitleEnabled = enabled, subtitleLanguage = lang) }
+        viewModelScope.launch {
+            try {
+                settingsRepository.updateSubtitleEnabled(enabled)
+                if (enabled) settingsRepository.updateSubtitleLanguage(lang)
+            } catch (e: kotlinx.coroutines.CancellationException) { throw e }
+            catch (_: Exception) { }
+        }
     }
 
     fun onAudioTrackSelected(track: AudioTrack) {
-        // Update audio track
+        val lang = track.language
+        _uiState.update { it.copy(audioLanguage = lang) }
+        viewModelScope.launch {
+            try {
+                settingsRepository.updateAudioLanguage(lang)
+            } catch (e: kotlinx.coroutines.CancellationException) { throw e }
+            catch (_: Exception) { }
+        }
     }
 
     private fun saveProgress() {
         val snapshot = _uiState.value
-        viewModelScope.launch { persist(snapshot) }
+        viewModelScope.launch { runCatching { persist(snapshot) } }
     }
 
     /**
@@ -421,6 +472,14 @@ _uiState.update {
         _uiState.update { it.copy(error = error) }
     }
 
+    fun onEmbeddedMedia(embedUrl: String, generation: Int, url: String, headers: Map<String, String>) {
+        val state = _uiState.value
+        if (state.selectedSource?.url != embedUrl || state.sourceGeneration != generation) return
+        playbackCaptures.record(com.example.vista.downloads.DownloadTarget(state.mediaId, state.title,
+            if (state.isSeries) "series" else "movie", state.seasonNumber ?: 0, state.episodeNumber ?: 0),
+            state.selectedSource.name, url, headers)
+    }
+
     /**
      * Automatic verification recovery handler for ExoPlayer / stream exceptions.
      */
@@ -431,6 +490,7 @@ _uiState.update {
         _uiState.update { it.copy(isRecovering = true, error = "Verifying playback & recovering stream...") }
 
         recoveryJob = viewModelScope.launch {
+            try {
             val result = playbackRecoveryManager.attemptRecovery(
                 mediaId = mediaId,
                 currentPosition = _progress.value.currentPosition,
@@ -470,6 +530,7 @@ _uiState.update {
                         it.copy(
                             isRecovering = false,
                             selectedSource = result.newSource,
+                            sourceGeneration = it.sourceGeneration + 1,
                             error = null,
                             retryAttemptCount = it.retryAttemptCount + 1,
                             isPlaying = true
@@ -495,6 +556,16 @@ _uiState.update {
                     }
                 }
             }
+            } catch (e: kotlinx.coroutines.CancellationException) { throw e }
+            catch (_: Exception) {
+                if (_uiState.value.sourceGeneration == currentState.sourceGeneration) {
+                    _uiState.update { it.copy(error = "Playback recovery failed. Check your connection or choose another source.") }
+                }
+            } finally {
+                if (_uiState.value.sourceGeneration == currentState.sourceGeneration) {
+                    _uiState.update { it.copy(isRecovering = false) }
+                }
+            }
         }
     }
 
@@ -506,10 +577,11 @@ _uiState.update {
         if (_uiState.value.isRecovering) return
         val source = _uiState.value.selectedSource
         val position = _progress.value
+        val generation = _uiState.value.sourceGeneration
         _uiState.update { it.copy(isRecovering = true, error = null, isPlaying = false) }
         recoveryJob = viewModelScope.launch {
             try {
-                playbackAccess.requireAccess()
+                playbackAccess.requireAccess(meteredConsent)
                 sessionManager.refreshSession().getOrThrow()
                 source?.url?.let { cacheManager.invalidatePlaybackResponse(it) }
                 val refreshed = kotlinx.coroutines.withTimeout(20_000) {
@@ -522,6 +594,9 @@ _uiState.update {
                 _uiState.update { it.copy(isRecovering = false, error = "The provider did not respond in time.") }
             } catch (e: kotlinx.coroutines.CancellationException) { throw e }
             catch (e: Exception) { _uiState.update { it.copy(isRecovering = false, error = e.message ?: "Playback repair failed.") } }
+            finally {
+                if (_uiState.value.sourceGeneration == generation) _uiState.update { it.copy(isRecovering = false) }
+            }
         }
     }
 
@@ -535,6 +610,6 @@ _uiState.update {
         // viewModelScope is already cancelled by the time onCleared runs, so a plain launch would
         // never execute. Persist the final position from the scope we own.
         val snapshot = _uiState.value
-        exitScope.launch { persist(snapshot) }
+        exitScope.launch { runCatching { persist(snapshot) } }
     }
 }

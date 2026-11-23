@@ -5,9 +5,14 @@
   "ai": { "binding": "AI" },
   "vars": {
     "FIREBASE_PROJECT_ID": "vista-cinema",
-    "AI_MODEL": "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
+    "AI_MODEL": "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+    "NVIDIA_MODEL": "nvidia/nemotron-3.5-lightning-30b-a3b"
   },
   "ratelimits": [{
+    "name": "VOICE_LIMITER",
+    "namespace_id": "1010",
+    "simple": { "limit": 6, "period": 60 }
+  }, {
     "name": "ASSISTANT_LIMITER",
     "namespace_id": "1009",
     "simple": { "limit": 15, "period": 60 }

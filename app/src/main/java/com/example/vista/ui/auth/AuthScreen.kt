@@ -36,8 +36,15 @@ fun AuthScreen(
     viewModel: AuthViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val draft by viewModel.draft.collectAsStateWithLifecycle()
+    val keyboard = androidx.compose.ui.platform.LocalSoftwareKeyboardController.current
+    val focusManager = androidx.compose.ui.platform.LocalFocusManager.current
     val context = LocalContext.current
     val activity = (context as? Activity)
+
+    LaunchedEffect(uiState.error) {
+        if (uiState.error != null) { keyboard?.hide(); focusManager.clearFocus() }
+    }
 
     LaunchedEffect(uiState.isUserLoggedIn, uiState.needsProfileSetup, uiState.isCheckingStatus, uiState.isGuest) {
         if (uiState.isCheckingStatus) return@LaunchedEffect
@@ -48,7 +55,7 @@ fun AuthScreen(
                     popUpTo(Screen.Auth.route) { inclusive = true }
                 }
             } else {
-                navController.navigate(Screen.Home.route) {
+                navController.navigate(viewModel.postAuthRoute()) {
                     popUpTo(Screen.Auth.route) { inclusive = true }
                 }
             }
@@ -56,7 +63,7 @@ fun AuthScreen(
         }
 
         if (uiState.isGuest) {
-            navController.navigate(Screen.Home.route) {
+            navController.navigate(viewModel.postAuthRoute()) {
                 popUpTo(Screen.Auth.route) { inclusive = true }
             }
         }
@@ -78,6 +85,8 @@ fun AuthScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(Background)
+            .windowInsetsPadding(WindowInsets.safeDrawing)
+            .imePadding()
             .verticalScroll(rememberScrollState()),
         contentAlignment = Alignment.Center
     ) {
@@ -103,25 +112,22 @@ fun AuthScreen(
             // Animated Logo - Premium Feel
             Surface(
                 modifier = Modifier.size(120.dp),
-                color = Color.White,
+                color = CardSurface,
                 shape = RoundedCornerShape(28.dp),
                 shadowElevation = 12.dp
             ) {
                 Box(
                     modifier = Modifier.background(
                         Brush.linearGradient(
-                            colors = listOf(Color.White, Color(0xFFEEEEEE))
+                            colors = listOf(CardSurface, Background)
                         )
                     ),
                     contentAlignment = Alignment.Center
                 ) {
-                    Text(
-                        text = "V",
-                        style = MaterialTheme.typography.displayLarge.copy(
-                            fontWeight = FontWeight.Black,
-                            letterSpacing = (-2).sp
-                        ),
-                        color = Accent
+                    androidx.compose.foundation.Image(
+                        painter = androidx.compose.ui.res.painterResource(com.example.vista.R.drawable.ic_launcher_foreground),
+                        contentDescription = "Vista Watch",
+                        modifier = Modifier.fillMaxSize()
                     )
                 }
             }
@@ -129,7 +135,7 @@ fun AuthScreen(
             Spacer(modifier = Modifier.height(40.dp))
 
             Text(
-                text = "VISTA CINEMA",
+                text = "VISTA",
                 style = MaterialTheme.typography.headlineLarge.copy(
                     fontWeight = FontWeight.ExtraBold,
                     letterSpacing = 4.sp
@@ -139,7 +145,7 @@ fun AuthScreen(
             )
 
             Text(
-                text = "PRO CINEMA SUITE",
+                text = "WATCH · YOUR NEXT GREAT STORY",
                 style = MaterialTheme.typography.labelLarge.copy(
                     fontWeight = FontWeight.Bold,
                     letterSpacing = 8.sp
@@ -157,10 +163,22 @@ fun AuthScreen(
                 border = BorderStroke(1.dp, Color.White.copy(alpha = 0.05f))
             ) {
                 Column(modifier = Modifier.padding(24.dp)) {
+                    Text(when (uiState.authMode) {
+                        AuthMode.SignIn -> "Welcome back"
+                        AuthMode.SignUp -> "Create your account"
+                        AuthMode.ForgotPassword -> "Reset your password"
+                    }, color = PrimaryText, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
+                    Spacer(Modifier.height(8.dp))
+                    Text(if (uiState.authMode == AuthMode.SignUp) "Join Vista Watch and make your profile your own."
+                        else "Your stories, ready when you are.", color = SecondaryText, style = MaterialTheme.typography.bodySmall)
+                    Spacer(Modifier.height(24.dp))
                     when (uiState.authMode) {
                         is AuthMode.SignIn -> SignInForm(
+                            email = draft.email, password = draft.password,
+                            onEmailChange = viewModel::updateEmail, onPasswordChange = viewModel::updatePassword,
                             isLoading = uiState.isLoading,
                             onSignIn = { email, password ->
+                                keyboard?.hide(); focusManager.clearFocus()
                                 viewModel.signInWithEmail(email, password)
                             },
                             onSignUpClick = { viewModel.switchToSignUp() },
@@ -168,16 +186,22 @@ fun AuthScreen(
                         )
 
                         is AuthMode.SignUp -> SignUpForm(
+                            email = draft.email, password = draft.password, confirmPassword = draft.confirmation,
+                            onEmailChange = viewModel::updateEmail, onPasswordChange = viewModel::updatePassword,
+                            onConfirmationChange = viewModel::updateConfirmation,
                             isLoading = uiState.isLoading,
                             onSignUp = { email, password ->
+                                keyboard?.hide(); focusManager.clearFocus()
                                 viewModel.signUpWithEmail(email, password)
                             },
                             onSignInClick = { viewModel.switchToSignIn() }
                         )
 
                         is AuthMode.ForgotPassword -> ForgotPasswordForm(
+                            email = draft.email, onEmailChange = viewModel::updateEmail,
                             isLoading = uiState.isLoading,
                             onResetPassword = { email ->
+                                keyboard?.hide(); focusManager.clearFocus()
                                 viewModel.sendPasswordReset(email)
                             },
                             onBackClick = { viewModel.backFromForgotPassword() }
@@ -209,36 +233,27 @@ fun AuthScreen(
                 textAlign = TextAlign.Center
             )
 
-            // Feedback sits directly under the form and is dismissible, rather than a small line of
-            // coloured text the viewer has to notice.
-            uiState.error?.let { message ->
-                AuthBanner(
-                    message = message,
-                    isError = true,
-                    onDismiss = { viewModel.clearError() }
-                )
-            }
-
-            uiState.info?.let { message ->
-                AuthBanner(
-                    message = message,
-                    isError = false,
-                    onDismiss = { viewModel.clearInfo() }
-                )
+            TextButton(onClick = { navController.navigate(Screen.Support.route) }, enabled = !uiState.isLoading) {
+                Text("Help & Support", color = PrimaryText)
             }
         }
+    }
+    AuthFeedbackDialog(uiState, onDismiss = viewModel::clearError, onRecover = viewModel::recover)
+    uiState.info?.let { message ->
+        AlertDialog(onDismissRequest = viewModel::clearInfo, containerColor = CardSurface,
+            title = { Text("Check your inbox", color = PrimaryText) }, text = { Text(message, color = SecondaryText) },
+            confirmButton = { TextButton(onClick = viewModel::clearInfo) { Text("OK", color = Accent) } })
     }
 }
 
 @Composable
 private fun SignInForm(
+    email: String, password: String, onEmailChange: (String) -> Unit, onPasswordChange: (String) -> Unit,
     isLoading: Boolean,
     onSignIn: (email: String, password: String) -> Unit,
     onSignUpClick: () -> Unit,
     onForgotPasswordClick: () -> Unit
 ) {
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
 
     val emailError = email.isNotBlank() && !isValidEmail(email)
@@ -246,7 +261,8 @@ private fun SignInForm(
     Column {
         AuthField(
             value = email,
-            onValueChange = { email = it },
+            onValueChange = onEmailChange,
+            enabled = !isLoading,
             label = "Email",
             keyboardType = KeyboardType.Email,
             imeAction = androidx.compose.ui.text.input.ImeAction.Next,
@@ -258,7 +274,8 @@ private fun SignInForm(
 
         AuthField(
             value = password,
-            onValueChange = { password = it },
+            onValueChange = onPasswordChange,
+            enabled = !isLoading,
             label = "Password",
             keyboardType = KeyboardType.Password,
             imeAction = androidx.compose.ui.text.input.ImeAction.Done,
@@ -272,6 +289,7 @@ private fun SignInForm(
 
         TextButton(
             onClick = onForgotPasswordClick,
+            enabled = !isLoading,
             modifier = Modifier.align(Alignment.End)
         ) {
             Text("Forgot password?", color = Accent, style = MaterialTheme.typography.bodySmall)
@@ -280,7 +298,7 @@ private fun SignInForm(
         Spacer(modifier = Modifier.height(24.dp))
 
         AuthSubmitButton(
-            label = "Sign In",
+            label = if (isLoading) "Signing in…" else "Sign In",
             isLoading = isLoading,
             enabled = canSubmit(email, password),
             onClick = { onSignIn(email, password) }
@@ -300,25 +318,26 @@ private fun SignInForm(
 
 @Composable
 private fun SignUpForm(
+    email: String, password: String, confirmPassword: String,
+    onEmailChange: (String) -> Unit, onPasswordChange: (String) -> Unit, onConfirmationChange: (String) -> Unit,
     isLoading: Boolean,
     onSignUp: (email: String, password: String) -> Unit,
     onSignInClick: () -> Unit
 ) {
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var confirmPassword by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
 
     val emailInvalid = email.isNotBlank() && !isValidEmail(email)
-    val passwordTooShort = password.isNotBlank() && password.length < MIN_PASSWORD_LENGTH
+    val passwordProblem = AuthInputPolicy.signupPasswordError(password)
+    val passwordTooShort = password.isNotEmpty() && passwordProblem != null
     val mismatch = confirmPassword.isNotBlank() && password != confirmPassword
-    val canSubmit = isValidEmail(email) && !passwordTooShort && password == confirmPassword &&
+    val canSubmit = isValidEmail(email) && passwordProblem == null && password == confirmPassword &&
         password.isNotEmpty() && !isLoading
 
     Column {
         AuthField(
             value = email,
-            onValueChange = { email = it },
+            onValueChange = onEmailChange,
+            enabled = !isLoading,
             label = "Email",
             keyboardType = KeyboardType.Email,
             imeAction = androidx.compose.ui.text.input.ImeAction.Next,
@@ -330,7 +349,8 @@ private fun SignUpForm(
 
         AuthField(
             value = password,
-            onValueChange = { password = it },
+            onValueChange = onPasswordChange,
+            enabled = !isLoading,
             label = "Password",
             keyboardType = KeyboardType.Password,
             imeAction = androidx.compose.ui.text.input.ImeAction.Next,
@@ -338,18 +358,15 @@ private fun SignUpForm(
             passwordVisible = passwordVisible,
             onPasswordVisibilityChange = { passwordVisible = it },
             isError = passwordTooShort,
-            supportingText = if (passwordTooShort) {
-                "Use at least $MIN_PASSWORD_LENGTH characters"
-            } else {
-                null
-            }
+            supportingText = if (passwordTooShort) passwordProblem else "Use at least ${AuthInputPolicy.MIN_PASSWORD_LENGTH} characters."
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
         AuthField(
             value = confirmPassword,
-            onValueChange = { confirmPassword = it },
+            onValueChange = onConfirmationChange,
+            enabled = !isLoading,
             label = "Confirm Password",
             keyboardType = KeyboardType.Password,
             imeAction = androidx.compose.ui.text.input.ImeAction.Done,
@@ -364,7 +381,7 @@ private fun SignUpForm(
         Spacer(modifier = Modifier.height(24.dp))
 
         AuthSubmitButton(
-            label = "Create Account",
+            label = if (isLoading) "Creating your account…" else "Create Account",
             isLoading = isLoading,
             enabled = canSubmit,
             onClick = { onSignUp(email, password) }
@@ -384,11 +401,11 @@ private fun SignUpForm(
 
 @Composable
 private fun ForgotPasswordForm(
+    email: String, onEmailChange: (String) -> Unit,
     isLoading: Boolean,
     onResetPassword: (email: String) -> Unit,
     onBackClick: () -> Unit
 ) {
-    var email by remember { mutableStateOf("") }
     val emailInvalid = email.isNotBlank() && !isValidEmail(email)
 
     Column {
@@ -402,7 +419,8 @@ private fun ForgotPasswordForm(
 
         AuthField(
             value = email,
-            onValueChange = { email = it },
+            onValueChange = onEmailChange,
+            enabled = !isLoading,
             label = "Email",
             keyboardType = KeyboardType.Email,
             imeAction = androidx.compose.ui.text.input.ImeAction.Done,
@@ -414,7 +432,7 @@ private fun ForgotPasswordForm(
         Spacer(modifier = Modifier.height(24.dp))
 
         AuthSubmitButton(
-            label = "Send Reset Link",
+            label = if (isLoading) "Requesting reset link…" else "Send Reset Link",
             isLoading = isLoading,
             enabled = isValidEmail(email),
             onClick = { onResetPassword(email) }
@@ -432,13 +450,11 @@ private fun ForgotPasswordForm(
     }
 }
 
-private const val MIN_PASSWORD_LENGTH = 6
-
 private fun isValidEmail(value: String): Boolean =
-    android.util.Patterns.EMAIL_ADDRESS.matcher(value.trim()).matches()
+    AuthInputPolicy.validEmail(value)
 
 private fun canSubmit(email: String, password: String): Boolean =
-    isValidEmail(email) && password.length >= MIN_PASSWORD_LENGTH
+    isValidEmail(email) && password.isNotEmpty()
 
 /** Shared text field with validation, an optional password reveal, and an IME action. */
 @Composable
@@ -453,14 +469,17 @@ private fun AuthField(
     onPasswordVisibilityChange: (Boolean) -> Unit = {},
     isError: Boolean = false,
     supportingText: String? = null,
-    onImeAction: () -> Unit = {}
+    onImeAction: () -> Unit = {},
+    enabled: Boolean = true
 ) {
+    val focusManager = androidx.compose.ui.platform.LocalFocusManager.current
     OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
         label = { Text(label) },
         modifier = Modifier.fillMaxWidth(),
         singleLine = true,
+        enabled = enabled,
         isError = isError,
         visualTransformation = if (isPassword && !passwordVisible) {
             PasswordVisualTransformation()
@@ -470,10 +489,10 @@ private fun AuthField(
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType, imeAction = imeAction),
         keyboardActions = androidx.compose.foundation.text.KeyboardActions(
             onDone = { onImeAction() },
-            onNext = { onImeAction() }
+            onNext = { focusManager.moveFocus(androidx.compose.ui.focus.FocusDirection.Down) }
         ),
         supportingText = supportingText?.let {
-            { Text(it, color = Accent, style = MaterialTheme.typography.labelSmall) }
+            { Text(it, color = if (isError) ErrorAccent else SecondaryText, style = MaterialTheme.typography.labelSmall) }
         },
         trailingIcon = if (isPassword) {
             {
@@ -502,7 +521,7 @@ private fun AuthSubmitButton(
 ) {
     Button(
         onClick = onClick,
-        modifier = Modifier.fillMaxWidth().height(56.dp),
+        modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp),
         enabled = enabled && !isLoading,
         colors = ButtonDefaults.buttonColors(containerColor = Accent),
         shape = RoundedCornerShape(16.dp)
@@ -561,4 +580,3 @@ private fun AuthBanner(
         }
     }
 }
-

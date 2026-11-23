@@ -4,42 +4,43 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
-import android.net.NetworkRequest
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.launch
 
 object NetworkUtils {
+    /** Inspect the route Android will actually use, including captive-portal validation. */
+    fun isConnected(context: Context): Boolean {
+        val manager = context.getSystemService(ConnectivityManager::class.java)
+        return isValidated(manager?.getNetworkCapabilities(manager.activeNetwork))
+    }
+
+    private fun isValidated(capabilities: NetworkCapabilities?): Boolean =
+        capabilities?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) == true &&
+            capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
+
     fun observeConnectivity(context: Context): Flow<Boolean> = callbackFlow {
         val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        
+
         val callback = object : ConnectivityManager.NetworkCallback() {
-            override fun onAvailable(network: Network) {
-                launch { send(true) }
+            override fun onCapabilitiesChanged(network: Network, capabilities: NetworkCapabilities) {
+                // A default route can be available before validation (hotel/login Wi-Fi).
+                if (network == connectivityManager.activeNetwork) trySend(isValidated(capabilities))
             }
 
             override fun onLost(network: Network) {
-                launch { send(false) }
+                // Losing the old Wi-Fi route must not hide a working cellular replacement.
+                trySend(isConnected(context))
             }
 
             override fun onUnavailable() {
-                launch { send(false) }
+                trySend(isConnected(context))
             }
         }
 
-        val request = NetworkRequest.Builder()
-            .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
-            .build()
-        
-        connectivityManager.registerNetworkCallback(request, callback)
-        
-        // Initial state
-        val activeNetwork = connectivityManager.activeNetwork
-        val capabilities = connectivityManager.getNetworkCapabilities(activeNetwork)
-        val isInitialConnected = capabilities?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) == true
-        launch { send(isInitialConnected) }
+        connectivityManager.registerDefaultNetworkCallback(callback)
+        trySend(isConnected(context))
 
         awaitClose {
             connectivityManager.unregisterNetworkCallback(callback)

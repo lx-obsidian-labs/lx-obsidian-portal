@@ -15,10 +15,25 @@ TMDB_ACCESS_TOKEN=your_tmdb_access_token_here
 # Get key at https://www.watchmode.com/api
 WATCHMODE_API_KEY=your_watchmode_api_key_here
 
+# Optional NexStream movie playback fallback (1.0.11+).
+# Set BACKUP_MOVIES_API_KEY in the root .env, environment, or Gradle properties.
+# Leave unset/blank to disable. Renew the provider's 30-day key and rebuild the app.
+# BACKUP_MOVIES_API_KEY=your_nexstream_api_key_here
+
 # Vista Cinema first-party analytics (Cloudflare Pages Function + D1)
 # Leave blank to disable. Must match the VISTA_ANALYTICS_KEY secret on Cloudflare Pages.
 VISTA_ANALYTICS_BASE_URL=https://www.lxobsidianportal.co.za
 VISTA_ANALYTICS_KEY=
 
 # HTTPS URL of deployed Vista assistant backend; never put an AI provider key here.
-VISTA_AI_BASE_URL=
+VISTA_AI_BASE_URL=https://vista-assistant.feedpatelmusic.workers.dev
+
+# Conservative Windows build settings (also used by Android Studio builds).
+# Increase memory/workers only after verifying the workstation has capacity.
+org.gradle.jvmargs=-Xmx1536m -Dfile.encoding=UTF-8
+org.gradle.workers.max=1
+org.gradle.parallel=false
+kotlin.compiler.execution.strategy=in-process
+# Avoid the missing shrunk-classpath-snapshot.bin failure on this workstation.
+kotlin.incremental=false
+ksp.incremental=false

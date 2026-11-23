@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.vista.data.remote.firebase.FirebaseManager
+import com.example.vista.domain.model.AgeBand
 import com.example.vista.domain.model.AppSettings
 import com.example.vista.domain.model.AppTheme
 import com.example.vista.domain.model.CellularStreamingSetting
@@ -26,8 +27,14 @@ enum class SettingsPage {
     DATA_STORAGE,
     APPEARANCE,
     PRIVACY_HISTORY,
-    ABOUT
+    ABOUT,
+    DOWNLOADS,
+    AI_VOICE,
+    SUPPORT,
+    FAMILY
 }
+
+enum class FamilyPinAction { DISABLE_KIDS, LOOSEN_AGE, ENABLE_ADULT_CONTENT, CHANGE_PIN }
 
 data class SettingsUiState(
     val currentPage: SettingsPage = SettingsPage.MAIN,
@@ -54,18 +61,36 @@ data class SettingsUiState(
     val audioLanguage: String = "Original",
     val doubleTapToSeekSeconds: Int = 10,
     val showAdultContent: Boolean = false,
+    val ageBand: AgeBand = AgeBand.ADULT,
+    val kidsMode: Boolean = false,
+    val hasParentalPin: Boolean = false,
+    val familyPinAction: FamilyPinAction? = null,
+    val familyPinInput: String = "",
+    val familyPinError: String? = null,
     val cacheLimitMb: Int = 500,
     val storageUsed: String = "0 B",
     val cacheSize: String = "0 B",
-    val viewer: Viewer? = null
+    val viewer: Viewer? = null,
+    val aiEnabled: Boolean = true,
+    val aiChatEnabled: Boolean = true,
+    val downloadMaxHeight: Int = 720,
+    val downloadedSize: String = "0 B",
+    val readyDownloads: Int = 0,
+    val freeStorage: String = "Checking…",
+    val hiddenFestiveSeason: Int = 0,
+    val taste: com.example.vista.ai.TastePreferences = com.example.vista.ai.TastePreferences(),
+    val maintenanceBusy: Boolean = false
 )
 
 @HiltViewModel
+@androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
 class SettingsViewModel @Inject constructor(
     private val settingsRepository: SettingsRepository,
     private val firebaseManager: FirebaseManager,
     private val preferencesManager: com.example.vista.data.local.PreferencesManager,
     private val messenger: com.example.vista.ui.components.VistaMessenger,
+    private val offlineDownloads: com.example.vista.downloads.OfflineDownloads,
+    private val tasteStore: com.example.vista.ai.TasteStore,
     @ApplicationContext private val context: Context
 ) : ViewModel() {
 
@@ -78,6 +103,35 @@ class SettingsViewModel @Inject constructor(
         loadSharePromptsPreference()
         loadViewerProfile()
         loadDeviceInfo()
+        viewModelScope.launch {
+            preferencesManager.aiFeaturesEnabled.collect { enabled -> _uiState.update { it.copy(aiEnabled = enabled) } }
+        }
+        viewModelScope.launch {
+            preferencesManager.aiChatEnabled.collect { enabled -> _uiState.update { it.copy(aiChatEnabled = enabled) } }
+        }
+        viewModelScope.launch { preferencesManager.downloadMaxHeight.collect { value -> _uiState.update { it.copy(downloadMaxHeight = value) } } }
+        viewModelScope.launch { preferencesManager.hiddenFestiveSeason.collect { value -> _uiState.update { it.copy(hiddenFestiveSeason = value) } } }
+        viewModelScope.launch { preferencesManager.ageBand.collect { value -> _uiState.update { it.copy(ageBand = value) } } }
+        viewModelScope.launch { preferencesManager.kidsMode.collect { value -> _uiState.update { it.copy(kidsMode = value) } } }
+        viewModelScope.launch { preferencesManager.hasParentalPin.collect { value -> _uiState.update { it.copy(hasParentalPin = value) } } }
+        viewModelScope.launch { tasteStore.changes.collect { value -> _uiState.update { it.copy(taste = value) } } }
+    }
+
+    fun updateAiEnabled(enabled: Boolean) {
+        viewModelScope.launch { preferencesManager.setAiFeaturesEnabled(enabled) }
+    }
+
+    fun updateAiChatEnabled(enabled: Boolean) {
+        viewModelScope.launch { preferencesManager.setAiChatEnabled(enabled) }
+    }
+    fun updateDownloadQuality(value: Int) { viewModelScope.launch { preferencesManager.setDownloadMaxHeight(value) } }
+    fun enablePersonalization(value: Boolean) { viewModelScope.launch { tasteStore.setEnabled(value) } }
+    fun toggleTasteGenre(value: String) { viewModelScope.launch { tasteStore.toggleGenre(value) } }
+    fun resetPersonalization() { viewModelScope.launch { tasteStore.reset(); messenger.show("Taste preferences and feedback reset. Your saved titles and history are preserved.") } }
+    fun setFestiveEnabled(value: Boolean) {
+        val date = java.time.LocalDate.now()
+        val year = com.example.vista.motd.FestiveSeason.moment(date)?.seasonYear ?: date.year
+        viewModelScope.launch { preferencesManager.hideFestiveSeason(if (value) 0 else year) }
     }
 
     /**
@@ -108,7 +162,7 @@ class SettingsViewModel @Inject constructor(
                 _uiState.update {
                     it.copy(
                         autoplayNext = settings.autoplayNext,
-                        preferredQuality = settings.preferredQuality,
+                        preferredQuality = com.example.vista.domain.model.PlaybackPreferencesPolicy.canonicalQuality(settings.preferredQuality),
                         subtitleLanguage = settings.subtitleLanguage,
                         subtitleEnabled = settings.subtitleEnabled,
                         subtitleSize = settings.subtitleSize,
@@ -142,22 +196,25 @@ class SettingsViewModel @Inject constructor(
     }
 
     private fun loadDeviceInfo() {
-        viewModelScope.launch {
-            _uiState.update {
-                it.copy(
-                    storageUsed = formatSize(directorySize(context.filesDir) + directorySize(context.dataDir)),
-                    cacheSize = formatSize(cacheBytes())
-                )
-            }
-        }
+        refreshSizes()
     }
 
     fun refreshSizes() {
         viewModelScope.launch {
+            val downloads = try { offlineDownloads.list() } catch (e: kotlinx.coroutines.CancellationException) { throw e } catch (_: Exception) { emptyList() }
+            val sizes = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+                // dataDir already contains filesDir, databases and internal cache.
+                val storage = directorySize(context.dataDir) + directorySize(context.getExternalFilesDir(null)) +
+                    directorySize(context.externalCacheDir)
+                formatSize(storage) to formatSize(cacheBytes())
+            }
             _uiState.update {
                 it.copy(
-                    storageUsed = formatSize(directorySize(context.filesDir) + directorySize(context.dataDir)),
-                    cacheSize = formatSize(cacheBytes())
+                    storageUsed = sizes.first,
+                    cacheSize = sizes.second,
+                    downloadedSize = formatSize(downloads.sumOf { entry -> entry.bytes }),
+                    readyDownloads = downloads.count { entry -> entry.state == androidx.media3.exoplayer.offline.Download.STATE_COMPLETED },
+                    freeStorage = formatSize(context.noBackupFilesDir.usableSpace)
                 )
             }
         }
@@ -210,11 +267,14 @@ class SettingsViewModel @Inject constructor(
     }
 
     fun updateSubtitleLanguage(language: String) {
-        viewModelScope.launch { settingsRepository.updateSubtitleLanguage(language) }
+        viewModelScope.launch { settingsRepository.updateSubtitleLanguage(language); settingsRepository.updateSubtitleEnabled(language != "Off") }
     }
 
     fun updateSubtitleEnabled(enabled: Boolean) {
-        viewModelScope.launch { settingsRepository.updateSubtitleEnabled(enabled) }
+        viewModelScope.launch {
+            if (enabled && _uiState.value.subtitleLanguage == "Off") settingsRepository.updateSubtitleLanguage("English")
+            settingsRepository.updateSubtitleEnabled(enabled)
+        }
     }
 
     fun updateSubtitleSize(size: Float) {
@@ -257,6 +317,92 @@ class SettingsViewModel @Inject constructor(
 
     fun updateShowAdultContent(show: Boolean) {
         viewModelScope.launch { settingsRepository.updateShowAdultContent(show) }
+    }
+
+    private var pendingAgeBand: AgeBand? = null
+    private var pendingParentalPin: String? = null
+
+    private fun requirePin(action: FamilyPinAction): Boolean {
+        if (!_uiState.value.hasParentalPin) return false
+        _uiState.update { it.copy(familyPinAction = action, familyPinInput = "", familyPinError = null) }
+        return true
+    }
+
+    fun requestShowAdultContent(show: Boolean) {
+        if (show && requirePin(FamilyPinAction.ENABLE_ADULT_CONTENT)) return
+        updateShowAdultContent(show)
+    }
+
+    fun requestAgeBand(band: AgeBand) {
+        val state = _uiState.value
+        val loosening = state.kidsMode || band.ordinal > state.ageBand.ordinal
+        if (loosening && requirePin(FamilyPinAction.LOOSEN_AGE)) {
+            pendingAgeBand = band
+            return
+        }
+        updateAgeBand(band)
+    }
+
+    fun requestKidsMode(enabled: Boolean) {
+        if (!enabled && requirePin(FamilyPinAction.DISABLE_KIDS)) return
+        updateKidsMode(enabled)
+    }
+
+    fun requestParentalPin(pin: String) {
+        if (_uiState.value.hasParentalPin && requirePin(FamilyPinAction.CHANGE_PIN)) {
+            pendingParentalPin = pin
+            return
+        }
+        updateParentalPin(pin)
+    }
+
+    fun updateFamilyPinInput(value: String) {
+        _uiState.update { it.copy(familyPinInput = value.filter(Char::isDigit).take(6), familyPinError = null) }
+    }
+
+    fun cancelFamilyPin() {
+        pendingAgeBand = null
+        pendingParentalPin = null
+        _uiState.update { it.copy(familyPinAction = null, familyPinInput = "", familyPinError = null) }
+    }
+
+    fun confirmFamilyPin() {
+        val action = _uiState.value.familyPinAction ?: return
+        val entered = _uiState.value.familyPinInput
+        viewModelScope.launch {
+            if (!preferencesManager.verifyParentalPin(entered)) {
+                _uiState.update { it.copy(familyPinError = "That PIN is not correct.") }
+                return@launch
+            }
+            when (action) {
+                FamilyPinAction.DISABLE_KIDS -> updateKidsMode(false)
+                FamilyPinAction.LOOSEN_AGE -> pendingAgeBand?.let(::updateAgeBand)
+                FamilyPinAction.ENABLE_ADULT_CONTENT -> updateShowAdultContent(true)
+                FamilyPinAction.CHANGE_PIN -> pendingParentalPin?.let(::updateParentalPin)
+            }
+            cancelFamilyPin()
+        }
+    }
+
+    fun updateAgeBand(band: AgeBand) {
+        viewModelScope.launch {
+            preferencesManager.setAgeBand(band)
+            messenger.show("Age band set to ${band.displayName}.")
+        }
+    }
+
+    fun updateKidsMode(enabled: Boolean) {
+        viewModelScope.launch {
+            preferencesManager.setKidsMode(enabled)
+            messenger.show(if (enabled) "Kids mode is on. Switch back in Family settings." else "Kids mode is off.")
+        }
+    }
+
+    fun updateParentalPin(pin: String) {
+        viewModelScope.launch {
+            preferencesManager.setParentalPin(pin)
+            messenger.show(if (pin.isBlank()) "Parental PIN removed." else "Parental PIN saved.")
+        }
     }
 
     fun updateNotificationsEnabled(enabled: Boolean) {
@@ -320,11 +466,11 @@ class SettingsViewModel @Inject constructor(
     }
 
     fun clearHistory() {
-        viewModelScope.launch { settingsRepository.clearHistory() }
+        maintenance("Watch history cleared.") { settingsRepository.clearHistory() }
     }
 
     fun clearSearchHistory() {
-        viewModelScope.launch { settingsRepository.clearSearchHistory() }
+        maintenance("Search history cleared.") { settingsRepository.clearSearchHistory() }
     }
 
     fun updateCacheLimitMb(limitMb: Int) {
@@ -333,12 +479,17 @@ class SettingsViewModel @Inject constructor(
     }
 
     fun clearCache() {
+        maintenance("Temporary-cache cleanup finished. Downloads, history and saved titles are preserved.") { settingsRepository.clearCache() }
+    }
+
+    private fun maintenance(success: String, block: suspend () -> Unit) {
+        if (_uiState.value.maintenanceBusy) return
+        _uiState.update { it.copy(maintenanceBusy = true) }
         viewModelScope.launch {
-            try {
-                settingsRepository.clearCache()
-            } catch (_: Exception) {
-            }
-            refreshSizes()
+            try { block(); messenger.show(success) }
+            catch (e: kotlinx.coroutines.CancellationException) { throw e }
+            catch (e: Exception) { messenger.show(e.message ?: "The operation could not finish.", com.example.vista.ui.components.VistaMessageKind.ERROR) }
+            finally { _uiState.update { it.copy(maintenanceBusy = false) }; refreshSizes() }
         }
     }
 

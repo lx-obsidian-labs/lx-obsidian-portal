@@ -97,7 +97,7 @@ class MovieOfTheDayWorker @AssistedInject constructor(
             .setContentTitle("${today.eventLabel}: ${today.movie.title}")
             .setContentText(today.movie.blurb)
             .setStyle(NotificationCompat.BigTextStyle().bigText(today.movie.blurb))
-            .setSubText("Free on Vista Cinema")
+            .setSubText("Free on Vista Watch")
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
             .build()

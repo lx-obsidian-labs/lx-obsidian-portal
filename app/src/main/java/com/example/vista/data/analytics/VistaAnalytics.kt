@@ -21,7 +21,7 @@ import javax.inject.Named
 import javax.inject.Singleton
 
 /**
- * First-party, privacy-safe analytics for Vista Cinema.
+ * First-party, privacy-safe analytics for Vista Watch.
  *
  * Events are fire-and-forget: a failed network call must never affect the calling screen, so
  * sending happens on a background scope and every failure is swallowed. Nothing personal is ever

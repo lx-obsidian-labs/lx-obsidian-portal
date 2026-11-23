@@ -12,12 +12,16 @@ import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 
 object AdManager {
 
+    private fun isTv(context: Context): Boolean = context is com.example.vista.TvMainActivity ||
+        DeviceDetector.detectDeviceType(context) == DeviceType.TV
+
     // ==================== App Open Ad ====================
     private var appOpenAd: AppOpenAd? = null
     private var appOpenAdShownThisSession = false
     private const val APP_OPEN_AD_UNIT_ID = "ca-app-pub-8968817915668565/8390544721"
 
     fun loadAppOpenAd(context: Context) {
+        if (isTv(context)) return
         if (appOpenAd != null) return
 
         val adRequest = AdRequest.Builder().build()
@@ -38,6 +42,7 @@ object AdManager {
     }
 
     fun showAppOpenAd(activity: Activity, onAdDismissed: () -> Unit = {}) {
+        if (isTv(activity)) { onAdDismissed(); return }
         if (appOpenAdShownThisSession || appOpenAd == null) {
             onAdDismissed()
             return
@@ -95,6 +100,7 @@ object AdManager {
     }
 
     fun loadInterstitialAd(context: Context) {
+        if (isTv(context)) return
         if (interstitialAd != null) return
 
         val adRequest = AdRequest.Builder().build()
@@ -115,6 +121,7 @@ object AdManager {
     }
 
     fun showInterstitialAd(activity: Activity, onAdDismissed: () -> Unit = {}) {
+        if (isTv(activity)) { onAdDismissed(); return }
         val currentTime = System.currentTimeMillis()
         val timeSinceLastAd = currentTime - lastShownTimestamp
 

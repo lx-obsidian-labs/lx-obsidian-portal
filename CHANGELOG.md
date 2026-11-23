@@ -1,11 +1,95 @@
 # Changelog
 
-All notable changes to Vista Cinema.
+All notable changes to Vista Watch.
 
-## [1.0.9] - 2026-10-12
+## [1.0.13] — In development
 
-Release APK: `deploy/VistaCinema-v1.0.9.apk` (same APK serves phone + TV). Deployed with the
-in-app update manifest pointing at `versionCode 16`.
+VersionCode **20**. AI entertainment and spoken-conversation development.
+
+### Added
+- Chat and Entertainment Brief sections, source cards with publisher dates, selectable answers, Copy/Read aloud and contextual news follow-ups.
+- Compact AI welcome, preferences sheet, session-only recent conversations and a jump-to-latest control.
+- Bounded entertainment-news retrieval with deduplication, relevance ranking and source-backed answers; unavailable evidence produces an explicit explanation.
+- Authenticated ElevenLabs speech endpoint and foreground spoken turn-taking through the existing Vista assistant.
+- Explicit ElevenLabs/Device voice selection. ElevenLabs is the default; failures do not silently switch to Android speech.
+- Cancellation of voice requests and temporary audio cleanup on Stop, screen exit and profile changes.
+
+These are development changes, not evidence of public deployment or completed live microphone/audio testing. See `docs/AI_ENTERTAINMENT_VOICE_DEVELOPMENT.md`.
+
+## [1.0.12] — Published 2026-11-17
+
+VersionCode **19**. First implementation: catalog continuity.
+
+### Branding
+- Product name transitions to **Vista Watch**, including launcher/splash/onboarding, phone and TV headers, Settings, sharing, notifications, iOS display name and the new V/play identity. Existing application identity and signing continuity support in-place upgrades.
+
+### Added
+- Bounded, versioned, atomic public-catalog snapshots outside user databases and cloud backup; saved rows render before refresh and expire after seven days.
+- Saved-catalog labels/timestamps on phone and TV, with independent row recovery during partial outages.
+- Home pagination errors keep their page and visible titles, expose retry, and ignore responses from a previous refresh generation.
+
+## [1.0.11] — Published 2026-11-15
+
+VersionCode **18**.
+
+Android is live as an optional signed update. Native iOS device IPA/archive downloads are published as unsigned developer builds requiring Apple signing before installation. See `docs/PUBLIC_RELEASE_1_0_11.md`.
+
+### Added
+- Optional four-question "Help shape Vista" poll on Home and in Settings, with sentiment, pain points, priorities and discovery-channel reporting; optional comments and separate anonymous-quote permission.
+- Polished recovery cards, adaptive collection grids and explicit failed-page retry controls.
+- TV focus scrolling follows the Foundation bring-into-view pivot, with row focus restoration and room for enlarged cards.
+- Optional NexStream backup movie playback source, offered after existing providers using the resolved TMDB movie ID.
+- Load `BACKUP_MOVIES_API_KEY` from Gradle properties, the environment, or the gitignored root `.env`. Blank keys disable the fallback; renewing a key requires rebuilding the app.
+
+### Fixed
+- Run targeted provider-ad cleanup at document start in all embed frames on supported WebViews, watch later iframe/attribute mutations, and preserve containers hosting actual player iframes.
+- Surface actionable catalog errors instead of empty successful sections, while keeping healthy home rows available.
+- Keep TVMaze series fallback available when TMDB fails; do not cache failed TVMaze lookups as empty results for five minutes.
+
+## [1.0.10] — Published 2026-11-08
+
+VersionCode **17**. Festive experience, smart TV adaptive layouts, suggestions and offline foundations release.
+
+Signed release, website and manifest are public. Smart TV responsiveness and Android phone/tablet/TV detection are prominently highlighted in the website, in-app manifest, release notes and update notification. APK size/hash/signature, GitHub assets, Cloudflare deployment, site CI and live AI checks pass; final physical-device offline/onboarding/signed-upgrade checks remain pending. See `docs/PUBLIC_RELEASE_1_0_10.md`.
+
+### Added
+- **Smart TV Detection & Resolution Scaling.**
+  - **Multi-Factor Device Detection (`DeviceDetector.kt`):** Detects Smart TVs, Amazon Fire TV, and Android OTT TV boxes by inspecting touchscreen absence, orientation, and active D-pad/remote controllers.
+  - **10-Foot Display Scaling:** Applies `1.20x`–`1.35x` density scaling and `48dp` x `28dp` overscan safe padding on 1080p and 4K TV displays.
+  - **Smooth D-Pad Scrolling (`TvScroll.kt`):** Dedicated row and grid scrollers (`rememberTvRowScroller`, `rememberTvGridScroller`) with `1.08x` focus scale animations and Accent border highlights.
+- **Festive Home Experience.**
+  - Seasonal home section (Nov 1–Jan 5) featuring year-aware Christmas & New Year moments, local countdowns, daily rotating festive picks, 3 curated collections, and season hide preferences.
+- **Grounded AI Companion & Single-Tap Actions.**
+   - Catalog-backed Details, Watch List, actual Resume and download-review actions, with typed follow-up references and explicit results.
+  - Refined taste ranker (`TasteRecommendations.kt`) with explicit dislikes, short-film validation, and mood/genre filters.
+- **Server Launch Controls & Notification Segmentation.**
+  - Server `LaunchStatus` integration in `PremiumAnnouncement.kt` preventing device clock tampering.
+  - Separated FCM notification channels (`CHANNEL_ID_UPDATES` and `CHANNEL_ID_PROMOTIONS`).
+- **Resilient Stream Recovery & Media Not Found Fallback.**
+  - Enhanced error recovery overlay in `PlayerScreen.kt` with manual repair, alternative search navigation, and multi-mirror probing (`VidsrcPlaybackRepository.kt`).
+
+## [1.0.9] - 2026-10-29
+
+VersionCode **16**. Signed release APK successfully built at `app/build/outputs/apk/release/app-release.apk`.
+Phone and TV use the same binary, hosted in the GitHub repository. The release manifest sets `mandatory: true`.
+Cloudflare Pages serves the website, documentation and manifest, not APKs. The release signing certificate
+matches the published 1.0.8 APK. Size: 22,369,333 bytes; SHA-256: `041131BC0350B193B2FF8327CC95289FED0AAF73D10BB79A22C09BE09221DB05`.
+
+### Latest AI and UI changes
+- Replaced classifier-only canned chat with generated NVIDIA NIM replies using bounded conversation history and catalog grounding.
+- Verified and deployed `nvidia/nemotron-3.5-lightning-30b-a3b` behind Firebase-authenticated Cloudflare; retained Workers AI fallback.
+- Fixed inherited environment credentials overriding the project's `.env` key; the provider key stays in a Worker secret.
+- Added profile-alias and enabled taste-preference context, plus a maintained reference to Vista's supported features.
+- Added allowlisted app-page actions and navigation to Search with a populated query.
+- Changed the Home FAB to floating chat while preserving the bottom-tab full-screen assistant.
+- Added foreground hands-free voice turns, spoken stop commands, high-quality Android voice selection and voice settings access.
+- Added Settings AI/chat controls and Profile assistant access and kids-version planning information.
+- Sent the date-free 1.0.9 coming-soon/kids-version-planned FCM announcement using Firebase CLI authentication; FCM accepted it for delivery.
+
+### Verification and build recovery
+- Nine backend tests passed; live page routing, app/profile knowledge and follow-up memory passed with NVIDIA explicitly required.
+- Clean `:app:assembleDebug` passed with 45 tasks after stopping stale daemons and using one worker, in-process Kotlin and disabled incremental Kotlin/KSP compilation.
+- Voice realism, microphone behavior and visual polish remain physical-device checks.
 
 ### Added
 - **Vista AI Assistant & Voice Integration.**

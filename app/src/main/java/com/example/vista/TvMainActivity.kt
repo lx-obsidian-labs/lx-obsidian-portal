@@ -62,8 +62,10 @@ class TvMainActivity : ComponentActivity() {
             )
 
             VistaTheme(appTheme = settings.appTheme) {
-                ProvideShimmerAnimation {
-                    TvUpdateHost(preferencesManager = preferencesManager)
+                com.example.vista.util.ProvideDeviceConfiguration(deviceTypeOverride = com.example.vista.util.DeviceType.TV) {
+                    ProvideShimmerAnimation {
+                        TvUpdateHost(preferencesManager = preferencesManager)
+                    }
                 }
             }
         }
@@ -78,6 +80,7 @@ fun TvAppEntryPoint() {
         navController.popBackStack()
     }
 
+    com.example.vista.ui.tv.TvFocusScrolling {
     NavHost(
         navController = navController,
         startDestination = Screen.Home.route
@@ -89,8 +92,13 @@ fun TvAppEntryPoint() {
                 },
                 onSearchClick = {
                     navController.navigate(Screen.TvSearch.route)
-                }
+                },
+                onSupportClick = { navController.navigate(Screen.Support.route) }
             )
+        }
+
+        composable(Screen.Support.route) {
+            com.example.vista.support.SupportScreen(onBack = { navController.popBackStack() })
         }
 
         composable(Screen.TvSearch.route) {
@@ -178,6 +186,7 @@ fun TvAppEntryPoint() {
             PlayerScreen(navController = navController)
         }
     }
+    }
 }
 
 private fun navigateToDetails(
@@ -220,7 +229,7 @@ private fun TvUpdateHost(preferencesManager: PreferencesManager) {
                 )
                 Spacer(Modifier.height(16.dp))
                 Text(
-                    "A new version of Vista Cinema (v${available.latestVersion}) is available.",
+                    "A new version of Vista Watch (v${available.latestVersion}) is available.",
                     style = MaterialTheme.typography.bodyMedium,
                     color = com.example.vista.ui.theme.MutedText
                 )
@@ -343,7 +352,7 @@ private fun TvUpdateHost(preferencesManager: PreferencesManager) {
         Dialog(onDismissRequest = { showPremiumDialog = false }) {
             TvUpdateDialogSurface {
                 Text(
-                    "Vista Cinema Premium is coming",
+                    "Vista Watch Premium is coming",
                     style = MaterialTheme.typography.headlineMedium,
                     color = com.example.vista.ui.theme.PrimaryText
                 )

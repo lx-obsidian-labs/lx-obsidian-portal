@@ -71,7 +71,7 @@ class ProfileViewModel @Inject constructor(
             _uiState.update { it.copy(isSaving = true) }
             try {
                 val updated = currentViewer.copy(alias = alias)
-                firebaseManager.saveViewerProfile(updated)
+                firebaseManager.updateProfileAlias(currentViewer.uid, alias)
                 _uiState.update { it.copy(viewer = updated, isSaving = false) }
                 _profileSaved.emit(true)
             } catch (e: Exception) {

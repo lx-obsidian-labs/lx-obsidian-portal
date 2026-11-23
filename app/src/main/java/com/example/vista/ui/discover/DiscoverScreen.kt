@@ -78,6 +78,13 @@ fun DiscoverScreen(
                 onTabSelected = { viewModel.selectTab(it) }
             )
 
+            com.example.vista.artwork.VistaArtworkBanner(
+                artwork = com.example.vista.artwork.VistaArtwork.DISCOVER,
+                heading = "Find your next obsession", subtitle = "Explore stories beyond your usual favourites.",
+                actionLabel = "Search stories", onClick = { navController.navigate(Screen.Search.route) },
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+            )
+
             // Genres - 2026 Floating Chips
             if (uiState.genres.isNotEmpty()) {
                 LazyRow(
@@ -126,7 +133,7 @@ fun DiscoverScreen(
                     }
                     uiState.error != null && uiState.items.isEmpty() -> {
                         DiscoverErrorContent(
-                            message = uiState.error!!,
+                            message = uiState.error ?: "Something went wrong",
                             onRetry = { viewModel.retry() }
                         )
                     }

@@ -97,6 +97,11 @@ fun LibraryScreen(
             )
 
             Spacer(modifier = Modifier.height(16.dp))
+            OutlinedButton(onClick = { navController.navigate(Screen.Downloads.route) }, modifier = Modifier.fillMaxWidth()) {
+                Icon(Icons.Outlined.DownloadForOffline, null)
+                Spacer(Modifier.width(8.dp))
+                Text("Downloads · Watch offline")
+            }
             LibraryFilterRow(
                 selected = uiState.filter,
                 onSelect = viewModel::selectFilter

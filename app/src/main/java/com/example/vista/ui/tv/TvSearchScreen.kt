@@ -6,16 +6,24 @@ import android.speech.RecognizerIntent
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.focusGroup
+import androidx.compose.ui.focus.focusRestorer
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -37,7 +45,7 @@ import com.example.vista.ui.theme.RaisedSurface
  * primary path and the text field sits next to it for when a viewer already knows the title.
  * Recent/trending terms render as focusable chips rather than the phone's swipeable rows.
  */
-@OptIn(ExperimentalTvMaterial3Api::class)
+@OptIn(ExperimentalTvMaterial3Api::class, ExperimentalFoundationApi::class, androidx.compose.ui.ExperimentalComposeUiApi::class)
 @Composable
 fun TvSearchScreen(
     onBackClick: () -> Unit,
@@ -46,7 +54,17 @@ fun TvSearchScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    var typedQuery by remember { mutableStateOf("") }
+    var typedQuery by rememberSaveable { mutableStateOf(uiState.query) }
+    val resultGridState = rememberLazyGridState()
+    var lastFocusedResult by rememberSaveable { mutableStateOf<String?>(null) }
+    var lastGridQuery by rememberSaveable { mutableStateOf(typedQuery) }
+    LaunchedEffect(typedQuery) {
+        if (lastGridQuery != typedQuery) {
+            lastFocusedResult = null
+            resultGridState.scrollToItem(0)
+            lastGridQuery = typedQuery
+        }
+    }
     val speechLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -65,7 +83,7 @@ fun TvSearchScreen(
                 RecognizerIntent.EXTRA_LANGUAGE_MODEL,
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
             )
-            putExtra(RecognizerIntent.EXTRA_PROMPT, "Search Vista Cinema")
+            putExtra(RecognizerIntent.EXTRA_PROMPT, "Search Vista Watch")
         }
         runCatching { speechLauncher.launch(intent) }
     }
@@ -135,9 +153,10 @@ fun TvSearchScreen(
                     fontWeight = FontWeight.Bold
                 )
                 Spacer(Modifier.height(12.dp))
-                val recentScroller = rememberTvRowScroller(uiState.recentSearches.size)
                 LazyRow(
-                    state = recentScroller.state,
+                    state = rememberLazyListState(),
+                    modifier = Modifier.focusRestorer().focusGroup(),
+                    contentPadding = PaddingValues(vertical = 12.dp),
                     horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     itemsIndexed(uiState.recentSearches, key = { _, term -> term }) { index, term ->
@@ -148,9 +167,6 @@ fun TvSearchScreen(
                             },
                             modifier = Modifier
                                 .padding(bottom = 4.dp)
-                                .onFocusChanged {
-                                    if (it.isFocused) recentScroller.onItemFocused(index)
-                                }
                         ) {
                             Text(
                                 text = term,
@@ -171,9 +187,10 @@ fun TvSearchScreen(
                     fontWeight = FontWeight.Bold
                 )
                 Spacer(Modifier.height(12.dp))
-                val trendingScroller = rememberTvRowScroller(uiState.trendingSearches.size)
                 LazyRow(
-                    state = trendingScroller.state,
+                    state = rememberLazyListState(),
+                    modifier = Modifier.focusRestorer().focusGroup(),
+                    contentPadding = PaddingValues(vertical = 12.dp),
                     horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     itemsIndexed(uiState.trendingSearches, key = { _, term -> term }) { index, term ->
@@ -184,9 +201,6 @@ fun TvSearchScreen(
                             },
                             modifier = Modifier
                                 .padding(bottom = 4.dp)
-                                .onFocusChanged {
-                                    if (it.isFocused) trendingScroller.onItemFocused(index)
-                                }
                         ) {
                             Text(
                                 text = term,
@@ -239,10 +253,11 @@ fun TvSearchScreen(
                 }
                 else -> {
                     LazyVerticalGrid(
-                        columns = GridCells.Fixed(5),
+                        state = resultGridState,
+                        columns = GridCells.Adaptive(160.dp),
                         verticalArrangement = Arrangement.spacedBy(20.dp),
                         horizontalArrangement = Arrangement.spacedBy(20.dp),
-                        modifier = Modifier.fillMaxSize(),
+                        modifier = Modifier.fillMaxSize().focusRestorer().focusGroup(),
                         // Cards scale to 1.08x on focus, so a focused cell in the last row or
                         // last column is clipped without this. Lazy grids scroll a focused item
                         // into view, but they do not account for its scaled bounds.
@@ -254,9 +269,13 @@ fun TvSearchScreen(
                         )
                     ) {
                         items(results, key = { "${it.watchlistKey()}" }) { item ->
+                            val focus = remember { FocusRequester() }
+                            LaunchedEffect(Unit) { if (lastFocusedResult == item.watchlistKey()) focus.requestFocus() }
                             TvMediaCard(
                                 item = item,
-                                onClick = { onMediaClick(item) }
+                                onClick = { onMediaClick(item) },
+                                modifier = Modifier.focusRequester(focus),
+                                onFocused = { lastFocusedResult = item.watchlistKey() }
                             )
                         }
                     }

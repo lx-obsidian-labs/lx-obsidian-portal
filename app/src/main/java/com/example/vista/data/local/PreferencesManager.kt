@@ -4,10 +4,12 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.*
 import androidx.datastore.preferences.preferencesDataStore
+import com.example.vista.domain.model.AgeBand
 import com.example.vista.domain.model.AppSettings
 import com.example.vista.domain.model.AppTheme
 import com.example.vista.domain.model.CellularStreamingSetting
 import com.example.vista.util.CountryResolver
+import java.security.MessageDigest
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -40,9 +42,13 @@ class PreferencesManager @Inject constructor(
         val AUDIO_LANGUAGE = stringPreferencesKey("audio_language")
         val DOUBLE_TAP_TO_SEEK = intPreferencesKey("double_tap_to_seek")
         val SHOW_ADULT_CONTENT = booleanPreferencesKey("show_adult_content")
+        val AGE_BAND = stringPreferencesKey("age_band")
+        val KIDS_MODE = booleanPreferencesKey("kids_mode")
+        val PARENTAL_PIN_HASH = stringPreferencesKey("parental_pin_hash")
         val DATA_SAVER_MODE = booleanPreferencesKey("data_saver_mode")
         val AUTO_RESUME = booleanPreferencesKey("auto_resume")
         val CACHE_LIMIT_MB = intPreferencesKey("cache_limit_mb")
+        val DOWNLOAD_MAX_HEIGHT = intPreferencesKey("download_max_height")
         val RECENT_SEARCHES = stringSetPreferencesKey("recent_searches")
         val TRENDING_SEARCHES = stringSetPreferencesKey("trending_searches")
         val GUEST_MODE = booleanPreferencesKey("guest_mode")
@@ -55,6 +61,7 @@ class PreferencesManager @Inject constructor(
         val NOTIF_FCM_TOKEN = stringPreferencesKey("notif_fcm_token")
         val COUNTRY_CODE = stringPreferencesKey("country_code")
         val MOTD_ENABLED = booleanPreferencesKey("motd_enabled")
+        val HIDDEN_FESTIVE_SEASON = intPreferencesKey("hidden_festive_season")
         val MOTD_LAST_CARD_DAY = longPreferencesKey("motd_last_card_day")
         val MOTD_NOT_INTERESTED = booleanPreferencesKey("motd_not_interested")
         val MOTD_LAST_DISMISSED_DAY = longPreferencesKey("motd_last_dismissed_day")
@@ -224,6 +231,23 @@ class PreferencesManager @Inject constructor(
         context.dataStore.edit { prefs -> prefs[Keys.DISPLAY_NAME] = name.trim() }
     }
 
+    private fun avatarKey(owner: String) = stringPreferencesKey("avatar_id:${if (owner.isBlank()) "guest" else "user:$owner"}")
+    private fun avatarPendingKey(owner: String) = booleanPreferencesKey("avatar_sync_pending:${if (owner.isBlank()) "guest" else "user:$owner"}")
+    fun avatarId(owner: String): Flow<String?> = context.dataStore.data.map { it[avatarKey(owner)] }
+    suspend fun setAvatarId(owner: String, id: String, syncPending: Boolean = false) {
+        context.dataStore.edit { prefs ->
+            prefs[avatarKey(owner)] = id
+            prefs[avatarPendingKey(owner)] = syncPending
+        }
+    }
+    suspend fun restoreAvatarIfUnset(owner: String, id: String) {
+        context.dataStore.edit { prefs -> if (prefs[avatarKey(owner)] == null) prefs[avatarKey(owner)] = id }
+    }
+    suspend fun avatarSyncPending(owner: String): Boolean = context.dataStore.data.map { it[avatarPendingKey(owner)] ?: false }.first()
+    suspend fun acknowledgeAvatarSync(owner: String, id: String) {
+        context.dataStore.edit { prefs -> if (prefs[avatarKey(owner)] == id) prefs[avatarPendingKey(owner)] = false }
+    }
+
     /** Whether the R20/month premium announcement has been acknowledged. */
     val premiumAcked: Flow<Boolean> = context.dataStore.data.map { prefs ->
         prefs[Keys.PREMIUM_ACKED] ?: false
@@ -282,7 +306,47 @@ class PreferencesManager @Inject constructor(
         return resolved
     }
 
+    val ageBand: Flow<AgeBand> = context.dataStore.data.map { prefs ->
+        try { AgeBand.valueOf(prefs[Keys.AGE_BAND] ?: AgeBand.ADULT.name) } catch (_: Exception) { AgeBand.ADULT }
+    }
+
+    val kidsMode: Flow<Boolean> = context.dataStore.data.map { prefs -> prefs[Keys.KIDS_MODE] ?: false }
+    val hasParentalPin: Flow<Boolean> = context.dataStore.data.map { prefs -> !prefs[Keys.PARENTAL_PIN_HASH].isNullOrBlank() }
+
+    suspend fun setAgeBand(band: AgeBand) {
+        context.dataStore.edit { prefs ->
+            prefs[Keys.AGE_BAND] = band.name
+            if (band != AgeBand.ADULT) prefs[Keys.SHOW_ADULT_CONTENT] = false
+        }
+    }
+
+    suspend fun setKidsMode(enabled: Boolean) {
+        context.dataStore.edit { prefs ->
+            prefs[Keys.KIDS_MODE] = enabled
+            if (enabled) prefs[Keys.SHOW_ADULT_CONTENT] = false
+        }
+    }
+
+    suspend fun setParentalPin(pin: String) {
+        context.dataStore.edit { prefs ->
+            if (pin.isBlank()) prefs.remove(Keys.PARENTAL_PIN_HASH)
+            else prefs[Keys.PARENTAL_PIN_HASH] = hashPin(pin)
+        }
+    }
+
+    suspend fun verifyParentalPin(pin: String): Boolean =
+        context.dataStore.data.map { prefs ->
+            val stored = prefs[Keys.PARENTAL_PIN_HASH]
+            stored.isNullOrBlank() || MessageDigest.isEqual(stored.toByteArray(), hashPin(pin).toByteArray())
+        }.first()
+
+    private fun hashPin(pin: String): String =
+        MessageDigest.getInstance("SHA-256").digest(pin.trim().toByteArray()).joinToString("") { "%02x".format(it) }
+
     val settings: Flow<AppSettings> = context.dataStore.data.map { prefs ->
+        val band = try { AgeBand.valueOf(prefs[Keys.AGE_BAND] ?: AgeBand.ADULT.name) } catch (_: Exception) { AgeBand.ADULT }
+        val kids = prefs[Keys.KIDS_MODE] ?: false
+        val adultAllowed = band == AgeBand.ADULT && !kids
         AppSettings(
             autoplayNext = prefs[Keys.AUTOPLAY_NEXT] ?: true,
             preferredQuality = prefs[Keys.PREFERRED_QUALITY] ?: "Auto",
@@ -309,10 +373,12 @@ class PreferencesManager @Inject constructor(
             shareDiagnostics = prefs[Keys.SHARE_DIAGNOSTICS] ?: true,
             audioLanguage = prefs[Keys.AUDIO_LANGUAGE] ?: "Original",
             doubleTapToSeekSeconds = prefs[Keys.DOUBLE_TAP_TO_SEEK] ?: 10,
-            showAdultContent = prefs[Keys.SHOW_ADULT_CONTENT] ?: false,
+            showAdultContent = adultAllowed && (prefs[Keys.SHOW_ADULT_CONTENT] ?: false),
             dataSaverMode = prefs[Keys.DATA_SAVER_MODE] ?: false,
             autoResume = prefs[Keys.AUTO_RESUME] ?: true,
-            cacheLimitMb = prefs[Keys.CACHE_LIMIT_MB] ?: 500
+            cacheLimitMb = prefs[Keys.CACHE_LIMIT_MB] ?: 500,
+            ageBand = band,
+            kidsMode = kids
         )
     }
 
@@ -335,7 +401,9 @@ class PreferencesManager @Inject constructor(
             prefs[Keys.SHARE_DIAGNOSTICS] = settings.shareDiagnostics
             prefs[Keys.AUDIO_LANGUAGE] = settings.audioLanguage
             prefs[Keys.DOUBLE_TAP_TO_SEEK] = settings.doubleTapToSeekSeconds
-            prefs[Keys.SHOW_ADULT_CONTENT] = settings.showAdultContent
+            prefs[Keys.SHOW_ADULT_CONTENT] = settings.ageBand == AgeBand.ADULT && !settings.kidsMode && settings.showAdultContent
+            prefs[Keys.AGE_BAND] = settings.ageBand.name
+            prefs[Keys.KIDS_MODE] = settings.kidsMode
             prefs[Keys.DATA_SAVER_MODE] = settings.dataSaverMode
             prefs[Keys.AUTO_RESUME] = settings.autoResume
             prefs[Keys.CACHE_LIMIT_MB] = settings.cacheLimitMb
@@ -383,7 +451,8 @@ class PreferencesManager @Inject constructor(
     }
 
     suspend fun updateShowAdultContent(show: Boolean) {
-        context.dataStore.edit { it[Keys.SHOW_ADULT_CONTENT] = show }
+        val allowed = settings.first().let { it.ageBand == AgeBand.ADULT && !it.kidsMode }
+        context.dataStore.edit { it[Keys.SHOW_ADULT_CONTENT] = show && allowed }
     }
 
     suspend fun updateDataSaverMode(enabled: Boolean) {
@@ -469,6 +538,14 @@ class PreferencesManager @Inject constructor(
     val movieOfTheDayEnabled: Flow<Boolean> = context.dataStore.data.map { prefs ->
         prefs[Keys.MOTD_ENABLED] ?: true
     }
+
+    val hiddenFestiveSeason: Flow<Int> = context.dataStore.data.map { it[Keys.HIDDEN_FESTIVE_SEASON] ?: 0 }
+    val downloadMaxHeight: Flow<Int> = context.dataStore.data.map { it[Keys.DOWNLOAD_MAX_HEIGHT] ?: 720 }
+    suspend fun setDownloadMaxHeight(value: Int) {
+        require(value in setOf(480, 720, Int.MAX_VALUE))
+        context.dataStore.edit { it[Keys.DOWNLOAD_MAX_HEIGHT] = value }
+    }
+    suspend fun hideFestiveSeason(year: Int) { context.dataStore.edit { it[Keys.HIDDEN_FESTIVE_SEASON] = year } }
 
     suspend fun setMovieOfTheDayEnabled(enabled: Boolean) {
         context.dataStore.edit { prefs -> prefs[Keys.MOTD_ENABLED] = enabled }

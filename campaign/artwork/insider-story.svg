@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
+  <rect width="1080" height="1920" fill="#10120e"/>
+  <rect x="0" y="0" width="1080" height="16" fill="#c6ff45"/>
+  <text x="80" y="240" fill="#c6ff45" font-family="system-ui, sans-serif" font-size="38" font-weight="700" letter-spacing="6">LX OBSIDIAN LABS</text>
+  <text x="80" y="330" fill="#f6f7f2" font-family="system-ui, sans-serif" font-size="52" font-weight="700">LX Insider · Beta Tester Rewards Programme</text>
+  <text x="80" y="560" fill="#f6f7f2" font-family="system-ui, sans-serif" font-size="150" font-weight="800" letter-spacing="-5">TEST.</text>
+  <text x="80" y="730" fill="#f6f7f2" font-family="system-ui, sans-serif" font-size="150" font-weight="800" letter-spacing="-5">SHAPE.</text>
+  <text x="80" y="900" fill="#c6ff45" font-family="system-ui, sans-serif" font-size="150" font-weight="800" letter-spacing="-5">EARN.</text>
+  <text x="80" y="1070" fill="#c6ff45" font-family="system-ui, sans-serif" font-size="150" font-weight="800" letter-spacing="-5">REPEAT.</text>
+  <text x="80" y="1200" fill="#c2c8b9" font-family="system-ui, sans-serif" font-size="44">Help build South African software.</text>
+  <text x="80" y="1265" fill="#c2c8b9" font-family="system-ui, sans-serif" font-size="44">First intake: LX Pocket Business for Android.</text>
+  <rect x="80" y="1330" width="920" height="2" fill="#34392e"/>
+  <text x="80" y="1420" fill="#f6f7f2" font-family="system-ui, sans-serif" font-size="38" font-weight="700">Android 8.0+ · Google Play account</text>
+  <text x="80" y="1480" fill="#f6f7f2" font-family="system-ui, sans-serif" font-size="38" font-weight="700">Honest feedback · 1–2 hours a week</text>
+  <text x="80" y="1560" fill="#c2c8b9" font-family="system-ui, sans-serif" font-size="32">Voluntary · Rewards for verified testing work</text>
+  <rect x="80" y="1650" width="920" height="110" rx="20" fill="#c6ff45"/>
+  <text x="120" y="1722" fill="#151a0b" font-family="system-ui, sans-serif" font-size="44" font-weight="800">lxobsidianportal.co.za/insider</text>
+  <text x="80" y="1850" fill="#68715b" font-family="system-ui, sans-serif" font-size="30">© 2026 LX Obsidian Labs</text>
+</svg>

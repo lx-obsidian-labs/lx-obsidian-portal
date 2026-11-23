@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080">
+  <rect width="1080" height="1080" fill="#10120e"/>
+  <rect x="0" y="0" width="1080" height="14" fill="#c6ff45"/>
+  <text x="80" y="150" fill="#c6ff45" font-family="system-ui, sans-serif" font-size="34" font-weight="700" letter-spacing="6">LX OBSIDIAN LABS · LX INSIDER</text>
+  <text x="80" y="330" fill="#f6f7f2" font-family="system-ui, sans-serif" font-size="128" font-weight="800" letter-spacing="-4">TEST. SHAPE.</text>
+  <text x="80" y="470" fill="#c6ff45" font-family="system-ui, sans-serif" font-size="128" font-weight="800" letter-spacing="-4">EARN. REPEAT.</text>
+  <text x="80" y="580" fill="#c2c8b9" font-family="system-ui, sans-serif" font-size="42">Beta test LX Pocket Business on Android.</text>
+  <text x="80" y="640" fill="#c2c8b9" font-family="system-ui, sans-serif" font-size="42">Income, expenses, debts, invoices — offline-first.</text>
+  <rect x="80" y="710" width="920" height="2" fill="#34392e"/>
+  <text x="80" y="790" fill="#f6f7f2" font-family="system-ui, sans-serif" font-size="36" font-weight="700">Android 8.0+ · Google Play account · Honest feedback</text>
+  <text x="80" y="850" fill="#c2c8b9" font-family="system-ui, sans-serif" font-size="32">Voluntary · Rewards for verified testing work, never reviews</text>
+  <rect x="80" y="910" width="760" height="96" rx="18" fill="#c6ff45"/>
+  <text x="120" y="972" fill="#151a0b" font-family="system-ui, sans-serif" font-size="40" font-weight="800">Apply: lxobsidianportal.co.za/insider</text>
+</svg>

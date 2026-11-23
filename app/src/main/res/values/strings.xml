@@ -1,5 +1,6 @@
 <resources>
-    <string name="app_name">Vista Cinema</string>
+    <string name="app_name">Vista Watch</string>
+    <string name="download_channel_name">Offline downloads</string>
     <string name="home">Home</string>
     <string name="discover">Discover</string>
     <string name="saved">Saved</string>

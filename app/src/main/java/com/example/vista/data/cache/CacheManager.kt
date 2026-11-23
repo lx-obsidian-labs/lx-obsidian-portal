@@ -10,7 +10,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * Smart Cache Manager for Vista Cinema.
+ * Smart Cache Manager for Vista Watch.
  *
  * Responsibilities:
  * - Manages app-owned designated temporary player files (`cacheDir/player_temp`).

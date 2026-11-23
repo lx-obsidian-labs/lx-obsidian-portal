@@ -101,7 +101,7 @@ class MainActivity : ComponentActivity() {
     lateinit var vistaAnalytics: VistaAnalytics
 
     /**
-     * Raised by a Movie of the Day tap, consumed by [VistaCinemaApp].
+     * Raised by a Movie of the Day tap, consumed by [VistaWatchApp].
      *
      * A flow rather than a direct navigation call because the intent can arrive in `onCreate`,
      * before the navigation graph exists. The Compose layer waits for the graph and clears this.
@@ -109,7 +109,7 @@ class MainActivity : ComponentActivity() {
     val openHomeRequest = MutableStateFlow(false)
 
     /**
-     * Milestone id a share notification asked us to open, consumed by [VistaCinemaApp].
+     * Milestone id a share notification asked us to open, consumed by [VistaWatchApp].
      *
      * A flow rather than a direct navigation call for the same reason as [openHomeRequest]: the
      * intent can arrive in `onCreate` before the navigation graph exists.
@@ -163,9 +163,11 @@ class MainActivity : ComponentActivity() {
             }
 
             VistaTheme(appTheme = settings.appTheme) {
-                ProvideShimmerAnimation {
-                    CompositionLocalProvider(LocalVistaMessenger provides vistaMessenger) {
-                        VistaCinemaApp(firebaseManager, this@MainActivity, vistaMessenger, isGuest)
+                com.example.vista.util.ProvideDeviceConfiguration {
+                    ProvideShimmerAnimation {
+                        CompositionLocalProvider(LocalVistaMessenger provides vistaMessenger) {
+                            VistaWatchApp(firebaseManager, this@MainActivity, vistaMessenger, isGuest)
+                        }
                     }
                 }
             }
@@ -256,29 +258,22 @@ private fun androidx.navigation.NavDestination?.isBottomTab(tabRoute: String): B
     return this?.hierarchy?.any { it.route?.substringBefore('?') == tabBase } == true
 }
 
-/**
- * Bridges a suspend call out of the synchronous [SplashScreen] completion callback. DataStore
- * reads are served from an in-memory cache and complete in microseconds, so the brief main-thread
- * hop at splash hand-off is invisible and avoids restructuring the splash contract.
- */
-private fun <T> runBlockingSuspension(block: suspend () -> T): T =
-    kotlinx.coroutines.runBlocking { block() }
-
 @Composable
-fun VistaCinemaApp(
+fun VistaWatchApp(
     firebaseManager: FirebaseManager,
     activity: Activity,
     vistaMessenger: VistaMessenger,
     isGuest: Boolean = false
 ) {
     val navController = rememberNavController()
+    val splashScope = rememberCoroutineScope()
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
     // Onboarding / premium gating state
     val mainActivity = activity as? MainActivity
-        ?: error("VistaCinemaApp requires a MainActivity")
+        ?: error("VistaWatchApp requires a MainActivity")
     val preferencesManager = mainActivity.preferencesManager
     val onboardingSeenAt by preferencesManager.onboardingSeenAt.collectAsStateWithLifecycle(
         initialValue = 0L
@@ -479,7 +474,7 @@ fun VistaCinemaApp(
             text = {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
-                        "Vista Cinema v${update?.latestVersion ?: ""} is ready for you.",
+                        "Vista Watch v${update?.latestVersion ?: ""} is ready for you.",
                         color = SecondaryText,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.fillMaxWidth()
@@ -607,9 +602,9 @@ fun VistaCinemaApp(
             text = {
                 Text(
                     if (canInstall) {
-                        "The new version of Vista Cinema has been downloaded. Tap Install to update the app."
+                        "The new version of Vista Watch has been downloaded. Tap Install to update the app."
                     } else {
-                        "To install updates, allow Vista Cinema to install apps from this source."
+                        "To install updates, allow Vista Watch to install apps from this source."
                     },
                     color = MutedText,
                     textAlign = TextAlign.Center,
@@ -772,45 +767,45 @@ fun VistaCinemaApp(
         ) {
             composable(Screen.Splash.route) {
                 SplashScreen(onSplashComplete = {
-                    // Expired guest trial → back to auth (the 3-day free trial does not renew).
-                    val isGuestNow = isGuest
-                    if (isGuestNow) {
-                        val trialActive = runBlockingSuspension {
-                            preferencesManager.startOrCheckGuestTrial()
+                    splashScope.launch {
+                        // Expired guest trial → back to auth (the 3-day free trial does not renew).
+                        val isGuestNow = isGuest
+                        if (isGuestNow) {
+                            val trialActive = runCatching { preferencesManager.startOrCheckGuestTrial() }.getOrDefault(true)
+                            if (!trialActive) {
+                                runCatching { preferencesManager.setGuestMode(false) }
+                                navController.navigate(Screen.Auth.route) {
+                                    popUpTo(Screen.Splash.route) { inclusive = true }
+                                }
+                                return@launch
+                            }
                         }
-                        if (!trialActive) {
-                            runBlockingSuspension { preferencesManager.setGuestMode(false) }
+
+                        // A returning guest skips the auth wall; guest mode is a persisted choice.
+                        val seenAt = runCatching { preferencesManager.onboardingSeenAt.first() }.getOrDefault(0L)
+                        if (firebaseManager.isUserLoggedIn() || isGuestNow) {
+                            if (seenAt == 0L ||
+                                com.example.vista.util.DateUtils.daysSince(seenAt) >=
+                                com.example.vista.data.local.PreferencesManager.WELCOME_BACK_AFTER_DAYS
+                            ) {
+                                // First-time viewer → full tour. Been away → welcome-back screen.
+                                navController.navigate(Screen.Onboarding.route) {
+                                    popUpTo(Screen.Splash.route) { inclusive = true }
+                                }
+                            } else {
+                                navController.navigate(Screen.Home.route) {
+                                    popUpTo(Screen.Splash.route) { inclusive = true }
+                                }
+                            }
+                        } else {
                             navController.navigate(Screen.Auth.route) {
                                 popUpTo(Screen.Splash.route) { inclusive = true }
                             }
-                            return@SplashScreen
                         }
-                    }
-
-                    // A returning guest skips the auth wall; guest mode is a persisted choice.
-                    if (firebaseManager.isUserLoggedIn() || isGuestNow) {
-                        val seenAt = onboardingSeenAt
-                        if (seenAt == 0L ||
-                            com.example.vista.util.DateUtils.daysSince(seenAt) >=
-                            com.example.vista.data.local.PreferencesManager.WELCOME_BACK_AFTER_DAYS
-                        ) {
-                            // First-time viewer → full tour. Been away → welcome-back screen.
-                            navController.navigate(Screen.Onboarding.route) {
-                                popUpTo(Screen.Splash.route) { inclusive = true }
-                            }
-                        } else {
-                            navController.navigate(Screen.Home.route) {
-                                popUpTo(Screen.Splash.route) { inclusive = true }
-                            }
+                        if (!hasShownSplash) {
+                            hasShownSplash = true
+                            showAppOpenAd = true
                         }
-                    } else {
-                        navController.navigate(Screen.Auth.route) {
-                            popUpTo(Screen.Splash.route) { inclusive = true }
-                        }
-                    }
-                    if (!hasShownSplash) {
-                        hasShownSplash = true
-                        showAppOpenAd = true
                     }
                 })
             }
@@ -823,6 +818,9 @@ fun VistaCinemaApp(
             }
             composable(Screen.Onboarding.route) {
                 com.example.vista.ui.onboarding.OnboardingScreen(navController = navController)
+            }
+            composable(Screen.OnboardingReplay.route) {
+                com.example.vista.ui.onboarding.OnboardingScreen(navController = navController, forceTour = true)
             }
 
             composableWithFadeTransition(Screen.Home.route) {
@@ -847,23 +845,38 @@ fun VistaCinemaApp(
             composableWithFadeTransition(Screen.Library.route) {
                 LibraryScreen(navController = navController)
             }
+            composable(Screen.Downloads.PATTERN, arguments = listOf(
+                navArgument("downloadMediaId") { type = NavType.StringType; defaultValue = "" },
+                navArgument("downloadTitle") { type = NavType.StringType; defaultValue = "" },
+                navArgument("downloadType") { type = NavType.StringType; defaultValue = "movie" },
+                navArgument("downloadSeason") { type = NavType.StringType; defaultValue = "0" },
+                navArgument("downloadEpisode") { type = NavType.StringType; defaultValue = "0" }
+            )) { com.example.vista.downloads.DownloadsScreen(navController) }
+            composable(Screen.OfflinePlayer.route, arguments = listOf(navArgument("downloadId") { type = NavType.StringType; defaultValue = "" })) {
+                com.example.vista.downloads.OfflinePlayerScreen(navController)
+            }
             composableWithFadeTransition(Screen.Profile.route) {
                 ProfileScreen(navController = navController)
             }
+            composableWithFadeTransition(Screen.Kids.route) {
+                com.example.vista.ui.kids.KidsModeScreen(navController = navController)
+            }
 
-            composableWithSearchTransition(Screen.Search.route) {
-                SearchScreen(navController = navController)
+            composableWithSearchTransition(Screen.Search.PATTERN,
+                arguments = listOf(navArgument("query") { type = NavType.StringType; defaultValue = "" })
+            ) { entry ->
+                SearchScreen(navController = navController, initialQuery = entry.arguments?.getString("query").orEmpty())
             }
 
             composableWithSlideTransition(
                 route = Screen.MovieDetails.route,
-                arguments = listOf(navArgument("movieId") { type = NavType.StringType })
+                arguments = listOf(navArgument("movieId") { type = NavType.StringType; defaultValue = "" })
             ) {
                 DetailsScreen(navController = navController)
             }
             composableWithSlideTransition(
                 route = Screen.SeriesDetails.route,
-                arguments = listOf(navArgument("seriesId") { type = NavType.StringType })
+                arguments = listOf(navArgument("seriesId") { type = NavType.StringType; defaultValue = "" })
             ) {
                 DetailsScreen(navController = navController)
             }
@@ -871,8 +884,8 @@ fun VistaCinemaApp(
             composableWithFadeOnlyTransition(
                 route = Screen.Player.route,
                 arguments = listOf(
-                    navArgument("mediaId") { type = NavType.StringType },
-                    navArgument("title") { type = NavType.StringType },
+                    navArgument("mediaId") { type = NavType.StringType; defaultValue = "" },
+                    navArgument("title") { type = NavType.StringType; defaultValue = "" },
                     navArgument("type") {
                         type = NavType.StringType
                         nullable = true
@@ -901,8 +914,8 @@ fun VistaCinemaApp(
             composableWithFadeOnlyTransition(
                 route = Screen.Trailer.route,
                 arguments = listOf(
-                    navArgument("videoKey") { type = NavType.StringType },
-                    navArgument("title") { type = NavType.StringType }
+                    navArgument("videoKey") { type = NavType.StringType; defaultValue = "" },
+                    navArgument("title") { type = NavType.StringType; defaultValue = "" }
                 )
             ) { backStackEntry ->
                 val videoKey = backStackEntry.arguments?.getString("videoKey") ?: ""
@@ -933,6 +946,10 @@ fun VistaCinemaApp(
             ) { backStackEntry ->
                 val page = backStackEntry.arguments?.getString("page")
                 SettingsScreen(navController = navController, page = page)
+            }
+
+            composableWithSlideTransition(Screen.Support.route) {
+                com.example.vista.support.SupportScreen(onBack = { navController.popBackStack() })
             }
 
             composableWithSlideTransition(Screen.WatchHistory.route) {

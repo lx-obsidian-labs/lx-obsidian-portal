@@ -43,11 +43,15 @@ import androidx.compose.runtime.snapshotFlow
 @Composable
 fun SearchScreen(
     navController: NavController,
-    viewModel: SearchViewModel = hiltViewModel()
+    viewModel: SearchViewModel = hiltViewModel(),
+    initialQuery: String = ""
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val watchlistKeys by viewModel.watchlistKeys.collectAsStateWithLifecycle()
     val lazyGridState = rememberLazyGridState()
+    LaunchedEffect(initialQuery) {
+        if (initialQuery.isNotBlank()) viewModel.onQueryChange(initialQuery)
+    }
 
     Column(
         modifier = Modifier

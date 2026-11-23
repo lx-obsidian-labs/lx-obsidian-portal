@@ -2,6 +2,7 @@
   "name": "vista-assistant",
   "private": true,
   "type": "module",
-  "scripts": { "test": "node --test", "deploy": "wrangler deploy" },
-  "devDependencies": { "wrangler": "^4.0.0" }
+  "scripts": { "test": "node --test", "deploy": "node --env-file=../.env.local deploy.mjs" },
+  "dependencies": { "@elevenlabs/elevenlabs-js": "^2.79.0" },
+  "devDependencies": { "wrangler": "^4.0.0", "esbuild": "^0.28.2" }
 }

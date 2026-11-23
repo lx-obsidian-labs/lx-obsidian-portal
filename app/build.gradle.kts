@@ -18,8 +18,8 @@ android {
         applicationId = "com.example.vista"
         minSdk = 24
         targetSdk = 35
-versionCode = 16
-        versionName = "1.0.9"
+        versionCode = 20
+        versionName = "1.0.13"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -37,6 +37,18 @@ versionCode = 16
             ?: error("TMDB_ACCESS_TOKEN not found in gradle.properties. Copy gradle.properties.example to gradle.properties and fill in your keys.")
         val watchmodeApiKey: String = properties["WATCHMODE_API_KEY"] as? String
             ?: error("WATCHMODE_API_KEY not found in gradle.properties. Copy gradle.properties.example to gradle.properties and fill in your keys.")
+
+        // Optional NexStream movie fallback. Explicit Gradle/environment values override .env.
+        val backupEnvFile = rootProject.file(".env")
+        val backupEnv = Properties().apply {
+            if (backupEnvFile.exists()) backupEnvFile.inputStream().use { load(it) }
+        }
+        val backupMoviesApiKey = providers.gradleProperty("BACKUP_MOVIES_API_KEY").orNull
+            ?: providers.environmentVariable("BACKUP_MOVIES_API_KEY").orNull
+            ?: backupEnv.getProperty("BACKUP_MOVIES_API_KEY", "")
+        val escapedBackupKey = backupMoviesApiKey.trim().removeSurrounding("\"")
+            .removeSurrounding("'").replace("\\", "\\\\").replace("\"", "\\\"")
+        buildConfigField("String", "BACKUP_MOVIES_API_KEY", "\"$escapedBackupKey\"")
 
         // First-party Vista analytics (Cloudflare Pages Function + D1). Blank disables tracking.
         val vistaAnalyticsBaseUrl: String = properties["VISTA_ANALYTICS_BASE_URL"] as? String ?: ""
@@ -115,6 +127,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.5")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.5")
     implementation("androidx.activity:activity-compose:1.9.2")
+    implementation("androidx.webkit:webkit:1.12.1")
 
     // Compose BOM
     implementation(platform("androidx.compose:compose-bom:2024.09.02"))
@@ -159,6 +172,7 @@ dependencies {
     implementation("androidx.media3:media3-ui:1.3.1")
     implementation("androidx.media3:media3-session:1.3.1")
     implementation("androidx.media3:media3-common:1.3.1")
+    implementation("androidx.media3:media3-database:1.3.1")
 
     // Hilt
     implementation("com.google.dagger:hilt-android:2.51.1")

@@ -1,18 +1,27 @@
-# Vista Cinema
+# Vista Watch
 
 A native Android streaming companion app for **phones, tablets and Android TV / Google TV**.
 Browse and search movies and series, read cast and "where to watch" info, build a watchlist,
 and stream titles through multiple embed sources. Ships with in-app updates delivered from its
 own website.
 
-**Current release:** 1.0.9 (versionCode 16) - min SDK 24 (Android 7.0+), target SDK 35.
+**Public release:** Android 1.0.11 (versionCode 18), published 15 November 2026 as an optional update. The signed APK is stored in GitHub; Cloudflare Pages serves the website, release information and redirect-only CDN download routes. Release assembly/lint, 36 focused JVM tests, website CI and all four public download hashes passed. A native iOS arm64 device archive and unsigned IPA are also hosted; Apple signing/provisioning is still required for iPhone installation. Device coverage and iOS parity gaps are disclosed in [`docs/PUBLIC_RELEASE_1_0_11.md`](docs/PUBLIC_RELEASE_1_0_11.md). Android min SDK 24 (Android 7.0+), target SDK 35. Native iOS: 17+.
+
+**Website / APK repository:** [lx-obsidian-labs/lx-obsidian-portal](https://github.com/lx-obsidian-labs/lx-obsidian-portal), branch `master`. Public downloads: [Vista Cinema](https://lxobsidianportal.co.za/vista.html). See `DEPLOYMENT.md` for the verified publishing destinations and current release status.
 
 ---
 
 ## Features
 
 - **Vista AI Assistant & Voice** - Talk or chat with Vista Assistant for personalized movie discoveries,
-  cast details, and spoiler-aware movie/series companion guides.
+  cast details, and spoiler-aware movie/series companion guides. NVIDIA NIM runs through an authenticated
+  Cloudflare Worker with conversation history, profile alias, enabled taste preferences and a guide to
+  Vista's actual features. The verified model is `nvidia/nemotron-3.5-lightning-30b-a3b`.
+- **Floating Chat & Page Actions** - The Home FAB opens a chat sheet while preserving the current tab;
+  the AI bottom tab opens full-screen. Assistant actions open supported app pages or Search with a query.
+- **Hands-Free Voice Turns** - Tap the microphone once to listen, generate, speak and listen again.
+  Say “stop listening” or tap Stop to end. The highest-quality available Android voice is selected;
+  Settings provides access to Android voice downloads/language settings. Audio quality needs device testing.
 - **Smart Cache & Playback Recovery** - Automatic video verification recovery engine that resolves stream
   failures, clears stale temporary segments, and performs controlled retries without interrupting active playback.
 - **Clean Icon-Only Bottom Navigation** - Sleek bottom navigation bar with active indicator pills.
@@ -100,7 +109,11 @@ TMDB_ACCESS_TOKEN=...
 WATCHMODE_API_KEY=...
 ```
 
-All keys are compiled into the app via `BuildConfig`.
+These content API keys are compiled into the app via `BuildConfig`. **The NVIDIA API key is not.**
+Store it in the project root `.env` as `NVIDIA_API_KEY` (or `NVIDIA_NIM_API_KEY`); the backend deploy
+script uploads it as a Cloudflare Worker secret. Android uses `VISTA_AI_BASE_URL`, a public HTTPS
+endpoint, with Firebase authentication. See `backend/README.md` for model probing, deployment and
+the live smoke test.
 
 ### Release signing
 
@@ -144,7 +157,15 @@ adb install -r app\build\outputs\apk\debug\app-debug.apk
 
 ## Documentation
 
+- **1.0.10 candidate:** [`docs/RELEASE_1_0_10.md`](docs/RELEASE_1_0_10.md) — implemented features, research, boundaries and verification record.
+- **Public-release plan:** [`docs/PUBLIC_RELEASE_1_0_10.md`](docs/PUBLIC_RELEASE_1_0_10.md) — onboarding continuity, signed upgrade, pilot and publication sequence.
+
+- **Next-version experience and network/download plan:** [`docs/NEXT_VERSION_EXPERIENCE.md`](docs/NEXT_VERSION_EXPERIENCE.md) — feature criticism, implemented reliability improvements, source-aware offline design and fibre/Wi-Fi/mobile verification matrix.
+- **Detailed downloads feature plan:** [`docs/DOWNLOADS_FEATURE_PLAN.md`](docs/DOWNLOADS_FEATURE_PLAN.md) — adaptive HLS/DASH feasibility, queue/service architecture, data costs, durable storage, offline playback and staged acceptance criteria.
+
+- **Next release / R20 subscription plan:** [`docs/premium-2027/README.md`](docs/premium-2027/README.md) — researched January 2027 strategy, critical review, product specification, billing/sync/AI architecture, executable economics and launch gates. These are proposed next-version features, not implemented subscription functionality.
 - `DEPLOYMENT.md` - step-by-step release and deployment runbook
+- `backend/README.md` - NVIDIA/Cloudflare setup, model verification, conversation contract and voice behavior
 - `MARKETING.md` - campaign copy, channel strategy, and the referral launch runbook
 - `deploy/README.md` - what ships in the deploy package & quick start for hosting it
 - `ENDPOINT_INTEGRATION.md` - all content/streaming APIs wired into the app

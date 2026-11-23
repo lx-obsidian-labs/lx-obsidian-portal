@@ -13,6 +13,8 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlinx.coroutines.CancellationException
+import java.io.IOException
 
 @Singleton
 class TmdbSearchRepository @Inject constructor(
@@ -20,6 +22,10 @@ class TmdbSearchRepository @Inject constructor(
     private val shoofaflamRepository: ShoofaflamRepository,
     private val recentSearchDao: RecentSearchDao
 ) : SearchRepository {
+    private suspend fun <T> optionalRemote(block: suspend () -> T): T? = try {
+        block()
+    } catch (e: CancellationException) { throw e }
+    catch (_: Exception) { null }
 
     /**
      * Searches movies, series and people.
@@ -38,10 +44,11 @@ class TmdbSearchRepository @Inject constructor(
         // Use multi-search for "All" tab to reduce network overhead and improve speed.
         if (filters.type == SearchType.ALL) {
             try {
-                val multiResults = async { runCatching { apiService.multiSearch(query, page) }.getOrNull() }
-                val localMovies = async { runCatching { shoofaflamRepository.searchTitles(query, 5) }.getOrDefault(emptyList()) }
+                val multiResults = async { optionalRemote { apiService.multiSearch(query, page) } }
+                val localMovies = async { if (page == 1) optionalRemote { shoofaflamRepository.searchTitles(query, 5) }.orEmpty() else emptyList() }
                 
-                val results = multiResults.await()?.results.orEmpty()
+                val response = multiResults.await() ?: throw IOException("Search is temporarily unavailable.")
+                val results = response.results.orEmpty()
                 val moviesList = mutableListOf<Movie>()
                 val seriesList = mutableListOf<Series>()
                 val peopleList = mutableListOf<Person>()
@@ -65,9 +72,10 @@ class TmdbSearchRepository @Inject constructor(
                     movies = filteredMovies.distinctBy { it.id },
                     series = filteredSeries.distinctBy { it.id },
                     people = peopleList.distinctBy { it.id },
-                    totalCount = filteredMovies.size + filteredSeries.size + peopleList.size
+                    totalCount = (response.totalResults ?: results.size) + localOnly.size
                 )
-            } catch (e: Exception) {
+            } catch (e: CancellationException) { throw e }
+            catch (e: Exception) {
                 // Fallback to individual searches if multi-search fails
             }
         }
@@ -78,25 +86,31 @@ class TmdbSearchRepository @Inject constructor(
 
         try {
             val movieResults = async {
-                if (wantsMovies) runCatching { apiService.searchMovies(query, page) }.getOrNull() else null
+                if (wantsMovies) optionalRemote { apiService.searchMovies(query, page) } else null
             }
             val tvResults = async {
-                if (wantsSeries) runCatching { apiService.searchTvShows(query, page) }.getOrNull() else null
+                if (wantsSeries) optionalRemote { apiService.searchTvShows(query, page) } else null
             }
             val peopleResults = async {
-                if (wantsPeople) runCatching { apiService.searchPeople(query, page) }.getOrNull() else null
+                if (wantsPeople) optionalRemote { apiService.searchPeople(query, page) } else null
             }
             val localMovies = async {
-                if (wantsMovies) {
-                    runCatching { shoofaflamRepository.searchTitles(query, 10) }.getOrDefault(emptyList())
+                if (wantsMovies && page == 1) {
+                    optionalRemote { shoofaflamRepository.searchTitles(query, 10) }.orEmpty()
                 } else {
                     emptyList()
                 }
             }
 
-            val tmdbMovies = movieResults.await()?.results?.map { it.toDomainMovie() }.orEmpty()
-            val tmdbSeries = tvResults.await()?.results?.map { it.toDomainSeries() }.orEmpty()
-            val people = peopleResults.await()?.results?.map { it.toDomainPerson() }.orEmpty()
+            val movieResponse = movieResults.await()
+            val tvResponse = tvResults.await()
+            val peopleResponse = peopleResults.await()
+            val tmdbMovies = movieResponse?.results?.map { it.toDomainMovie() }.orEmpty()
+            val tmdbSeries = tvResponse?.results?.map { it.toDomainSeries() }.orEmpty()
+            val people = peopleResponse?.results?.map { it.toDomainPerson() }.orEmpty()
+            if (movieResponse == null && tvResponse == null && peopleResponse == null && localMovies.await().isEmpty()) {
+                throw IOException("Couldn't reach search. Check your connection and try again.")
+            }
 
             // The local catalogue is a fallback: a title TMDB already found is dropped from it, and
             // the two are matched on title because they share no id space.
@@ -111,10 +125,12 @@ class TmdbSearchRepository @Inject constructor(
                 movies = movies.distinctBy { it.id },
                 series = series.distinctBy { it.id },
                 people = people.distinctBy { it.id },
-                totalCount = movies.size + series.size + people.size
+                totalCount = (movieResponse?.totalResults ?: 0) + (tvResponse?.totalResults ?: 0) +
+                    (peopleResponse?.totalResults ?: 0) + localOnly.size
             )
-        } catch (e: Exception) {
-            SearchResult(emptyList(), emptyList(), emptyList(), 0)
+        } catch (e: CancellationException) { throw e }
+        catch (e: Exception) {
+            throw IOException("Couldn't reach search. Check your connection and try again.", e)
         }
     }
 

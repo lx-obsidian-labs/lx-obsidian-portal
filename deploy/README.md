@@ -3,14 +3,24 @@
 Local staging folder for the public download page, the in-app update manifest, and the signed
 release APKs.
 
+## Current release status — October 29, 2026
+
+- **Release package:** 1.0.9 / versionCode 16, signed at `app/build/outputs/apk/release/app-release.apk`. Both manifests set `mandatory: true`; verify `https://lxobsidianportal.co.za/vista-version.json` after deployment.
+- **APK size / SHA-256:** 22,369,333 bytes / `041131BC0350B193B2FF8327CC95289FED0AAF73D10BB79A22C09BE09221DB05`. Release certificate matches 1.0.8.
+- **GitHub website/APK repo:** https://github.com/lx-obsidian-labs/lx-obsidian-portal, branch `master`.
+- Publish the signed release APK and update **root** `vista.html` and `vista-version.json` in the current website checkout, then deploy its `dist` output to Cloudflare Pages project `lxobsidianmainsite`.
+- The coming-soon/kids-version-planned announcement was already accepted by FCM. No release date is confirmed.
+
+Use the current `DEPLOYMENT.md` runbook. The 1.0.6 package details below are historical reference, not the current publication status.
+
 > **Where the pieces actually live in production**
 >
 > * The **APKs** are hosted from GitHub at `lx-obsidian-labs/lx-obsidian-portal` and served over
 >   raw.githubusercontent URLs. That is the only place the in-app updater and every download page
 >   point to. They are *not* uploaded to Cloudflare Pages.
-> * The **site** (`vista.html`, `vista-version.json`) is built from the separate repo at
->   `C:\Users\KAIRO VILANE NATHAN\Desktop\lx obsidian labs official site` and deployed to Cloudflare
->   Pages as its `dist/` artifact.
+> * The **site** (`vista.html`, root `vista-version.json`) is in that same GitHub repository and
+>   deployed to Cloudflare Pages as its `dist/` artifact. The previously documented Desktop
+>   checkout path no longer exists; use a current checkout of remote `master`.
 > * This folder is a **staging package only** so releases can be prepared and checksummed before
 >   anything is pushed. `index.html` is a complete standalone page that happens to link straight to
 >   the GitHub URLs, so nothing here has to be uploaded to host the downloads.

@@ -2,6 +2,8 @@
 
 Status: planning baseline, not a release-readiness report.
 
+> **Historical 1.0.9 baseline.** Several implementation facts below describe the earlier draft and have since changed: 1.0.9 is released, Room is v6, NVIDIA/Cloudflare conversational AI is verified, and FCM announcements were accepted. For the next release and January R20/month programme, use [`docs/premium-2027/README.md`](docs/premium-2027/README.md). Current release evidence remains in `BUILD_REPORT.md` and `DEPLOYMENT.md`; this historical plan is not an account of current defects.
+
 ## Goal
 
 Upgrade the existing Android app with a polished adaptive interface, five primary destinations, a grounded AI assistant, user-activated voice, explainable taste recommendations, spoiler-aware movie companionship, and evidence-based playback recovery. Preserve profiles, watch lists and viewing history throughout upgrades.

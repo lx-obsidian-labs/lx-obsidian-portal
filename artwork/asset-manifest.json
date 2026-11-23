@@ -1,0 +1,231 @@
+{
+  "product": "Vista Watch",
+  "developer": "LX Obsidian Labs",
+  "assets": [
+    {
+      "id": "vista_onboarding_portrait",
+      "filename": "vista_onboarding_portrait.webp",
+      "original": "img.png",
+      "source_sha256": "25817e34372163ee86c0dcf2add16446b2ea6dc7ef4d70a4ed41e55e99607cd8",
+      "source_dimensions": [
+        941,
+        1672
+      ],
+      "dimensions": [
+        941,
+        1672
+      ],
+      "bytes": 72172,
+      "quality": 88,
+      "purpose": "First-time welcome background",
+      "sha256": "503a2b1a48ab54c8bdc0485e2b53392359e6eb40c793379f3b1dd04b8c013996"
+    },
+    {
+      "id": "vista_banner_movie_night",
+      "filename": "vista_banner_movie_night.webp",
+      "original": "ChatGPT Image Nov 15, 2026, 11_27_26 AM-2.png",
+      "source_sha256": "db5c8fb620ded78dd7ae9c5ab1e08161f5c7db052cac1f32f4d0721e4b6c993e",
+      "source_dimensions": [
+        1672,
+        941
+      ],
+      "dimensions": [
+        1279,
+        720
+      ],
+      "bytes": 53914,
+      "quality": 88,
+      "purpose": "Home/TV movie discovery action",
+      "sha256": "1ec9f7eaccdde50412547abe094c11d0e6cfca83b740ce4983c74d65ab302761"
+    },
+    {
+      "id": "vista_season_christmas",
+      "filename": "vista_season_christmas.webp",
+      "original": "ChatGPT Image Nov 15, 2026, 11_27_27 AM-3.png",
+      "source_sha256": "203d09c7119db702e0c95a5d37fe8fc63bfe1d4a787b414110e0ae3e385f92fe",
+      "source_dimensions": [
+        1672,
+        941
+      ],
+      "dimensions": [
+        1279,
+        720
+      ],
+      "bytes": 84198,
+      "quality": 88,
+      "purpose": "Seasonal campaign with native countdown",
+      "sha256": "3469450a1ecba6b3ddb653a7f900d223cb2830a34481f10b2484c4cb30d4f883"
+    },
+    {
+      "id": "vista_avatar_ai_assistant",
+      "filename": "vista_avatar_ai_assistant.webp",
+      "original": "ChatGPT Image Nov 15, 2026, 11_27_28 AM-4.png",
+      "source_sha256": "dcad292dea336def581ea643710be950ee5b15e105f6c8cadd701d471bd1ae90",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "dimensions": [
+        512,
+        512
+      ],
+      "bytes": 22470,
+      "quality": 88,
+      "purpose": "Reserved Vista AI identity",
+      "sha256": "936062b3358ae33dc4ec7e59aebf9c640beb3b325f16d2c350eb656a18c49471"
+    },
+    {
+      "id": "vista_avatar_male_01",
+      "filename": "vista_avatar_male_01.webp",
+      "original": "ChatGPT Image Nov 15, 2026, 11_27_29 AM-5.png",
+      "source_sha256": "7736dc8ab0bef387f2468289af5f3a7dc9ef7071dfed0bd9b1ebaa9d57a8ce8d",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "dimensions": [
+        512,
+        512
+      ],
+      "bytes": 17812,
+      "quality": 88,
+      "purpose": "Selectable avatar: male_01",
+      "sha256": "341651780d309586d61680ab92964339ee310b18010aa5f42150d9cee2d8a7d9"
+    },
+    {
+      "id": "vista_avatar_female_01",
+      "filename": "vista_avatar_female_01.webp",
+      "original": "ChatGPT Image Nov 15, 2026, 11_27_30 AM-6.png",
+      "source_sha256": "cda46b5cc67f4f71ff4c6d4fcf265d9c95946cefbc8f7e3a1d2783201ac06186",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "dimensions": [
+        512,
+        512
+      ],
+      "bytes": 19300,
+      "quality": 88,
+      "purpose": "Selectable avatar: female_01",
+      "sha256": "633cffbecab3aa7a0bba29b797ece3cb07ad90da659b029dd1218d2c300bd87f"
+    },
+    {
+      "id": "vista_avatar_fox_01",
+      "filename": "vista_avatar_fox_01.webp",
+      "original": "artwork/source-originals/vista_avatar_fox_01.png",
+      "source_sha256": "eb041cce1b269bed307511fc9ebca147bfebee8a4df3bafa032f73325a5de90a",
+      "source_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        512,
+        512
+      ],
+      "bytes": 9088,
+      "quality": 88,
+      "purpose": "Selectable original geometric avatar: fox_01",
+      "sha256": "c53fb7b4b22dcd3347ee2f44fa456b05ff72e340e8cd41d105f12e081a57d20c"
+    },
+    {
+      "id": "vista_avatar_owl_01",
+      "filename": "vista_avatar_owl_01.webp",
+      "original": "artwork/source-originals/vista_avatar_owl_01.png",
+      "source_sha256": "3fb4f264d91c4448f30a8719d6632a8b76af7c32595a993476f628fd4513145b",
+      "source_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        512,
+        512
+      ],
+      "bytes": 10798,
+      "quality": 88,
+      "purpose": "Selectable original geometric avatar: owl_01",
+      "sha256": "52913cdf0192130a9b4f6b638da54861f088b5622e11958f0671b83b2c654089"
+    },
+    {
+      "id": "vista_avatar_orbit_01",
+      "filename": "vista_avatar_orbit_01.webp",
+      "original": "artwork/source-originals/vista_avatar_orbit_01.png",
+      "source_sha256": "8c0ede849dead49a6c3c0ae1a8a5a85ba99c17e8f5678e53aff93740fec94308",
+      "source_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        512,
+        512
+      ],
+      "bytes": 9456,
+      "quality": 88,
+      "purpose": "Selectable original geometric avatar: orbit_01",
+      "sha256": "98e76fbc6148b29ec28de9cb84f171a644e6a759b7f5219222b074206e898bc8"
+    },
+    {
+      "id": "vista_avatar_ember_01",
+      "filename": "vista_avatar_ember_01.webp",
+      "original": "artwork/source-originals/vista_avatar_ember_01.png",
+      "source_sha256": "8ed8d4a077e89e923819569c01f9b41246040f9ff1dfd649683b958c31a7c0cf",
+      "source_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        512,
+        512
+      ],
+      "bytes": 6828,
+      "quality": 88,
+      "purpose": "Selectable original geometric avatar: ember_01",
+      "sha256": "ca4c4d02e3ed6d66b5f64135efe36b81ddbad997a327c1537845a4ace2c7bbc0"
+    },
+    {
+      "id": "vista_avatar_summit_01",
+      "filename": "vista_avatar_summit_01.webp",
+      "original": "artwork/source-originals/vista_avatar_summit_01.png",
+      "source_sha256": "5e4f2e08f2687a7421a0128e77078ad06e8b444bf607bf8ca07fa26f50585fda",
+      "source_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        512,
+        512
+      ],
+      "bytes": 5442,
+      "quality": 88,
+      "purpose": "Selectable original geometric avatar: summit_01",
+      "sha256": "62f5079006f5ce253c8b69ae39f885a2cb264e536e692cbbeda31e47b62a42c8"
+    },
+    {
+      "id": "vista_avatar_moon_01",
+      "filename": "vista_avatar_moon_01.webp",
+      "original": "artwork/source-originals/vista_avatar_moon_01.png",
+      "source_sha256": "3a1f5979c802942264bc20ccb6e7ddf0f81d139ed9f014ea8b3896a1420a1b8c",
+      "source_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        512,
+        512
+      ],
+      "bytes": 7194,
+      "quality": 88,
+      "purpose": "Selectable original geometric avatar: moon_01",
+      "sha256": "8ab8cb1348a8b80c75b23d29d24ae85b9bdc6a7de69daf073434d3009dcc5d04"
+    }
+  ],
+  "total_webp_bytes": 318672,
+  "unavailable_from_supplied_directory": [
+    "vista_ai_discovery.webp",
+    "vista_banner_relax.webp",
+    "vista_premium_background.webp",
+    "vista_banner_discover.webp",
+    "vista_season_christmas_alt.webp",
+    "vista_onboarding_portrait_alt.webp"
+  ]
+}

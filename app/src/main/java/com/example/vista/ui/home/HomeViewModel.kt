@@ -4,6 +4,8 @@ import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.vista.data.local.PreferencesManager
+import com.example.vista.data.repository.HomeCatalogLoader
+import com.example.vista.data.repository.CatalogLoadException
 import com.example.vista.domain.model.*
 import com.example.vista.domain.repository.CatalogRepository
 import com.example.vista.domain.repository.HistoryRepository
@@ -25,8 +27,10 @@ data class HomeUiState(
     val sectionPages: Map<String, Int> = emptyMap(),
     val sectionHasMore: Map<String, Boolean> = emptyMap(),
     val sectionLoadMoreLoading: Map<String, Boolean> = emptyMap(),
+    val sectionLoadMoreErrors: Map<String, String> = emptyMap(),
     val featuredMovies: List<MediaItem> = emptyList(),
     val becauseYouWatched: List<MediaItem> = emptyList(),
+    val suggestionReasons: Map<String, String> = emptyMap(),
     val continueWatching: List<MediaItem.ContinueWatchingItem> = emptyList(),
     val error: String? = null,
     val isOffline: Boolean = false
@@ -43,11 +47,17 @@ class HomeViewModel @Inject constructor(
     private val vistaAnalytics: com.example.vista.data.analytics.VistaAnalytics,
     private val taste: com.example.vista.ai.TasteStore,
     private val recommendations: com.example.vista.ai.TasteRecommendations,
+    private val homeCatalogLoader: HomeCatalogLoader,
     application: Application
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(HomeUiState())
+    private var contentAccessSettings = AppSettings()
+    private var homeLoadJob: kotlinx.coroutines.Job? = null
+    private var homeGeneration = 0
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
+    val hiddenFestiveSeason = preferencesManager.hiddenFestiveSeason.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), 0)
+    fun hideFestiveSeason(year: Int) { viewModelScope.launch { preferencesManager.hideFestiveSeason(year) } }
 
     private val _movieOfTheDay = MutableStateFlow<MovieOfTheDay?>(null)
     val movieOfTheDay: StateFlow<MovieOfTheDay?> = _movieOfTheDay.asStateFlow()
@@ -148,6 +158,7 @@ class HomeViewModel @Inject constructor(
 
     init {
         observeNetworkConnectivity(application)
+        observeContentAccess()
         observeIdentity()
         observeBellStates()
         loadHomeContent()
@@ -161,6 +172,26 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             preferencesManager.displayName.collect { name ->
                 _displayName.value = name
+            }
+        }
+    }
+
+    private fun observeContentAccess() {
+        viewModelScope.launch {
+            preferencesManager.settings.distinctUntilChanged().collect { settings ->
+                contentAccessSettings = settings
+                _uiState.update { state ->
+                    val sections = state.sections.map { section ->
+                        section.copy(items = section.items.filter { item -> ContentAccessPolicy.allows(settings, item) })
+                    }
+                    state.copy(
+                        sections = sections,
+                        featuredMovies = sections.firstOrNull { section -> section.id == CatalogSection.FEATURED_ID }
+                            ?.items.orEmpty(),
+                        becauseYouWatched = state.becauseYouWatched.filter { item -> ContentAccessPolicy.allows(settings, item) },
+                        continueWatching = if (settings.kidsMode || settings.ageBand != AgeBand.ADULT) emptyList() else state.continueWatching
+                    )
+                }
             }
         }
     }
@@ -241,43 +272,46 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun dismissSuggestion(item: MediaItem) {
+        _uiState.update { it.copy(becauseYouWatched = it.becauseYouWatched.filterNot { candidate -> candidate.watchlistKey() == item.watchlistKey() }) }
+        viewModelScope.launch { taste.dislike(item.watchlistKey()) }
+    }
+
     /**
      * Loads the home content. Extracts featured movies from sections to avoid
      * a duplicate trending-movies API call.
      */
-    private fun loadHomeContent() {
-        viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true, error = null) }
+    private fun loadHomeContent(refresh: Boolean = false) {
+        if (homeLoadJob?.isActive == true) return
+        homeGeneration++
+        homeLoadJob = viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = it.sections.isEmpty(), isRefreshing = refresh,
+                sectionLoadMoreLoading = emptyMap(), sectionLoadMoreErrors = emptyMap(), error = null) }
             try {
-                val sections = catalogRepository.getHomeSections()
-                // Reuse the featured section from getHomeSections instead of a separate API call
-                val featured = sections
-                    .firstOrNull { it.id == CatalogSection.FEATURED_ID }
-                    ?.items
-                    ?.ifEmpty { null }
-                    ?: sections
-                        .firstOrNull { it.id == CatalogSection.TRENDING_MOVIES.id }
-                        ?.items
-                        ?.take(5)
-                val featuredMovies = featured ?: emptyList()
-                val initialPages = sections.associate { it.id to 1 }
-                val initialHasMore = sections.associate { it.id to (it.items.size >= 10) }
-
-                _uiState.update {
-                    it.copy(
-                        isLoading = false,
-                        sections = sections,
-                        featuredMovies = featuredMovies,
-                        sectionPages = initialPages,
-                        sectionHasMore = initialHasMore,
-                        error = if (sections.isEmpty()) "No content available. Please check your connection." else null
-                    )
+                homeCatalogLoader.load(_uiState.value.sections).collect { result ->
+                    val settings = contentAccessSettings
+                    val sections = result.sections.map { section ->
+                        section.copy(items = section.items.filter { item -> ContentAccessPolicy.allows(settings, item) })
+                    }
+                    _uiState.update {
+                        it.copy(
+                            isLoading = false,
+                            isRefreshing = result.refreshing,
+                            sections = sections,
+                            featuredMovies = sections.firstOrNull { section -> section.id == CatalogSection.FEATURED_ID }?.items.orEmpty(),
+                            sectionPages = sections.associate { section -> section.id to 1 },
+                            sectionHasMore = sections.associate { section -> section.id to (section.items.size >= 10) },
+                            error = result.error
+                        )
+                    }
                 }
-            } catch (e: Exception) {
+            } catch (e: kotlinx.coroutines.CancellationException) { throw e }
+            catch (e: Exception) {
                 _uiState.update {
                     it.copy(
                         isLoading = false,
-                        error = e.message ?: "Failed to load content"
+                        isRefreshing = false,
+                        error = CatalogLoadException.from(e).message
                     )
                 }
             }
@@ -285,6 +319,8 @@ class HomeViewModel @Inject constructor(
     }
 
     fun loadMoreSection(sectionId: String) {
+        if (homeLoadJob?.isActive == true) return
+        val generation = homeGeneration
         val currentPages = _uiState.value.sectionPages
         val currentLoading = _uiState.value.sectionLoadMoreLoading
         if (currentLoading[sectionId] == true || _uiState.value.sectionHasMore[sectionId] != true) return
@@ -292,29 +328,37 @@ class HomeViewModel @Inject constructor(
         val currentPage = currentPages[sectionId] ?: 1
         val nextPage = currentPage + 1
 
-        _uiState.update { it.copy(sectionLoadMoreLoading = it.sectionLoadMoreLoading + (sectionId to true)) }
+        _uiState.update { it.copy(sectionLoadMoreLoading = it.sectionLoadMoreLoading + (sectionId to true),
+            sectionLoadMoreErrors = it.sectionLoadMoreErrors - sectionId) }
 
         viewModelScope.launch {
             try {
                 val newItems = loadSectionPage(sectionId, nextPage)
+                if (generation != homeGeneration) return@launch
+                val allowedNewItems = newItems.filter { item -> ContentAccessPolicy.allows(contentAccessSettings, item) }
                 _uiState.update {
                     val existingSections = it.sections.toMutableList()
                     val sectionIndex = existingSections.indexOfFirst { s -> s.id == sectionId }
                     if (sectionIndex >= 0) {
                         val section = existingSections[sectionIndex]
                         existingSections[sectionIndex] = section.copy(
-                            items = (section.items + newItems).distinctBy { m -> m.id }
+                            items = (section.items + allowedNewItems).distinctBy { m -> m.watchlistKey() }
                         )
                     }
                     it.copy(
                         sections = existingSections,
                         sectionPages = it.sectionPages + (sectionId to nextPage),
-                        sectionHasMore = it.sectionHasMore + (sectionId to newItems.isNotEmpty()),
+                        sectionHasMore = it.sectionHasMore + (sectionId to allowedNewItems.isNotEmpty()),
                         sectionLoadMoreLoading = it.sectionLoadMoreLoading - sectionId
                     )
                 }
-            } catch (e: Exception) {
-                _uiState.update { it.copy(sectionLoadMoreLoading = it.sectionLoadMoreLoading - sectionId) }
+            } catch (e: kotlinx.coroutines.CancellationException) { throw e }
+            catch (e: Exception) {
+                if (generation == homeGeneration) _uiState.update {
+                    it.copy(sectionLoadMoreLoading = it.sectionLoadMoreLoading - sectionId,
+                        sectionLoadMoreErrors = it.sectionLoadMoreErrors + (sectionId to
+                            (CatalogLoadException.from(e).message ?: "Couldn't load more titles. Try again.")))
+                }
             }
         }
     }
@@ -329,21 +373,25 @@ class HomeViewModel @Inject constructor(
     private fun observeContinueWatching() {
         viewModelScope.launch {
             historyRepository.getContinueWatching().collect { items ->
-                _uiState.update { it.copy(continueWatching = items) }
+                val settings = contentAccessSettings
+                _uiState.update {
+                    it.copy(continueWatching = if (settings.kidsMode || settings.ageBand != AgeBand.ADULT) emptyList() else items)
+                }
             }
         }
     }
 
     private fun observeBecauseYouWatched() {
         viewModelScope.launch {
-            combine(taste.changes, historyRepository.getWatchHistory()) { prefs, history ->
-                "$prefs:${history.firstOrNull()?.mediaId}"
+            combine(taste.changes, historyRepository.getWatchHistory(), watchlistRepository.getWatchlist()) { prefs, history, saved ->
+                "$prefs:${history.take(8).map { "${it.mediaType}:${it.mediaId}:${it.isCompleted}" }}:${saved.map { it.watchlistKey() }}"
             }.distinctUntilChanged().collectLatest {
                 try {
                     val picks = recommendations.suggestions()
-                    _uiState.update { it.copy(becauseYouWatched = picks.map { pick -> pick.item }) }
+                    _uiState.update { it.copy(becauseYouWatched = picks.map { pick -> pick.item },
+                        suggestionReasons = picks.associate { pick -> pick.item.watchlistKey() to pick.reason.substringBefore(" • ") }) }
                 } catch (e: kotlinx.coroutines.CancellationException) { throw e }
-                catch (_: Exception) { _uiState.update { it.copy(becauseYouWatched = emptyList()) } }
+                catch (_: Exception) { /* Preserve last useful suggestions while their source is unavailable. */ }
             }
         }
     }
@@ -359,7 +407,8 @@ class HomeViewModel @Inject constructor(
             emptyList()
         }
         _uiState.update {
-            it.copy(becauseYouWatched = items.filterNot { item -> item.watchlistKey() == latest.mediaId })
+            it.copy(becauseYouWatched = items.filter { item -> ContentAccessPolicy.allows(contentAccessSettings, item) }
+                .filterNot { item -> item.watchlistKey() == latest.mediaId })
         }
     }
 
@@ -368,39 +417,6 @@ class HomeViewModel @Inject constructor(
     }
 
     fun refresh() {
-        viewModelScope.launch {
-            _uiState.update { it.copy(isRefreshing = true, error = null) }
-            try {
-                val sections = catalogRepository.getHomeSections()
-                val featured = sections
-                    .firstOrNull { it.id == CatalogSection.FEATURED_ID }
-                    ?.items
-                    ?.ifEmpty { null }
-                    ?: sections
-                        .firstOrNull { it.id == CatalogSection.TRENDING_MOVIES.id }
-                        ?.items
-                        ?.take(5)
-                val featuredMovies = featured ?: emptyList()
-                val initialPages = sections.associate { it.id to 1 }
-                val initialHasMore = sections.associate { it.id to (it.items.size >= 10) }
-
-                _uiState.update {
-                    it.copy(
-                        isRefreshing = false,
-                        sections = sections,
-                        featuredMovies = featuredMovies,
-                        sectionPages = initialPages,
-                        sectionHasMore = initialHasMore
-                    )
-                }
-            } catch (e: Exception) {
-                _uiState.update {
-                    it.copy(
-                        isRefreshing = false,
-                        error = e.message ?: "Failed to refresh content"
-                    )
-                }
-            }
-        }
+        loadHomeContent(refresh = true)
     }
 }

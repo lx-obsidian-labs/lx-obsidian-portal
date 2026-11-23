@@ -2,7 +2,7 @@ package com.example.vista.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-// Core colors matching Vista Cinema branding
+// Core colors matching Vista Watch branding
 val Background = Color(0xFF0A0A0A)
 val RaisedSurface = Color(0xFF141414)
 val CardSurface = Color(0xFF1A1A1A)
@@ -12,7 +12,7 @@ val PrimaryText = Color(0xFFFFFFFF)
 val SecondaryText = Color(0xCCFFFFFF) // 80% white
 val MutedText = Color(0x80FFFFFF) // 50% white
 
-// Accent - Red (matching Vista Cinema branding)
+// Accent - Red (matching Vista Watch branding)
 val Accent = Color(0xFFE50914) // Netflix-style red
 val AccentDark = Color(0xFFB8070F)
 val AccentLight = Color(0xFFFF1A25)

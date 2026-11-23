@@ -16,7 +16,10 @@ import javax.inject.Inject
 data class OnboardingUiState(
     val isWelcomeBack: Boolean = false,
     val suggestedName: String = "",
-    val daysAway: Int = 0
+    val daysAway: Int = 0,
+    val isLoading: Boolean = true,
+    val isFinishing: Boolean = false,
+    val error: String? = null
 )
 
 @HiltViewModel
@@ -37,29 +40,39 @@ class OnboardingViewModel @Inject constructor(
             val suggested = if (displayName.isNotBlank()) {
                 displayName
             } else {
-                runCatching { firebaseManager.getViewerProfile()?.alias }.getOrNull() ?: ""
+                try { kotlinx.coroutines.withTimeoutOrNull(2_000) { firebaseManager.getViewerProfile()?.alias } ?: "" }
+                catch (e: kotlinx.coroutines.CancellationException) { throw e }
+                catch (_: Exception) { "" }
             }
 
             _uiState.update {
                 it.copy(
                     isWelcomeBack = seenAt > 0L,
                     suggestedName = suggested,
-                    daysAway = com.example.vista.util.DateUtils.daysSince(seenAt)
+                    daysAway = com.example.vista.util.DateUtils.daysSince(seenAt),
+                    isLoading = false
                 )
             }
         }
     }
 
     /** Saves the chosen name and stamps onboarding as complete. */
-    fun finish(name: String) {
+    fun finish(name: String, onFinished: () -> Unit) {
+        if (_uiState.value.isLoading || _uiState.value.isFinishing) return
+        _uiState.update { it.copy(isFinishing = true, error = null) }
         viewModelScope.launch {
-            val finalName = name.trim()
-            if (finalName.isNotBlank()) {
-                preferencesManager.setDisplayName(finalName)
-            } else if (_uiState.value.suggestedName.isNotBlank()) {
-                preferencesManager.setDisplayName(_uiState.value.suggestedName)
-            }
-            preferencesManager.markOnboardingSeen()
+            try {
+                val finalName = name.trim().take(32)
+                if (finalName.isNotBlank()) {
+                    preferencesManager.setDisplayName(finalName)
+                } else if (_uiState.value.suggestedName.isNotBlank()) {
+                    preferencesManager.setDisplayName(_uiState.value.suggestedName)
+                }
+                preferencesManager.markOnboardingSeen()
+                onFinished()
+            } catch (e: kotlinx.coroutines.CancellationException) { throw e }
+            catch (_: Exception) { _uiState.update { it.copy(error = "Couldn't save your welcome preferences. Please try again.") } }
+            finally { _uiState.update { it.copy(isFinishing = false) } }
         }
     }
 }

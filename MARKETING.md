@@ -1,5 +1,7 @@
 # Vista Cinema - Marketing
 
+> **Current planning authority (29 October 2026):** [`docs/premium-2027/README.md`](docs/premium-2027/README.md). Version 1.0.9 is released; R20/month in January 2027 is a gated, opt-in proposal, not active billing. The old 1.0.6 campaign and referral offer below are historical material. Do not launch the 5-friends/12-month reward: the new plan defers it until funded rewards and qualification exist. The public `/vista` product page is already live; the unpublished item is the separate referral campaign, not that product page. Subscription copy must clearly state the approved free/paid boundary and avoid unverified content or unlimited-AI claims.
+
 Campaign copy, channel strategy, and launch runbooks. Everything here is free to execute: organic
 posting on platforms the brand already has, plus Firebase Cloud Messaging.
 

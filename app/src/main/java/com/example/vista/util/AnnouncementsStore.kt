@@ -55,13 +55,19 @@ class AnnouncementsStore @Inject constructor(
             for (i in 0 until array.length()) {
                 val obj = array.optJSONObject(i) ?: continue
                 result += Announcement(
-                    title = obj.optString("title", "Vista Cinema"),
-                    body = obj.optString("body", ""),
+                    title = VistaBrand.normalize(obj.optString("title", VistaBrand.NAME)),
+                    body = VistaBrand.normalize(obj.optString("body", "")),
                     timestamp = obj.optLong("ts", 0L)
                 )
             }
         }
-        return result
+        val current = result.filterNot { AnnouncementPolicy.obsoleteRelease(it.title, it.body, com.example.vista.BuildConfig.VERSION_NAME) }
+        if (current.size != result.size) {
+            val cleaned = JSONArray()
+            current.forEach { cleaned.put(JSONObject().put("title", it.title).put("body", it.body).put("ts", it.timestamp)) }
+            prefs.edit().putString(KEY_ITEMS, cleaned.toString()).apply()
+        }
+        return current
     }
 
     /** Newest announcement timestamp, or 0 when the inbox is empty. */

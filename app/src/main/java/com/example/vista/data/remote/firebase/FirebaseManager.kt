@@ -7,6 +7,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.CancellationException
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -28,7 +29,8 @@ class FirebaseManager @Inject constructor(
             auth.signInWithEmailAndPassword(email, password).await()
             logInAnalytics("email_sign_in")
             Result.success(Unit)
-        } catch (e: Exception) {
+        } catch (e: CancellationException) { throw e }
+        catch (e: Exception) {
             crashlytics.recordException(e)
             Result.failure(e)
         }
@@ -48,7 +50,8 @@ class FirebaseManager @Inject constructor(
             }
             logInAnalytics("email_sign_up")
             Result.success(Unit)
-        } catch (e: Exception) {
+        } catch (e: CancellationException) { throw e }
+        catch (e: Exception) {
             crashlytics.recordException(e)
             Result.failure(e)
         }
@@ -59,7 +62,8 @@ class FirebaseManager @Inject constructor(
             auth.sendPasswordResetEmail(email).await()
             logEvent("password_reset_requested", bundleOf("email" to email))
             Result.success(Unit)
-        } catch (e: Exception) {
+        } catch (e: CancellationException) { throw e }
+        catch (e: Exception) {
             crashlytics.recordException(e)
             Result.failure(e)
         }
@@ -93,33 +97,50 @@ class FirebaseManager @Inject constructor(
     // ==================== Profile Management ====================
 
     suspend fun getViewerProfile(): Viewer? {
-        val uid = auth.currentUser?.uid ?: return null
         return try {
-            val snapshot = firestore.collection("viewers").document(uid).get().await()
-            if (snapshot.exists()) {
-                val viewer = snapshot.toObject(Viewer::class.java)
-                firestore.collection("viewers").document(uid)
-                    .update("lastSeenAt", System.currentTimeMillis())
-                viewer
-            } else {
-                null
-            }
-        } catch (e: Exception) {
+            getViewerProfileOrThrow()
+        } catch (e: CancellationException) { throw e }
+        catch (e: Exception) {
             crashlytics.recordException(e)
             null
         }
     }
 
+    suspend fun getViewerProfileOrThrow(): Viewer? {
+        val uid = auth.currentUser?.uid ?: return null
+        val snapshot = firestore.collection("viewers").document(uid).get().await()
+        check(auth.currentUser?.uid == uid) { "Account changed." }
+        return if (snapshot.exists()) {
+            // Preserve last-seen updates without making an auxiliary write gate a valid sign-in.
+            firestore.collection("viewers").document(uid).update("lastSeenAt", System.currentTimeMillis())
+            snapshot.toObject(Viewer::class.java)
+        } else null
+    }
+
     suspend fun saveViewerProfile(viewer: Viewer) {
         val uid = auth.currentUser?.uid ?: return
+        check(viewer.uid == uid) { "Account changed." }
         try {
-            firestore.collection("viewers").document(uid).set(viewer).await()
+            firestore.collection("viewers").document(uid)
+                .set(viewer, com.google.firebase.firestore.SetOptions.merge()).await()
             analytics.setUserId(uid)
             logEvent("profile_updated", null)
         } catch (e: Exception) {
             crashlytics.recordException(e)
             throw e
         }
+    }
+
+    suspend fun updateAvatar(owner: String, avatarId: String) {
+        check(auth.currentUser?.uid == owner) { "Account changed." }
+        firestore.collection("viewers").document(owner)
+            .set(mapOf("avatarId" to avatarId), com.google.firebase.firestore.SetOptions.merge()).await()
+    }
+
+    suspend fun updateProfileAlias(owner: String, alias: String) {
+        check(auth.currentUser?.uid == owner) { "Account changed." }
+        firestore.collection("viewers").document(owner)
+            .set(mapOf("alias" to alias), com.google.firebase.firestore.SetOptions.merge()).await()
     }
 
     // ==================== Utility ====================

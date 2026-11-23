@@ -4,6 +4,8 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.focusGroup
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -11,9 +13,16 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.focusRestorer
+import androidx.compose.ui.zIndex
+import androidx.activity.compose.BackHandler
+import kotlinx.coroutines.launch
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
@@ -22,7 +31,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.tv.material3.*
-import androidx.tv.material3.SurfaceDefaults
 import com.example.vista.domain.model.HomeSection
 import com.example.vista.domain.model.MediaItem
 import com.example.vista.domain.model.watchlistKey
@@ -31,25 +39,36 @@ import com.example.vista.ui.theme.Accent
 import com.example.vista.ui.theme.Background
 import com.example.vista.ui.theme.PrimaryText
 
-/**
- * How much of the row above stays visible when a row is brought into view.
- *
- * Without it the incoming row lands flush against the top edge, and its title sits under the edge of
- * the screen on overscan TVs where the border is cropped.
- */
-private val RowPeekDp: androidx.compose.ui.unit.Dp = 72.dp
-
 @OptIn(ExperimentalTvMaterial3Api::class)
 @Composable
 fun TvHomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     onMediaClick: (MediaItem) -> Unit,
-    onSearchClick: () -> Unit = {}
+    onSearchClick: () -> Unit = {},
+    onSupportClick: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    // Negative, so the target row stops short of the top edge and the row above stays partly
-    // visible. A positive offset would scroll past it and push its own title under the bezel.
-    val peekOffsetPx = with(LocalDensity.current) { -RowPeekDp.toPx() }.toInt()
+    val searchFocus = remember { FocusRequester() }
+    val avatarFocus = remember { FocusRequester() }
+    var lastFocusedCard by rememberSaveable { mutableStateOf<String?>(null) }
+    var showAvatarPicker by rememberSaveable { mutableStateOf(false) }
+    var showMovieCollection by rememberSaveable { mutableStateOf(false) }
+    var showFestiveCollection by rememberSaveable { mutableStateOf(false) }
+    val campaignDate = com.example.vista.artwork.rememberCampaignDate()
+    val festive = com.example.vista.motd.FestiveSeason.moment(campaignDate)
+    val hiddenFestive by viewModel.hiddenFestiveSeason.collectAsStateWithLifecycle()
+    val movieItems = uiState.sections.flatMap { it.items }.filterIsInstance<MediaItem.MovieItem>().distinctBy { it.watchlistKey() }
+
+    if (showAvatarPicker) com.example.vista.artwork.VistaAvatarPicker(onDismiss = { showAvatarPicker = false })
+    if (showMovieCollection) com.example.vista.artwork.TvArtworkCollection(movieItems,
+        onDismiss = { showMovieCollection = false }, onOpen = { showMovieCollection = false; onMediaClick(it) })
+    if (showFestiveCollection) com.example.vista.ui.components.FestiveCollectionDialog(
+        onDismiss = { showFestiveCollection = false },
+        onOpen = { id ->
+            showFestiveCollection = false
+            val pick = com.example.vista.motd.FestiveSeason.collections.flatMap { it.movies }.first { it.tmdbId.toString() == id }
+            onMediaClick(MediaItem.MovieItem(id, pick.title, null, null, pick.year, null, null))
+        })
 
     when {
         uiState.isLoading -> {
@@ -83,30 +102,34 @@ fun TvHomeScreen(
             }
         }
         else -> {
-            // Row-by-row paging. Free scrolling on a television means rows stop at arbitrary
-            // offsets and the viewer loses track of where they are; this advances a whole row at a
-            // time, driven by which row currently holds focus.
+            // Foundation owns focus-driven scrolling under TvFocusScrolling's shared pivot.
             val listState = rememberLazyListState()
-            var focusedSection by remember { mutableStateOf(-1) }
+            val navigationScope = rememberCoroutineScope()
+            val canReturnToTop by remember { derivedStateOf { listState.canScrollBackward } }
+            BackHandler(enabled = canReturnToTop && !showAvatarPicker && !showMovieCollection && !showFestiveCollection) {
+                lastFocusedCard = "search"
+                navigationScope.launch {
+                    listState.scrollToItem(0)
+                    withFrameNanos { }
+                    searchFocus.requestFocus()
+                }
+            }
 
-            // Empty sections are dropped before indexing, not filtered inside the item block. The
-            // vertical paging below maps a section's position to a LazyColumn item index, so the two
-            // lists have to agree on how many rows there are - filtering inside the block would make
-            // every row after an empty one scroll to the wrong place, and eventually past the end.
+            // Stable section keys keep row state attached to the right content after refresh.
             val visibleSections = remember(uiState.sections) {
                 uiState.sections.filter { it.items.isNotEmpty() }
             }
 
-            // LazyColumn item 0 is the header row; the hero occupies the next slot only when there is
-            // something to show, so section indices have to be offset by both.
-            val headerCount = 1
-            val heroCount = if (uiState.featuredMovies.isNotEmpty()) 1 else 0
-
-            LaunchedEffect(focusedSection) {
-                if (focusedSection < 0) return@LaunchedEffect
-                val target = headerCount + heroCount + focusedSection
-                if (listState.layoutInfo.visibleItemsInfo.none { it.index == target }) {
-                    listState.animateScrollToItem(target, peekOffsetPx)
+            LaunchedEffect(visibleSections.map { section -> section.id to section.items.map { it.watchlistKey() } }) {
+                val current = lastFocusedCard
+                val known = current == null || current in setOf("search", "avatar", "promo_movies", "promo_festive") ||
+                    current == uiState.featuredMovies.firstOrNull()?.let { "hero:${it.watchlistKey()}" } ||
+                    visibleSections.any { section -> section.items.any { "${section.id}:${it.watchlistKey()}" == current } }
+                if (!known) {
+                    lastFocusedCard = "search"
+                    listState.scrollToItem(0)
+                    withFrameNanos { }
+                    searchFocus.requestFocus()
                 }
             }
 
@@ -115,11 +138,18 @@ fun TvHomeScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(Background),
-                contentPadding = PaddingValues(bottom = 64.dp)
+                contentPadding = PaddingValues(top = 28.dp, bottom = 64.dp)
             ) {
                 // Header: brand + search entry. Search is a destination on TV (voice-first),
                 // so it lives here rather than as a phone-style icon in a corner.
-                item {
+                item(key = "header") {
+                    LaunchedEffect(Unit) {
+                        withFrameNanos { }
+                        when (lastFocusedCard) {
+                            null, "search" -> searchFocus.requestFocus()
+                            "avatar" -> avatarFocus.requestFocus()
+                        }
+                    }
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -132,22 +162,39 @@ fun TvHomeScreen(
                             style = MaterialTheme.typography.headlineLarge,
                             color = com.example.vista.ui.theme.Accent
                         )
-                        Button(onClick = onSearchClick) {
-                            Text("Search")
+                        Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                            Button(onClick = { showAvatarPicker = true }, modifier = Modifier.focusRequester(avatarFocus)
+                                .onFocusChanged { if (it.isFocused) lastFocusedCard = "avatar" }) {
+                                com.example.vista.artwork.CurrentUserAvatar(size = 36.dp)
+                                Spacer(Modifier.width(8.dp))
+                                Text("Edit Avatar")
+                            }
+                            Button(onClick = onSearchClick, modifier = Modifier.focusRequester(searchFocus)
+                                .onFocusChanged { if (it.isFocused) lastFocusedCard = "search" }) { Text("Search") }
+                            Button(onClick = onSupportClick) { Text("Help") }
                         }
                     }
                 }
 
                 // Featured Section
                 if (uiState.featuredMovies.isNotEmpty()) {
-                    item {
+                    item(key = "hero") {
                         val movie = uiState.featuredMovies.first()
-                        Box(
+                        val heroFocus = remember { FocusRequester() }
+                        LaunchedEffect(Unit) {
+                            if (lastFocusedCard == "hero:${movie.watchlistKey()}") heroFocus.requestFocus()
+                        }
+                        Surface(
+                            onClick = { onMediaClick(movie) },
+                            scale = ClickableSurfaceDefaults.scale(focusedScale = 1.015f),
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(400.dp)
-                                .clickable { onMediaClick(movie) }
+                                .padding(horizontal = 48.dp, vertical = 12.dp)
+                                .height((androidx.compose.ui.platform.LocalConfiguration.current.screenHeightDp * 0.45f).dp.coerceIn(200.dp, 320.dp))
+                                .focusRequester(heroFocus)
+                                .onFocusChanged { if (it.isFocused) lastFocusedCard = "hero:${movie.watchlistKey()}" }
                         ) {
+                            Box(Modifier.fillMaxSize()) {
                             com.example.vista.ui.components.CoilImage(
                                 url = movie.posterUrl,
                                 contentDescription = null,
@@ -177,16 +224,34 @@ fun TvHomeScreen(
                                     color = PrimaryText
                                 )
                             }
+                            }
                         }
                     }
                 }
 
                 // Sections
-                itemsIndexed(visibleSections, key = { _, section -> section.title }) { index, section ->
+                if (movieItems.isNotEmpty()) item(key = "artwork_movie_night") {
+                    val focus = remember { FocusRequester() }
+                    LaunchedEffect(Unit) { if (lastFocusedCard == "promo_movies") focus.requestFocus() }
+                    com.example.vista.artwork.VistaArtworkBanner(com.example.vista.artwork.VistaArtwork.MOVIE_NIGHT,
+                        "Make tonight a movie night.", "Find your next favourite story.", "Explore Movies",
+                        onClick = { showMovieCollection = true }, modifier = Modifier.padding(horizontal = 48.dp, vertical = 16.dp)
+                            .focusRequester(focus).onFocusChanged { if (it.isFocused) lastFocusedCard = "promo_movies" })
+                }
+                if (festive != null && hiddenFestive != festive.seasonYear) item(key = "artwork_festive") {
+                    val focus = remember { FocusRequester() }
+                    LaunchedEffect(Unit) { if (lastFocusedCard == "promo_festive") focus.requestFocus() }
+                    com.example.vista.artwork.VistaArtworkBanner(com.example.vista.artwork.VistaArtwork.CHRISTMAS,
+                        festive.heading, festive.countdown, "Explore Festive Movies", onClick = { showFestiveCollection = true },
+                        modifier = Modifier.padding(horizontal = 48.dp, vertical = 16.dp)
+                            .focusRequester(focus).onFocusChanged { if (it.isFocused) lastFocusedCard = "promo_festive" }, contentAlignment = Alignment.End)
+                }
+                itemsIndexed(visibleSections, key = { _, section -> section.id }) { _, section ->
                     TvSection(
                         section = section,
                         onMediaClick = onMediaClick,
-                        onSectionFocused = { focusedSection = index }
+                        restoreFocusKey = lastFocusedCard,
+                        onItemFocused = { lastFocusedCard = it }
                     )
                 }
             }
@@ -194,14 +259,15 @@ fun TvHomeScreen(
     }
 }
 
-@OptIn(ExperimentalTvMaterial3Api::class)
+@OptIn(ExperimentalTvMaterial3Api::class, ExperimentalFoundationApi::class, androidx.compose.ui.ExperimentalComposeUiApi::class)
 @Composable
 fun TvSection(
     section: HomeSection,
     onMediaClick: (MediaItem) -> Unit,
-    onSectionFocused: () -> Unit = {}
+    restoreFocusKey: String? = null,
+    onItemFocused: (String) -> Unit = {}
 ) {
-    val scroller = rememberTvRowScroller(section.items.size)
+    val rowState = rememberLazyListState()
 
     Column(
         modifier = Modifier
@@ -214,22 +280,30 @@ fun TvSection(
             color = PrimaryText,
             modifier = Modifier.padding(horizontal = 48.dp, vertical = 8.dp)
         )
+        if (section.isSavedCatalog) Text(
+            text = "Saved catalog · ${section.catalogSavedAt?.let { com.example.vista.util.DateUtils.formatDate(it, "d MMM, HH:mm") }.orEmpty()}",
+            color = com.example.vista.ui.theme.SecondaryText,
+            style = MaterialTheme.typography.bodySmall,
+            modifier = Modifier.padding(horizontal = 48.dp, vertical = 4.dp)
+        )
 
         LazyRow(
-            state = scroller.state,
-            contentPadding = PaddingValues(horizontal = 48.dp),
+            state = rowState,
+            modifier = Modifier.focusRestorer().focusGroup(),
+            contentPadding = PaddingValues(horizontal = 48.dp, vertical = 16.dp),
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            itemsIndexed(section.items, key = { _, item -> item.watchlistKey() }) { index, item ->
+            itemsIndexed(section.items, key = { _, item -> item.watchlistKey() }) { _, item ->
+                val focusKey = "${section.id}:${item.watchlistKey()}"
+                val focus = remember { FocusRequester() }
+                LaunchedEffect(Unit) {
+                    if (restoreFocusKey == focusKey) focus.requestFocus()
+                }
                 TvMediaCard(
                     item = item,
                     onClick = { onMediaClick(item) },
-                    onFocused = {
-                        // Both scrollers move together: this row slides the focused card into its
-                        // resting position, and the parent column advances the row itself.
-                        scroller.onItemFocused(index)
-                        onSectionFocused()
-                    }
+                    modifier = Modifier.focusRequester(focus),
+                    onFocused = { onItemFocused(focusKey) }
                 )
             }
         }
@@ -241,6 +315,7 @@ fun TvSection(
 fun TvMediaCard(
     item: MediaItem,
     onClick: () -> Unit,
+    modifier: Modifier = Modifier,
     onFocused: () -> Unit = {}
 ) {
     var focused by remember { mutableStateOf(false) }
@@ -252,7 +327,10 @@ fun TvMediaCard(
 
     Surface(
         onClick = onClick,
-        modifier = Modifier
+        // Avoid compounding TV Surface's own default scale with our animated focus scale.
+        scale = ClickableSurfaceDefaults.scale(focusedScale = 1f),
+        modifier = modifier
+            .zIndex(if (focused) 1f else 0f)
             .width(180.dp)
             .aspectRatio(0.67f)
             .graphicsLayer {

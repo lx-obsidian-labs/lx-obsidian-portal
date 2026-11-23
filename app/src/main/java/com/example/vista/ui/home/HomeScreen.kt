@@ -65,6 +65,7 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val hiddenFestiveSeason by viewModel.hiddenFestiveSeason.collectAsStateWithLifecycle()
     val watchlistKeys by viewModel.watchlistKeys.collectAsStateWithLifecycle()
     val displayName by viewModel.displayName.collectAsStateWithLifecycle()
     val bellUnread by viewModel.bellUnread.collectAsStateWithLifecycle()
@@ -77,6 +78,15 @@ fun HomeScreen(
     // Notification bell sheet + premium dialog state
     var showAnnouncements by remember { mutableStateOf(false) }
     var showPremiumDialog by remember { mutableStateOf(false) }
+    var showAssistant by remember { mutableStateOf(false) }
+    val connectionMessages = remember { SnackbarHostState() }
+    LaunchedEffect(uiState.error, uiState.isOffline) {
+        val message = uiState.error ?: if (uiState.isOffline) "You're offline. Previously loaded titles are still available." else null
+        if (message != null && uiState.sections.isNotEmpty()) {
+            if (connectionMessages.showSnackbar(message, "Retry") == SnackbarResult.ActionPerformed) viewModel.retry()
+        }
+    }
+    val floatingAssistant: AiChatViewModel = hiltViewModel(key = "floating-assistant")
 
     // Quick Preview State
     var previewItem by remember { mutableStateOf<MediaItem?>(null) }
@@ -100,24 +110,31 @@ fun HomeScreen(
                     uiState.isLoading -> {
                         HomeLoadingSkeleton()
                     }
-                    uiState.error != null -> {
+                    uiState.error != null && uiState.sections.isEmpty() -> {
                         ErrorContent(
                             message = uiState.error ?: "Unknown error",
-                            onRetry = { viewModel.retry() }
+                            onRetry = { viewModel.retry() },
+                            isOffline = uiState.isOffline,
+                            onOpenLibrary = { navController.navigate(Screen.Library.route) }
                         )
                     }
                     else -> {
                         HomeContent(
+                            hiddenFestiveSeason = hiddenFestiveSeason,
+                            onHideFestive = viewModel::hideFestiveSeason,
                             navController = navController,
                             sections = uiState.sections,
                             featuredMovies = uiState.featuredMovies,
                             continueWatching = uiState.continueWatching,
                             becauseYouWatched = uiState.becauseYouWatched,
+                            suggestionReasons = uiState.suggestionReasons,
+                            onDismissSuggestion = viewModel::dismissSuggestion,
                             watchlistKeys = watchlistKeys,
                             onToggleWatchlist = { viewModel.toggleWatchlist(it) },
                             sectionPages = uiState.sectionPages,
                             sectionHasMore = uiState.sectionHasMore,
                             sectionLoadMoreLoading = uiState.sectionLoadMoreLoading,
+                            sectionLoadMoreErrors = uiState.sectionLoadMoreErrors,
                             onLoadMore = { viewModel.loadMoreSection(it) },
                             scrollState = scrollState,
                             onLongClick = { previewItem = it },
@@ -147,10 +164,12 @@ fun HomeScreen(
                 showAnnouncements = true
             }
         )
+        SnackbarHost(connectionMessages, modifier = Modifier.align(Alignment.BottomCenter).padding(16.dp))
         // Netflix-style Quick Preview Sheet
-        if (previewItem != null) {            QuickPreviewSheet(
-                item = previewItem!!,
-                isInWatchlist = watchlistKeys.contains(previewItem!!.watchlistKey()),
+        val preview = previewItem
+        if (preview != null) {            QuickPreviewSheet(
+                item = preview,
+                isInWatchlist = watchlistKeys.contains(preview.watchlistKey()),
                 onDismiss = { previewItem = null },
                 onPlay = { item ->
                     previewItem = null
@@ -198,7 +217,25 @@ fun HomeScreen(
         )
     }
 
-    // AI FAB
+    if (showAssistant) {
+        ModalBottomSheet(
+            onDismissRequest = { floatingAssistant.cancel(); showAssistant = false },
+            sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
+            containerColor = Background,
+            dragHandle = { BottomSheetDefaults.DragHandle(color = MutedText) }
+        ) {
+            Box(Modifier.fillMaxWidth().fillMaxHeight(0.92f)) {
+                AiChatScreen(
+                    navController = navController,
+                    viewModel = floatingAssistant,
+                    floating = true,
+                    onDismiss = { floatingAssistant.cancel(); showAssistant = false }
+                )
+            }
+        }
+    }
+
+    // Floating chat preserves the current tab and its scroll position.
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -206,7 +243,7 @@ fun HomeScreen(
         contentAlignment = Alignment.BottomEnd
     ) {
         androidx.compose.material3.FloatingActionButton(
-            onClick = { navController.navigate(Screen.AiAssistant.route) },
+            onClick = { showAssistant = true },
             containerColor = Accent,
             contentColor = com.example.vista.ui.theme.PrimaryText,
             modifier = Modifier
@@ -255,7 +292,7 @@ private fun HomeTopBar(
             Row(modifier = Modifier.weight(1f), verticalAlignment = Alignment.CenterVertically) {
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        text = "VISTA",
+                        text = "VISTA WATCH",
                         style = MaterialTheme.typography.titleLarge,
                         color = Accent,
                         fontWeight = FontWeight.Black,
@@ -292,7 +329,7 @@ private fun HomeTopBar(
                     Icon(Icons.Outlined.Search, "Search", tint = PrimaryText, modifier = Modifier.size(24.dp))
                 }
                 IconButton(onClick = { navController.navigate(Screen.Profile.route) }) {
-                    Icon(Icons.Outlined.Person, "Profile", tint = PrimaryText, modifier = Modifier.size(24.dp))
+                    com.example.vista.artwork.CurrentUserAvatar(size = 32.dp)
                 }
             }
         }
@@ -598,16 +635,21 @@ private fun QuickPreviewSheet(
 
 @Composable
 private fun HomeContent(
+    hiddenFestiveSeason: Int,
+    onHideFestive: (Int) -> Unit,
     navController: NavController,
     sections: List<HomeSection>,
     featuredMovies: List<MediaItem>,
     continueWatching: List<MediaItem.ContinueWatchingItem>,
     becauseYouWatched: List<MediaItem>,
+    suggestionReasons: Map<String, String>,
+    onDismissSuggestion: (MediaItem) -> Unit,
     watchlistKeys: Set<String> = emptySet(),
     onToggleWatchlist: (MediaItem) -> Unit = {},
     sectionPages: Map<String, Int> = emptyMap(),
     sectionHasMore: Map<String, Boolean> = emptyMap(),
     sectionLoadMoreLoading: Map<String, Boolean> = emptyMap(),
+    sectionLoadMoreErrors: Map<String, String> = emptyMap(),
     onLoadMore: (String) -> Unit = {},
     scrollState: androidx.compose.foundation.ScrollState,
     onLongClick: (MediaItem) -> Unit = {},
@@ -705,7 +747,41 @@ private fun HomeContent(
             navController.navigate(Screen.Discover.createRoute(HomeCategoryTab.tabFor(category)))
         })
 
+        val artworkContext = androidx.compose.ui.platform.LocalContext.current
+        val availableCampaigns = remember(artworkContext) {
+            setOf(com.example.vista.artwork.VistaArtwork.MOVIE_NIGHT, com.example.vista.artwork.VistaArtwork.RELAX)
+                .filter { com.example.vista.artwork.VistaArtworkRegistry.resolve(artworkContext, it) != null }.toSet()
+        }
+        val campaign = com.example.vista.artwork.VistaArtworkRegistry.movieNight(com.example.vista.artwork.rememberCampaignDate().toEpochDay(), availableCampaigns)
+        com.example.vista.artwork.VistaArtworkBanner(
+            artwork = campaign,
+            heading = if (campaign == com.example.vista.artwork.VistaArtwork.RELAX) "Sit back. Press play." else "Make tonight a movie night.",
+            subtitle = if (campaign == com.example.vista.artwork.VistaArtwork.RELAX) "Your next favourite is waiting." else "Find your next favourite story.",
+            actionLabel = "Explore Movies",
+            onClick = { navController.navigate(Screen.Discover.createRoute("MOVIES")) },
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)
+        )
+
+        if (sections.any { it.isSavedCatalog }) {
+            Surface(color = RaisedSurface, shape = RoundedCornerShape(12.dp),
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp)) {
+                Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Icon(Icons.Outlined.CloudOff, null, tint = SecondaryText)
+                    Spacer(Modifier.width(12.dp))
+                    Text("Saved catalog · Some collections are from your last successful visit. Pull to refresh when connected.",
+                        color = SecondaryText, style = MaterialTheme.typography.bodySmall)
+                }
+            }
+        }
+
+        com.example.vista.ui.components.FestiveHomeSection(
+            hiddenSeason = hiddenFestiveSeason, savedKeys = watchlistKeys, onHide = onHideFestive,
+            onOpen = { navController.navigate(Screen.MovieDetails.createRoute(it)) }, onSave = onToggleWatchlist
+        )
+
         // Continue Watching
+        com.example.vista.feedback.FeedbackPollCard(onSignIn = { navController.navigate(Screen.Auth.route) })
+
         if (continueWatching.isNotEmpty()) {
             SectionWithSeeAll(
                 title = "Continue Watching",
@@ -757,6 +833,7 @@ private fun HomeContent(
                     horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     items(becauseYouWatched, key = { it.watchlistKey() }) { item ->
+                        Column(Modifier.width(150.dp)) {
                         MediaCard(
                             item = item,
                             onClick = {
@@ -772,6 +849,15 @@ private fun HomeContent(
                             onLongClick = { onLongClick(item) },
                             modifier = Modifier.width(135.dp)
                         )
+                        Text(suggestionReasons[item.watchlistKey()].orEmpty(), color = SecondaryText,
+                            style = MaterialTheme.typography.labelSmall, minLines = 2, maxLines = 2,
+                            modifier = Modifier.padding(top = 6.dp))
+                        TextButton(onClick = { onDismissSuggestion(item) }) {
+                            Icon(Icons.Outlined.ThumbDownOffAlt, null, modifier = Modifier.size(16.dp))
+                            Spacer(Modifier.width(4.dp))
+                            Text("Not for me", style = MaterialTheme.typography.labelSmall)
+                        }
+                        }
                     }
                 }
             }
@@ -793,6 +879,17 @@ private fun HomeContent(
                         PlaySomethingButton(items = section.items, navController = navController)
                     }
                 ) {
+                    if (section.isSavedCatalog) Text(
+                        "Saved catalog · ${section.catalogSavedAt?.let { com.example.vista.util.DateUtils.formatDate(it, "d MMM, HH:mm") }.orEmpty()}",
+                        color = SecondaryText, style = MaterialTheme.typography.labelSmall,
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                    )
+                    sectionLoadMoreErrors[section.id]?.let { message ->
+                        Row(Modifier.fillMaxWidth().padding(horizontal = 16.dp), verticalAlignment = Alignment.CenterVertically) {
+                            Text(message, color = SecondaryText, style = MaterialTheme.typography.bodySmall, modifier = Modifier.weight(1f))
+                            TextButton(onClick = { onLoadMore(section.id) }) { Text("Retry", color = PrimaryText) }
+                        }
+                    }
                     if (section.id.contains("trending") && index < 2) {
                         // Netflix-style Top 10 Row
                         Top10Row(
@@ -1484,18 +1581,17 @@ private fun HomeLoadingSkeleton() {
 @Composable
 private fun ErrorContent(
     message: String,
-    onRetry: () -> Unit
+    onRetry: () -> Unit,
+    isOffline: Boolean,
+    onOpenLibrary: () -> Unit
 ) {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(ViewUtils.formatError(message), color = PrimaryText, style = MaterialTheme.typography.bodyLarge)
-            Spacer(modifier = Modifier.height(16.dp))
-            Button(onClick = onRetry, colors = ButtonDefaults.buttonColors(containerColor = Accent)) {
-                Text("Retry", color = PrimaryText)
-            }
-        }
-    }
+    com.example.vista.ui.components.RecoveryState(
+        title = if (isOffline) "You're offline" else "Let's get your movies back",
+        message = if (isOffline) "Reconnect to load the catalog. You can still open your library and completed downloads."
+            else ViewUtils.formatError(message),
+        icon = if (isOffline) Icons.Outlined.WifiOff else Icons.Outlined.Movie,
+        primaryLabel = "Try again", onPrimary = onRetry,
+        secondaryLabel = "Open library", onSecondary = onOpenLibrary,
+        modifier = Modifier.padding(top = 80.dp)
+    )
 }

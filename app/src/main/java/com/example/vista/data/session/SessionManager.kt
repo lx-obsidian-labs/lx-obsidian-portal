@@ -9,7 +9,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * Session Manager for Vista Cinema.
+ * Session Manager for Vista Watch.
  *
  * Handles playback authentication session validation and refreshing expired sessions
  * (e.g. Firebase token renewal or guest session validation) during playback verification errors.

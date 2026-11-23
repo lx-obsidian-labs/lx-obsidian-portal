@@ -1,7 +1,9 @@
 {
-  "versionCode": 15,
-  "versionName": "1.0.8",
-  "downloadUrl": "https://github.com/lx-obsidian-labs/lx-obsidian-portal/raw/master/VistaCinema-v1.0.8.apk",
-  "changelog": "Critical fix: v1.0.7 shipped a build with no content (empty catalog). 1.0.8 restores the full working app. Required for all 1.0.7 users.",
-  "mandatory": true
+  "versionCode": 19,
+  "versionName": "1.0.12",
+  "downloadUrl": "https://lxobsidianportal.co.za/api/vista-download?platform=android",
+  "changelog": "FIXED: Clearer catalog errors and retry, with independent TVMaze fallback instead of empty successful results.\nIMPROVED: Earlier, all-frame targeted provider-ad cleanup on supported WebViews.\nTV: Consistent focus-driven scrolling, row focus restoration and more space around enlarged cards.\nPOLISH: Clearer loading and recovery screens, adaptive collection grids and failed-page retry.\nNEW: Optional Help shape Vista feedback poll in phone/tablet Home and Settings.\nPLAYBACK: Optional NexStream backup movie source after existing providers. Availability remains provider-dependent.\nLive TV and Sports are being planned; availability and timing are not confirmed.",
+  "sha256": "F8E7C8F97A1835BA58E20F69F968C4B7D4E50F0319CB67CCE66F102D03920360",
+  "sizeBytes": 23020491,
+  "mandatory": false
 }

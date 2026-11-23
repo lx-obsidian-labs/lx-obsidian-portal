@@ -11,6 +11,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material.icons.outlined.Movie
+import androidx.compose.material.icons.outlined.CloudOff
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -69,7 +71,7 @@ fun SeeAllScreen(
         Box(modifier = Modifier.fillMaxSize().padding(padding)) {
             if (uiState.isLoading && uiState.items.isEmpty()) {
                 LazyVerticalGrid(
-                    columns = GridCells.Fixed(3),
+                    columns = GridCells.Adaptive(104.dp),
                     contentPadding = PaddingValues(16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp),
                     horizontalArrangement = Arrangement.spacedBy(12.dp)
@@ -84,11 +86,11 @@ fun SeeAllScreen(
                     onRetry = { viewModel.retry() }
                 )
             } else if (uiState.items.isEmpty() && !uiState.isLoading) {
-                SeeAllEmptyContent()
+                SeeAllEmptyContent(onBack = { navController.popBackStack() })
             } else {
                 LazyVerticalGrid(
                     state = lazyListState,
-                    columns = GridCells.Fixed(3),
+                    columns = GridCells.Adaptive(104.dp),
                     contentPadding = PaddingValues(16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp),
                     horizontalArrangement = Arrangement.spacedBy(12.dp)
@@ -108,7 +110,20 @@ fun SeeAllScreen(
                             }
                         )
                     }
-                    if (uiState.hasMore) {
+                    if (uiState.error != null) {
+                        item(span = { GridItemSpan(maxLineSpan) }) {
+                            Column(
+                                modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.spacedBy(8.dp)
+                            ) {
+                                Text("Couldn't load more titles", color = PrimaryText, style = MaterialTheme.typography.titleSmall)
+                                Text(uiState.error.orEmpty(), color = SecondaryText,
+                                    textAlign = androidx.compose.ui.text.style.TextAlign.Center)
+                                OutlinedButton(onClick = viewModel::retryLoadMore) { Text("Try again", color = PrimaryText) }
+                            }
+                        }
+                    } else if (uiState.hasMore) {
                         item(
                             span = { GridItemSpan(maxLineSpan) }
                         ) {
@@ -118,12 +133,12 @@ fun SeeAllScreen(
                 }
 
                 // Infinite scroll trigger
-                LaunchedEffect(lazyListState) {
+                LaunchedEffect(lazyListState, uiState.error) {
                     snapshotFlow { lazyListState.layoutInfo.visibleItemsInfo }
                         .collect { visibleItems ->
                             val lastVisible = visibleItems.lastOrNull()
                             val totalItems = lazyListState.layoutInfo.totalItemsCount
-                            if (lastVisible != null && totalItems > 0) {
+                            if (uiState.error == null && lastVisible != null && totalItems > 0) {
                                 if (lastVisible.index >= totalItems - 6) {
                                     viewModel.loadMore()
                                 }
@@ -169,59 +184,17 @@ private fun SeeAllErrorContent(
     message: String,
     onRetry: () -> Unit
 ) {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(32.dp)
-        ) {
-            Icon(
-                imageVector = Icons.Outlined.FavoriteBorder,
-                contentDescription = null,
-                tint = MutedText,
-                modifier = Modifier.size(64.dp)
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                message,
-                color = PrimaryText,
-                style = MaterialTheme.typography.bodyLarge
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            Button(
-                onClick = onRetry,
-                colors = ButtonDefaults.buttonColors(containerColor = Accent)
-            ) {
-                Text("Retry", color = PrimaryText)
-            }
-        }
-    }
+    com.example.vista.ui.components.RecoveryState(
+        title = "Titles couldn't load", message = message, icon = Icons.Outlined.CloudOff,
+        primaryLabel = "Try again", onPrimary = onRetry
+    )
 }
 
 @Composable
-private fun SeeAllEmptyContent() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(32.dp)
-        ) {
-            Icon(
-                imageVector = Icons.Outlined.FavoriteBorder,
-                contentDescription = null,
-                tint = MutedText,
-                modifier = Modifier.size(64.dp)
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                "No content available",
-                color = PrimaryText,
-                style = MaterialTheme.typography.bodyLarge
-            )
-        }
-    }
+private fun SeeAllEmptyContent(onBack: () -> Unit) {
+    com.example.vista.ui.components.RecoveryState(
+        title = "More stories are on the way",
+        message = "There are no titles in this collection right now. Explore another collection to find your next watch.",
+        icon = Icons.Outlined.Movie, primaryLabel = "Back to browsing", onPrimary = onBack
+    )
 }

@@ -20,9 +20,10 @@ object EmbedOrigins {
     const val TWOE = "https://www.2embed.cc"
     const val VIDSRCME = "https://vidsrc.me"
     const val MULTIEMBED = "https://multiembed.mov"
+    const val NEXSTREAM = "https://api.codespecters.com"
 
     /** Every origin that may host a main-frame page, as [host] values. */
-    val hosts: List<String> = listOf(VIDSRUC, VIDSRCPRO, TWOE, VIDSRCME, MULTIEMBED)
+    val hosts: List<String> = listOf(VIDSRUC, VIDSRCPRO, TWOE, VIDSRCME, MULTIEMBED, NEXSTREAM)
         .map { hostOf(it) }
         .filter { it.isNotEmpty() }
 
@@ -34,8 +35,9 @@ object EmbedOrigins {
      * `https://vidsrc.to.evil.example` cannot pass as `vidsrc.to`.
      */
     fun allowsTopLevel(url: String): Boolean {
-        val host = hostOf(url)
-        if (host.isEmpty()) return false
+        val parsed = try { java.net.URI(url.trim()) } catch (_: Exception) { return false }
+        if (!parsed.scheme.equals("https", ignoreCase = true) || parsed.userInfo != null) return false
+        val host = parsed.host?.lowercase() ?: return false
         return hosts.any { host == it || host.endsWith(".$it") }
     }
 
