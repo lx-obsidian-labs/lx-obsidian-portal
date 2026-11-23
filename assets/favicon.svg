@@ -1,4 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="6" fill="#0a0a0f"/>
-  <text x="4" y="23" font-family="system-ui,sans-serif" font-weight="700" font-size="18" fill="#00f0ff">LX</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="LX Obsidian Labs">
+  <rect width="64" height="64" rx="14" fill="#0a0a0f"/>
+  <path d="M32 5 55 25 48 51 32 60 16 51 9 25Z" fill="#111d21" stroke="#b9ff4a" stroke-width="2.5"/>
+  <path d="M32 9 47 26 32 54 17 26Z" fill="#18333a"/>
+  <path d="M32 9 47 26 32 31Z" fill="#75e3dd"/>
+  <path d="M32 9 17 26 32 31Z" fill="#d0ff5b"/>
+  <path d="M17 26 32 31 32 54Z" fill="#329d9d"/>
+  <path d="M47 26 32 31 32 54Z" fill="#0d555c"/>
 </svg>
