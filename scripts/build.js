@@ -238,3 +238,17 @@ function getSize(dir) {
   }
   return total;
 }
+
+// Seasonal enhancement: include on every published HTML page, without changing canonical URLs.
+function injectFestive(dir) {
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const target = path.join(dir, entry.name);
+    if (entry.isDirectory()) { injectFestive(target); continue; }
+    if (!entry.name.endsWith('.html')) continue;
+    const html = fs.readFileSync(target, 'utf8');
+    if (!html.includes('festive-2026.js') && /<\/body>/i.test(html)) {
+      fs.writeFileSync(target, html.replace(/<\/body>/i, '<script defer src="/js/festive-2026.js"></script>\\n</body>'));
+    }
+  }
+}
+injectFestive(DIST);
